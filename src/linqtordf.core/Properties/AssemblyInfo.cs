@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("linqtordf.core")]
+[assembly: AssemblyTitle("RdfSerialisation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("linqtordf.core")]
+[assembly: AssemblyProduct("RdfSerialisation")]
 [assembly: AssemblyCopyright("Copyright ©  2007")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fdf4cb6a-4c0a-47aa-97a4-d5bac11872a9")]
+[assembly: Guid("4598b144-d2f1-4732-8ee3-d79f1cea6a2c")]
 
 // Version information for an assembly consists of the following four values:
 //
