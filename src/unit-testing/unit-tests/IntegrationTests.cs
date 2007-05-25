@@ -1,0 +1,141 @@
+using System;
+using System.Diagnostics;
+using System.Query;
+using System.Text;
+using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RdfMusic;
+using RdfSerialisation;
+using SemWeb;
+using SemWeb.Inference;
+
+namespace RdfSerialisationTest
+{
+    /// <summary>
+    /// Summary description for IntegrationTests
+    /// </summary>
+    [TestClass]
+    public class IntegrationTests
+    {
+        private static MemoryStore store;
+        public IntegrationTests()
+        {
+            //
+            // TODO: Add constructor logic here
+            //
+        }
+
+        #region Additional test attributes
+        //
+        // You can use the following additional attributes as you write your tests:
+        //
+        // Use ClassInitialize to run code before running the first test in the class
+        // [ClassInitialize()]
+        // public static void MyClassInitialize(TestContext testContext) { }
+        //
+        // Use ClassCleanup to run code after all tests in a class have run
+        // [ClassCleanup()]
+        // public static void MyClassCleanup() { }
+        //
+        // Use TestInitialize to run code before running each test 
+        // [TestInitialize()]
+        // public void MyTestInitialize() { }
+        //
+        // Use TestCleanup to run code after each test has run
+         [TestCleanup()]
+         public void MyTestCleanup()
+         {
+             if (store != null)
+                 store = null;
+         }
+        
+        #endregion
+
+        #region Unit Tests
+
+        [TestMethod]
+        public void Query1()
+        {
+            CreateMemoryStore();
+            IQueryable<Track> qry = new RdfContext(store).ForType<Track>();
+	        var q = from t in qry
+		        where t.ArtistName == "Thomas Laqueur"
+		        select t;
+	        List<Track> resultList = new List<Track>();
+            resultList.AddRange(q);
+        }
+
+[TestMethod]
+public void QueryWithProjection()
+{
+    CreateMemoryStore();
+    IRdfQuery<Track> qry = new RdfContext(store).ForType<Track>();
+    var q = from t in qry
+        where t.Year == 2006 &&
+        t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
+        select new {t.Title, t.FileLocation};
+	var x = q.GetEnumerator();
+    foreach(var track in q){
+        Trace.WriteLine(track.Title + ": " + track.FileLocation);
+    }        
+}
+
+        [TestMethod]
+        public void Query3()
+        {
+            string serialisedLocation = @"";
+	        Store s = new MemoryStore(new N3Reader(serialisedLocation));
+            IRdfQuery<Track> qry = new RdfContext(s).ForType<Track>(); // should deduce that it is N3 and open correctly
+	        var q = from t in qry
+		        where Convert.ToInt32(t.Year) > 1998 &&
+		        t.GenreName == "Chillout" 
+		        select t;
+	        foreach(Track track in q){
+		        Console.WriteLine(track.Title + ": " + track.FileLocation);
+	        }        
+        }
+
+        [TestMethod]
+        public void Query4()
+        {
+            string urlToRemoteSparqlEndpoint = @"http://localhost/MyMusicService/SparqlQuery.ashx";
+            IRdfQuery<Track> qry = new RdfSparqlContext(urlToRemoteSparqlEndpoint).ForType<Track>(); 
+	        var titles = from t in qry
+		        where t.ArtistName == "Jethro Tull"
+		        select t.Title;
+	        foreach(string title in titles){
+		        Console.WriteLine(title);
+	        }        
+        }
+
+        [TestMethod]
+        public void Query5()
+        {
+            string urlToRemoteSparqlEndpoint = @"http://localhost/MyMusicService/SparqlQuery.ashx";
+            RdfSparqlContext ctx = new RdfSparqlContext(urlToRemoteSparqlEndpoint);
+            IRdfQuery<Track> qry = ctx.ForType<Track>(); 
+	        var q = from t in qry
+		        where t.ArtistName == "Jethro Tull"
+		        select t;
+            foreach (Track track in q)
+            {
+                track.Rating = 5;
+            }
+            ctx.AcceptChanges();
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private static void CreateMemoryStore()
+        {
+            string serialisedLocation = @"C:\dev\prototypes\semantic-web\src\RdfSerialisationTest\store3.n3";
+            store = new MemoryStore();
+            store.AddReasoner(new Euler(new N3Reader(MusicConstants.OntologyURL)));
+            store.Import(new N3Reader(serialisedLocation));
+        }
+
+        #endregion
+    }
+}
