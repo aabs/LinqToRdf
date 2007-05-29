@@ -55,14 +55,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="IExpressionTranslator.cs" />
     <Compile Include="N3ExpressionTranslator.cs" />
     <Compile Include="IRdfContext.cs" />
     <Compile Include="IRdfQuery.cs" />
     <Compile Include="MemoryStoreExtensions.cs" />
+    <Compile Include="NamespaceManager.cs" />
     <Compile Include="ObjectDeserialiser.cs" />
     <Compile Include="OwlClassSupertype.cs" />
     <Compile Include="OwlInstanceSupertype.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryFactory.cs" />
     <Compile Include="QuerySupertype.cs" />
     <Compile Include="RdfContext.cs" />
     <Compile Include="RdfN3Query.cs" />

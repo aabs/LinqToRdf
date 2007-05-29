@@ -6,7 +6,7 @@ using linqtordf.core;
 
 namespace RdfSerialisation
 {
-	public class SparqlExpressionTranslator<T>
+	public class SparqlExpressionTranslator<T> : IExpressionTranslator
 	{
 		public StringBuilder StringBuilder
 		{
@@ -14,7 +14,7 @@ namespace RdfSerialisation
 			set { stringBuilder = value; }
 		}
 
-		private StringBuilder stringBuilder;
+		private StringBuilder stringBuilder = new StringBuilder();
 
 		public SparqlExpressionTranslator()
 		{
@@ -187,6 +187,26 @@ namespace RdfSerialisation
 			Log(fmt, args);
 		}
 
+		private void GenerateBinaryExpression(Expression e, string op)
+		{
+			if (e == null)
+				throw new ArgumentNullException("e was null");
+			if (op == null)
+				throw new ArgumentNullException("op was null");
+			if (op.Length == 0)
+				throw new ArgumentNullException("op.Length was empty");
+			BinaryExpression be = e as BinaryExpression;
+			if (be != null)
+			{
+				QueryAppend("(");
+				Dispatch(be.Left);
+				QueryAppend(")"+op+"(");
+				Dispatch(be.Right);
+				QueryAppend(")");
+				Log("+ :{0} Handled", e.NodeType);
+			}
+		}
+
 		public string InstancePlaceholderName
 		{
 			get
@@ -198,6 +218,11 @@ namespace RdfSerialisation
 		private string Sanitise(string s)
 		{
 			return s.Replace("<", "").Replace(">", "").Replace("'", "");
+		}
+
+		internal void Log(string msg, params object[] args)
+		{
+			Trace.WriteLine(string.Format(msg, args));
 		}
 
 		public static readonly string tripleFormatString = "{0} <{1}> {2} .\n";
@@ -488,26 +513,6 @@ namespace RdfSerialisation
 			GenerateBinaryExpression(e, "*");
 		}
 
-		private void GenerateBinaryExpression(Expression e, string op)
-		{
-			if (e == null)
-				throw new ArgumentNullException("e was null");
-			if (op == null)
-				throw new ArgumentNullException("op was null");
-			if (op.Length == 0)
-				throw new ArgumentNullException("op.Length was empty");
-			BinaryExpression be = e as BinaryExpression;
-			if (be != null)
-			{
-				QueryAppend("(");
-				Dispatch(be.Left);
-				QueryAppend(")"+op+"(");
-				Dispatch(be.Right);
-				QueryAppend(")");
-				Log("+ :{0} Handled", e.NodeType);
-			}
-		}
-
 		public void MultiplyChecked(Expression e)
 		{
 			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.MultiplyChecked);
@@ -596,9 +601,5 @@ namespace RdfSerialisation
 		}
 
 		#endregion
-		internal void Log(string msg, params object[] args)
-		{
-			Trace.WriteLine(string.Format(msg, args));
-		}
 	}
 }

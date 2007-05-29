@@ -31,7 +31,7 @@ namespace RdfSerialisation
 
 		public IRdfQuery<T> ForType<T>() 
         {
-            throw new NotImplementedException("IRdfQuery<T> OriginalType<T>() not implemented yet");
-        }
+			return new RdfSparqlQuery<T>(sparqlEndpoint);
+		}
     }
 }

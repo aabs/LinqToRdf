@@ -96,6 +96,12 @@ namespace RdfSerialisationTest
 		}
 
 		public int[] ia = new int[]{1,2,3,4,5,6};
+
+		private PropertyInfo GetProperty(string arg)
+		{
+			return GetType().GetProperty(arg);
+		}
+
 		private TestContext testContextInstance;
 
 		/// <summary>
@@ -147,6 +153,7 @@ namespace RdfSerialisationTest
 		//
 		#endregion
 
+		#region Unit Tests
 
 		/// <summary>
 		///A test for Add (Expression)
@@ -830,11 +837,6 @@ namespace RdfSerialisationTest
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		private PropertyInfo GetProperty(string arg)
-		{
-			return GetType().GetProperty(arg);
-		}
-
 		/// <summary>
 		///A test for Parameter (Expression)
 		///</summary>
@@ -975,6 +977,7 @@ namespace RdfSerialisationTest
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
+		#endregion
 	}
 
 

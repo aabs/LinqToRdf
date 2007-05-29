@@ -1,24 +1,29 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Expressions;
-using System.IO;
 using System.Query;
-using System.Reflection;
 using System.Text;
-using SemWeb;
 using C5;
 
 namespace RdfSerialisation
 {
 	public class RdfSparqlQuery<T> : QuerySupertype<T>, IRdfQuery<T>
 	{
+		public RdfSparqlQuery(string sparqlEndpoint)
+		{
+			this.sparqlEndpoint = sparqlEndpoint;
+			originalType = typeof (T);
+			parser = new SparqlExpressionTranslator<T>();
+		}
+
 		private Expression expression;
 
 		private SparqlExpressionTranslator<T> parser;
 
 		private readonly string sparqlEndpoint;
+
+		private List<T> result = null;
 
 		public Type ElementType
 		{
@@ -27,7 +32,7 @@ namespace RdfSerialisation
 
 		public Expression Expression
 		{
-			get { return expression; }
+			get { return Expression.Constant(this); }
 		}
 
 		public SparqlExpressionTranslator<T> Parser
@@ -39,11 +44,6 @@ namespace RdfSerialisation
 		public string SparqlEndpoint
 		{
 			get { return sparqlEndpoint; }
-		}
-
-		public RdfSparqlQuery(string sparqlEndpoint)
-		{
-			this.sparqlEndpoint = sparqlEndpoint;
 		}
 
 		public IQueryable<S> CreateQuery<S>(Expression expression)
@@ -90,6 +90,11 @@ namespace RdfSerialisation
 		///<filterpriority>1</filterpriority>
 		IEnumerator<T> IEnumerable<T>.GetEnumerator()
 		{
+			// establish connection to the sparql endpoint
+			// put finishing touches to the query
+			// present the query to the endpoint
+			// retrieve the results
+			// yield the results
 			throw new NotImplementedException();
 		}
 

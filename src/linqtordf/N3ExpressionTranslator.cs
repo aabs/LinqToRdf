@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RdfSerialisation
 {
-	public class N3ExpressionTranslator<T>
+	public class N3ExpressionTranslator<T> : IExpressionTranslator
 	{
 		public StringBuilder StringBuilder
 		{

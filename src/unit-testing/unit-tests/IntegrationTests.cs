@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
+using System.Expressions;
 using System.Query;
+using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -51,64 +53,106 @@ namespace RdfSerialisationTest
         
         #endregion
 
-        #region Unit Tests
+    	#region working tests
 
-        [TestMethod]
-        public void Query1()
-        {
-            CreateMemoryStore();
-            IQueryable<Track> qry = new RdfContext(store).ForType<Track>();
-	        var q = from t in qry
-		        where t.ArtistName == "Thomas Laqueur"
-		        select t;
-	        List<Track> resultList = new List<Track>();
-            resultList.AddRange(q);
-        }
+    	[TestMethod]
+    	public void QueryWithProjection()
+    	{
+    		CreateMemoryStore();
+    		IRdfQuery<Track> qry = new RdfContext(store).ForType<Track>();
+    		var q = from t in qry
+				where t.Year == 2006 &&
+    				t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
+    			select new {t.Title, t.FileLocation};
+    		foreach(var track in q){
+    			Trace.WriteLine(track.Title + ": " + track.FileLocation);
+    		}        
+    	}
 
-[TestMethod]
-public void QueryWithProjection()
-{
-    CreateMemoryStore();
-    IRdfQuery<Track> qry = new RdfContext(store).ForType<Track>();
-    var q = from t in qry
-        where t.Year == 2006 &&
-        t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
-        select new {t.Title, t.FileLocation};
-	var x = q.GetEnumerator();
-    foreach(var track in q){
-        Trace.WriteLine(track.Title + ": " + track.FileLocation);
-    }        
-}
+    	#endregion
 
-        [TestMethod]
-        public void Query3()
-        {
-            string serialisedLocation = @"";
-	        Store s = new MemoryStore(new N3Reader(serialisedLocation));
-            IRdfQuery<Track> qry = new RdfContext(s).ForType<Track>(); // should deduce that it is N3 and open correctly
-	        var q = from t in qry
-		        where Convert.ToInt32(t.Year) > 1998 &&
-		        t.GenreName == "Chillout" 
-		        select t;
-	        foreach(Track track in q){
-		        Console.WriteLine(track.Title + ": " + track.FileLocation);
-	        }        
-        }
+    	#region current tests
 
-        [TestMethod]
-        public void Query4()
+    	[TestMethod]
+        public void SparqlQuery()
         {
             string urlToRemoteSparqlEndpoint = @"http://localhost/MyMusicService/SparqlQuery.ashx";
             IRdfQuery<Track> qry = new RdfSparqlContext(urlToRemoteSparqlEndpoint).ForType<Track>(); 
-	        var titles = from t in qry
-		        where t.ArtistName == "Jethro Tull"
-		        select t.Title;
-	        foreach(string title in titles){
-		        Console.WriteLine(title);
-	        }        
+	        var q = from t in qry
+				where t.Year == 2006 &&
+				t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
+				select new {t.Title, t.FileLocation};
+			foreach(var track in q){
+				Trace.WriteLine(track.Title + ": " + track.FileLocation);
+			}        
         }
 
-        [TestMethod]
+    	[TestMethod]
+		public void ExplodedSparqlQuery()
+		{
+			ParameterExpression t = Expression.Parameter(typeof(Track), "t");
+			string urlToRemoteSparqlEndpoint = "http://localhost/MyMusicService/SparqlQuery.ashx";
+			MethodInfo artistNamePropInfo = propertyof(typeof(Track), "ArtistName");
+			MethodInfo titlePropInfo = propertyof(typeof(Track),"Title");
+			MemberExpression arg0 = Expression.Property(t,
+			                                            artistNamePropInfo);
+			ConstantExpression arg1 = Expression.Constant("Jethro Tull", typeof(string));
+			Expression[] whereClauseArgs = new Expression[] { 
+			                                                	arg0, 
+			                                                	arg1 
+			                                                };
+			MethodInfo eqop = typeof(string).GetMethod("op_Equality");
+			MethodCallExpression whereClause = Expression.Call(eqop, t,
+			                                                   whereClauseArgs);
+			Expression<Func<Track, bool>> whereLambda = Expression.Lambda<Func<Track, bool>>(
+				whereClause,
+				new ParameterExpression[] { t });
+			Expression<Func<Track, string>> selectLambda = Expression.Lambda<Func<Track, string>>(
+				Expression.Property(t, titlePropInfo),
+				new ParameterExpression[] { t });
+			RdfSparqlContext ctx = new RdfSparqlContext(urlToRemoteSparqlEndpoint);
+			IRdfQuery<Track> qry = ctx.ForType<Track>();
+			
+			IQueryable<Track> qry2 = Queryable.Where<Track>(qry, whereLambda);
+			IQueryable<string> qry3 = Queryable.Select<Track, string>(qry2, selectLambda);
+			foreach (string title in qry3)
+			{
+				Console.WriteLine(title);
+			}
+		}
+
+    	#endregion
+
+    	#region unstarted tests
+
+    	[TestMethod]
+    	public void Query1()
+    	{
+    		CreateMemoryStore();
+    		IQueryable<Track> qry = new RdfContext(store).ForType<Track>();
+    		var q = from t in qry
+    		                  	where t.ArtistName == "Thomas Laqueur"
+    		select t;
+    		List<Track> resultList = new List<Track>();
+    		resultList.AddRange(q);
+    	}
+
+    	[TestMethod]
+    	public void Query3()
+    	{
+    		string serialisedLocation = @"";
+    		Store s = new MemoryStore(new N3Reader(serialisedLocation));
+    		IRdfQuery<Track> qry = new RdfContext(s).ForType<Track>(); // should deduce that it is N3 and open correctly
+    		var q = from t in qry
+    		                  	where Convert.ToInt32(t.Year) > 1998 &&
+    		                  	      t.GenreName == "Chillout" 
+    		select t;
+    		foreach(Track track in q){
+    			Console.WriteLine(track.Title + ": " + track.FileLocation);
+    		}        
+    	}
+
+    	[TestMethod]
         public void Query5()
         {
             string urlToRemoteSparqlEndpoint = @"http://localhost/MyMusicService/SparqlQuery.ashx";
@@ -124,9 +168,9 @@ public void QueryWithProjection()
             ctx.AcceptChanges();
         }
 
-        #endregion
+    	#endregion
 
-        #region Helpers
+    	#region Helpers
 
         private static void CreateMemoryStore()
         {
@@ -136,6 +180,16 @@ public void QueryWithProjection()
             store.Import(new N3Reader(serialisedLocation));
         }
 
-        #endregion
+    	private MethodInfo propertyof(Type t, string arg)
+    	{
+    		return t.GetProperty(arg).GetGetMethod();
+    	}
+
+    	private MethodInfo methodof(Type t, string arg)
+    	{
+    		return GetType().GetMethod(arg);
+    	}
+
+    	#endregion
     }
 }
