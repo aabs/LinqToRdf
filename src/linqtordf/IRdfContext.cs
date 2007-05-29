@@ -1,4 +1,4 @@
-namespace RdfSerialisation
+namespace LinqToRdf
 {
     internal interface IRdfContext
     {

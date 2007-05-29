@@ -68,7 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryFactory.cs" />
     <Compile Include="QuerySupertype.cs" />
-    <Compile Include="RdfContext.cs" />
+    <Compile Include="RdfN3Context.cs" />
     <Compile Include="RdfN3Query.cs" />
     <Compile Include="RdfSparqlContext.cs" />
     <Compile Include="RdfSparqlQuery.cs" />

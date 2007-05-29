@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Web;
 using ID3Lib;
-using RdfSerialisation;
+using LinqToRdf;
 using SemWeb;
 using SemWeb.Inference;
 

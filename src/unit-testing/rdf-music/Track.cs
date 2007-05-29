@@ -1,6 +1,6 @@
 using System;
 using ID3Lib;
-using RdfSerialisation;
+using LinqToRdf;
 
 namespace RdfMusic
 {

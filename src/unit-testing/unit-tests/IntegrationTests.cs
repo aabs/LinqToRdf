@@ -7,7 +7,7 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
-using RdfSerialisation;
+using LinqToRdf;
 using SemWeb;
 using SemWeb.Inference;
 
@@ -59,7 +59,7 @@ namespace RdfSerialisationTest
     	public void QueryWithProjection()
     	{
     		CreateMemoryStore();
-    		IRdfQuery<Track> qry = new RdfContext(store).ForType<Track>();
+    		IRdfQuery<Track> qry = new RdfN3Context(store).ForType<Track>();
     		var q = from t in qry
 				where t.Year == 2006 &&
     				t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
@@ -129,7 +129,7 @@ namespace RdfSerialisationTest
     	public void Query1()
     	{
     		CreateMemoryStore();
-    		IQueryable<Track> qry = new RdfContext(store).ForType<Track>();
+    		IQueryable<Track> qry = new RdfN3Context(store).ForType<Track>();
     		var q = from t in qry
     		                  	where t.ArtistName == "Thomas Laqueur"
     		select t;
@@ -142,7 +142,7 @@ namespace RdfSerialisationTest
     	{
     		string serialisedLocation = @"";
     		Store s = new MemoryStore(new N3Reader(serialisedLocation));
-    		IRdfQuery<Track> qry = new RdfContext(s).ForType<Track>(); // should deduce that it is N3 and open correctly
+    		IRdfQuery<Track> qry = new RdfN3Context(s).ForType<Track>(); // should deduce that it is N3 and open correctly
     		var q = from t in qry
     		                  	where Convert.ToInt32(t.Year) > 1998 &&
     		                  	      t.GenreName == "Chillout" 

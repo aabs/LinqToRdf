@@ -3,16 +3,18 @@ using System.Diagnostics;
 using System.Expressions;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using C5;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	public class QuerySupertype<T>{
 		protected TextWriter logger;
 		protected Type originalType = typeof(T);
 		protected Delegate projection;
 		protected HashSet<string> properties = new HashSet<string>();
-		private string query;
+		protected string query;
+		protected QueryFactory<T> queryFactory;
 
 		public TextWriter Logger
 		{
@@ -42,6 +44,12 @@ namespace RdfSerialisation
 		{
 			get { return query; }
 			set { query = value; }
+		}
+
+		public QueryFactory<T> QueryFactory
+		{
+			get { return queryFactory; }
+			set { queryFactory = value; }
 		}
 
 		protected void BuildProjection(Expression expression)
@@ -77,5 +85,6 @@ namespace RdfSerialisation
 		{
 			Trace.WriteLine(string.Format(msg, args));
 		}
+
 	}
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	public class NamespaceManager
 	{

@@ -9,24 +9,29 @@ using System.Text;
 using SemWeb;
 using SemWeb.Query;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	public class RdfN3Query<T> : QuerySupertype<T>, IRdfQuery<T>
 	{
-		public RdfN3Query(Store store)
+		public RdfN3Query()
 		{
-			this.store = store;
 			originalType = typeof(T);
 			parser = new N3ExpressionTranslator<T>();
 		}
 
-		private N3ExpressionTranslator<T> parser;
+		private IExpressionTranslator parser;
 		private Expression expression;
-		private string query = "";
+
+		public Store Store
+		{
+			get { return store; }
+			set { store = value; }
+		}
+
 		private Store store;
 		private List<T> result = null;
 
-		public N3ExpressionTranslator<T> Parser
+		public IExpressionTranslator Parser
 		{
 			get { return parser; }
 			set { parser = value; }
@@ -41,16 +46,24 @@ namespace RdfSerialisation
 		{
 			get { return OriginalType; }
 		}
-
-		public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
+		protected RdfN3Query<TElement> CloneQueryForNewType<TElement>()
 		{
-			RdfN3Query<TElement> newQuery = new RdfN3Query<TElement>(store);
+			RdfN3Query<TElement> newQuery = new RdfN3Query<TElement>();
+			newQuery.Store = store;
 			newQuery.OriginalType = originalType;
 			newQuery.Projection = projection;
 			newQuery.Properties = properties;
 			newQuery.Query = Query;
 			newQuery.Logger = logger;
-			newQuery.Parser = new N3ExpressionTranslator<TElement>(new StringBuilder(parser.StringBuilder.ToString()));
+			newQuery.QueryFactory = new QueryFactory<TElement>(QueryFactory.QueryType);
+			newQuery.Parser = QueryFactory.CreateExpressionTranslator();
+			newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
+			return newQuery;
+		}
+
+		public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
+		{
+			RdfN3Query<TElement> newQuery = CloneQueryForNewType<TElement>();
 
 			MethodCallExpression call = expression as MethodCallExpression;
 			if (call != null)

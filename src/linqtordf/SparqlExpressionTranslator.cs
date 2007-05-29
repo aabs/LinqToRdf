@@ -2,9 +2,9 @@ using System;
 using System.Diagnostics;
 using System.Expressions;
 using System.Text;
-using linqtordf.core;
+using LinqToRdf;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	public class SparqlExpressionTranslator<T> : IExpressionTranslator
 	{

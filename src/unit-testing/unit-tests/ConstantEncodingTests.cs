@@ -3,7 +3,7 @@ using System.Expressions;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
-using RdfSerialisation;
+using LinqToRdf;
 
 namespace RdfSerialisationTest
 {

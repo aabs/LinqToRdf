@@ -5,7 +5,7 @@ using System.Reflection;
 using SemWeb;
 using SemWeb.Query;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	public class ObjectDeserialiserQuerySink : QueryResultSink
 	{

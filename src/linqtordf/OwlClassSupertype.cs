@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
     public class OwlClassSupertype
     {

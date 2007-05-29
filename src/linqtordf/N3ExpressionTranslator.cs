@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Expressions;
 using System.Text;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	public class N3ExpressionTranslator<T> : IExpressionTranslator
 	{

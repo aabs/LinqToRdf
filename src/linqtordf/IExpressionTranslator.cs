@@ -1,7 +1,7 @@
 using System.Expressions;
 using System.Text;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	public interface IExpressionTranslator
 	{

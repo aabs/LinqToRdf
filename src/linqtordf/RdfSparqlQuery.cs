@@ -4,24 +4,23 @@ using System.Collections.Generic;
 using System.Expressions;
 using System.Query;
 using System.Text;
-using C5;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	public class RdfSparqlQuery<T> : QuerySupertype<T>, IRdfQuery<T>
 	{
-		public RdfSparqlQuery(string sparqlEndpoint)
+		public RdfSparqlQuery()
 		{
-			this.sparqlEndpoint = sparqlEndpoint;
+			this.sparqlEndpoint = "";
 			originalType = typeof (T);
 			parser = new SparqlExpressionTranslator<T>();
 		}
 
 		private Expression expression;
 
-		private SparqlExpressionTranslator<T> parser;
+		private IExpressionTranslator parser;
 
-		private readonly string sparqlEndpoint;
+		private string sparqlEndpoint;
 
 		private List<T> result = null;
 
@@ -35,7 +34,7 @@ namespace RdfSerialisation
 			get { return Expression.Constant(this); }
 		}
 
-		public SparqlExpressionTranslator<T> Parser
+		public IExpressionTranslator Parser
 		{
 			get { return parser; }
 			set { parser = value; }
@@ -44,17 +43,12 @@ namespace RdfSerialisation
 		public string SparqlEndpoint
 		{
 			get { return sparqlEndpoint; }
+			set { sparqlEndpoint = value; }
 		}
 
 		public IQueryable<S> CreateQuery<S>(Expression expression)
 		{
-			RdfSparqlQuery<S> newQuery = new RdfSparqlQuery<S>(sparqlEndpoint);
-			newQuery.OriginalType = originalType;
-			newQuery.Projection = projection;
-			newQuery.Properties = properties;
-			newQuery.Query = Query;
-			newQuery.Logger = logger;
-			newQuery.Parser = new SparqlExpressionTranslator<S>(new StringBuilder(parser.StringBuilder.ToString()));
+			RdfSparqlQuery<S> newQuery = CloneQueryForNewType<S>();
 
 			MethodCallExpression call = expression as MethodCallExpression;
 			if (call != null)
@@ -95,7 +89,7 @@ namespace RdfSerialisation
 			// present the query to the endpoint
 			// retrieve the results
 			// yield the results
-			throw new NotImplementedException();
+			return result.GetEnumerator();
 		}
 
 		///<summary>
@@ -121,7 +115,7 @@ namespace RdfSerialisation
 			throw new NotImplementedException();
 		}
 
-		private void BuildQuery(Expression q)
+		protected void BuildQuery(Expression q)
 		{
 			StringBuilder sb = new StringBuilder();
 			ParseQuery(q, sb);
@@ -129,10 +123,25 @@ namespace RdfSerialisation
 			Log(Query);
 		}
 
-		private void ParseQuery(Expression expression, StringBuilder sb)
+		protected void ParseQuery(Expression expression, StringBuilder sb)
 		{
 			sb.Append("#Query - " + DateTime.Now.ToLongTimeString());
 			Parser.Dispatch(expression);
+		}
+
+		protected RdfSparqlQuery<S> CloneQueryForNewType<S>()
+		{
+			RdfSparqlQuery<S> newQuery = new RdfSparqlQuery<S>();
+			newQuery.SparqlEndpoint = sparqlEndpoint;
+			newQuery.OriginalType = originalType;
+			newQuery.Projection = projection;
+			newQuery.Properties = properties;
+			newQuery.Query = Query;
+			newQuery.Logger = logger;
+			newQuery.QueryFactory = new QueryFactory<S>(QueryFactory.QueryType);
+			newQuery.Parser = QueryFactory.CreateExpressionTranslator();
+			newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
+			return newQuery;
 		}
 	}
 }

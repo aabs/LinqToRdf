@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace linqtordf.core
+namespace LinqToRdf
 {
 	[AttributeUsage(AttributeTargets.Field)]
 	public class XsdtAttribute : Attribute

@@ -1,7 +1,7 @@
 using System;
 using SemWeb;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
     public class RdfSparqlContext : IRdfContext
     {
@@ -29,9 +29,13 @@ namespace RdfSerialisation
             throw new NotImplementedException();
         }
 
-		public IRdfQuery<T> ForType<T>() 
-        {
-			return new RdfSparqlQuery<T>(sparqlEndpoint);
+		public IRdfQuery<T> ForType<T>()
+		{
+			QueryFactory<T> qf = new QueryFactory<T>(QueryType.RemoteSparqlStore);
+			RdfSparqlQuery<T> result = (RdfSparqlQuery<T>) qf.CreateQuery<T>();
+			result.SparqlEndpoint = sparqlEndpoint;
+			result.QueryFactory = qf;
+			return result;
 		}
     }
 }

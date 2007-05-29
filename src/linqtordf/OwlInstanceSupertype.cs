@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using SemWeb;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
     public class OwlInstanceSupertype : OwlClassSupertype
     {

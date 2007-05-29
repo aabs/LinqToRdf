@@ -1,6 +1,6 @@
 using System.Query;
 
-namespace RdfSerialisation
+namespace LinqToRdf
 {
     public interface IRdfQuery<T> : IQueryable<T>
     {

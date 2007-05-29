@@ -1,4 +1,4 @@
-namespace RdfSerialisation
+namespace LinqToRdf
 {
 	/// <summary>
 	/// indictates what types of store can be used, and how they can be interacted with.
