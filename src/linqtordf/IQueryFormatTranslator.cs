@@ -3,7 +3,7 @@ using System.Text;
 
 namespace LinqToRdf
 {
-	public interface IExpressionTranslator
+	public interface IQueryFormatTranslator
 	{
 		StringBuilder StringBuilder
 		{
@@ -14,6 +14,12 @@ namespace LinqToRdf
 		string InstancePlaceholderName
 		{
 			get;
+		}
+
+		ITypeTranslator TypeTranslator
+		{
+			get;
+			set;
 		}
 
 		void Dispatch(Expression expression);

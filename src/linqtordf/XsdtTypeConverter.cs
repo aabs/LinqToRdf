@@ -76,9 +76,15 @@ namespace LinqToRdf
 		[Xsdt(false, "")]
 		XsdtUnknown
 	}
-	public static class XsdtTypeConverter
+	public interface ITypeTranslator
 	{
-		static XsdtTypeConverter()
+		XsdtPrimitiveDataType GetDataType(Type t);
+		object Get<T>(T obj);
+		object Get(Type t, object obj);
+	}
+	public class XsdtTypeConverter : ITypeTranslator
+	{
+		public XsdtTypeConverter()
 		{
 			typeLookup.Add(typeof(string), XsdtPrimitiveDataType.XsdtString);
 			typeLookup.Add(typeof(Char), XsdtPrimitiveDataType.XsdtString);
@@ -94,22 +100,22 @@ namespace LinqToRdf
 			typeLookup.Add(typeof(Uri), XsdtPrimitiveDataType.XsdtAnyUri);
 			typeLookup.Add(typeof(DateTime), XsdtPrimitiveDataType.XsdtDateTime);
 		}
-		public static Dictionary<Type, XsdtPrimitiveDataType> TypeLookup
+		public  Dictionary<Type, XsdtPrimitiveDataType> TypeLookup
 		{
 			get { return typeLookup; }
 			set { typeLookup = value; }
 		}
 
-		static Dictionary<Type, XsdtPrimitiveDataType> typeLookup = new Dictionary<Type, XsdtPrimitiveDataType>();
+		 Dictionary<Type, XsdtPrimitiveDataType> typeLookup = new Dictionary<Type, XsdtPrimitiveDataType>();
 
-		public static XsdtPrimitiveDataType GetDataType(Type t)
+		public  XsdtPrimitiveDataType GetDataType(Type t)
 		{
 			if (TypeLookup.ContainsKey(t))
 				return TypeLookup[t];
 			else return XsdtPrimitiveDataType.XsdtUnknown;
 		}
 
-		public static string Get<T>(T obj)
+		public  object Get<T>(T obj)
 		{
 			string result = "";
 			XsdtPrimitiveDataType dt = GetDataType(typeof(T));
@@ -130,7 +136,7 @@ namespace LinqToRdf
 
 			return result + "^^" + attr.Name;
 		}
-		public static string Get(Type t, object obj)
+		public  object Get(Type t, object obj)
 		{
 			string result = "";
 			XsdtPrimitiveDataType dt = GetDataType(t);
@@ -156,18 +162,18 @@ namespace LinqToRdf
 
 		}
 
-		private static string GetXsdtDateRepresentationFor(DateTime d, XsdtPrimitiveDataType dt, XsdtAttribute attr)
+		private  string GetXsdtDateRepresentationFor(DateTime d, XsdtPrimitiveDataType dt, XsdtAttribute attr)
 		{
 			// TODO: the time zone offset needs to be returned from somewhere...
 			return d.ToString("yyyy-MM-ddTHH:mm:sszzz");
 		}
 
-		private static string GetStringRepresentationFor<T>(T obj, XsdtPrimitiveDataType dt, XsdtAttribute attr)
+		private  string GetStringRepresentationFor<T>(T obj, XsdtPrimitiveDataType dt, XsdtAttribute attr)
 		{
 			return obj.ToString();
 		}
 
-		private static XsdtAttribute GetXsdtAttrFor(XsdtPrimitiveDataType dt)
+		private  XsdtAttribute GetXsdtAttrFor(XsdtPrimitiveDataType dt)
 		{
 			FieldInfo fi = dt.GetType().GetField(dt.ToString());
 			XsdtAttribute[] attrs = (XsdtAttribute[])fi.GetCustomAttributes(typeof(XsdtAttribute), false);

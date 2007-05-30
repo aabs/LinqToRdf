@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 
 namespace LinqToRdf
@@ -10,15 +11,20 @@ namespace LinqToRdf
 		}
 
 		private readonly QueryType queryType;
+		private ITypeTranslator typeConverter;
 
-		public IExpressionTranslator CreateExpressionTranslator()
+		public IQueryFormatTranslator CreateExpressionTranslator()
 		{
 			switch (queryType)
 			{
 				case QueryType.RemoteSparqlStore:
-					return new SparqlExpressionTranslator<T>(new StringBuilder());
+					LinqToSparqlExpTranslator<T> translator = new LinqToSparqlExpTranslator<T>(new StringBuilder());
+					translator.TypeTranslator = TypeTranslator;
+					return translator;
 				default:
-					return new N3ExpressionTranslator<T>(new StringBuilder());
+					LinqToN3ExpTranslator<T> n3translator = new LinqToN3ExpTranslator<T>(new StringBuilder());
+					n3translator.TypeTranslator = TypeTranslator;
+					return n3translator;
 			}
 		}
 
@@ -36,6 +42,16 @@ namespace LinqToRdf
 		public QueryType QueryType
 		{
 			get { return queryType; }
+		}
+
+		public ITypeTranslator TypeTranslator
+		{
+			get
+			{
+				if (typeConverter == null)
+					typeConverter = new XsdtTypeConverter();
+				return typeConverter;
+			}
 		}
 	}
 }

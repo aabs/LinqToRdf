@@ -5,9 +5,28 @@ namespace LinqToRdf
 {
 	public class NamespaceManager
 	{
+		private char ns = 'a';
 		public Dictionary<Type, string> typeMappings = new Dictionary<Type, string>();
 		public Dictionary<string, string> namespaceUris = new Dictionary<string, string>();
-		
+
+		public void RegisterType(Type t)
+		{
+			if(!typeMappings.ContainsKey(t))
+			{
+				string newNs = OwlClassSupertype.GetOntologyBaseUri(t);
+				RegisterType(t, ns.ToString());
+				RegisterNamespace(ns.ToString(), newNs);
+				IncrementNamespace();
+			}
+		}
+
+		private void IncrementNamespace()
+		{
+			int x = Convert.ToInt32(ns);
+			x++;
+			ns = Convert.ToChar(x);
+		}
+
 		public void RegisterType(Type t, string prefix)
 		{
 			if (!typeMappings.ContainsKey(t) && !typeMappings.ContainsValue(prefix))

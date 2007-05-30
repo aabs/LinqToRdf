@@ -5,8 +5,15 @@ using System.Text;
 
 namespace LinqToRdf
 {
-	public class N3ExpressionTranslator<T> : IExpressionTranslator
+	public class LinqToN3ExpTranslator<T> : IQueryFormatTranslator
 	{
+		public ITypeTranslator TypeTranslator
+		{
+			get { return typeTranslator; }
+			set { typeTranslator = value; }
+		}
+
+		private ITypeTranslator typeTranslator = null;
 		public StringBuilder StringBuilder
 		{
 			get { return stringBuilder; }
@@ -15,12 +22,12 @@ namespace LinqToRdf
 
 		private StringBuilder stringBuilder;
 
-		public N3ExpressionTranslator()
+		public LinqToN3ExpTranslator()
 		{
 			stringBuilder = new StringBuilder();
 		}
 
-		public N3ExpressionTranslator(StringBuilder stringBuilder)
+		public LinqToN3ExpTranslator(StringBuilder stringBuilder)
 		{
 			this.stringBuilder = stringBuilder;
 		}

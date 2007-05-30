@@ -16,10 +16,10 @@ namespace LinqToRdf
 		public RdfN3Query()
 		{
 			originalType = typeof(T);
-			parser = new N3ExpressionTranslator<T>();
+			parser = new LinqToN3ExpTranslator<T>();
 		}
 
-		private IExpressionTranslator parser;
+		private IQueryFormatTranslator parser;
 		private Expression expression;
 
 		public Store Store
@@ -31,7 +31,7 @@ namespace LinqToRdf
 		private Store store;
 		private List<T> result = null;
 
-		public IExpressionTranslator Parser
+		public IQueryFormatTranslator Parser
 		{
 			get { return parser; }
 			set { parser = value; }
@@ -150,7 +150,7 @@ namespace LinqToRdf
 			// create a ObjectDeserialiserQuerySink and attach it to the store
 			string q = string.Format("@prefix m: <{0}> .\n", OwlInstanceSupertype.GetOntologyBaseUri(originalType));
 			query = q + query;
-			foreach (PropertyInfo pi in typeof(T).GetProperties())
+			foreach (PropertyInfo pi in OwlClassSupertype.GetAllPersistentProperties(typeof(T)))
 			{
 				query += string.Format("?{0} <{1}> ?{2} .\n", originalType.Name, OwlInstanceSupertype.GetPropertyUri(originalType, pi.Name), pi.Name);
 			}

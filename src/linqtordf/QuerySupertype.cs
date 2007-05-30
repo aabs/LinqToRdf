@@ -9,10 +9,11 @@ using C5;
 namespace LinqToRdf
 {
 	public class QuerySupertype<T>{
+		protected NamespaceManager namespaceManager = new NamespaceManager();
 		protected TextWriter logger;
 		protected Type originalType = typeof(T);
 		protected Delegate projection;
-		protected HashSet<string> properties = new HashSet<string>();
+		protected HashSet<MemberInfo> properties = new HashSet<MemberInfo>();
 		protected string query;
 		protected QueryFactory<T> queryFactory;
 
@@ -28,7 +29,7 @@ namespace LinqToRdf
 			set { originalType = value; }
 		}
 
-		public HashSet<string> Properties
+		public HashSet<MemberInfo> Properties
 		{
 			get { return properties; }
 			set { properties = value; }
@@ -63,27 +64,28 @@ namespace LinqToRdf
 					FindProperties(b);
 			else
 				foreach (PropertyInfo i in originalType.GetProperties())
-					properties.Add(i.Name);
+					properties.Add(i);
 		}
 
 		private void FindProperties(Binding e)
 		{
+			namespaceManager.RegisterType(OriginalType);
 			switch (e.BindingType)
 			{
 				case BindingType.MemberAssignment:
-					properties.Add(e.Member.Name);
+					properties.Add(e.Member);
 					break;
 				case BindingType.MemberListBinding:
 					break;
 				case BindingType.MemberMemberBinding:
-					properties.Add(e.Member.Name);
+					properties.Add(e.Member);
 					break;
 			}
 		}
 
 		internal void Log(string msg, params object[] args)
 		{
-			Trace.WriteLine(string.Format(msg, args));
+			Trace.WriteLine(string.Format("+ :"+msg, args));
 		}
 
 	}

@@ -6,7 +6,7 @@ using LinqToRdf;
 
 namespace LinqToRdf
 {
-	public class SparqlExpressionTranslator<T> : IExpressionTranslator
+	public class LinqToSparqlExpTranslator<T> : IQueryFormatTranslator
 	{
 		public StringBuilder StringBuilder
 		{
@@ -14,14 +14,21 @@ namespace LinqToRdf
 			set { stringBuilder = value; }
 		}
 
+		public ITypeTranslator TypeTranslator
+		{
+			get { return typeTranslator; }
+			set { typeTranslator = value; }
+		}
+
+		private ITypeTranslator typeTranslator = null;
 		private StringBuilder stringBuilder = new StringBuilder();
 
-		public SparqlExpressionTranslator()
+		public LinqToSparqlExpTranslator()
 		{
 			stringBuilder = new StringBuilder();
 		}
 
-		public SparqlExpressionTranslator(StringBuilder stringBuilder)
+		public LinqToSparqlExpTranslator(StringBuilder stringBuilder)
 		{
 			this.stringBuilder = stringBuilder;
 		}
@@ -316,7 +323,7 @@ namespace LinqToRdf
 		public void Constant(Expression e)
 		{
 			ConstantExpression ce = (ConstantExpression)e;
-			QueryAppend(XsdtTypeConverter.Get(e.Type, ce.Value));
+			QueryAppend(TypeTranslator.Get(e.Type, ce.Value).ToString());
 		}
 
 		public void Convert(Expression e)

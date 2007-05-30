@@ -13,7 +13,8 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_string()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
 			ConstantExpression ce = Expression.Constant("hello world"); // string
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
@@ -26,7 +27,8 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_char()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
 			ConstantExpression ce = Expression.Constant('a'); // string
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
@@ -39,7 +41,8 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_short()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
 			ConstantExpression ce = Expression.Constant((short)4); // string
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
@@ -52,7 +55,8 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_int()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
 			ConstantExpression ce = Expression.Constant(4); // string
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
@@ -65,7 +69,8 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_long()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
 			ConstantExpression ce = Expression.Constant((long)4); // string
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
@@ -78,7 +83,8 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_float()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
 			ConstantExpression ce = Expression.Constant((float)3.14); // string
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
@@ -91,7 +97,8 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_double()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
 			ConstantExpression ce = Expression.Constant(3.14); // string
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
@@ -104,7 +111,8 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_decimal()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
 			ConstantExpression ce = Expression.Constant((decimal)3.14); // string
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
@@ -120,8 +128,9 @@ namespace RdfSerialisationTest
 		[TestMethod()]
 		public void ConstantTest_DateTime()
 		{
-			SparqlExpressionTranslator<Track> target = new SparqlExpressionTranslator<Track>();
-			ConstantExpression ce = Expression.Constant(new DateTime(2002,03,04,05,06,07));
+			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
+			target.TypeTranslator = new XsdtTypeConverter();
+			ConstantExpression ce = Expression.Constant(new DateTime(2002, 03, 04, 05, 06, 07));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
 			target.Constant(ce);

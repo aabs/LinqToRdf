@@ -59,7 +59,9 @@ namespace RdfSerialisationTest
     	public void QueryWithProjection()
     	{
     		CreateMemoryStore();
-    		IRdfQuery<Track> qry = new RdfN3Context(store).ForType<Track>();
+			TripleStore ts = new TripleStore();
+    		ts.LocalTripleStore = store;
+    		IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
     		var q = from t in qry
 				where t.Year == 2006 &&
     				t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
@@ -77,7 +79,10 @@ namespace RdfSerialisationTest
         public void SparqlQuery()
         {
             string urlToRemoteSparqlEndpoint = @"http://localhost/MyMusicService/SparqlQuery.ashx";
-            IRdfQuery<Track> qry = new RdfSparqlContext(urlToRemoteSparqlEndpoint).ForType<Track>(); 
+			TripleStore ts = new TripleStore();
+    		ts.EndpointUri = urlToRemoteSparqlEndpoint;
+			ts.QueryType = QueryType.RemoteSparqlStore;
+            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
 	        var q = from t in qry
 				where t.Year == 2006 &&
 				t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
@@ -110,7 +115,9 @@ namespace RdfSerialisationTest
 			Expression<Func<Track, string>> selectLambda = Expression.Lambda<Func<Track, string>>(
 				Expression.Property(t, titlePropInfo),
 				new ParameterExpression[] { t });
-			RdfSparqlContext ctx = new RdfSparqlContext(urlToRemoteSparqlEndpoint);
+			TripleStore ts = new TripleStore();
+			ts.EndpointUri = urlToRemoteSparqlEndpoint;
+			RDF ctx = new RDF(ts);
 			IRdfQuery<Track> qry = ctx.ForType<Track>();
 			
 			IQueryable<Track> qry2 = Queryable.Where<Track>(qry, whereLambda);
@@ -129,7 +136,9 @@ namespace RdfSerialisationTest
     	public void Query1()
     	{
     		CreateMemoryStore();
-    		IQueryable<Track> qry = new RdfN3Context(store).ForType<Track>();
+			TripleStore ts = new TripleStore();
+    		ts.LocalTripleStore = store;
+    		IQueryable<Track> qry = new RDF(ts).ForType<Track>();
     		var q = from t in qry
     		                  	where t.ArtistName == "Thomas Laqueur"
     		select t;
@@ -142,7 +151,9 @@ namespace RdfSerialisationTest
     	{
     		string serialisedLocation = @"";
     		Store s = new MemoryStore(new N3Reader(serialisedLocation));
-    		IRdfQuery<Track> qry = new RdfN3Context(s).ForType<Track>(); // should deduce that it is N3 and open correctly
+			TripleStore ts = new TripleStore();
+    		ts.LocalTripleStore = s;
+    		IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); // should deduce that it is N3 and open correctly
     		var q = from t in qry
     		                  	where Convert.ToInt32(t.Year) > 1998 &&
     		                  	      t.GenreName == "Chillout" 
@@ -156,7 +167,9 @@ namespace RdfSerialisationTest
         public void Query5()
         {
             string urlToRemoteSparqlEndpoint = @"http://localhost/MyMusicService/SparqlQuery.ashx";
-            RdfSparqlContext ctx = new RdfSparqlContext(urlToRemoteSparqlEndpoint);
+			TripleStore ts = new TripleStore();
+    		ts.EndpointUri = urlToRemoteSparqlEndpoint;
+            RDF ctx = new RDF(ts);
             IRdfQuery<Track> qry = ctx.ForType<Track>(); 
 	        var q = from t in qry
 		        where t.ArtistName == "Jethro Tull"

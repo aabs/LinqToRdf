@@ -56,8 +56,8 @@
   <ItemGroup>
     <Compile Include="Attributes.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="IExpressionTranslator.cs" />
-    <Compile Include="N3ExpressionTranslator.cs" />
+    <Compile Include="IQueryFormatTranslator.cs" />
+    <Compile Include="LinqToN3ExpTranslator.cs" />
     <Compile Include="IRdfContext.cs" />
     <Compile Include="IRdfQuery.cs" />
     <Compile Include="MemoryStoreExtensions.cs" />
@@ -68,12 +68,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryFactory.cs" />
     <Compile Include="QuerySupertype.cs" />
-    <Compile Include="RdfN3Context.cs" />
+    <Compile Include="RDF.cs" />
     <Compile Include="RdfN3Query.cs" />
-    <Compile Include="RdfSparqlContext.cs" />
     <Compile Include="RdfSparqlQuery.cs" />
-    <Compile Include="SparqlExpressionTranslator.cs" />
+    <Compile Include="LinqToSparqlExpTranslator.cs" />
     <Compile Include="XsdtTypeConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(ProgramFiles)\LINQ Preview\Misc\Linq.targets" />
   <!--Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /-->

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Expressions;
 using System.Query;
+using System.Reflection;
 using System.Text;
 
 namespace LinqToRdf
@@ -13,12 +14,12 @@ namespace LinqToRdf
 		{
 			this.sparqlEndpoint = "";
 			originalType = typeof (T);
-			parser = new SparqlExpressionTranslator<T>();
+			parser = new LinqToSparqlExpTranslator<T>();
 		}
 
 		private Expression expression;
 
-		private IExpressionTranslator parser;
+		private IQueryFormatTranslator parser;
 
 		private string sparqlEndpoint;
 
@@ -34,7 +35,7 @@ namespace LinqToRdf
 			get { return Expression.Constant(this); }
 		}
 
-		public IExpressionTranslator Parser
+		public IQueryFormatTranslator Parser
 		{
 			get { return parser; }
 			set { parser = value; }
@@ -84,12 +85,35 @@ namespace LinqToRdf
 		///<filterpriority>1</filterpriority>
 		IEnumerator<T> IEnumerable<T>.GetEnumerator()
 		{
+			StringBuilder sbPrefixes = new StringBuilder();
+			StringBuilder sbClauses = new StringBuilder();
+			StringBuilder sbQuery = new StringBuilder();
+
+			foreach (string prefix in namespaceManager.namespaceUris.Keys)
+			{
+				sbPrefixes.AppendFormat("@prefix {0}: <{1}> .\n", prefix, namespaceManager.namespaceUris[prefix]);
+			}
+			var ppq = from pi in originalType.GetProperties()
+					where pi.GetCustomAttributes(typeof(OwlPropertyAttribute), true).Length == 1
+					select pi;
+			foreach (PropertyInfo propInfo in ppq)
+			{
+				sbClauses.AppendFormat("?{0} <{1}> ?{2} .\n", originalType.Name, OwlClassSupertype.GetPropertyUri(originalType, propInfo.Name), propInfo.Name);
+			}
+			sbQuery.AppendFormat("{0}\nSELECT {1} \nWHERE\n{{ {2} \n FILTER{{ {3} }}}}", sbPrefixes, GetParameterString(), sbClauses, Query);
+			Query = sbQuery.ToString();
 			// establish connection to the sparql endpoint
 			// put finishing touches to the query
 			// present the query to the endpoint
 			// retrieve the results
 			// yield the results
 			return result.GetEnumerator();
+		}
+
+		private string GetParameterString()
+		{
+			List<string> args = new List<string>(from p in properties select "?"+p.Name);
+			return string.Join(", ", args.ToArray());
 		}
 
 		///<summary>
@@ -119,13 +143,14 @@ namespace LinqToRdf
 		{
 			StringBuilder sb = new StringBuilder();
 			ParseQuery(q, sb);
-			Query = Parser.StringBuilder.ToString();
+			Query = sb.ToString();
 			Log(Query);
 		}
 
 		protected void ParseQuery(Expression expression, StringBuilder sb)
 		{
-			sb.Append("#Query - " + DateTime.Now.ToLongTimeString());
+			Log("#Query {0:d}", DateTime.Now);
+			Parser.StringBuilder = sb;
 			Parser.Dispatch(expression);
 		}
 
