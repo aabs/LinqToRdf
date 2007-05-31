@@ -57,6 +57,8 @@
     <Compile Include="Attributes.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="IQueryFormatTranslator.cs" />
+    <Compile Include="IRdfCommand.cs" />
+    <Compile Include="IRdfConnection.cs" />
     <Compile Include="LinqToN3ExpTranslator.cs" />
     <Compile Include="IRdfContext.cs" />
     <Compile Include="IRdfQuery.cs" />
@@ -70,8 +72,10 @@
     <Compile Include="QuerySupertype.cs" />
     <Compile Include="RDF.cs" />
     <Compile Include="RdfN3Query.cs" />
-    <Compile Include="RdfSparqlQuery.cs" />
+    <Compile Include="SparqlQuery.cs" />
     <Compile Include="LinqToSparqlExpTranslator.cs" />
+    <Compile Include="SparqlCommand.cs" />
+    <Compile Include="SparqlConnection.cs" />
     <Compile Include="XsdtTypeConverter.cs" />
   </ItemGroup>
   <ItemGroup>

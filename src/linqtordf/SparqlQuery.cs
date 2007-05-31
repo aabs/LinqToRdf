@@ -1,16 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Expressions;
 using System.Query;
 using System.Reflection;
 using System.Text;
 
-namespace LinqToRdf
+namespace LinqToRdf.Sparql
 {
-	public class RdfSparqlQuery<T> : QuerySupertype<T>, IRdfQuery<T>
+	public class SparqlQuery<T> : QuerySupertype<T>, IRdfQuery<T>
 	{
-		public RdfSparqlQuery()
+		public SparqlQuery()
 		{
 			this.sparqlEndpoint = "";
 			originalType = typeof (T);
@@ -22,8 +23,6 @@ namespace LinqToRdf
 		private IQueryFormatTranslator parser;
 
 		private string sparqlEndpoint;
-
-		private List<T> result = null;
 
 		public Type ElementType
 		{
@@ -49,7 +48,7 @@ namespace LinqToRdf
 
 		public IQueryable<S> CreateQuery<S>(Expression expression)
 		{
-			RdfSparqlQuery<S> newQuery = CloneQueryForNewType<S>();
+			SparqlQuery<S> newQuery = CloneQueryForNewType<S>();
 
 			MethodCallExpression call = expression as MethodCallExpression;
 			if (call != null)
@@ -85,29 +84,12 @@ namespace LinqToRdf
 		///<filterpriority>1</filterpriority>
 		IEnumerator<T> IEnumerable<T>.GetEnumerator()
 		{
-			StringBuilder sbPrefixes = new StringBuilder();
-			StringBuilder sbClauses = new StringBuilder();
-			StringBuilder sbQuery = new StringBuilder();
-
-			foreach (string prefix in namespaceManager.namespaceUris.Keys)
+			using(IRdfConnection<T> conn = QueryFactory.CreateConnection(this))
 			{
-				sbPrefixes.AppendFormat("@prefix {0}: <{1}> .\n", prefix, namespaceManager.namespaceUris[prefix]);
+				IRdfCommand<T> cmd = conn.CreateCommand();
+				cmd.CommandText = Query;
+				return cmd.ExecuteQuery();
 			}
-			var ppq = from pi in originalType.GetProperties()
-					where pi.GetCustomAttributes(typeof(OwlPropertyAttribute), true).Length == 1
-					select pi;
-			foreach (PropertyInfo propInfo in ppq)
-			{
-				sbClauses.AppendFormat("?{0} <{1}> ?{2} .\n", originalType.Name, OwlClassSupertype.GetPropertyUri(originalType, propInfo.Name), propInfo.Name);
-			}
-			sbQuery.AppendFormat("{0}\nSELECT {1} \nWHERE\n{{ {2} \n FILTER{{ {3} }}}}", sbPrefixes, GetParameterString(), sbClauses, Query);
-			Query = sbQuery.ToString();
-			// establish connection to the sparql endpoint
-			// put finishing touches to the query
-			// present the query to the endpoint
-			// retrieve the results
-			// yield the results
-			return result.GetEnumerator();
 		}
 
 		private string GetParameterString()
@@ -126,7 +108,12 @@ namespace LinqToRdf
 		///<filterpriority>2</filterpriority>
 		public IEnumerator GetEnumerator()
 		{
-			throw new NotImplementedException();
+			using (IRdfConnection<T> conn = QueryFactory.CreateConnection(this))
+			{
+				IRdfCommand<T> cmd = conn.CreateCommand();
+				cmd.CommandText = Query;
+				return cmd.ExecuteQuery();
+			}
 		}
 
 		public IQueryable CreateQuery(Expression expression)
@@ -141,10 +128,26 @@ namespace LinqToRdf
 
 		protected void BuildQuery(Expression q)
 		{
-			StringBuilder sb = new StringBuilder();
-			ParseQuery(q, sb);
-			Query = sb.ToString();
-			Log(Query);
+			StringBuilder sbPrefixes = new StringBuilder();
+			StringBuilder sbClauses = new StringBuilder();
+			StringBuilder sbQuery = new StringBuilder();
+			StringBuilder sbFilter = new StringBuilder();
+			ParseQuery(q, sbFilter);
+
+			foreach (string prefix in namespaceManager.namespaceUris.Keys)
+			{
+				sbPrefixes.AppendFormat("@prefix {0}: <{1}> .\n", prefix, namespaceManager.namespaceUris[prefix]);
+			}
+			var ppq = from pi in originalType.GetProperties()
+					where pi.GetCustomAttributes(typeof(OwlPropertyAttribute), true).Length == 1
+					select pi;
+			foreach (PropertyInfo propInfo in ppq)
+			{
+				sbClauses.AppendFormat("?{0} <{1}> ?{2} .\n", originalType.Name, OwlClassSupertype.GetPropertyUri(originalType, propInfo.Name), propInfo.Name);
+			}
+			sbQuery.AppendFormat("{0}\nSELECT {1} \nWHERE\n{{ {2} \n FILTER{{ {3} }}}}", sbPrefixes, GetParameterString(), sbClauses, Query);
+			Query = sbQuery.ToString();
+			Trace.WriteLine(Query);
 		}
 
 		protected void ParseQuery(Expression expression, StringBuilder sb)
@@ -154,9 +157,9 @@ namespace LinqToRdf
 			Parser.Dispatch(expression);
 		}
 
-		protected RdfSparqlQuery<S> CloneQueryForNewType<S>()
+		protected SparqlQuery<S> CloneQueryForNewType<S>()
 		{
-			RdfSparqlQuery<S> newQuery = new RdfSparqlQuery<S>();
+			SparqlQuery<S> newQuery = new SparqlQuery<S>();
 			newQuery.SparqlEndpoint = sparqlEndpoint;
 			newQuery.OriginalType = originalType;
 			newQuery.Projection = projection;

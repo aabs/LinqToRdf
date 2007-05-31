@@ -1,6 +1,7 @@
 using System;
 using System.Expressions;
 using System.Text;
+using LinqToRdf.Sparql;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 using LinqToRdf;

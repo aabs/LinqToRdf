@@ -4,7 +4,7 @@ using System.Expressions;
 using System.Text;
 using LinqToRdf;
 
-namespace LinqToRdf
+namespace LinqToRdf.Sparql
 {
 	public class LinqToSparqlExpTranslator<T> : IQueryFormatTranslator
 	{

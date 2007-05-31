@@ -3,6 +3,7 @@ using System.Expressions;
 using System.Reflection;
 using System.Text;
 using LinqToRdf;
+using LinqToRdf.Sparql;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 using EH = RdfSerialisationTest.ExpressionHelper;

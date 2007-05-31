@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using LinqToRdf.Sparql;
 
 namespace LinqToRdf
 {
@@ -33,7 +34,7 @@ namespace LinqToRdf
 			switch (queryType)
 			{
 				case QueryType.RemoteSparqlStore:
-					return new RdfSparqlQuery<S>();
+					return new SparqlQuery<S>();
 				default:
 					return new RdfN3Query<S>();
 			}
@@ -51,6 +52,18 @@ namespace LinqToRdf
 				if (typeConverter == null)
 					typeConverter = new XsdtTypeConverter();
 				return typeConverter;
+			}
+		}
+
+		public IRdfConnection<T> CreateConnection(IRdfQuery<T> qry)
+		{
+			switch(queryType)
+			{
+				case QueryType.RemoteSparqlStore:
+					SparqlConnection<T> sparqlConnection = new SparqlConnection<T>((SparqlQuery<T>) qry);
+					return sparqlConnection;
+				default:
+					throw new ApplicationException("Only sparql queries currently support the ADO.NET style APIs");
 			}
 		}
 	}

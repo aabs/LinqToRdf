@@ -1,4 +1,5 @@
 using System;
+using LinqToRdf.Sparql;
 using SemWeb;
 
 namespace LinqToRdf
@@ -59,7 +60,7 @@ namespace LinqToRdf
 					tmp.QueryFactory = qf;
 					return tmp;
 				case QueryType.RemoteSparqlStore:
-					RdfSparqlQuery<T> tmp2 = (RdfSparqlQuery<T>) qf.CreateQuery<T>();
+					SparqlQuery<T> tmp2 = (SparqlQuery<T>) qf.CreateQuery<T>();
 					tmp2.SparqlEndpoint = Store.EndpointUri;
 					tmp2.QueryFactory = qf;
 					return tmp2;
