@@ -71,6 +71,7 @@
     <Compile Include="QueryFactory.cs" />
     <Compile Include="QuerySupertype.cs" />
     <Compile Include="RDF.cs" />
+    <Compile Include="RdfExpressionTranslator.cs" />
     <Compile Include="RdfN3Query.cs" />
     <Compile Include="SparqlQuery.cs" />
     <Compile Include="LinqToSparqlExpTranslator.cs" />

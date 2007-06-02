@@ -6,23 +6,8 @@ using LinqToRdf;
 
 namespace LinqToRdf.Sparql
 {
-	public class LinqToSparqlExpTranslator<T> : IQueryFormatTranslator
+	public class LinqToSparqlExpTranslator<T> : RdfExpressionTranslator<T>, IQueryFormatTranslator
 	{
-		public StringBuilder StringBuilder
-		{
-			get { return stringBuilder; }
-			set { stringBuilder = value; }
-		}
-
-		public ITypeTranslator TypeTranslator
-		{
-			get { return typeTranslator; }
-			set { typeTranslator = value; }
-		}
-
-		private ITypeTranslator typeTranslator = null;
-		private StringBuilder stringBuilder = new StringBuilder();
-
 		public LinqToSparqlExpTranslator()
 		{
 			stringBuilder = new StringBuilder();
@@ -188,12 +173,6 @@ namespace LinqToRdf.Sparql
 
 		}
 
-		private void QueryAppend(string fmt, params object[] args)
-		{
-			stringBuilder.AppendFormat(fmt, args);
-			Log(fmt, args);
-		}
-
 		private void GenerateBinaryExpression(Expression e, string op)
 		{
 			if (e == null)
@@ -212,24 +191,6 @@ namespace LinqToRdf.Sparql
 				QueryAppend(")");
 				Log("+ :{0} Handled", e.NodeType);
 			}
-		}
-
-		public string InstancePlaceholderName
-		{
-			get
-			{
-				return "?" + Sanitise(typeof(T).Name);
-			}
-		}
-
-		private string Sanitise(string s)
-		{
-			return s.Replace("<", "").Replace(">", "").Replace("'", "");
-		}
-
-		internal void Log(string msg, params object[] args)
-		{
-			Trace.WriteLine(string.Format(msg, args));
 		}
 
 		public static readonly string tripleFormatString = "{0} <{1}> {2} .\n";
