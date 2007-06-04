@@ -52,7 +52,7 @@ namespace LinqToRdf
 			newQuery.Store = store;
 			newQuery.OriginalType = originalType;
 			newQuery.Projection = projection;
-			newQuery.Properties = properties;
+			newQuery.QueryGraphParameters = queryGraphParameters;
 			newQuery.Query = Query;
 			newQuery.Logger = logger;
 			newQuery.QueryFactory = new QueryFactory<TElement>(QueryFactory.QueryType);

@@ -39,7 +39,7 @@ namespace LinqToRdf
             OntologyBaseUriAttribute[] baseUris =
                 (OntologyBaseUriAttribute[])t.GetCustomAttributes(typeof(OntologyBaseUriAttribute), true);
             if (baseUris == null || baseUris.Length == 0 || baseUris[0] == null)
-                throw new ApplicationException("no ontology baseUri attribute has been set");
+                throw new ApplicationException("No ontology baseUri attribute has been set");
             return baseUris[0].BaseUri;
         }
 
@@ -64,15 +64,20 @@ namespace LinqToRdf
                 return classNames[0].Uri;
         }
 
-        public static string GetPropertyUri(Type t, string propName)
-        {
-            PropertyInfo pi = t.GetProperty(propName);
-            OwlPropertyAttribute[] props = (OwlPropertyAttribute[])pi.GetCustomAttributes(typeof(OwlPropertyAttribute), false);
-            if (props == null || props.Length == 0)
-                throw new ApplicationException("no OwlProperty attribute has been set of property " + propName);
-            if (!props[0].IsRelativeUri)
-                return props[0].Uri;
-            return GetOntologyBaseUri(t) + props[0].Uri;
-        }
-    }
+		public static string GetPropertyUri(Type t, string propName)
+		{
+			return GetPropertyUri(t, propName, false);
+		}
+
+		public static string GetPropertyUri(Type t, string propName, bool giveRelativeUri)
+		{
+			PropertyInfo pi = t.GetProperty(propName);
+			OwlPropertyAttribute[] props = (OwlPropertyAttribute[])pi.GetCustomAttributes(typeof(OwlPropertyAttribute), false);
+			if (props == null || props.Length == 0)
+				throw new ApplicationException("No OwlPropertyAttribute has been added to property " + propName);
+			if (!props[0].IsRelativeUri)
+				return props[0].Uri;
+			return (giveRelativeUri?"":GetOntologyBaseUri(t)) + props[0].Uri;
+		}
+	}
 }

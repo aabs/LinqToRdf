@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Expressions;
 using System.IO;
@@ -9,13 +10,26 @@ using C5;
 namespace LinqToRdf
 {
 	public class QuerySupertype<T>{
-		protected NamespaceManager namespaceManager = new NamespaceManager();
+		protected Dictionary<string, MethodCallExpression> expressions;
 		protected TextWriter logger;
+		protected NamespaceManager namespaceManager = new NamespaceManager();
 		protected Type originalType = typeof(T);
 		protected Delegate projection;
-		protected HashSet<MemberInfo> properties = new HashSet<MemberInfo>();
+		protected HashSet<MemberInfo> queryGraphParameters = new HashSet<MemberInfo>();
+		protected HashSet<MemberInfo> projectionParameters = new HashSet<MemberInfo>();
 		protected string query;
 		protected QueryFactory<T> queryFactory;
+
+		public Dictionary<string, MethodCallExpression> Expressions
+		{
+			get
+			{
+				if(expressions == null)
+					expressions = new Dictionary<string, MethodCallExpression>();
+				return expressions;
+			}
+			set { expressions = value; }
+		}
 
 		public TextWriter Logger
 		{
@@ -29,10 +43,16 @@ namespace LinqToRdf
 			set { originalType = value; }
 		}
 
-		public HashSet<MemberInfo> Properties
+		public HashSet<MemberInfo> QueryGraphParameters
 		{
-			get { return properties; }
-			set { properties = value; }
+			get { return queryGraphParameters; }
+			set { queryGraphParameters = value; }
+		}
+
+		public HashSet<MemberInfo> ProjectionParameters
+		{
+			get { return projectionParameters; }
+			set { projectionParameters = value; }
 		}
 
 		public Delegate Projection
@@ -64,7 +84,7 @@ namespace LinqToRdf
 					FindProperties(b);
 			else
 				foreach (PropertyInfo i in originalType.GetProperties())
-					properties.Add(i);
+					projectionParameters.Add(i);
 		}
 
 		private void FindProperties(Binding e)
@@ -73,12 +93,12 @@ namespace LinqToRdf
 			switch (e.BindingType)
 			{
 				case BindingType.MemberAssignment:
-					properties.Add(e.Member);
+					projectionParameters.Add(e.Member);
 					break;
 				case BindingType.MemberListBinding:
 					break;
 				case BindingType.MemberMemberBinding:
-					properties.Add(e.Member);
+					projectionParameters.Add(e.Member);
 					break;
 			}
 		}

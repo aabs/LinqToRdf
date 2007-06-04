@@ -1,5 +1,7 @@
 using System.Expressions;
+using System.Reflection;
 using System.Text;
+using C5;
 
 namespace LinqToRdf
 {
@@ -17,6 +19,12 @@ namespace LinqToRdf
 		}
 
 		ITypeTranslator TypeTranslator
+		{
+			get;
+			set;
+		}
+
+		HashSet<MemberInfo> Parameters
 		{
 			get;
 			set;

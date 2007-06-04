@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Expressions;
+using System.Reflection;
 using System.Text;
+using C5;
 
 namespace LinqToRdf
 {
@@ -12,6 +14,16 @@ namespace LinqToRdf
 			get { return typeTranslator; }
 			set { typeTranslator = value; }
 		}
+
+		#region IQueryFormatTranslator Members
+
+		public HashSet<MemberInfo> Parameters
+		{
+			get { return parameters; }
+			set { parameters = value; }
+		}
+
+		#endregion
 
 		private ITypeTranslator typeTranslator = null;
 		public StringBuilder StringBuilder
@@ -208,6 +220,7 @@ namespace LinqToRdf
 
 		public static readonly string tripleFormatString = "{0} <{1}> {2} .\n";
 		public static readonly string tripleFormatStringLiteral = "{0} <{1}> \"{2}\" .\n";
+		private HashSet<MemberInfo> parameters;
 
 		#region Node Handlers
 

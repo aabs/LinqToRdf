@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Expressions;
+using System.Reflection;
 using System.Text;
+using C5;
 using LinqToRdf;
 
 namespace LinqToRdf.Sparql
@@ -196,6 +198,19 @@ namespace LinqToRdf.Sparql
 		public static readonly string tripleFormatString = "{0} <{1}> {2} .\n";
 		public static readonly string tripleFormatStringLiteral = "{0} <{1}> \"{2}\" .\n";
 
+		public HashSet<MemberInfo> Parameters
+		{
+			get
+			{
+				if(parameters == null)
+					parameters = new HashSet<MemberInfo>();
+				return parameters;
+			}
+			set { parameters = value; }
+		}
+
+		private HashSet<MemberInfo> parameters;
+
 		#region Expression Node Handlers
 
 		public void Add(Expression e)
@@ -224,7 +239,6 @@ namespace LinqToRdf.Sparql
 
 		public void As(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation As not supported");
 		}
 
@@ -247,37 +261,31 @@ namespace LinqToRdf.Sparql
 
 		public void BitwiseNot(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation BitwiseNot not supported");
 		}
 
 		public void BitwiseOr(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation BitwiseOr not supported");
 		}
 
 		public void BitwiseXor(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation BitwiseXor not supported");
 		}
 
 		public void Cast(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Cast not supported");
 		}
 
 		public void Coalesce(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Coalesce not supported");
 		}
 
 		public void Conditional(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Conditional not supported");
 		}
 
@@ -289,13 +297,11 @@ namespace LinqToRdf.Sparql
 
 		public void Convert(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Convert not supported");
 		}
 
 		public void ConvertChecked(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation ConvertChecked not supported");
 		}
 
@@ -351,7 +357,6 @@ namespace LinqToRdf.Sparql
 
 		public void Funclet(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Funclet not supported");
 		}
 
@@ -378,13 +383,11 @@ namespace LinqToRdf.Sparql
 
 		public void Invoke(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Invoke not supported");
 		}
 
 		public void Is(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Is not supported");
 		}
 
@@ -401,19 +404,16 @@ namespace LinqToRdf.Sparql
 
 		public void Len(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Len not supported");
 		}
 
 		public void ListInit(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation ListInit not supported");
 		}
 
 		public void LShift(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation LShift not supported");
 		}
 
@@ -425,17 +425,17 @@ namespace LinqToRdf.Sparql
 
 		public void MemberAccess(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			MemberExpression me = e as MemberExpression;
 			if (me != null)
 			{
-				me.BuildString(stringBuilder);
+				stringBuilder.Append("?" + me.Member.Name);
+				if(me.Member.MemberType == MemberTypes.Property)
+					Parameters.Add(me.Member);
 			}
 		}
 
 		public void MemberInit(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation MemberInit not supported");
 		}
 
@@ -465,13 +465,11 @@ namespace LinqToRdf.Sparql
 
 		public void MethodCallVirtual(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation MethodCallVirtual not supported");
 		}
 
 		public void Modulo(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation Modulo not supported");
 		}
 
@@ -500,19 +498,16 @@ namespace LinqToRdf.Sparql
 
 		public void New(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation New not supported");
 		}
 
 		public void NewArrayInit(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation NewArrayInit not supported");
 		}
 
 		public void NewArrayBounds(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation NewArrayBounds not supported");
 		}
 
@@ -552,7 +547,6 @@ namespace LinqToRdf.Sparql
 
 		public void RShift(Expression e)
 		{
-			//QueryAppend("+ :{0} Handled", e.NodeType);
 			throw new NotImplementedException("operation RShift not supported");
 		}
 
