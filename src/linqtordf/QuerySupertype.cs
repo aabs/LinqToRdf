@@ -1,3 +1,16 @@
+/* 
+ * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
+ *
+ * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ *
+ * It is licensed under the following license:
+ *   - Berkeley License, V2.0 or any newer version
+ *
+ * You may not use this file except in compliance with the above license.
+ *
+ * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ *
+ */
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +23,7 @@ using C5;
 namespace LinqToRdf
 {
 	public class QuerySupertype<T>{
+		protected IRdfContext context;
 		protected Dictionary<string, MethodCallExpression> expressions;
 		protected TextWriter logger;
 		protected NamespaceManager namespaceManager = new NamespaceManager();
@@ -17,8 +31,13 @@ namespace LinqToRdf
 		protected Delegate projection;
 		protected HashSet<MemberInfo> queryGraphParameters = new HashSet<MemberInfo>();
 		protected HashSet<MemberInfo> projectionParameters = new HashSet<MemberInfo>();
-		protected string query;
+		protected string filterClause;
 		protected QueryFactory<T> queryFactory;
+
+		public IRdfContext Context
+		{
+			get { return context; }
+		}
 
 		public Dictionary<string, MethodCallExpression> Expressions
 		{
@@ -61,10 +80,10 @@ namespace LinqToRdf
 			set { projection = value; }
 		}
 
-		public string Query
+		public string FilterClause
 		{
-			get { return query; }
-			set { query = value; }
+			get { return filterClause; }
+			set { filterClause = value; }
 		}
 
 		public QueryFactory<T> QueryFactory
@@ -105,8 +124,8 @@ namespace LinqToRdf
 
 		internal void Log(string msg, params object[] args)
 		{
-			Trace.WriteLine(string.Format("+ :"+msg, args));
+			if(Logger != null)
+				logger.WriteLine(string.Format("+ :"+msg, args));
 		}
-
 	}
 }

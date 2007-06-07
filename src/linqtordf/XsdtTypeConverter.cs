@@ -1,3 +1,16 @@
+/* 
+ * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
+ *
+ * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ *
+ * It is licensed under the following license:
+ *   - Berkeley License, V2.0 or any newer version
+ *
+ * You may not use this file except in compliance with the above license.
+ *
+ * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ *
+ */
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -133,8 +146,12 @@ namespace LinqToRdf
 			{
 				result = "\"" + GetStringRepresentationFor(obj, dt, attr) + "\"";
 			}
-
-			return result + "^^" + attr.Name;
+			string xsdTypeSuffix; 
+			if (dt != XsdtPrimitiveDataType.XsdtInt && dt != XsdtPrimitiveDataType.XsdtString)
+				xsdTypeSuffix = "^^xsdt:" + attr.Name;
+			else 
+				xsdTypeSuffix = "";
+			return result + xsdTypeSuffix;
 		}
 		public  object Get(Type t, object obj)
 		{
@@ -158,8 +175,12 @@ namespace LinqToRdf
 			{
 				result = "\"" + result + "\"";
 			}
-			return result + "^^xsdt:" + attr.Name;
-
+			string xsdTypeSuffix;
+			if (dt != XsdtPrimitiveDataType.XsdtInt && dt != XsdtPrimitiveDataType.XsdtString)
+				xsdTypeSuffix = "^^xsdt:" + attr.Name;
+			else
+				xsdTypeSuffix = "";
+			return result + xsdTypeSuffix;
 		}
 
 		private  string GetXsdtDateRepresentationFor(DateTime d, XsdtPrimitiveDataType dt, XsdtAttribute attr)

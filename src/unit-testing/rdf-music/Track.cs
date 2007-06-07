@@ -1,3 +1,16 @@
+/* 
+ * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
+ *
+ * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ *
+ * It is licensed under the following license:
+ *   - Berkeley License, V2.0 or any newer version
+ *
+ * You may not use this file except in compliance with the above license.
+ *
+ * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ *
+ */
 using System;
 using ID3Lib;
 using LinqToRdf;
@@ -31,7 +44,7 @@ namespace RdfMusic
         }
 
         [OwlProperty("year", true)]
-        public int Year
+        public string Year
         {
             get { return year; }
             set { year = value; }
@@ -68,7 +81,7 @@ namespace RdfMusic
         private string title;
         private string artistName;
         private string albumName;
-        private int year;
+		private string year;
         private string genreName;
         private string comment;
         private string fileLocation;
@@ -80,7 +93,7 @@ namespace RdfMusic
             title = th.Track;
             artistName = th.Artist;
             albumName = th.Album;
-            year = Convert.ToInt32(th.Year);
+            year = th.Year;
             genreName = th.Genere;
             comment = th.Comment;
         }

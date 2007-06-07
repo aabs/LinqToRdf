@@ -1,3 +1,16 @@
+/* 
+ * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
+ *
+ * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ *
+ * It is licensed under the following license:
+ *   - Berkeley License, V2.0 or any newer version
+ *
+ * You may not use this file except in compliance with the above license.
+ *
+ * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ *
+ */
 using System;
 using System.Diagnostics;
 using System.Expressions;
@@ -188,7 +201,7 @@ namespace LinqToRdf.Sparql
 			{
 				QueryAppend("(");
 				Dispatch(be.Left);
-				QueryAppend(")"+op+"(");
+				QueryAppend(")" + op + "(");
 				Dispatch(be.Right);
 				QueryAppend(")");
 				Log("+ :{0} Handled", e.NodeType);
@@ -202,7 +215,7 @@ namespace LinqToRdf.Sparql
 		{
 			get
 			{
-				if(parameters == null)
+				if (parameters == null)
 					parameters = new HashSet<MemberInfo>();
 				return parameters;
 			}
@@ -245,18 +258,18 @@ namespace LinqToRdf.Sparql
 		public void BitwiseAnd(Expression e)
 		{
 			throw new NotImplementedException("operation Bitwise And not supported");
-/*
-			BinaryExpression be = e as BinaryExpression;
-			if (be != null)
-			{
-				QueryAppend("(");
-				Dispatch(be.Left);
-				QueryAppend(")&(");
-				Dispatch(be.Right);
-				QueryAppend(")");
-			}
-			Log("+ :{0} Handled", e.NodeType);
-*/
+			/*
+						BinaryExpression be = e as BinaryExpression;
+						if (be != null)
+						{
+							QueryAppend("(");
+							Dispatch(be.Left);
+							QueryAppend(")&(");
+							Dispatch(be.Right);
+							QueryAppend(")");
+						}
+						Log("+ :{0} Handled", e.NodeType);
+			*/
 		}
 
 		public void BitwiseNot(Expression e)
@@ -342,12 +355,25 @@ namespace LinqToRdf.Sparql
 
 			if (lh != null && rh != null)
 			{
-				QueryAppend("(");
-				Dispatch(lh);
-				QueryAppend(")=(");
-				Dispatch(rh);
-				QueryAppend(")");
-				Log("+ :{0} Handled", e.NodeType);
+				XsdtPrimitiveDataType dt = TypeTranslator.GetDataType(lh.Type);
+				if (dt == XsdtPrimitiveDataType.XsdtString)
+				{
+					QueryAppend("regex(");
+					Dispatch(lh);
+					QueryAppend(", ");
+					Dispatch(rh);
+					QueryAppend(") ");
+				}
+				else
+				{
+					//QueryAppend("(");
+					Dispatch(lh);
+					QueryAppend(" = ");
+					//QueryAppend(")=(");
+					Dispatch(rh);
+					//QueryAppend(")");
+					//Log("+ :{0} Handled", e.NodeType);
+				}
 			}
 			else
 			{
@@ -374,7 +400,7 @@ namespace LinqToRdf.Sparql
 
 		public void Index(Expression e)
 		{
-			BinaryExpression be = (BinaryExpression) e;
+			BinaryExpression be = (BinaryExpression)e;
 			Dispatch(be.Left);
 			QueryAppend("[");
 			Dispatch(be.Right);
@@ -429,7 +455,7 @@ namespace LinqToRdf.Sparql
 			if (me != null)
 			{
 				stringBuilder.Append("?" + me.Member.Name);
-				if(me.Member.MemberType == MemberTypes.Property)
+				if (me.Member.MemberType == MemberTypes.Property)
 					Parameters.Add(me.Member);
 			}
 		}
@@ -451,7 +477,7 @@ namespace LinqToRdf.Sparql
 					Dispatch(mce.Object);
 					QueryAppend("." + mce.Method.Name + "(");
 					string sep = "";
-					for (int i = 0; i < mce.Parameters.Count; i++ )
+					for (int i = 0; i < mce.Parameters.Count; i++)
 					{
 						QueryAppend(sep);
 						Dispatch(mce.Parameters[i]);
@@ -514,7 +540,7 @@ namespace LinqToRdf.Sparql
 		public void Not(Expression e)
 		{
 			Debug.Assert(e is UnaryExpression && e.NodeType == ExpressionType.Not);
-			UnaryExpression ue = (UnaryExpression) e;
+			UnaryExpression ue = (UnaryExpression)e;
 			QueryAppend("!(");
 			Dispatch(ue.Operand);
 			QueryAppend(")");
@@ -539,7 +565,7 @@ namespace LinqToRdf.Sparql
 
 		public void Quote(Expression e)
 		{
-			UnaryExpression q = (UnaryExpression) e;
+			UnaryExpression q = (UnaryExpression)e;
 			QueryAppend("\"");
 			Dispatch(q.Operand);
 			QueryAppend("\"");

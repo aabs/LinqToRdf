@@ -1,3 +1,16 @@
+/* 
+ * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
+ *
+ * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ *
+ * It is licensed under the following license:
+ *   - Berkeley License, V2.0 or any newer version
+ *
+ * You may not use this file except in compliance with the above license.
+ *
+ * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ *
+ */
 using System;
 using System.Diagnostics;
 using System.Expressions;
@@ -202,7 +215,7 @@ namespace LinqToRdf
 		private void QueryAppend(string fmt, params object[] args)
 		{
 			stringBuilder.AppendFormat(fmt, args);
-			Trace.WriteLine(string.Format(fmt, args));
+			Console.WriteLine(string.Format(fmt, args));
 		}
 
 		public string InstancePlaceholderName
@@ -250,7 +263,7 @@ namespace LinqToRdf
 				Dispatch(be.Left);
 				Dispatch(be.Right);
 			}
-			Trace.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
+			Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 		}
 
 		public void As(Expression e)
@@ -333,7 +346,7 @@ namespace LinqToRdf
 				MemberExpression me = be.Left as MemberExpression;
 				ConstantExpression ce = be.Right as ConstantExpression;
 				QueryAppend(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString());
-				Trace.WriteLine(string.Format(tripleFormatStringLiteral, be.Left, "=", be.Right));
+				Console.WriteLine(string.Format(tripleFormatStringLiteral, be.Left, "=", be.Right));
 			}
 			MethodCallExpression mce = e as MethodCallExpression;
 			if (mce != null && mce.Method.Name == "op_Equality")
@@ -341,9 +354,9 @@ namespace LinqToRdf
 				MemberExpression me = mce.Parameters[0] as MemberExpression;
 				ConstantExpression ce = mce.Parameters[1] as ConstantExpression;
 				QueryAppend(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString());
-				Trace.WriteLine(string.Format(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString()));
+				Console.WriteLine(string.Format(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString()));
 			}
-			Trace.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
+			Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 		}
 
 		public void Funclet(Expression e)
@@ -359,9 +372,9 @@ namespace LinqToRdf
 						if (be != null)
 						{
 							QueryAppend(tripleFormatString, be.Left, ">", be.Right);
-							Trace.WriteLine(string.Format(tripleFormatString, InstancePlaceholderName+"!"+be.Left, ">", be.Right));
+							Console.WriteLine(string.Format(tripleFormatString, InstancePlaceholderName+"!"+be.Left, ">", be.Right));
 						}
-						Trace.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
+						Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 			*/
 			throw new NotImplementedException("operation > is not supported");
 		}
@@ -373,9 +386,9 @@ namespace LinqToRdf
 						if (be != null)
 						{
 							QueryAppend(tripleFormatString, be.Left.ToString(), be.Right.ToString());
-							Trace.WriteLine(string.Format(tripleFormatString, InstancePlaceholderName + "!" + be.Left, ">=", be.Right));
+							Console.WriteLine(string.Format(tripleFormatString, InstancePlaceholderName + "!" + be.Left, ">=", be.Right));
 						}
-						Trace.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
+						Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 			*/
 			throw new NotImplementedException("operation >= is not supported");
 		}
@@ -457,7 +470,7 @@ namespace LinqToRdf
 						break;
 				}
 			}
-			Trace.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
+			Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 		}
 
 		public void MethodCallVirtual(Expression e)
@@ -535,7 +548,7 @@ namespace LinqToRdf
 							Dispatch(be.Left);
 							Dispatch(be.Right);
 						}
-						Trace.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
+						Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 			*/
 			throw new NotImplementedException("Operator not supported");
 		}

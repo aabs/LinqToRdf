@@ -1,3 +1,16 @@
+/* 
+ * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
+ *
+ * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ *
+ * It is licensed under the following license:
+ *   - Berkeley License, V2.0 or any newer version
+ *
+ * You may not use this file except in compliance with the above license.
+ *
+ * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ *
+ */
 using System;
 using System.Expressions;
 using System.Reflection;
@@ -163,7 +176,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Add(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.IntTestProperty)+(5^^xsdt:int)";
+			string expectedResult = "(?IntTestProperty)+(5)";
 			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
 		}
 
@@ -183,7 +196,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.AddChecked(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.IntTestProperty)+(5^^xsdt:int)";
+			string expectedResult = "(?IntTestProperty)+(5)";
 			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
 		}
 
@@ -203,7 +216,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.And(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)&&(True^^xsdt:boolean)";
+			string expectedResult = "(?BooleanTestProperty)&&(True^^xsdt:boolean)";
 			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
 		}
 
@@ -223,7 +236,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.AndAlso(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)&&(True^^xsdt:boolean)";
+			string expectedResult = "(?BooleanTestProperty)&&(True^^xsdt:boolean)";
 			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
 		}
 
@@ -259,7 +272,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.BitwiseAnd(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)&(True^^xsdt:boolean)";
+			string expectedResult = "(?BooleanTestProperty)&(True^^xsdt:boolean)";
 			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
 		}
 
@@ -295,7 +308,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.BitwiseOr(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)|(True^^xsdt:boolean)";
+			string expectedResult = "(?BooleanTestProperty)|(True^^xsdt:boolean)";
 			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
 		}
 
@@ -406,7 +419,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Divide(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)/(15^^xsdt:int)";
+			string expectedResult = "(10)/(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -424,7 +437,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.EQ(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)=(15^^xsdt:int)";
+			string expectedResult = "10 = 15";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -457,7 +470,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.GE(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)>=(15^^xsdt:int)";
+			string expectedResult = "(10)>=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -474,7 +487,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.GT(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)>(15^^xsdt:int)";
+			string expectedResult = "(10)>(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -491,7 +504,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Index(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "t.Ia[1^^xsdt:int]";
+			string expectedResult = "?Ia[1]";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -519,7 +532,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Is(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)>(15^^xsdt:int)";
+			string expectedResult = "(10)>(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -546,7 +559,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.LE(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)<=(15^^xsdt:int)";
+			string expectedResult = "(10)<=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -564,7 +577,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Len(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)<=(15^^xsdt:int)";
+			string expectedResult = "(10)<=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -592,7 +605,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.LShift(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)<=(15^^xsdt:int)";
+			string expectedResult = "(10)<=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -609,7 +622,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.LT(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)<(15^^xsdt:int)";
+			string expectedResult = "(10)<(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -626,7 +639,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.MemberAccess(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "t.Ia";
+			string expectedResult = "?Ia";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -706,7 +719,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Multiply(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)*(15^^xsdt:int)";
+			string expectedResult = "(10)*(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -723,7 +736,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.MultiplyChecked(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)*(15^^xsdt:int)";
+			string expectedResult = "(10)*(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -740,7 +753,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.NE(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(10^^xsdt:int)!=(15^^xsdt:int)";
+			string expectedResult = "(10)!=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -758,7 +771,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Negate(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "!(t.BooleanTestProperty)";
+			string expectedResult = "!(?BooleanTestProperty)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -776,7 +789,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.New(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)";
+			string expectedResult = "(?BooleanTestProperty)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -794,7 +807,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.NewArrayBounds(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)";
+			string expectedResult = "(?BooleanTestProperty)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -812,7 +825,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.NewArrayInit(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)";
+			string expectedResult = "(?BooleanTestProperty)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -829,7 +842,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Not(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "!(t.BooleanTestProperty)";
+			string expectedResult = "!(?BooleanTestProperty)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -848,7 +861,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Or(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)||(!(t.BooleanTestProperty))";
+			string expectedResult = "(?BooleanTestProperty)||(!(?BooleanTestProperty))";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -867,7 +880,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.OrElse(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.BooleanTestProperty)||(!(t.BooleanTestProperty))";
+			string expectedResult = "(?BooleanTestProperty)||(!(?BooleanTestProperty))";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -901,7 +914,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Quote(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "\"5^^xsdt:int\""; //  assumption - it should retain its XSDT type?
+			string expectedResult = "\"5\""; //  assumption - it should retain its XSDT type?
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -995,7 +1008,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Subtract(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.IntTestProperty)-(1^^xsdt:int)";
+			string expectedResult = "(?IntTestProperty)-(1)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -1013,7 +1026,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.SubtractChecked(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.IntTestProperty)-(1^^xsdt:int)";
+			string expectedResult = "(?IntTestProperty)-(1)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 

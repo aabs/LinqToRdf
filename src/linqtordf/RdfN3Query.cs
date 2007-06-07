@@ -1,3 +1,16 @@
+/* 
+ * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
+ *
+ * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ *
+ * It is licensed under the following license:
+ *   - Berkeley License, V2.0 or any newer version
+ *
+ * You may not use this file except in compliance with the above license.
+ *
+ * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ *
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,8 +26,9 @@ namespace LinqToRdf
 {
 	public class RdfN3Query<T> : QuerySupertype<T>, IRdfQuery<T>
 	{
-		public RdfN3Query()
+		public RdfN3Query(IRdfContext context)
 		{
+			this.context = context;
 			originalType = typeof(T);
 			parser = new LinqToN3ExpTranslator<T>();
 		}
@@ -48,14 +62,14 @@ namespace LinqToRdf
 		}
 		protected RdfN3Query<TElement> CloneQueryForNewType<TElement>()
 		{
-			RdfN3Query<TElement> newQuery = new RdfN3Query<TElement>();
+			RdfN3Query<TElement> newQuery = new RdfN3Query<TElement>(context);
 			newQuery.Store = store;
 			newQuery.OriginalType = originalType;
 			newQuery.Projection = projection;
 			newQuery.QueryGraphParameters = queryGraphParameters;
-			newQuery.Query = Query;
+			newQuery.FilterClause = FilterClause;
 			newQuery.Logger = logger;
-			newQuery.QueryFactory = new QueryFactory<TElement>(QueryFactory.QueryType);
+			newQuery.QueryFactory = new QueryFactory<TElement>(QueryFactory.QueryType, context);
 			newQuery.Parser = QueryFactory.CreateExpressionTranslator();
 			newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
 			return newQuery;
@@ -126,9 +140,9 @@ namespace LinqToRdf
 		{
 			if (result != null)
 				return result.GetEnumerator();
-			query = ConstructQuery();
+			filterClause = ConstructQuery();
 			PrepareQueryAndConnection();
-			PresentQuery(query);
+			PresentQuery(filterClause);
 			return result.GetEnumerator();
 		}
 
@@ -149,10 +163,10 @@ namespace LinqToRdf
 		{
 			// create a ObjectDeserialiserQuerySink and attach it to the store
 			string q = string.Format("@prefix m: <{0}> .\n", OwlInstanceSupertype.GetOntologyBaseUri(originalType));
-			query = q + query;
+			filterClause = q + filterClause;
 			foreach (PropertyInfo pi in OwlClassSupertype.GetAllPersistentProperties(typeof(T)))
 			{
-				query += string.Format("?{0} <{1}> ?{2} .\n", originalType.Name, OwlInstanceSupertype.GetPropertyUri(originalType, pi.Name), pi.Name);
+				filterClause += string.Format("?{0} <{1}> ?{2} .\n", originalType.Name, OwlInstanceSupertype.GetPropertyUri(originalType, pi.Name), pi.Name);
 			}
 		}
 
@@ -165,8 +179,8 @@ namespace LinqToRdf
 		{
 			StringBuilder sb = new StringBuilder();
 			ParseQuery(q, sb);
-			Query = Parser.StringBuilder.ToString();
-			Log(Query);
+			FilterClause = Parser.StringBuilder.ToString();
+			Log(FilterClause);
 		}
 
 		private void ParseQuery(Expression expression, StringBuilder sb)
