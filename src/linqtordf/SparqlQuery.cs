@@ -51,18 +51,6 @@ namespace LinqToRdf.Sparql
 			set { tripleStore = value; }
 		}
 
-		protected IEnumerator<T> RunQuery()
-		{
-			if (Context.ResultsCache.ContainsKey(GetHashCode().ToString()))
-				return (IEnumerator<T>)Context.ResultsCache[GetHashCode().ToString()].GetEnumerator();
-			StringBuilder sb = new StringBuilder();
-			CreateQuery(sb);
-			IRdfConnection<T> conn = QueryFactory.CreateConnection(this);
-			IRdfCommand<T> cmd = conn.CreateCommand();
-			cmd.CommandText = sb.ToString();
-			return cmd.ExecuteQuery();
-		}
-
 		protected void BuildQuery(Expression q)
 		{
 			StringBuilder sbPrefixes = new StringBuilder();
@@ -86,15 +74,6 @@ namespace LinqToRdf.Sparql
 			Console.WriteLine(FilterClause);
 		}
 
-		protected void ParseQuery(Expression expression, StringBuilder sb)
-		{
-			Log("#Query {0:d}", DateTime.Now);
-			StringBuilder tmp = Parser.StringBuilder;
-			Parser.StringBuilder = sb;
-			Parser.Dispatch(expression);
-			Parser.StringBuilder = tmp;
-		}
-
 		protected SparqlQuery<S> CloneQueryForNewType<S>()
 		{
 			SparqlQuery<S> newQuery = new SparqlQuery<S>(context);
@@ -109,6 +88,27 @@ namespace LinqToRdf.Sparql
 			newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
 			newQuery.Expressions = expressions;
 			return newQuery;
+		}
+
+		protected void ParseQuery(Expression expression, StringBuilder sb)
+		{
+			Log("#Query {0:d}", DateTime.Now);
+			StringBuilder tmp = Parser.StringBuilder;
+			Parser.StringBuilder = sb;
+			Parser.Dispatch(expression);
+			Parser.StringBuilder = tmp;
+		}
+
+		protected IEnumerator<T> RunQuery()
+		{
+			if (Context.ResultsCache.ContainsKey(GetHashCode().ToString()))
+				return (IEnumerator<T>)Context.ResultsCache[GetHashCode().ToString()].GetEnumerator();
+			StringBuilder sb = new StringBuilder();
+			CreateQuery(sb);
+			IRdfConnection<T> conn = QueryFactory.CreateConnection(this);
+			IRdfCommand<T> cmd = conn.CreateCommand();
+			cmd.CommandText = sb.ToString();
+			return cmd.ExecuteQuery();
 		}
 
 		#region SPARQL Query Construction
