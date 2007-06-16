@@ -4,17 +4,18 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{DCB04931-F2F1-45CA-B857-233D7B0AC615}</ProjectGuid>
+    <ProjectGuid>{97996711-8EFC-4F00-AB3C-6D32E5BEB10D}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>linqtordf.core</RootNamespace>
-    <AssemblyName>linqtordf.core</AssemblyName>
+    <RootNamespace>test_sparql_endpoint</RootNamespace>
+    <AssemblyName>test-sparql-endpoint</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -22,64 +23,50 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="C5, Version=1.0.1.0, Culture=neutral, PublicKeyToken=06a1b38866503b69, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\C5.dll</HintPath>
-    </Reference>
     <Reference Include="SemWeb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\SemWeb.dll</HintPath>
+      <HintPath>..\..\..\lib\SemWeb.dll</HintPath>
     </Reference>
     <Reference Include="SemWeb.Sparql, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\SemWeb.Sparql.dll</HintPath>
+      <HintPath>..\..\..\lib\SemWeb.Sparql.dll</HintPath>
     </Reference>
     <Reference Include="sparql-core, Version=0.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\sparql-core.dll</HintPath>
+      <HintPath>..\..\..\lib\sparql-core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Query, Version=1.0.2319.19041, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="IQueryFormatTranslator.cs" />
-    <Compile Include="IRdfCommand.cs" />
-    <Compile Include="IRdfConnection.cs" />
-    <Compile Include="LinqToN3ExpTranslator.cs" />
-    <Compile Include="IRdfContext.cs" />
-    <Compile Include="IRdfQuery.cs" />
-    <Compile Include="MemoryStoreExtensions.cs" />
-    <Compile Include="NamespaceManager.cs" />
-    <Compile Include="ObjectDeserialiser.cs" />
-    <Compile Include="OwlClassSupertype.cs" />
-    <Compile Include="OwlInstanceSupertype.cs" />
+    <Content Include="Default.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryFactory.cs" />
-    <Compile Include="QuerySupertype.cs" />
-    <Compile Include="RDF.cs" />
-    <Compile Include="RdfExpressionTranslator.cs" />
-    <Compile Include="RdfN3Query.cs" />
-    <Compile Include="SparqlQuery.cs" />
-    <Compile Include="LinqToSparqlExpTranslator.cs" />
-    <Compile Include="SparqlCommand.cs" />
-    <Compile Include="SparqlConnection.cs" />
-    <Compile Include="XsdtTypeConverter.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <Import Project="$(ProgramFiles)\LINQ Preview\Misc\Linq.targets" />
-  <!--Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v8.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -87,4 +74,19 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49910</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

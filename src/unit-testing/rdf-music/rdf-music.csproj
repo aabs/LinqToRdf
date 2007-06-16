@@ -30,7 +30,7 @@
   <ItemGroup>
     <Reference Include="id3lib, Version=1.0.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\prototypes\semantic-web\lib\id3lib.dll</HintPath>
+      <HintPath>..\..\..\lib\id3lib.dll</HintPath>
     </Reference>
     <Reference Include="IKVM.GNU.Classpath, Version=0.28.0.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58">
       <SpecificVersion>False</SpecificVersion>
