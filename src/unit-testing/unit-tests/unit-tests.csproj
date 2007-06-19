@@ -58,9 +58,13 @@
   <ItemGroup>
     <Compile Include="ConstantEncodingTests.cs" />
     <Compile Include="LocalSparqlTests.cs" />
+    <Compile Include="OwlInstanceSupertypeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IntegrationTests.cs" />
+    <Compile Include="QueryFactoryTest.cs" />
     <Compile Include="SparqlExpressionTranslatorTest.cs" />
+    <Compile Include="VSCodeGenAccessors.cs" />
+    <Compile Include="XsdtTypeConverterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\linqtordf\linqtordf.csproj">

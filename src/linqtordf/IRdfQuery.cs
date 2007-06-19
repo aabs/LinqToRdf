@@ -17,5 +17,6 @@ namespace LinqToRdf
 {
     public interface IRdfQuery<T> : IOrderedQueryable<T>
     {
+        bool ShouldReuseResultset { get; set; }
     }
 }

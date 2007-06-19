@@ -5,7 +5,7 @@
 <body>
 	<form id="form1" runat="server">
 	</form>
-	<form action="/sparql" method="get">
+	<form action="SparqlQuery.aspx" method="post">
 		<input type="hidden" name="outputMimeType" value="text/xml" />
 		<textarea name="query" rows="10" cols="80">
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>

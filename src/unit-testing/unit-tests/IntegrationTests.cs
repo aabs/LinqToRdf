@@ -103,6 +103,20 @@ namespace RdfSerialisationTest
         }
 
 		[TestMethod]
+		public void SparqlQueryUsingHttp()
+        {
+			TripleStore ts = CreateOnlineTripleStore();
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
+	        var q = from t in qry
+				where t.Year == "2007" &&
+				t.GenreName == "Rory Blyth: The Smartest Man in the World" 
+				select new {t.Title, t.FileLocation};
+			foreach(var track in q){
+				Console.WriteLine(track.Title + ": " + track.FileLocation);
+			}        
+        }
+
+		[TestMethod]
 		public void SparqlQueryUsingCachedResults()
         {
 			TripleStore ts = CreateSparqlTripleStore();
@@ -187,13 +201,11 @@ namespace RdfSerialisationTest
 		[TestMethod]
 		public void Query5()
         {
-            string urlToRemoteSparqlEndpoint = @"http://localhost/MyMusicService/SparqlQuery.ashx";
-			TripleStore ts = new TripleStore();
-    		ts.EndpointUri = urlToRemoteSparqlEndpoint;
+		    TripleStore ts = CreateOnlineTripleStore();
             RDF ctx = new RDF(ts);
             IRdfQuery<Track> qry = ctx.ForType<Track>(); 
 	        var q = from t in qry
-		        where t.ArtistName == "Jethro Tull"
+		        where t.GenreName == "Rory Blyth: The Smartest Man in the World" 
 		        select t;
             foreach (Track track in q)
             {
@@ -208,20 +220,27 @@ namespace RdfSerialisationTest
 
 		private static void CreateMemoryStore()
 		{
-			string serialisedLocation = @"C:\dev\prototypes\semantic-web\src\RdfSerialisationTest\store3.n3";
+            string serialisedLocation = @"C:\dev\semantic-web\linqtordf\src\unit-testing\unit-tests\store3.n3";
 			store = new MemoryStore();
 //			store.AddReasoner(new Euler(new N3Reader(MusicConstants.OntologyURL)));
 			store.Import(new N3Reader(serialisedLocation));
 		}
 
-		private TripleStore CreateSparqlTripleStore()
-		{
-			CreateMemoryStore();
-			TripleStore ts = new TripleStore();
-			ts.LocalTripleStore = store;
-			ts.QueryType = QueryType.LocalSparqlStore;
-			return ts;
-		}
+        private TripleStore CreateSparqlTripleStore()
+        {
+            CreateMemoryStore();
+            TripleStore ts = new TripleStore();
+            ts.LocalTripleStore = store;
+            ts.QueryType = QueryType.LocalSparqlStore;
+            return ts;
+        }
+        private TripleStore CreateOnlineTripleStore()
+        {
+            TripleStore ts = new TripleStore();
+            ts.EndpointUri = @"http://localhost/linqtordf/SparqlQuery.aspx";
+            ts.QueryType = QueryType.RemoteSparqlStore;
+            return ts;
+        }
 
 		private MethodInfo propertyof(Type t, string arg)
 		{

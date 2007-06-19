@@ -14,8 +14,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Expressions;
 using System.Query;
 using System.Reflection;
@@ -101,8 +99,8 @@ namespace LinqToRdf.Sparql
 
 		protected IEnumerator<T> RunQuery()
 		{
-			if (Context.ResultsCache.ContainsKey(GetHashCode().ToString()))
-				return (IEnumerator<T>)Context.ResultsCache[GetHashCode().ToString()].GetEnumerator();
+			if (CachedResults != null && ShouldReuseResultset)
+                return CachedResults.GetEnumerator();
 			StringBuilder sb = new StringBuilder();
 			CreateQuery(sb);
 			IRdfConnection<T> conn = QueryFactory.CreateConnection(this);

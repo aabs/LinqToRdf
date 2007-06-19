@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product
+		 Id="142aea33-8d4e-4f92-bd56-7656d457db35"
+		 Name="LINQ to RDF"
+		 Language="1033"
+		 Version="0.1.0.0"
+		 Manufacturer="Andrew Matthews"
+		 UpgradeCode="a2dc998d-6fad-4bf0-ac9e-c2e0ad2473b7">
+		<Package InstallerVersion="200" Compressed="yes" />
+
+		<Media Id="1" Cabinet="installer.cab" EmbedCab="yes" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLLOCATION" Name="LinqToRdf">
+					<Component Id="MainInstallation" Guid="1eb0f92a-5ae4-4370-ba94-c1072a17340a">
+						<File
+							Id='LinqToRdfDll'
+							Name='linqtordf.dll'
+							DiskId='1'
+							Source='..\unit-testing\unit-tests\bin\Debug\linqtordf.dll'
+							Vital='yes'/>
+
+						<File
+							Id='C5Dll'
+							Name='C5.dll'
+							DiskId='1'
+							Source='..\unit-testing\unit-tests\bin\Debug\C5.dll'
+							Vital='yes'/>
+
+						<File
+							Id='SemWebDll'
+							Name='SemWeb.dll'
+							DiskId='1'
+							Source='..\unit-testing\unit-tests\bin\Debug\SemWeb.dll'
+							Vital='yes'/>
+
+						<File
+							Id='SemWebSparqlDll'
+							Name='SemWeb.Sparql.dll'
+							DiskId='1'
+							Source='..\unit-testing\unit-tests\bin\Debug\SemWeb.Sparql.dll'
+							Vital='yes'/>
+
+						<File
+							Id='SparqlCoreDll'
+							Name='sparql-core.dll'
+							DiskId='1'
+							Source='..\unit-testing\unit-tests\bin\Debug\sparql-core.dll'
+							Vital='yes'/>
+
+						<File
+							Id='IkvmGnuClasspathDll'
+							Name='IKVM.GNU.Classpath.dll'
+							DiskId='1'
+							Source='..\unit-testing\unit-tests\bin\Debug\IKVM.GNU.Classpath.dll'
+							Vital='yes'/>
+						<File
+							Id='IkvmRuntimeDll'
+							Name='IKVM.Runtime.dll'
+							DiskId='1'
+							Source='..\unit-testing\unit-tests\bin\Debug\IKVM.Runtime.dll'
+							Vital='yes'/>
+
+					</Component>
+					<Component Id='Documentation' Guid='2dd46927-3afd-4ce1-b5cd-aef293513cde'>
+						<File
+							Id='GettingStartedPdf'
+							Name='Getting Started With LINQ to RDF.pdf'
+							DiskId='1'
+							Source='..\..\doc\Getting Started With LINQ to RDF.pdf'
+							Vital='yes'/>
+
+					</Component>
+				</Directory>
+			</Directory>
+		</Directory>
+
+		<Feature
+			Id='Complete'
+			Title='LinqToRdf 0.1'
+			Description='Install everything'
+			Display='expand'
+			Level='1'
+			ConfigurableDirectory='INSTALLLOCATION'>
+			<Feature Id='MainProgram' Title='LinqToRdf SDK' Description='All required assemblies.' Level='1'>
+				<ComponentRef Id='MainInstallation' />
+			</Feature>
+
+			<Feature 
+				Id='Documentation' 
+				Title='LinqToRdf Documentation' 
+				Description='Guide to working with LinqToRdf' Level='1000'>
+				<ComponentRef Id='Documentation' />
+			</Feature>
+		</Feature>
+
+		<WixVariable Id="WixUILicenseRtf" Value="nbsl.rtf" />
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+		<UIRef Id="WixUI_Mondo"/>
+	</Product>
+</Wix>

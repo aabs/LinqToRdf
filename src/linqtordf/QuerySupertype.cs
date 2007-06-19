@@ -33,13 +33,32 @@ namespace LinqToRdf
 		protected HashSet<MemberInfo> projectionParameters = new HashSet<MemberInfo>();
 		protected string filterClause;
 		protected QueryFactory<T> queryFactory;
+	    private bool shouldReuseResultset = false;
 
-		public IRdfContext Context
+	    public IRdfContext Context
 		{
 			get { return context; }
 		}
 
-		public Dictionary<string, MethodCallExpression> Expressions
+	    public IEnumerable<T> CachedResults
+	    {
+	        get
+	        {
+	            string hashcode = GetHashCode().ToString();
+	            if(Context.ResultsCache.ContainsKey(hashcode))
+	            {
+	                return Context.ResultsCache[hashcode] as IEnumerable<T>;
+	            }
+	            return null;
+	        }
+	        set
+	        {
+	            string hashcode = GetHashCode().ToString();
+	            Context.ResultsCache[hashcode] = value;
+	        }
+	    }
+
+	    public Dictionary<string, MethodCallExpression> Expressions
 		{
 			get
 			{
@@ -50,7 +69,13 @@ namespace LinqToRdf
 			set { expressions = value; }
 		}
 
-		public TextWriter Logger
+	    public string FilterClause
+	    {
+	        get { return filterClause; }
+	        set { filterClause = value; }
+	    }
+
+	    public TextWriter Logger
 		{
 			get { return logger; }
 			set { logger = value; }
@@ -80,19 +105,29 @@ namespace LinqToRdf
 			set { projection = value; }
 		}
 
-		public string FilterClause
-		{
-			get { return filterClause; }
-			set { filterClause = value; }
-		}
 
-		public QueryFactory<T> QueryFactory
+	    public QueryFactory<T> QueryFactory
 		{
 			get { return queryFactory; }
 			set { queryFactory = value; }
 		}
 
-		protected void BuildProjection(Expression expression)
+	    public bool ShouldReuseResultset
+	    {
+            get { return shouldReuseResultset; }
+	        set
+	        {
+	            shouldReuseResultset = value;
+                // if we stop caching & we already have results then erase them
+                if(shouldReuseResultset == false && Context.ResultsCache != null)
+                {
+                    Context.ResultsCache.Clear();
+                    Context.ResultsCache = null;
+                }
+	        }
+	    }
+
+	    protected void BuildProjection(Expression expression)
 		{
 			LambdaExpression le = ((MethodCallExpression)expression).Parameters[1] as LambdaExpression;
 			if (le == null) throw new ApplicationException("Incompatible expression type found when building a projection");

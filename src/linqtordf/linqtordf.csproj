@@ -7,8 +7,10 @@
     <ProjectGuid>{DCB04931-F2F1-45CA-B857-233D7B0AC615}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>linqtordf.core</RootNamespace>
-    <AssemblyName>linqtordf.core</AssemblyName>
+    <RootNamespace>linqtordf</RootNamespace>
+    <AssemblyName>linqtordf</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>linqtordf.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -18,6 +20,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRules>-Microsoft.Globalization#CA1301;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1303;-Microsoft.Globalization#CA1306;-Microsoft.Globalization#CA1304;-Microsoft.Globalization#CA1305;-Microsoft.Globalization#CA1300</CodeAnalysisRules>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -77,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="linqtordf.snk" />
   </ItemGroup>
   <Import Project="$(ProgramFiles)\LINQ Preview\Misc\Linq.targets" />
   <!--Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" /-->

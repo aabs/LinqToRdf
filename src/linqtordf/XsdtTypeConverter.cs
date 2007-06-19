@@ -130,28 +130,7 @@ namespace LinqToRdf
 
 		public  object Get<T>(T obj)
 		{
-			string result = "";
-			XsdtPrimitiveDataType dt = GetDataType(typeof(T));
-			XsdtAttribute attr = GetXsdtAttrFor(dt);
-			if (dt == XsdtPrimitiveDataType.XsdtUnknown)
-			{
-				if (attr.IsQuoted)
-				{
-					return "\"" + obj + "\"";
-				}
-				else return obj.ToString();
-			}
-
-			if (attr.IsQuoted)
-			{
-				result = "\"" + GetStringRepresentationFor(obj, dt, attr) + "\"";
-			}
-			string xsdTypeSuffix; 
-			if (dt != XsdtPrimitiveDataType.XsdtInt && dt != XsdtPrimitiveDataType.XsdtString)
-				xsdTypeSuffix = "^^xsdt:" + attr.Name;
-			else 
-				xsdTypeSuffix = "";
-			return result + xsdTypeSuffix;
+			return Get(typeof (T), obj);
 		}
 		public  object Get(Type t, object obj)
 		{
