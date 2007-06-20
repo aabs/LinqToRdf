@@ -19,48 +19,48 @@
 							Id='LinqToRdfDll'
 							Name='linqtordf.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Debug\linqtordf.dll'
+							Source='..\unit-testing\unit-tests\bin\Release\linqtordf.dll'
 							Vital='yes'/>
 
 						<File
 							Id='C5Dll'
 							Name='C5.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Debug\C5.dll'
+							Source='..\unit-testing\unit-tests\bin\Release\C5.dll'
 							Vital='yes'/>
 
 						<File
 							Id='SemWebDll'
 							Name='SemWeb.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Debug\SemWeb.dll'
+							Source='..\unit-testing\unit-tests\bin\Release\SemWeb.dll'
 							Vital='yes'/>
 
 						<File
 							Id='SemWebSparqlDll'
 							Name='SemWeb.Sparql.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Debug\SemWeb.Sparql.dll'
+							Source='..\unit-testing\unit-tests\bin\Release\SemWeb.Sparql.dll'
 							Vital='yes'/>
 
 						<File
 							Id='SparqlCoreDll'
 							Name='sparql-core.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Debug\sparql-core.dll'
+							Source='..\unit-testing\unit-tests\bin\Release\sparql-core.dll'
 							Vital='yes'/>
 
 						<File
 							Id='IkvmGnuClasspathDll'
 							Name='IKVM.GNU.Classpath.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Debug\IKVM.GNU.Classpath.dll'
+							Source='..\unit-testing\unit-tests\bin\Release\IKVM.GNU.Classpath.dll'
 							Vital='yes'/>
 						<File
 							Id='IkvmRuntimeDll'
 							Name='IKVM.Runtime.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Debug\IKVM.Runtime.dll'
+							Source='..\unit-testing\unit-tests\bin\Release\IKVM.Runtime.dll'
 							Vital='yes'/>
 
 					</Component>

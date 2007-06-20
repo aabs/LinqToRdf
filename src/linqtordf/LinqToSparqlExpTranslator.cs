@@ -491,7 +491,69 @@ namespace LinqToRdf.Sparql
 
 		public void MethodCallVirtual(Expression e)
 		{
-			throw new NotImplementedException("operation MethodCallVirtual not supported");
+			MethodCallExpression mce = (MethodCallExpression)e;
+			MethodInfo mi = mce.Method;
+
+			// is it eligible for a regex operation?
+			if(mi.DeclaringType == typeof(string))
+			{
+				HandleStringOperations(mce);
+				return;
+			}
+			throw new NotImplementedException("operation MethodCallVirtual not supported for Method '" + mi.Name + "'");
+		}
+
+		private void HandleStringOperations(MethodCallExpression mce)
+		{
+			MethodInfo mi = mce.Method;
+			switch (mi.Name)
+			{
+				case "Contains":
+					GenerateRegexComparison(mce);
+					return;
+				case "StartsWith":
+					GenerateRegexStartsWith(mce);
+					return;
+				case "EndsWith":
+					GenerateRegexEndsWith(mce);
+					return;
+			}
+
+			throw new NotImplementedException("operation MethodCallVirtual not supported for Method '" + mi.Name + "'");
+		}
+		private void GenerateRegexStartsWith(MethodCallExpression mce)
+		{
+			ConstantExpression constantExpression = (ConstantExpression)mce.Parameters[0];
+			MemberExpression memberExpression = (MemberExpression)mce.Object;
+			QueryAppend("regex({0}, \"^{1}\") ", "?" + memberExpression.Member.Name, constantExpression.Value);
+		}
+
+		private void GenerateRegexEndsWith(MethodCallExpression mce)
+		{
+			ConstantExpression constantExpression = (ConstantExpression)mce.Parameters[0];
+			MemberExpression memberExpression = (MemberExpression)mce.Object;
+			QueryAppend("regex({0}, \"{1}$\") ", "?" + memberExpression.Member.Name, constantExpression.Value);
+		}
+
+		/// <summary>
+		/// Create a regex string comparison
+		/// </summary>
+		/// <param name="mce">the MethodCallExpression for a string.Compare</param>
+		/// <remarks>
+		/// <see cref="http://www.w3.org/TR/xpath-functions/#regex-syntax"/> for acceptable regex syntax
+		/// <see cref="http://www.w3.org/TR/xpath-functions/#func-matches"/> for usage hints
+		/// Should produce a filter regex of the form <c>regex(?name, "^ali", "i")</c>.
+		/// The <see cref="System.String.Compare"/> is case-sensitive and culture-insensitive
+		/// </remarks>
+		private void GenerateRegexComparison(MethodCallExpression mce)
+		{
+			ConstantExpression constantExpression = (ConstantExpression)mce.Parameters[0];
+			MemberExpression memberExpression = (MemberExpression)mce.Object;
+			QueryAppend("regex({0}, \"{1}\") ", "?" + memberExpression.Member.Name, constantExpression.Value.ToString());
+		}
+
+		private void GenerateRegex(MemberExpression memberExpression, ConstantExpression constantExpression)
+		{
 		}
 
 		public void Modulo(Expression e)

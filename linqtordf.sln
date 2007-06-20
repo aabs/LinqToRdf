@@ -2,15 +2,44 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "linqtordf", "src\linqtordf\linqtordf.csproj", "{DCB04931-F2F1-45CA-B857-233D7B0AC615}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unit-tests", "src\unit-testing\unit-tests\unit-tests.csproj", "{8BAC4EF7-87A2-4B85-B4ED-AFE9D38A8DB5}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rdf-music", "src\unit-testing\rdf-music\rdf-music.csproj", "{C1B5CACB-CCC2-4440-ADE2-CE4FF9A5EFE1}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{23CF45EA-C094-4990-8AA7-FFB654673050}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
+		codecoverage.testrunconfig = codecoverage.testrunconfig
 		Ideas.htm = Ideas.htm
 		linqtordf.vsmdi = linqtordf.vsmdi
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test-sparql-endpoint", "src\unit-testing\test-sparql-endpoint\test-sparql-endpoint.csproj", "{97996711-8EFC-4F00-AB3C-6D32E5BEB10D}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "installer", "src\installer\installer.wixproj", "{0C57E91D-545D-449D-AE16-E6951447B276}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
 Global
@@ -34,6 +63,14 @@ Global
 		{C1B5CACB-CCC2-4440-ADE2-CE4FF9A5EFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1B5CACB-CCC2-4440-ADE2-CE4FF9A5EFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1B5CACB-CCC2-4440-ADE2-CE4FF9A5EFE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97996711-8EFC-4F00-AB3C-6D32E5BEB10D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97996711-8EFC-4F00-AB3C-6D32E5BEB10D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97996711-8EFC-4F00-AB3C-6D32E5BEB10D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97996711-8EFC-4F00-AB3C-6D32E5BEB10D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C57E91D-545D-449D-AE16-E6951447B276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C57E91D-545D-449D-AE16-E6951447B276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C57E91D-545D-449D-AE16-E6951447B276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C57E91D-545D-449D-AE16-E6951447B276}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

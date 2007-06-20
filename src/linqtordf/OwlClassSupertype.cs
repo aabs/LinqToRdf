@@ -56,16 +56,21 @@ namespace LinqToRdf
             return baseUris[0].BaseUri;
         }
 
-        public static string GetOwlClassUri(Type t)
-        {
-            OwlClassAttribute[] ta = (OwlClassAttribute[])t.GetCustomAttributes(typeof(OwlClassAttribute), true);
-            if (ta[0].IsRelativeUri)
-                return GetOntologyBaseUri(t) + ta[0].Uri;
-            else
-                return ta[0].Uri;
-        }
+		public static string GetOwlClassUri(Type t)
+		{
+			return GetOwlClassUri(t, false);
+		}
 
-        public static string GetInstanceBaseUri(Type t)
+		public static string GetOwlClassUri(Type t, bool giveRelativeUri)
+		{
+			OwlClassAttribute[] ta = (OwlClassAttribute[])t.GetCustomAttributes(typeof(OwlClassAttribute), true);
+			if (ta[0].IsRelativeUri && !giveRelativeUri)
+				return GetOntologyBaseUri(t) + ta[0].Uri;
+			else
+				return ta[0].Uri;
+		}
+
+		public static string GetInstanceBaseUri(Type t)
         {
             OwlClassAttribute[] classNames =
                 (OwlClassAttribute[])t.GetCustomAttributes(typeof(OwlClassAttribute), true);

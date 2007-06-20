@@ -100,7 +100,7 @@ namespace LinqToRdf.Sparql
 		protected IEnumerator<T> RunQuery()
 		{
 			if (CachedResults != null && ShouldReuseResultset)
-                return CachedResults.GetEnumerator();
+				return CachedResults.GetEnumerator();
 			StringBuilder sb = new StringBuilder();
 			CreateQuery(sb);
 			IRdfConnection<T> conn = QueryFactory.CreateConnection(this);
@@ -124,8 +124,8 @@ namespace LinqToRdf.Sparql
 				if (Parser.Parameters != null)
 					queryGraphParameters.AddAll(Parser.Parameters);
 				// we need to add the original type to the prolog to allow elements of the where clause to be optimised
-				namespaceManager.RegisterType(OriginalType);
 			}
+			namespaceManager.RegisterType(OriginalType);
 			CreateProlog(sb);
 			CreateDataSetClause(sb);
 			CreateProjection(sb);
@@ -156,7 +156,8 @@ namespace LinqToRdf.Sparql
 
 		private void CreateProjection(StringBuilder sb)
 		{
-			BuildProjection(Expressions["Select"]);
+			if (Expressions.ContainsKey("Select"))
+				BuildProjection(Expressions["Select"]);
 
 			if (projectionParameters.Count == 0)
 			{
@@ -176,18 +177,70 @@ namespace LinqToRdf.Sparql
 
 		private void CreateWhereClause(StringBuilder sb)
 		{
+			bool shouldUseOptionalForAllProperties = !(Expressions.ContainsKey("Where"));
+			if(shouldUseOptionalForAllProperties)
+			{
+				CreateOptionalWhereClause(sb);
+				return;
+			}
 			string instanceName = GetInstanceName();
 			sb.Append("WHERE {\n");
 			List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
+
+			if (parameters.Count == 0)
+			{
+				// is it an identity projection? If so, place all persistent properties into parameters
+				if (OriginalType == typeof(T))
+				{
+					foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
+					{
+						parameters.Add(info);
+					}
+				}
+			}
 			if (parameters.Count > 0)
 			{
 				sb.AppendFormat("_:{0} ", instanceName);
+				sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
 			}
 			for (int i = 0; i < parameters.Count; i++)
 			{
 				MemberInfo info = parameters[i];
-				sb.AppendFormat("{1}{2} ?{3} ", instanceName, namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
+				sb.AppendFormat("{0}{1} ?{2} ", namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
 				sb.AppendFormat((i < parameters.Count - 1) ? ";\n" : ".\n");
+			}
+			if (FilterClause != null && FilterClause.Length > 0)
+			{
+				sb.AppendFormat("FILTER(\n{0}\n)\n", FilterClause);
+			}
+			sb.Append("}\n");
+		}
+		private void CreateOptionalWhereClause(StringBuilder sb)
+		{
+			string instanceName = GetInstanceName();
+			sb.Append("WHERE {\n");
+			List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
+
+			if (parameters.Count == 0)
+			{
+				// is it an identity projection? If so, place all persistent properties into parameters
+				if (OriginalType == typeof(T))
+				{
+					foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
+					{
+						parameters.Add(info);
+					}
+				}
+			}
+			if (parameters.Count > 0)
+			{
+				sb.AppendFormat("_:{0} ", instanceName);
+				sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {0}.\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
+			}
+			for (int i = 0; i < parameters.Count; i++)
+			{
+				MemberInfo info = parameters[i];
+				sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
 			}
 			if (FilterClause != null && FilterClause.Length > 0)
 			{
@@ -198,10 +251,18 @@ namespace LinqToRdf.Sparql
 
 		private string GetInstanceName()
 		{
-			MethodCallExpression whereExp = Expressions["Where"];
-			LambdaExpression le = (LambdaExpression)Expressions["Where"].Parameters[1];
-			ParameterExpression instance = le.Parameters[0];
-			return instance.Name;
+			if (Expressions.ContainsKey("Where"))
+			{
+				MethodCallExpression whereExp = Expressions["Where"];
+				LambdaExpression le = (LambdaExpression)Expressions["Where"].Parameters[1];
+				ParameterExpression instance = le.Parameters[0];
+				return instance.Name;
+			}
+			else
+			{
+				// no name supplied by LINQ so just give one at random.
+				return "x";
+			}
 		}
 
 		private void CreateSolutionModifier(StringBuilder sb)

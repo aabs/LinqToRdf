@@ -163,7 +163,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Add (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void AddTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -183,7 +183,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for AddChecked (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void AddCheckedTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -203,7 +203,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for And (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void AndTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -223,7 +223,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for AndAlso (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void AndAlsoTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -243,7 +243,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for As (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void AsTest()
 		{
@@ -258,7 +258,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for BitwiseAnd (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void BitwiseAndTest()
 		{
@@ -279,7 +279,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for BitwiseNot (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void BitwiseNotTest()
 		{
@@ -294,7 +294,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for BitwiseOr (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void BitwiseOrTest()
 		{
@@ -315,7 +315,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for BitwiseXor (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void BitwiseXorTest()
 		{
@@ -330,7 +330,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Cast (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (ArgumentException))]
 		public void CastTest()
 		{
@@ -345,7 +345,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Coalesce (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void CoalesceTest()
 		{
@@ -360,7 +360,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Conditional (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void ConditionalTest()
 		{
@@ -378,7 +378,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Convert (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void ConvertTest()
 		{
@@ -393,7 +393,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for ConvertChecked (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void ConvertCheckedTest()
 		{
@@ -408,7 +408,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Divide (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void DivideTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -426,7 +426,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for EQ (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void EQTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -460,7 +460,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for GE (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void GETest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -477,7 +477,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for GT (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void GTTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -494,7 +494,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Index (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void IndexTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -511,7 +511,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Invoke (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[Ignore, ExpectedException(typeof (NotImplementedException))]
 		public void InvokeTest()
 		{
@@ -521,7 +521,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Is (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void IsTest()
 		{
@@ -539,7 +539,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Lambda (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[Ignore, ExpectedException(typeof (NotImplementedException))]
 		public void LambdaTest()
 		{
@@ -549,7 +549,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for LE (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void LETest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -566,7 +566,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Len (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void LenTest()
 		{
@@ -584,7 +584,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for ListInit (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[Ignore, ExpectedException(typeof (NotImplementedException))]
 		public void ListInitTest()
 		{
@@ -594,7 +594,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for LShift (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void LShiftTest()
 		{
@@ -612,7 +612,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for LT (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void LTTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -629,7 +629,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for MemberAccess (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void MemberAccessTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -646,7 +646,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for MemberInit (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[Ignore, ExpectedException(typeof (NotImplementedException))]
 		public void MemberInitTest()
 		{
@@ -656,7 +656,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for MethodCall (Expression)
 		///</summary>
-		[Ignore, TestMethod()]
+		[Ignore, TestMethod]
 		public void MethodCallTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -674,7 +674,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for MethodCallVirtual (Expression)
 		///</summary>
-		[Ignore, TestMethod()]
+		[Ignore, TestMethod]
 		public void MethodCallVirtualTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -691,7 +691,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Modulo (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void ModuloTest()
 		{
@@ -700,7 +700,7 @@ namespace RdfSerialisationTest
 			Expression e = Expression.Modulo(Expression.Constant(10), Expression.Constant(3));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.MethodCallVirtual(e);
+			target.Modulo(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "ignore";
 			Assert.AreEqual(expectedResult, actualResult);
@@ -709,7 +709,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Multiply (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void MultiplyTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -726,7 +726,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for MultiplyChecked (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void MultiplyCheckedTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -743,7 +743,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for NE (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void NETest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -760,7 +760,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Negate (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void NegateTest()
 		{
@@ -778,7 +778,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for New (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void NewTest()
 		{
@@ -796,7 +796,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for NewArrayBounds (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void NewArrayBoundsTest()
 		{
@@ -814,7 +814,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for NewArrayInit (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[Ignore, ExpectedException(typeof (NotImplementedException))]
 		public void NewArrayInitTest()
 		{
@@ -832,7 +832,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Not (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void NotTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -849,7 +849,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Or (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void OrTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -868,7 +868,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for OrElse (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void OrElseTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -887,7 +887,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Parameter (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void ParameterTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -904,7 +904,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Quote (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void QuoteTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -921,7 +921,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for RShift (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
 		public void RShiftTest()
 		{
@@ -998,7 +998,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for Subtract (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void SubtractTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -1015,7 +1015,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for SubtractChecked (Expression)
 		///</summary>
-		[TestMethod()]
+		[TestMethod]
 		public void SubtractCheckedTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();

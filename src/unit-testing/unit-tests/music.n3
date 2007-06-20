@@ -1,0 +1,52 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix daml: <http://www.daml.org/2001/03/daml+oil#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsdt: <http://www.w3.org/2001/XMLSchema#>.
+@prefix : <http://aabs.purl.org/ontologies/2007/04/music#> .
+
+:ProducerOfMusic a owl:Class.
+:SellerOfMusic a owl:Class.
+:NamedThing a owl:Class.
+:TemporalThing a owl:Class.
+:Person a owl:Class;
+	owl:subClassOf :NamedThing.
+:Musician owl:subClassOf :ProducerOfMusic, :Person.
+:Band a :ProducerOfMusic.
+:Studio a :SellerOfMusic, :NamedThing.
+:Label = :Studio.
+:Music a owl:Class.
+:Album a :NamedThing.
+:Track a :NamedThing.
+:Song a :NamedThing.
+:Mp3File a owl:Class.
+:Genre a :NamedThing.
+:Style = :Genre.
+:title 
+	rdfs:domain :Track;
+	rdfs:range  xsdt:string.
+:artistName
+	rdfs:domain :Track;
+	rdfs:range  xsdt:string.
+:albumName 
+	rdfs:domain :Track;
+	rdfs:range  xsdt:string.
+:year 
+	rdfs:domain :Album;
+	rdfs:range  xsdt:integer.
+:genreName
+	rdfs:domain :Track;
+	rdfs:range  xsdt:string.
+:comment 
+	rdfs:domain :Track;
+	rdfs:range  xsdt:string.
+:isTrackOn 
+	rdfs:domain :Track;
+	rdfs:range  :Album.
+:fileLocation 
+	rdfs:domain :Track;
+	rdfs:range  xsdt:string.
+:name
+	rdfs:domain	:NamedThing;
+	rdfs:range	xsdt:string.

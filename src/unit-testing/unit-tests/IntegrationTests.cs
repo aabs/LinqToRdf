@@ -30,9 +30,8 @@ namespace RdfSerialisationTest
 	/// Summary description for IntegrationTests
 	/// </summary>
 	[TestClass]
-	public class IntegrationTests
+	public class IntegrationTests : HighLevelTests
 	{
-		private static MemoryStore store;
 		public IntegrationTests()
 		{
 			//
@@ -87,6 +86,19 @@ namespace RdfSerialisationTest
 		#endregion
 
 		#region current tests
+
+		[TestMethod]
+		public void SparqlQueryAll()
+        {
+			TripleStore ts = CreateSparqlTripleStore();
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
+	        var q = from t in qry select t;
+			List<Track> lt = new List<Track>(q);
+			foreach(var track in q){
+				Console.WriteLine("Track: " + track.Title);
+			}        
+			Assert.IsTrue(lt.Count > 1);
+        }
 
 		[TestMethod]
 		public void SparqlQuery()
@@ -217,40 +229,6 @@ namespace RdfSerialisationTest
 		#endregion
 
 		#region Helpers
-
-		private static void CreateMemoryStore()
-		{
-            string serialisedLocation = @"C:\dev\semantic-web\linqtordf\src\unit-testing\unit-tests\store3.n3";
-			store = new MemoryStore();
-//			store.AddReasoner(new Euler(new N3Reader(MusicConstants.OntologyURL)));
-			store.Import(new N3Reader(serialisedLocation));
-		}
-
-        private TripleStore CreateSparqlTripleStore()
-        {
-            CreateMemoryStore();
-            TripleStore ts = new TripleStore();
-            ts.LocalTripleStore = store;
-            ts.QueryType = QueryType.LocalSparqlStore;
-            return ts;
-        }
-        private TripleStore CreateOnlineTripleStore()
-        {
-            TripleStore ts = new TripleStore();
-            ts.EndpointUri = @"http://localhost/linqtordf/SparqlQuery.aspx";
-            ts.QueryType = QueryType.RemoteSparqlStore;
-            return ts;
-        }
-
-		private MethodInfo propertyof(Type t, string arg)
-		{
-			return t.GetProperty(arg).GetGetMethod();
-		}
-
-		private MethodInfo methodof(Type t, string arg)
-		{
-			return GetType().GetMethod(arg);
-		}
 
 		#endregion
 	}

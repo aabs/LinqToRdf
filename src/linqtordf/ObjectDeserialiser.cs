@@ -13,6 +13,7 @@
  */
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using SemWeb;
@@ -49,14 +50,28 @@ namespace LinqToRdf
 			if (originalType == null) throw new ApplicationException("need a type to create");
 			object t = Activator.CreateInstance(instanceType);
 
-//			foreach (PropertyInfo pi in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
-			foreach (PropertyInfo pi in instanceType.GetProperties())
+			IEnumerable<PropertyInfo> props;
+			if(originalType == instanceType) //  i.e. identity projection, meaning we can use GetAllPersistentProperties safely
+			{
+				props = OwlClassSupertype.GetAllPersistentProperties(OriginalType);
+			}
+			else
+			{
+				props = instanceType.GetProperties();
+			}
+
+			foreach (PropertyInfo pi in props)
 			{
 				try
 				{
-					string vn = OwlClassSupertype.GetPropertyUri(OriginalType, pi.Name).Split('#')[1];
-					string vVal = result[pi.Name].ToString();
-					pi.SetValue(t, Convert.ChangeType(vVal, pi.PropertyType), null);
+					if(result[pi.Name] != null)
+					{
+						string vVal = result[pi.Name].ToString();
+						vVal = RemoveEnclosingQuotesOnString(vVal, pi);
+						if (IsXsdtEncoded(vVal))
+							vVal = DecodeXsdtString(vVal);
+						pi.SetValue(t, Convert.ChangeType(vVal, pi.PropertyType), null);
+					}
 				}
 				catch (Exception e)
 				{
@@ -66,6 +81,34 @@ namespace LinqToRdf
 			}
 			DeserialisedObjects.Add(t);
 			return true;
+		}
+
+		private string DecodeXsdtString(string val)
+		{
+			string[] delims = new string[] {"^^"};
+			string[] sa = val.Split(delims, StringSplitOptions.None);
+			string sValue = sa[0];
+			string xsdtType = sa[1];
+			if (xsdtType.EndsWith("integer>"))
+				return sValue.Substring(1, sValue.Length - 2);
+			return sValue;
+		}
+
+		private bool IsXsdtEncoded(string val)
+		{
+			return val.Contains("^^");
+		}
+
+		private string RemoveEnclosingQuotesOnString(string val, PropertyInfo pi)
+		{
+			if(pi.PropertyType == typeof(string))
+			{
+				if(val.StartsWith("\"") && val.EndsWith("\"") && val.Length > 1)
+				{
+					return val.Substring(1, val.Length - 2);
+				}
+			}
+			return val;
 		}
 	}
 
