@@ -14,9 +14,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Expressions;
+using System.Linq.Expressions;
 using System.IO;
-using System.Query;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using SemWeb;
@@ -73,7 +73,7 @@ namespace LinqToRdf
                 {
                     case "Where":
                         Log("Processing the where expression");
-                        newQuery.BuildQuery(call.Parameters[1]);
+                        newQuery.BuildQuery(call.Arguments[1]);
                         break;
                     case "Select":
                         Log("Processing the select expression");
@@ -199,5 +199,15 @@ namespace LinqToRdf
             sb.Append("#Query - " + DateTime.Now.ToLongTimeString());
             Parser.Dispatch(expression);
         }
-    }
+
+				#region IQueryable Members
+
+
+				public IQueryProvider Provider
+				{
+					get { return this; }
+				}
+
+				#endregion
+		}
 }

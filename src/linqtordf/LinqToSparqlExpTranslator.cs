@@ -13,11 +13,11 @@
  */
 using System;
 using System.Diagnostics;
-using System.Expressions;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using C5;
 using LinqToRdf;
+using System.Collections.Generic;
 
 namespace LinqToRdf.Sparql
 {
@@ -49,23 +49,14 @@ namespace LinqToRdf.Sparql
 				case ExpressionType.AndAlso:
 					AndAlso(expression);
 					break;
-				case ExpressionType.As:
-					As(expression);
+				case ExpressionType.ArrayIndex:
+					ArrayIndex(expression);
 					break;
-				case ExpressionType.BitwiseAnd:
-					BitwiseAnd(expression);
+				case ExpressionType.ArrayLength:
+					ArrayLength(expression);
 					break;
-				case ExpressionType.BitwiseNot:
-					BitwiseNot(expression);
-					break;
-				case ExpressionType.BitwiseOr:
-					BitwiseOr(expression);
-					break;
-				case ExpressionType.BitwiseXor:
-					BitwiseXor(expression);
-					break;
-				case ExpressionType.Cast:
-					Cast(expression);
+				case ExpressionType.Call:
+					Call(expression);
 					break;
 				case ExpressionType.Coalesce:
 					Coalesce(expression);
@@ -85,56 +76,41 @@ namespace LinqToRdf.Sparql
 				case ExpressionType.Divide:
 					Divide(expression);
 					break;
-				case ExpressionType.EQ:
-					EQ(expression);
+				case ExpressionType.Equal:
+					Equal(expression);
 					break;
-				case ExpressionType.Funclet:
-					Funclet(expression);
+				case ExpressionType.ExclusiveOr:
+					ExclusiveOr(expression);
 					break;
-				case ExpressionType.GT:
-					GT(expression);
+				case ExpressionType.GreaterThan:
+					GreaterThan(expression);
 					break;
-				case ExpressionType.GE:
-					GE(expression);
-					break;
-				case ExpressionType.Index:
-					Index(expression);
+				case ExpressionType.GreaterThanOrEqual:
+					GreaterThanOrEqual(expression);
 					break;
 				case ExpressionType.Invoke:
 					Invoke(expression);
 					break;
-				case ExpressionType.Is:
-					Is(expression);
-					break;
 				case ExpressionType.Lambda:
 					Lambda(expression);
 					break;
-				case ExpressionType.LE:
-					LE(expression);
+				case ExpressionType.LeftShift:
+					LeftShift(expression);
 					break;
-				case ExpressionType.Len:
-					Len(expression);
+				case ExpressionType.LessThan:
+					LessThan(expression);
+					break;
+				case ExpressionType.LessThanOrEqual:
+					LessThanOrEqual(expression);
 					break;
 				case ExpressionType.ListInit:
 					ListInit(expression);
-					break;
-				case ExpressionType.LShift:
-					LShift(expression);
-					break;
-				case ExpressionType.LT:
-					LT(expression);
 					break;
 				case ExpressionType.MemberAccess:
 					MemberAccess(expression);
 					break;
 				case ExpressionType.MemberInit:
 					MemberInit(expression);
-					break;
-				case ExpressionType.MethodCall:
-					MethodCall(expression);
-					break;
-				case ExpressionType.MethodCallVirtual:
-					MethodCallVirtual(expression);
 					break;
 				case ExpressionType.Modulo:
 					Modulo(expression);
@@ -148,20 +124,23 @@ namespace LinqToRdf.Sparql
 				case ExpressionType.Negate:
 					Negate(expression);
 					break;
-				case ExpressionType.NE:
-					NE(expression);
+				case ExpressionType.NegateChecked:
+					NegateChecked(expression);
 					break;
 				case ExpressionType.New:
 					New(expression);
 					break;
-				case ExpressionType.NewArrayInit:
-					NewArrayInit(expression);
-					break;
 				case ExpressionType.NewArrayBounds:
 					NewArrayBounds(expression);
 					break;
+				case ExpressionType.NewArrayInit:
+					NewArrayInit(expression);
+					break;
 				case ExpressionType.Not:
 					Not(expression);
+					break;
+				case ExpressionType.NotEqual:
+					NotEqual(expression);
 					break;
 				case ExpressionType.Or:
 					Or(expression);
@@ -172,11 +151,14 @@ namespace LinqToRdf.Sparql
 				case ExpressionType.Parameter:
 					Parameter(expression);
 					break;
+				case ExpressionType.Power:
+					Power(expression);
+					break;
 				case ExpressionType.Quote:
 					Quote(expression);
 					break;
-				case ExpressionType.RShift:
-					RShift(expression);
+				case ExpressionType.RightShift:
+					RightShift(expression);
 					break;
 				case ExpressionType.Subtract:
 					Subtract(expression);
@@ -184,8 +166,37 @@ namespace LinqToRdf.Sparql
 				case ExpressionType.SubtractChecked:
 					SubtractChecked(expression);
 					break;
+				case ExpressionType.TypeAs:
+					TypeAs(expression);
+					break;
+				case ExpressionType.TypeIs:
+					TypeIs(expression);
+					break;
+				case ExpressionType.UnaryPlus:
+					UnaryPlus(expression);
+					break;
 			}
 
+		}
+
+		public void ExclusiveOr(Expression expression)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void NegateChecked(Expression expression)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Power(Expression expression)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void UnaryPlus(Expression expression)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void GenerateBinaryExpression(Expression e, string op)
@@ -250,9 +261,9 @@ namespace LinqToRdf.Sparql
 			GenerateBinaryExpression(e, "&&");
 		}
 
-		public void As(Expression e)
+		public void TypeAs(Expression e)
 		{
-			throw new NotImplementedException("operation As not supported");
+			throw new NotImplementedException("operation TypeAs not supported");
 		}
 
 		public void BitwiseAnd(Expression e)
@@ -332,7 +343,7 @@ namespace LinqToRdf.Sparql
 			Log("+ :{0} Handled", e.NodeType);
 		}
 
-		public void EQ(Expression e)
+		public void Equal(Expression e)
 		{
 			Expression lh;
 			Expression rh;
@@ -345,8 +356,8 @@ namespace LinqToRdf.Sparql
 			else if (e is MethodCallExpression)
 			{
 				MethodCallExpression mce = e as MethodCallExpression;
-				lh = mce.Parameters[0];
-				rh = mce.Parameters[1];
+				lh = mce.Arguments[0];
+				rh = mce.Arguments[1];
 			}
 			else
 			{
@@ -377,7 +388,7 @@ namespace LinqToRdf.Sparql
 			}
 			else
 			{
-				Log("Failure during generation of EQ expression");
+				Log("Failure during generation of Equal expression");
 			}
 		}
 
@@ -386,19 +397,19 @@ namespace LinqToRdf.Sparql
 			throw new NotImplementedException("operation Funclet not supported");
 		}
 
-		public void GT(Expression e)
+		public void GreaterThan(Expression e)
 		{
-			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.GT);
+			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.GreaterThan);
 			GenerateBinaryExpression(e, ">");
 		}
 
-		public void GE(Expression e)
+		public void GreaterThanOrEqual(Expression e)
 		{
-			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.GE);
+			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.GreaterThanOrEqual);
 			GenerateBinaryExpression(e, ">=");
 		}
 
-		public void Index(Expression e)
+		public void ArrayIndex(Expression e)
 		{
 			BinaryExpression be = (BinaryExpression)e;
 			Dispatch(be.Left);
@@ -412,9 +423,9 @@ namespace LinqToRdf.Sparql
 			throw new NotImplementedException("operation Invoke not supported");
 		}
 
-		public void Is(Expression e)
+		public void TypeIs(Expression e)
 		{
-			throw new NotImplementedException("operation Is not supported");
+			throw new NotImplementedException("operation TypeIs not supported");
 		}
 
 		public void Lambda(Expression e)
@@ -422,15 +433,15 @@ namespace LinqToRdf.Sparql
 			Dispatch(((LambdaExpression)e).Body);
 		}
 
-		public void LE(Expression e)
+		public void LessThanOrEqual(Expression e)
 		{
-			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.LE);
+			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.LessThanOrEqual);
 			GenerateBinaryExpression(e, "<=");
 		}
 
-		public void Len(Expression e)
+		public void ArrayLength(Expression e)
 		{
-			throw new NotImplementedException("operation Len not supported");
+			throw new NotImplementedException("operation ArrayLength not supported");
 		}
 
 		public void ListInit(Expression e)
@@ -438,14 +449,14 @@ namespace LinqToRdf.Sparql
 			throw new NotImplementedException("operation ListInit not supported");
 		}
 
-		public void LShift(Expression e)
+		public void LeftShift(Expression e)
 		{
 			throw new NotImplementedException("operation LShift not supported");
 		}
 
-		public void LT(Expression e)
+		public void LessThan(Expression e)
 		{
-			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.LT);
+			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.LessThan);
 			GenerateBinaryExpression(e, "<");
 		}
 
@@ -465,22 +476,22 @@ namespace LinqToRdf.Sparql
 			throw new NotImplementedException("operation MemberInit not supported");
 		}
 
-		public void MethodCall(Expression e)
+		public void Call(Expression e)
 		{
 			MethodCallExpression mce = (MethodCallExpression)e;
 			switch (mce.Method.Name)
 			{
 				case "op_Equality":
-					EQ(e);
+					Equal(e);
 					break;
 				default:
 					Dispatch(mce.Object);
 					QueryAppend("." + mce.Method.Name + "(");
 					string sep = "";
-					for (int i = 0; i < mce.Parameters.Count; i++)
+					for (int i = 0; i < mce.Arguments.Count; i++)
 					{
 						QueryAppend(sep);
-						Dispatch(mce.Parameters[i]);
+						Dispatch(mce.Arguments[i]);
 						sep = ", ";
 					}
 					QueryAppend(")");
@@ -523,14 +534,14 @@ namespace LinqToRdf.Sparql
 		}
 		private void GenerateRegexStartsWith(MethodCallExpression mce)
 		{
-			ConstantExpression constantExpression = (ConstantExpression)mce.Parameters[0];
+			ConstantExpression constantExpression = (ConstantExpression)mce.Arguments[0];
 			MemberExpression memberExpression = (MemberExpression)mce.Object;
 			QueryAppend("regex({0}, \"^{1}\") ", "?" + memberExpression.Member.Name, constantExpression.Value);
 		}
 
 		private void GenerateRegexEndsWith(MethodCallExpression mce)
 		{
-			ConstantExpression constantExpression = (ConstantExpression)mce.Parameters[0];
+			ConstantExpression constantExpression = (ConstantExpression)mce.Arguments[0];
 			MemberExpression memberExpression = (MemberExpression)mce.Object;
 			QueryAppend("regex({0}, \"{1}$\") ", "?" + memberExpression.Member.Name, constantExpression.Value);
 		}
@@ -547,7 +558,7 @@ namespace LinqToRdf.Sparql
 		/// </remarks>
 		private void GenerateRegexComparison(MethodCallExpression mce)
 		{
-			ConstantExpression constantExpression = (ConstantExpression)mce.Parameters[0];
+			ConstantExpression constantExpression = (ConstantExpression)mce.Arguments[0];
 			MemberExpression memberExpression = (MemberExpression)mce.Object;
 			QueryAppend("regex({0}, \"{1}\") ", "?" + memberExpression.Member.Name, constantExpression.Value.ToString());
 		}
@@ -578,9 +589,9 @@ namespace LinqToRdf.Sparql
 			throw new NotImplementedException("operation Negate not supported");
 		}
 
-		public void NE(Expression e)
+		public void NotEqual(Expression e)
 		{
-			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.NE);
+			Debug.Assert(e is BinaryExpression && e.NodeType == ExpressionType.NotEqual);
 			GenerateBinaryExpression(e, "!=");
 		}
 
@@ -622,7 +633,8 @@ namespace LinqToRdf.Sparql
 
 		public void Parameter(Expression e)
 		{
-			e.BuildString(stringBuilder);
+			ParameterExpression pe = (ParameterExpression)e;
+			stringBuilder.Append(pe.Name);
 		}
 
 		public void Quote(Expression e)
@@ -633,7 +645,7 @@ namespace LinqToRdf.Sparql
 			QueryAppend("\"");
 		}
 
-		public void RShift(Expression e)
+		public void RightShift(Expression e)
 		{
 			throw new NotImplementedException("operation RShift not supported");
 		}

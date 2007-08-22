@@ -12,7 +12,7 @@
  *
  */
 using System;
-using System.Expressions;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using LinqToRdf;
@@ -241,7 +241,7 @@ namespace RdfSerialisationTest
 		}
 
 		/// <summary>
-		///A test for As (Expression)
+		///A test for TypeAs (Expression)
 		///</summary>
 		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
@@ -250,66 +250,9 @@ namespace RdfSerialisationTest
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
 
-			Expression e = Expression.As(Expression.Constant("true"), typeof (bool));
+			Expression e = Expression.TypeAs(Expression.Constant("true"), typeof (bool));
 			target.StringBuilder = new StringBuilder();
-			target.As(e);
-		}
-
-		/// <summary>
-		///A test for BitwiseAnd (Expression)
-		///</summary>
-		[TestMethod]
-		[ExpectedException(typeof (NotImplementedException))]
-		public void BitwiseAndTest()
-		{
-			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
-			target.TypeTranslator = new XsdtTypeConverter();
-
-			Expression e = Expression.BitAnd(
-				EH.Member(GetType().GetProperty("BooleanTestProperty")),
-				Expression.Constant(true));
-			StringBuilder sb = new StringBuilder();
-			target.StringBuilder = sb;
-			target.BitwiseAnd(e);
-			string actualResult = sb.ToString();
-			string expectedResult = "(?BooleanTestProperty)&(True^^xsdt:boolean)";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
-		}
-
-		/// <summary>
-		///A test for BitwiseNot (Expression)
-		///</summary>
-		[TestMethod]
-		[ExpectedException(typeof (NotImplementedException))]
-		public void BitwiseNotTest()
-		{
-			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
-			target.TypeTranslator = new XsdtTypeConverter();
-
-			Expression e = Expression.BitNot(EH.Member(GetType().GetProperty("BooleanTestProperty")));
-			target.StringBuilder = new StringBuilder();
-			target.BitwiseNot(e);
-		}
-
-		/// <summary>
-		///A test for BitwiseOr (Expression)
-		///</summary>
-		[TestMethod]
-		[ExpectedException(typeof (NotImplementedException))]
-		public void BitwiseOrTest()
-		{
-			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
-			target.TypeTranslator = new XsdtTypeConverter();
-
-			Expression e = Expression.BitOr(
-				EH.Member(GetType().GetProperty("BooleanTestProperty")),
-				Expression.Constant(true));
-			StringBuilder sb = new StringBuilder();
-			target.StringBuilder = sb;
-			target.BitwiseOr(e);
-			string actualResult = sb.ToString();
-			string expectedResult = "(?BooleanTestProperty)|(True^^xsdt:boolean)";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			target.TypeAs(e);
 		}
 
 		/// <summary>
@@ -317,14 +260,14 @@ namespace RdfSerialisationTest
 		///</summary>
 		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
-		public void BitwiseXorTest()
+		public void XorTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
 
-			Expression e = Expression.BitXor(Expression.Constant(10), Expression.Constant(8));
+			Expression e = Expression.ExclusiveOr(Expression.Constant(10), Expression.Constant(8));
 			target.StringBuilder = new StringBuilder();
-			target.BitwiseXor(e);
+			target.ExclusiveOr(e);
 		}
 
 		/// <summary>
@@ -332,14 +275,14 @@ namespace RdfSerialisationTest
 		///</summary>
 		[TestMethod]
 		[ExpectedException(typeof (ArgumentException))]
-		public void CastTest()
+		public void TypeAsTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
 
-			Expression e = Expression.Cast(Expression.Constant("3.14"), typeof (double));
+			Expression e = Expression.TypeAs(Expression.Constant("3.14"), typeof (double));
 			target.StringBuilder = new StringBuilder();
-			target.Cast(e);
+			target.TypeAs(e);
 		}
 
 		/// <summary>
@@ -368,11 +311,11 @@ namespace RdfSerialisationTest
 			target.TypeTranslator = new XsdtTypeConverter();
 
 			Expression e = Expression.Condition(
-				Expression.EQ(EH.Member(GetType().GetProperty("BooleanTestProperty")),
+				Expression.Equal(EH.Member(GetType().GetProperty("BooleanTestProperty")),
 				              Expression.Constant(true)),
 				Expression.Constant(10), Expression.Constant(15));
 			target.StringBuilder = new StringBuilder();
-			target.Conditional(e);
+			target.Equal(e);
 		}
 
 		/// <summary>
@@ -424,7 +367,7 @@ namespace RdfSerialisationTest
 		}
 
 		/// <summary>
-		///A test for EQ (Expression)
+		///A test for Equal (Expression)
 		///</summary>
 		[TestMethod]
 		public void EQTest()
@@ -432,10 +375,10 @@ namespace RdfSerialisationTest
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
 
-			Expression e = Expression.EQ(Expression.Constant(10), Expression.Constant(15));
+			Expression e = Expression.Equal(Expression.Constant(10), Expression.Constant(15));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.EQ(e);
+			target.Equal(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "10 = 15";
 			Assert.AreEqual(expectedResult, actualResult);
@@ -458,34 +401,34 @@ namespace RdfSerialisationTest
 		}
 
 		/// <summary>
-		///A test for GE (Expression)
+		///A test for GreaterThanOrEqual (Expression)
 		///</summary>
 		[TestMethod]
 		public void GETest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.GE(Expression.Constant(10), Expression.Constant(15));
+			Expression e = Expression.GreaterThanOrEqual(Expression.Constant(10), Expression.Constant(15));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.GE(e);
+			target.GreaterThanOrEqual(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(10)>=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
 		/// <summary>
-		///A test for GT (Expression)
+		///A test for GreaterThan (Expression)
 		///</summary>
 		[TestMethod]
 		public void GTTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.GT(Expression.Constant(10), Expression.Constant(15));
+			Expression e = Expression.GreaterThan(Expression.Constant(10), Expression.Constant(15));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.GT(e);
+			target.GreaterThan(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(10)>(15)";
 			Assert.AreEqual(expectedResult, actualResult);
@@ -499,10 +442,10 @@ namespace RdfSerialisationTest
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.Index(EH.Member(GetType().GetProperty("Ia")), Expression.Constant(1));
+			Expression e = Expression.ArrayIndex(EH.Member(GetType().GetProperty("Ia")), Expression.Constant(1));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.Index(e);
+			target.ArrayIndex(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "?Ia[1]";
 			Assert.AreEqual(expectedResult, actualResult);
@@ -519,7 +462,7 @@ namespace RdfSerialisationTest
 		}
 
 		/// <summary>
-		///A test for Is (Expression)
+		///A test for TypeIs (Expression)
 		///</summary>
 		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
@@ -527,10 +470,10 @@ namespace RdfSerialisationTest
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.Is(Expression.Constant(10), typeof(int));
+			Expression e = Expression.TypeIs(Expression.Constant(10), typeof(int));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.Is(e);
+			target.TypeIs(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(10)>(15)";
 			Assert.AreEqual(expectedResult, actualResult);
@@ -547,24 +490,24 @@ namespace RdfSerialisationTest
 		}
 
 		/// <summary>
-		///A test for LE (Expression)
+		///A test for LessThanOrEqual (Expression)
 		///</summary>
 		[TestMethod]
 		public void LETest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.LE(Expression.Constant(10), Expression.Constant(15));
+			Expression e = Expression.LessThanOrEqual(Expression.Constant(10), Expression.Constant(15));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.LE(e);
+			target.LessThanOrEqual(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(10)<=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
 		/// <summary>
-		///A test for Len (Expression)
+		///A test for ArrayLength (Expression)
 		///</summary>
 		[TestMethod]
 		[ExpectedException(typeof (NotImplementedException))]
@@ -572,10 +515,10 @@ namespace RdfSerialisationTest
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.Len(EH.Member(GetType().GetProperty("Ia")));
+			Expression e = Expression.ArrayLength(EH.Member(GetType().GetProperty("Ia")));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.Len(e);
+			target.ArrayLength(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(10)<=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
@@ -600,27 +543,27 @@ namespace RdfSerialisationTest
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.LShift(Expression.Constant(10), Expression.Constant(15));
+			Expression e = Expression.LeftShift(Expression.Constant(10), Expression.Constant(15));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.LShift(e);
+			target.LeftShift(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(10)<=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
 		/// <summary>
-		///A test for LT (Expression)
+		///A test for LessThan (Expression)
 		///</summary>
 		[TestMethod]
 		public void LTTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.LT(Expression.Constant(10), Expression.Constant(15));
+			Expression e = Expression.LessThan(Expression.Constant(10), Expression.Constant(15));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.LT(e);
+			target.LessThan(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(10)<(15)";
 			Assert.AreEqual(expectedResult, actualResult);
@@ -662,29 +605,12 @@ namespace RdfSerialisationTest
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
 			Expression[] ea = new Expression[] { Expression.Constant(15) };
-			Expression e = Expression.Call(GetType().GetMethod("IntTestMethod"), Expression.Constant(this), ea);
+			Expression e = Expression.Call(GetType().GetMethod("IntTestMethod"), ea);
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.MethodCall(e);
+			target.Call(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(t.IntTestMethod(15)";
-			Assert.AreEqual(expectedResult, actualResult);
-		}
-
-		/// <summary>
-		///A test for MethodCallVirtual (Expression)
-		///</summary>
-		[Ignore, TestMethod]
-		public void MethodCallVirtualTest()
-		{
-			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
-			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.CallVirtual(GetType().GetMethod("IntTestMethod"), Expression.Constant(15));
-			StringBuilder sb = new StringBuilder();
-			target.StringBuilder = sb;
-			target.MethodCallVirtual(e);
-			string actualResult = sb.ToString();
-			string expectedResult = "(t.IntTestMethod(15))";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -741,17 +667,17 @@ namespace RdfSerialisationTest
 		}
 
 		/// <summary>
-		///A test for NE (Expression)
+		///A test for NotEqual (Expression)
 		///</summary>
 		[TestMethod]
 		public void NETest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.NE(Expression.Constant(10), Expression.Constant(15));
+			Expression e = Expression.NotEqual(Expression.Constant(10), Expression.Constant(15));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.NE(e);
+			target.NotEqual(e);
 			string actualResult = sb.ToString();
 			string expectedResult = "(10)!=(15)";
 			Assert.AreEqual(expectedResult, actualResult);
@@ -927,10 +853,10 @@ namespace RdfSerialisationTest
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.RShift(Expression.Constant(1), Expression.Constant(5));
+			Expression e = Expression.RightShift(Expression.Constant(1), Expression.Constant(5));
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
-			target.RShift(e);
+			target.RightShift(e);
 			string actualResult = sb.ToString();
 			string expectedResult = ""; //  shouldn't make it to here
 			Assert.AreEqual(expectedResult, actualResult);

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using LinqToRdf;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
-using System.Query;
+using System.Linq;
 
 namespace RdfSerialisationTest
 {

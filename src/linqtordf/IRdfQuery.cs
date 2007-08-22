@@ -11,11 +11,11 @@
  * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
  *
  */
-using System.Query;
+using System.Linq;
 
 namespace LinqToRdf
 {
-    public interface IRdfQuery<T> : IOrderedQueryable<T>
+    public interface IRdfQuery<T> : IOrderedQueryable<T>, IQueryProvider
     {
         bool ShouldReuseResultset { get; set; }
     }

@@ -14,15 +14,15 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Expressions;
+using System.Linq.Expressions;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using C5;
 
 namespace LinqToRdf
 {
-	public class QuerySupertype<T>{
+	public class QuerySupertype<T>
+	{
 		protected IRdfContext context;
 		protected Dictionary<string, MethodCallExpression> expressions;
 		protected TextWriter logger;
@@ -33,49 +33,49 @@ namespace LinqToRdf
 		protected HashSet<MemberInfo> projectionParameters = new HashSet<MemberInfo>();
 		protected string filterClause;
 		protected QueryFactory<T> queryFactory;
-	    private bool shouldReuseResultset = false;
+		private bool shouldReuseResultset = false;
 
-	    public IRdfContext Context
+		public IRdfContext Context
 		{
 			get { return context; }
 		}
 
-	    public IEnumerable<T> CachedResults
-	    {
-	        get
-	        {
-	            string hashcode = GetHashCode().ToString();
-	            if(Context.ResultsCache.ContainsKey(hashcode))
-	            {
-	                return Context.ResultsCache[hashcode] as IEnumerable<T>;
-	            }
-	            return null;
-	        }
-	        set
-	        {
-	            string hashcode = GetHashCode().ToString();
-	            Context.ResultsCache[hashcode] = value;
-	        }
-	    }
-
-	    public Dictionary<string, MethodCallExpression> Expressions
+		public IEnumerable<T> CachedResults
 		{
 			get
 			{
-				if(expressions == null)
+				string hashcode = GetHashCode().ToString();
+				if (Context.ResultsCache.ContainsKey(hashcode))
+				{
+					return Context.ResultsCache[hashcode] as IEnumerable<T>;
+				}
+				return null;
+			}
+			set
+			{
+				string hashcode = GetHashCode().ToString();
+				Context.ResultsCache[hashcode] = value;
+			}
+		}
+
+		public Dictionary<string, MethodCallExpression> Expressions
+		{
+			get
+			{
+				if (expressions == null)
 					expressions = new Dictionary<string, MethodCallExpression>();
 				return expressions;
 			}
 			set { expressions = value; }
 		}
 
-	    public string FilterClause
-	    {
-	        get { return filterClause; }
-	        set { filterClause = value; }
-	    }
+		public string FilterClause
+		{
+			get { return filterClause; }
+			set { filterClause = value; }
+		}
 
-	    public TextWriter Logger
+		public TextWriter Logger
 		{
 			get { return logger; }
 			set { logger = value; }
@@ -106,52 +106,57 @@ namespace LinqToRdf
 		}
 
 
-	    public QueryFactory<T> QueryFactory
+		public QueryFactory<T> QueryFactory
 		{
 			get { return queryFactory; }
 			set { queryFactory = value; }
 		}
 
-	    public bool ShouldReuseResultset
-	    {
-            get { return shouldReuseResultset; }
-	        set
-	        {
-	            shouldReuseResultset = value;
-                // if we stop caching & we already have results then erase them
-                if(shouldReuseResultset == false && Context.ResultsCache != null)
-                {
-                    Context.ResultsCache.Clear();
-                    Context.ResultsCache = null;
-                }
-	        }
-	    }
-
-	    protected void BuildProjection(Expression expression)
+		public bool ShouldReuseResultset
 		{
-			LambdaExpression le = ((MethodCallExpression)expression).Parameters[1] as LambdaExpression;
-			if (le == null) throw new ApplicationException("Incompatible expression type found when building a projection");
-			projection = le.Compile();
-			MemberInitExpression mie = le.Body as MemberInitExpression;
-			if (mie != null)
-				foreach (Binding b in mie.Bindings)
-					FindProperties(b);
-			else
-				foreach (PropertyInfo i in originalType.GetProperties())
-					projectionParameters.Add(i);
+			get { return shouldReuseResultset; }
+			set
+			{
+				shouldReuseResultset = value;
+				// if we stop caching & we already have results then erase them
+				if (shouldReuseResultset == false && Context.ResultsCache != null)
+				{
+					Context.ResultsCache.Clear();
+					Context.ResultsCache = null;
+				}
+			}
 		}
 
-		private void FindProperties(Binding e)
+		protected void BuildProjection(Expression expression)
+		{
+			UnaryExpression ue = ((MethodCallExpression)expression).Arguments[1] as UnaryExpression;
+			LambdaExpression le = (LambdaExpression)ue.Operand;
+			if (le == null) throw new ApplicationException("Incompatible expression type found when building a projection");
+			projection = le.Compile();
+			NewExpression mie = le.Body as NewExpression;
+			if (le.Body is ParameterExpression) //  ie an identity projection
+			{
+				foreach (PropertyInfo i in originalType.GetProperties())
+					projectionParameters.Add(i);
+			}
+			else
+				foreach (MemberExpression me in mie.Arguments)
+				{
+					projectionParameters.Add(me.Member);
+				}
+		}
+
+		private void FindProperties(MemberBinding e)
 		{
 			namespaceManager.RegisterType(OriginalType);
 			switch (e.BindingType)
 			{
-				case BindingType.MemberAssignment:
+				case MemberBindingType.Assignment:
 					projectionParameters.Add(e.Member);
 					break;
-				case BindingType.MemberListBinding:
+				case MemberBindingType.ListBinding:
 					break;
-				case BindingType.MemberMemberBinding:
+				case MemberBindingType.MemberBinding:
 					projectionParameters.Add(e.Member);
 					break;
 			}
@@ -159,8 +164,8 @@ namespace LinqToRdf
 
 		internal void Log(string msg, params object[] args)
 		{
-			if(Logger != null)
-				logger.WriteLine(string.Format("+ :"+msg, args));
+			if (Logger != null)
+				logger.WriteLine(string.Format("+ :" + msg, args));
 		}
 	}
 }

@@ -13,10 +13,10 @@
  */
 using System;
 using System.Diagnostics;
-using System.Expressions;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using C5;
+using System.Collections.Generic;
 
 namespace LinqToRdf
 {
@@ -73,8 +73,150 @@ namespace LinqToRdf
 				case ExpressionType.AndAlso:
 					AndAlso(expression);
 					break;
-				case ExpressionType.As:
-					As(expression);
+				case ExpressionType.ArrayIndex:
+					Index(expression);
+					break;
+				case ExpressionType.ArrayLength:
+					ArrayLength(expression);
+					break;
+				case ExpressionType.Call:
+					MethodCall(expression);
+					break;
+				case ExpressionType.Coalesce:
+					Coalesce(expression);
+					break;
+				case ExpressionType.Conditional:
+					Conditional(expression);
+					break;
+				case ExpressionType.Constant:
+					Constant(expression);
+					break;
+				case ExpressionType.Convert:
+					Convert(expression);
+					break;
+				case ExpressionType.ConvertChecked:
+					ConvertChecked(expression);
+					break;
+				case ExpressionType.Divide:
+					Divide(expression);
+					break;
+				case ExpressionType.Equal:
+					Equal(expression);
+					break;
+				case ExpressionType.ExclusiveOr:
+					ExclusiveOr(expression);
+					break;
+				case ExpressionType.GreaterThan:
+					GreaterThan(expression);
+					break;
+				case ExpressionType.GreaterThanOrEqual:
+					GreaterThanOrEqual(expression);
+					break;
+				case ExpressionType.Invoke:
+					Invoke(expression);
+					break;
+				case ExpressionType.Lambda:
+					Lambda(expression);
+					break;
+				case ExpressionType.LeftShift:
+					LeftShift(expression);
+					break;
+				case ExpressionType.LessThan:
+					LessThan(expression);
+					break;
+				case ExpressionType.LessThanOrEqual:
+					LessThanOrEqual(expression);
+					break;
+				case ExpressionType.ListInit:
+					ListInit(expression);
+					break;
+				case ExpressionType.MemberAccess:
+					MemberAccess(expression);
+					break;
+				case ExpressionType.MemberInit:
+					MemberInit(expression);
+					break;
+				case ExpressionType.Modulo:
+					Modulo(expression);
+					break;
+				case ExpressionType.Multiply:
+					Multiply(expression);
+					break;
+				case ExpressionType.MultiplyChecked:
+					MultiplyChecked(expression);
+					break;
+				case ExpressionType.Negate:
+					Negate(expression);
+					break;
+				case ExpressionType.NegateChecked:
+					NegateChecked(expression);
+					break;
+				case ExpressionType.New:
+					New(expression);
+					break;
+				case ExpressionType.NewArrayBounds:
+					NewArrayBounds(expression);
+					break;
+				case ExpressionType.NewArrayInit:
+					NewArrayInit(expression);
+					break;
+				case ExpressionType.Not:
+					Not(expression);
+					break;
+				case ExpressionType.NotEqual:
+					NotEqual(expression);
+					break;
+				case ExpressionType.Or:
+					Or(expression);
+					break;
+				case ExpressionType.OrElse:
+					OrElse(expression);
+					break;
+				case ExpressionType.Parameter:
+					Parameter(expression);
+					break;
+				case ExpressionType.Power:
+					Power(expression);
+					break;
+				case ExpressionType.Quote:
+					Quote(expression);
+					break;
+				case ExpressionType.RightShift:
+					RightShift(expression);
+					break;
+				case ExpressionType.Subtract:
+					Subtract(expression);
+					break;
+				case ExpressionType.SubtractChecked:
+					SubtractChecked(expression);
+					break;
+				case ExpressionType.TypeAs:
+					TypeAs(expression);
+					break;
+				case ExpressionType.TypeIs:
+					TypeIs(expression);
+					break;
+				case ExpressionType.UnaryPlus:
+					UnaryPlus(expression);
+					break;
+			}
+			#region old code
+			/*switch (expression.NodeType)
+			{
+				case ExpressionType.Add:
+					Add(expression);
+					break;
+				case ExpressionType.AddChecked:
+					AddChecked(expression);
+					break;
+				case ExpressionType.And:
+					And(expression);
+					break;
+				case ExpressionType.AndAlso:
+					AndAlso(expression);
+					break;
+				case ExpressionType.TypeAs:
+					TypeAs(expression);
 					break;
 				case ExpressionType.BitwiseAnd:
 					BitwiseAnd(expression);
@@ -109,17 +251,17 @@ namespace LinqToRdf
 				case ExpressionType.Divide:
 					Divide(expression);
 					break;
-				case ExpressionType.EQ:
-					EQ(expression);
+				case ExpressionType.Equal:
+					Equal(expression);
 					break;
 				case ExpressionType.Funclet:
 					Funclet(expression);
 					break;
-				case ExpressionType.GT:
-					GT(expression);
+				case ExpressionType.GreaterThan:
+					GreaterThan(expression);
 					break;
-				case ExpressionType.GE:
-					GE(expression);
+				case ExpressionType.GreaterThanOrEqual:
+					GreaterThanOrEqual(expression);
 					break;
 				case ExpressionType.Index:
 					Index(expression);
@@ -127,17 +269,17 @@ namespace LinqToRdf
 				case ExpressionType.Invoke:
 					Invoke(expression);
 					break;
-				case ExpressionType.Is:
-					Is(expression);
+				case ExpressionType.TypeIs:
+					TypeIs(expression);
 					break;
 				case ExpressionType.Lambda:
 					Lambda(expression);
 					break;
-				case ExpressionType.LE:
-					LE(expression);
+				case ExpressionType.LessThanOrEqual:
+					LessThanOrEqual(expression);
 					break;
-				case ExpressionType.Len:
-					Len(expression);
+				case ExpressionType.ArrayLength:
+					ArrayLength(expression);
 					break;
 				case ExpressionType.ListInit:
 					ListInit(expression);
@@ -145,8 +287,8 @@ namespace LinqToRdf
 				case ExpressionType.LShift:
 					LShift(expression);
 					break;
-				case ExpressionType.LT:
-					LT(expression);
+				case ExpressionType.LessThan:
+					LessThan(expression);
 					break;
 				case ExpressionType.MemberAccess:
 					MemberAccess(expression);
@@ -172,8 +314,8 @@ namespace LinqToRdf
 				case ExpressionType.Negate:
 					Negate(expression);
 					break;
-				case ExpressionType.NE:
-					NE(expression);
+				case ExpressionType.NotEqual:
+					NotEqual(expression);
 					break;
 				case ExpressionType.New:
 					New(expression);
@@ -209,7 +351,38 @@ namespace LinqToRdf
 					SubtractChecked(expression);
 					break;
 			}
+			*/
+			#endregion
+		}
 
+		private void UnaryPlus(Expression expression)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void ExclusiveOr(Expression expression)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void LeftShift(Expression expression)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void NegateChecked(Expression expression)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void Power(Expression expression)
+		{
+			throw new NotImplementedException();
+		}
+
+		private void RightShift(Expression expression)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void QueryAppend(string fmt, params object[] args)
@@ -266,10 +439,10 @@ namespace LinqToRdf
 			Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 		}
 
-		public void As(Expression e)
+		public void TypeAs(Expression e)
 		{
 			//QueryAppend("+ :{0} Handled", e.NodeType);
-			throw new NotImplementedException("operation As not supported");
+			throw new NotImplementedException("operation TypeAs not supported");
 		}
 
 		public void BitwiseAnd(Expression e)
@@ -338,7 +511,7 @@ namespace LinqToRdf
 			throw new NotImplementedException("operation Divide not supported");
 		}
 
-		public void EQ(Expression e)
+		public void Equal(Expression e)
 		{
 			BinaryExpression be = e as BinaryExpression;
 			if (be != null)
@@ -351,8 +524,8 @@ namespace LinqToRdf
 			MethodCallExpression mce = e as MethodCallExpression;
 			if (mce != null && mce.Method.Name == "op_Equality")
 			{
-				MemberExpression me = mce.Parameters[0] as MemberExpression;
-				ConstantExpression ce = mce.Parameters[1] as ConstantExpression;
+				MemberExpression me = mce.Arguments[0] as MemberExpression;
+				ConstantExpression ce = mce.Arguments[1] as ConstantExpression;
 				QueryAppend(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString());
 				Console.WriteLine(string.Format(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString()));
 			}
@@ -365,7 +538,7 @@ namespace LinqToRdf
 			throw new NotImplementedException("operation Funclet not supported");
 		}
 
-		public void GT(Expression e)
+		public void GreaterThan(Expression e)
 		{
 			/*
 						BinaryExpression be = e as BinaryExpression;
@@ -379,7 +552,7 @@ namespace LinqToRdf
 			throw new NotImplementedException("operation > is not supported");
 		}
 
-		public void GE(Expression e)
+		public void GreaterThanOrEqual(Expression e)
 		{
 			/*
 						BinaryExpression be = e as BinaryExpression;
@@ -405,10 +578,10 @@ namespace LinqToRdf
 			throw new NotImplementedException("operation Invoke not supported");
 		}
 
-		public void Is(Expression e)
+		public void TypeIs(Expression e)
 		{
 			//QueryAppend("+ :{0} Handled", e.NodeType);
-			throw new NotImplementedException("operation Is not supported");
+			throw new NotImplementedException("operation TypeIs not supported");
 		}
 
 		public void Lambda(Expression e)
@@ -416,16 +589,16 @@ namespace LinqToRdf
 			Dispatch(((LambdaExpression)e).Body);
 		}
 
-		public void LE(Expression e)
+		public void LessThanOrEqual(Expression e)
 		{
 			//QueryAppend("+ :{0} Handled", e.NodeType);
-			throw new NotImplementedException("operation LE not supported");
+			throw new NotImplementedException("operation LessThanOrEqual not supported");
 		}
 
-		public void Len(Expression e)
+		public void ArrayLength(Expression e)
 		{
 			//QueryAppend("+ :{0} Handled", e.NodeType);
-			throw new NotImplementedException("operation Len not supported");
+			throw new NotImplementedException("operation ArrayLength not supported");
 		}
 
 		public void ListInit(Expression e)
@@ -440,10 +613,10 @@ namespace LinqToRdf
 			throw new NotImplementedException("operation LShift not supported");
 		}
 
-		public void LT(Expression e)
+		public void LessThan(Expression e)
 		{
 			//QueryAppend("+ :{0} Handled", e.NodeType);
-			throw new NotImplementedException("operation LT not supported");
+			throw new NotImplementedException("operation LessThan not supported");
 		}
 
 		public void MemberAccess(Expression e)
@@ -466,7 +639,7 @@ namespace LinqToRdf
 				switch (mce.Method.Name)
 				{
 					case "op_Equality":
-						EQ(e);
+						Equal(e);
 						break;
 				}
 			}
@@ -503,10 +676,10 @@ namespace LinqToRdf
 			throw new NotImplementedException("operation Negate not supported");
 		}
 
-		public void NE(Expression e)
+		public void NotEqual(Expression e)
 		{
 			//QueryAppend("+ :{0} Handled", e.NodeType);
-			throw new NotImplementedException("operation NE not supported");
+			throw new NotImplementedException("operation NotEqual not supported");
 		}
 
 		public void New(Expression e)

@@ -12,7 +12,7 @@
  *
  */
 using System;
-using System.Expressions;
+using System.Linq.Expressions;
 using System.Text;
 using LinqToRdf.Sparql;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

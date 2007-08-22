@@ -12,7 +12,7 @@
  *
  */
 using System;
-using System.Query;
+using System.Linq;
 
 namespace LinqToRdf
 {

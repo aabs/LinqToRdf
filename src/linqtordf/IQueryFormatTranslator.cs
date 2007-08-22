@@ -11,10 +11,10 @@
  * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
  *
  */
-using System.Expressions;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using C5;
+using System.Collections.Generic;
 
 namespace LinqToRdf
 {

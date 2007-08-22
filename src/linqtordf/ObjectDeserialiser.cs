@@ -48,7 +48,7 @@ namespace LinqToRdf
 		public override bool Add(VariableBindings result)
 		{
 			if (originalType == null) throw new ApplicationException("need a type to create");
-			object t = Activator.CreateInstance(instanceType);
+			object t;
 
 			IEnumerable<PropertyInfo> props;
 			if(originalType == instanceType) //  i.e. identity projection, meaning we can use GetAllPersistentProperties safely
@@ -59,25 +59,52 @@ namespace LinqToRdf
 			{
 				props = instanceType.GetProperties();
 			}
-
-			foreach (PropertyInfo pi in props)
+			if (originalType == instanceType)
 			{
-				try
+				t = Activator.CreateInstance(instanceType);
+				foreach (PropertyInfo pi in props)
 				{
-					if(result[pi.Name] != null)
+					try
 					{
-						string vVal = result[pi.Name].ToString();
-						vVal = RemoveEnclosingQuotesOnString(vVal, pi);
-						if (IsXsdtEncoded(vVal))
-							vVal = DecodeXsdtString(vVal);
-						pi.SetValue(t, Convert.ChangeType(vVal, pi.PropertyType), null);
+						if(result[pi.Name] != null)
+						{
+							string vVal = result[pi.Name].ToString();
+							vVal = RemoveEnclosingQuotesOnString(vVal, pi);
+							if (IsXsdtEncoded(vVal))
+								vVal = DecodeXsdtString(vVal);
+							pi.SetValue(t, Convert.ChangeType(vVal, pi.PropertyType), null);
+						}
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(e);
+						return false;
 					}
 				}
-				catch (Exception e)
+			}
+			else
+			{
+				List<object> args = new List<object>();
+				foreach (PropertyInfo pi in props)
 				{
-					Console.WriteLine(e);
-					return false;
+					try
+					{
+						if(result[pi.Name] != null)
+						{
+							string vVal = result[pi.Name].ToString();
+							vVal = RemoveEnclosingQuotesOnString(vVal, pi);
+							if (IsXsdtEncoded(vVal))
+								vVal = DecodeXsdtString(vVal);
+							args.Add(Convert.ChangeType(vVal, pi.PropertyType));
+						}
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(e);
+						return false;
+					}
 				}
+				t = Activator.CreateInstance(instanceType, args.ToArray());
 			}
 			DeserialisedObjects.Add(t);
 			return true;

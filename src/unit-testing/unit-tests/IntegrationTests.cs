@@ -13,8 +13,8 @@
  */
 using System;
 using System.Diagnostics;
-using System.Expressions;
-using System.Query;
+using System.Linq.Expressions;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
@@ -69,19 +69,20 @@ namespace RdfSerialisationTest
 
 		[TestMethod]
 		public void QueryWithProjection()
-    	{
+		{
 			CreateMemoryStore();
 			TripleStore ts = new TripleStore();
-    		ts.LocalTripleStore = store;
-    		IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
-    		var q = from t in qry
-				where t.Year == "2006" &&
-    				t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
-    			select new {t.Title, t.FileLocation};
-    		foreach(var track in q){
-    			Console.WriteLine(track.Title + ": " + track.FileLocation);
-    		}        
-    	}
+			ts.LocalTripleStore = store;
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+			var q = from t in qry
+							where t.Year == "2006" &&
+									t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
+							select new { t.Title, t.FileLocation };
+			foreach (var track in q)
+			{
+				Console.WriteLine(track.Title + ": " + track.FileLocation);
+			}
+		}
 
 		#endregion
 
@@ -89,92 +90,99 @@ namespace RdfSerialisationTest
 
 		[TestMethod]
 		public void SparqlQueryAll()
-        {
+		{
 			TripleStore ts = CreateSparqlTripleStore();
-			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
-	        var q = from t in qry select t;
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+			var q = from t in qry select t;
 			List<Track> lt = new List<Track>(q);
-			foreach(var track in q){
+			foreach (var track in q)
+			{
 				Console.WriteLine("Track: " + track.Title);
-			}        
+			}
 			Assert.IsTrue(lt.Count > 1);
-        }
+		}
 
 		[TestMethod]
 		public void SparqlQuery()
-        {
+		{
 			TripleStore ts = CreateSparqlTripleStore();
-			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
-	        var q = from t in qry
-				where t.Year == "2007" &&
-				t.GenreName == "Rory Blyth: The Smartest Man in the World" 
-				select new {t.Title, t.FileLocation};
-			foreach(var track in q){
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+			var q = from t in qry
+							where t.Year == "2007" &&
+							t.GenreName == "Rory Blyth: The Smartest Man in the World"
+							select new { t.Title, t.FileLocation };
+			foreach (var track in q)
+			{
 				Console.WriteLine(track.Title + ": " + track.FileLocation);
-			}        
-        }
+			}
+		}
 
 		[TestMethod]
 		public void SparqlQueryUsingHttp()
-        {
+		{
 			TripleStore ts = CreateOnlineTripleStore();
-			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
-	        var q = from t in qry
-				where t.Year == "2007" &&
-				t.GenreName == "Rory Blyth: The Smartest Man in the World" 
-				select new {t.Title, t.FileLocation};
-			foreach(var track in q){
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+			var q = from t in qry
+							where t.Year == "2007" &&
+							t.GenreName == "Rory Blyth: The Smartest Man in the World"
+							select new { t.Title, t.FileLocation };
+			foreach (var track in q)
+			{
 				Console.WriteLine(track.Title + ": " + track.FileLocation);
-			}        
-        }
+			}
+		}
 
 		[TestMethod]
 		public void SparqlQueryUsingCachedResults()
-        {
+		{
 			TripleStore ts = CreateSparqlTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
-	        var q = from t in qry
-				where t.Year == "2007" &&
-				t.GenreName == "Rory Blyth: The Smartest Man in the World" 
-				select new {t.Title, t.FileLocation};
-			foreach(var track in q){
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+			var q = from t in qry
+							where t.Year == "2007" &&
+							t.GenreName == "Rory Blyth: The Smartest Man in the World"
+							select new { t.Title, t.FileLocation };
+			foreach (var track in q)
+			{
 				Console.WriteLine(track.Title + ": " + track.FileLocation);
-			}        
+			}
 			// this should not invoke query parsing or execution
-			foreach(var track in q){
+			foreach (var track in q)
+			{
 				Console.WriteLine("Title: " + track.Title);
-			}        
-        }
+			}
+		}
 		[TestMethod]
 		public void SparqlQueryWithTheLot()
 		{
 			TripleStore ts = CreateSparqlTripleStore();
-			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
 			var q = (from t in qry
-				where t.Year == "2006" &&
-				t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
-				orderby t.FileLocation
-				select new {t.Title, t.FileLocation}).Skip(10).Take(5);
-			foreach(var track in q){
+							 where t.Year == "2006" &&
+							 t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
+							 orderby t.FileLocation
+							 select new { t.Title, t.FileLocation }).Skip(10).Take(5);
+			foreach (var track in q)
+			{
 				Console.WriteLine(track.Title + ": " + track.FileLocation);
-			}        
+			}
 		}
 
 
 		[TestMethod]
 		public void SparqlQueryOrdered()
-        {
+		{
 			TripleStore ts = CreateSparqlTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
-	        var q = from t in qry
-				where t.Year == "2006" &&
-				t.GenreName == "History 5 | Fall 2006 | UC Berkeley" 
-				orderby t.FileLocation
-				select new {t.Title, t.FileLocation};
-			foreach(var track in q){
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+			var q = from t in qry
+							where t.Year == "2006" &&
+							t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
+							orderby t.FileLocation
+							select new { t.Title, t.FileLocation };
+			foreach (var track in q)
+			{
 				Console.WriteLine(track.Title + ": " + track.FileLocation);
-			}        
-        }
+			}
+		}
 
 		#endregion
 
@@ -182,49 +190,50 @@ namespace RdfSerialisationTest
 
 		[TestMethod]
 		public void Query1()
-    	{
-    		CreateMemoryStore();
+		{
+			CreateMemoryStore();
 			TripleStore ts = new TripleStore();
-    		ts.LocalTripleStore = store;
-    		IQueryable<Track> qry = new RDF(ts).ForType<Track>();
-    		var q = from t in qry
-				where t.ArtistName == "Thomas Laqueur"
-				select t;
-    		List<Track> resultList = new List<Track>();
-    		resultList.AddRange(q);
-    	}
+			ts.LocalTripleStore = store;
+			IQueryable<Track> qry = new RDF(ts).ForType<Track>();
+			var q = from t in qry
+							where t.ArtistName == "Thomas Laqueur"
+							select t;
+			List<Track> resultList = new List<Track>();
+			resultList.AddRange(q);
+		}
 
 		[TestMethod]
 		public void Query3()
-    	{
-    		CreateMemoryStore();
+		{
+			CreateMemoryStore();
 			TripleStore ts = new TripleStore();
-    		ts.LocalTripleStore = store;
-    		IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); // should deduce that it is N3 and open correctly
-    		var q = from t in qry
-					where Convert.ToInt32(t.Year) > 1998 &&
-					t.GenreName == "Chillout" 
-					select t;
-    		foreach(Track track in q){
-    			Console.WriteLine(track.Title + ": " + track.FileLocation);
-    		}        
-    	}
+			ts.LocalTripleStore = store;
+			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); // should deduce that it is N3 and open correctly
+			var q = from t in qry
+							where Convert.ToInt32(t.Year) > 1998 &&
+							t.GenreName == "Chillout"
+							select t;
+			foreach (Track track in q)
+			{
+				Console.WriteLine(track.Title + ": " + track.FileLocation);
+			}
+		}
 
 		[TestMethod]
 		public void Query5()
-        {
-		    TripleStore ts = CreateOnlineTripleStore();
-            RDF ctx = new RDF(ts);
-            IRdfQuery<Track> qry = ctx.ForType<Track>(); 
-	        var q = from t in qry
-		        where t.GenreName == "Rory Blyth: The Smartest Man in the World" 
-		        select t;
-            foreach (Track track in q)
-            {
-                track.Rating = 5;
-            }
-            ctx.AcceptChanges();
-        }
+		{
+			TripleStore ts = CreateOnlineTripleStore();
+			RDF ctx = new RDF(ts);
+			IRdfQuery<Track> qry = ctx.ForType<Track>();
+			var q = from t in qry
+							where t.GenreName == "Rory Blyth: The Smartest Man in the World"
+							select t;
+			foreach (Track track in q)
+			{
+				track.Rating = 5;
+			}
+			ctx.AcceptChanges();
+		}
 
 		#endregion
 

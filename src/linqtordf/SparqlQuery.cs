@@ -14,8 +14,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Expressions;
-using System.Query;
+using System.Linq.Expressions;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -117,12 +117,18 @@ namespace LinqToRdf.Sparql
 			{
 				// first parse the where expression to get the list of parameters to/from the query.
 				StringBuilder sbTmp = new StringBuilder();
-				ParseQuery(Expressions["Where"].Parameters[1], sbTmp);
+				UnaryExpression ue = Expressions["Where"].Arguments[1] as UnaryExpression;
+				ParseQuery(ue.Operand, sbTmp);
 				//sbTmp now contains the FILTER clause so save it somewhere useful.
 				FilterClause = sbTmp.ToString();
 				// now store the parameters where they can be used later on.
 				if (Parser.Parameters != null)
-					queryGraphParameters.AddAll(Parser.Parameters);
+				{
+					foreach (var item in Parser.Parameters)
+					{
+						queryGraphParameters.Add(item);
+					}
+				}
 				// we need to add the original type to the prolog to allow elements of the where clause to be optimised
 			}
 			namespaceManager.RegisterType(OriginalType);
@@ -254,7 +260,8 @@ namespace LinqToRdf.Sparql
 			if (Expressions.ContainsKey("Where"))
 			{
 				MethodCallExpression whereExp = Expressions["Where"];
-				LambdaExpression le = (LambdaExpression)Expressions["Where"].Parameters[1];
+				UnaryExpression ue = ((MethodCallExpression)whereExp).Arguments[1] as UnaryExpression;
+				LambdaExpression le = (LambdaExpression)ue.Operand;
 				ParameterExpression instance = le.Parameters[0];
 				return instance.Name;
 			}
@@ -277,7 +284,7 @@ namespace LinqToRdf.Sparql
 			if (Expressions.ContainsKey("OrderBy"))
 			{
 				MethodCallExpression orderExp = Expressions["OrderBy"];
-				LambdaExpression descriminatingFunction = (LambdaExpression)orderExp.Parameters[1];
+				LambdaExpression descriminatingFunction = (LambdaExpression)orderExp.Arguments[1];
 				MemberExpression me = (MemberExpression)descriminatingFunction.Body;
 				sb.AppendFormat("ORDER BY ?{0}\n", me.Member.Name);
 			}
@@ -288,7 +295,7 @@ namespace LinqToRdf.Sparql
 			if (Expressions.ContainsKey("Take"))
 			{
 				MethodCallExpression takeExpression = Expressions["Take"];
-				ConstantExpression constantExpression = (ConstantExpression)takeExpression.Parameters[1];
+				ConstantExpression constantExpression = (ConstantExpression)takeExpression.Arguments[1];
 				if (constantExpression.Value != null)
 				{
 					sb.AppendFormat("LIMIT {0}\n", constantExpression.Value);
@@ -301,7 +308,7 @@ namespace LinqToRdf.Sparql
 			if (Expressions.ContainsKey("Skip"))
 			{
 				MethodCallExpression skipExpression = Expressions["Skip"];
-				ConstantExpression constantExpression = (ConstantExpression)skipExpression.Parameters[1];
+				ConstantExpression constantExpression = (ConstantExpression)skipExpression.Arguments[1];
 				if (constantExpression.Value != null)
 				{
 					sb.AppendFormat("OFFSET {0}\n", constantExpression.Value);
@@ -320,7 +327,7 @@ namespace LinqToRdf.Sparql
 
 		public Expression Expression
 		{
-			get { return System.Expressions.Expression.Constant(this); }
+			get { return System.Linq.Expressions.Expression.Constant(this); }
 		}
 
 		public IQueryable<S> CreateQuery<S>(Expression expression)
@@ -375,6 +382,16 @@ namespace LinqToRdf.Sparql
 		public object Execute(Expression expression)
 		{
 			throw new NotImplementedException();
+		}
+
+		#endregion
+
+		#region IQueryable Members
+
+
+		public IQueryProvider Provider
+		{
+			get { return this; }
 		}
 
 		#endregion

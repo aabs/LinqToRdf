@@ -14,9 +14,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Query;
+using System.Linq;
 using System.Text;
-using System.Expressions;
+using System.Linq.Expressions;
 
 namespace RdfMusic.IO
 {
