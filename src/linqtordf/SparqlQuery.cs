@@ -284,7 +284,8 @@ namespace LinqToRdf.Sparql
 			if (Expressions.ContainsKey("OrderBy"))
 			{
 				MethodCallExpression orderExp = Expressions["OrderBy"];
-				LambdaExpression descriminatingFunction = (LambdaExpression)orderExp.Arguments[1];
+				UnaryExpression ue = (UnaryExpression)orderExp.Arguments[1];
+				LambdaExpression descriminatingFunction = (LambdaExpression)ue.Operand;
 				MemberExpression me = (MemberExpression)descriminatingFunction.Body;
 				sb.AppendFormat("ORDER BY ?{0}\n", me.Member.Name);
 			}

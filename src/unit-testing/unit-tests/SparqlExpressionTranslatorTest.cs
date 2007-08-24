@@ -239,7 +239,8 @@ namespace RdfSerialisationTest
 			string expectedResult = "(?BooleanTestProperty)&&(True^^xsdt:boolean)";
 			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
 		}
-
+		class A { }
+		class B : A { }
 		/// <summary>
 		///A test for TypeAs (Expression)
 		///</summary>
@@ -250,7 +251,7 @@ namespace RdfSerialisationTest
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
 
-			Expression e = Expression.TypeAs(Expression.Constant("true"), typeof (bool));
+			Expression e = Expression.TypeAs(Expression.Constant(new B()), typeof (A));
 			target.StringBuilder = new StringBuilder();
 			target.TypeAs(e);
 		}
@@ -294,8 +295,9 @@ namespace RdfSerialisationTest
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-
-			Expression e = Expression.Coalesce(Expression.Constant(10), Expression.Constant(15));
+			string testVal = "hello";
+			string defaultVal = "world";
+			Expression e = Expression.Coalesce(Expression.Constant(testVal), Expression.Constant(defaultVal));
 			target.StringBuilder = new StringBuilder();
 			target.Coalesce(e);
 		}
@@ -315,7 +317,7 @@ namespace RdfSerialisationTest
 				              Expression.Constant(true)),
 				Expression.Constant(10), Expression.Constant(15));
 			target.StringBuilder = new StringBuilder();
-			target.Equal(e);
+			target.Conditional(e);
 		}
 
 		/// <summary>

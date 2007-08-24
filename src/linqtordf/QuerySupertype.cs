@@ -136,7 +136,7 @@ namespace LinqToRdf
 			NewExpression mie = le.Body as NewExpression;
 			if (le.Body is ParameterExpression) //  ie an identity projection
 			{
-				foreach (PropertyInfo i in originalType.GetProperties())
+				foreach (PropertyInfo i in OwlClassSupertype.GetAllPersistentProperties(originalType))
 					projectionParameters.Add(i);
 			}
 			else

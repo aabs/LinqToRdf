@@ -479,12 +479,16 @@ namespace LinqToRdf.Sparql
 		public void Call(Expression e)
 		{
 			MethodCallExpression mce = (MethodCallExpression)e;
-			switch (mce.Method.Name)
+			if (mce.Method.Name == "op_Equality")
 			{
-				case "op_Equality":
 					Equal(e);
-					break;
-				default:
+			}
+			else if (mce.Method.DeclaringType ==  typeof(string))
+			{
+				HandleStringOperations(mce);
+			}
+			else
+			{
 					Dispatch(mce.Object);
 					QueryAppend("." + mce.Method.Name + "(");
 					string sep = "";
@@ -495,7 +499,6 @@ namespace LinqToRdf.Sparql
 						sep = ", ";
 					}
 					QueryAppend(")");
-					break;
 			}
 			Log("+ :{0} Handled", e.NodeType);
 		}

@@ -735,7 +735,8 @@ namespace LinqToRdf
 		public void Quote(Expression e)
 		{
 			//QueryAppend("+ :{0} Handled", e.NodeType);
-			throw new NotImplementedException("operation Quote not supported");
+			UnaryExpression ue = (UnaryExpression)e;
+			Dispatch(ue.Operand);
 		}
 
 		public void RShift(Expression e)
