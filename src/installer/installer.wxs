@@ -23,13 +23,6 @@
 							Vital='yes'/>
 
 						<File
-							Id='C5Dll'
-							Name='C5.dll'
-							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Release\C5.dll'
-							Vital='yes'/>
-
-						<File
 							Id='SemWebDll'
 							Name='SemWeb.dll'
 							DiskId='1'
@@ -79,7 +72,7 @@
 
 		<Feature
 			Id='Complete'
-			Title='LinqToRdf 0.1'
+			Title='LinqToRdf 0.2'
 			Description='Install everything'
 			Display='expand'
 			Level='1'

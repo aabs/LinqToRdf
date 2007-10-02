@@ -60,6 +60,7 @@
     <Compile Include="ConstantEncodingTests.cs" />
     <Compile Include="HighLevelTestSuperclass.cs" />
     <Compile Include="JoinTests.cs" />
+    <Compile Include="JosekiTests.cs" />
     <Compile Include="LocalSparqlTests.cs" />
     <Compile Include="OwlInstanceSupertypeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

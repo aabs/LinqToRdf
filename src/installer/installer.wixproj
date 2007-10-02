@@ -4,7 +4,7 @@
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{0c57e91d-545d-449d-ae16-e6951447b276}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>LinqToRdf-0.1</OutputName>
+    <OutputName>LinqToRdf-0.2</OutputName>
     <OutputType>Package</OutputType>
     <WixToolPath>$(ProgramFiles)\Windows Installer XML v3\bin\</WixToolPath>
   </PropertyGroup>
