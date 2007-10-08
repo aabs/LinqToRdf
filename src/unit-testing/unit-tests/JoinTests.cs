@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 using System.Linq;
 
-namespace RdfSerialisationTest
+namespace RdfSerialisationTest 
 {
 	/// <summary>
 	/// Summary description for JoinTests
