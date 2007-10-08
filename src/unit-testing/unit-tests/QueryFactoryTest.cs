@@ -5,7 +5,7 @@ using LinqToRdf;
 using LinqToRdf.Sparql;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
-using SemWeb;
+using SemWeb; 
 
 namespace RdfSerialisationTest
 {
