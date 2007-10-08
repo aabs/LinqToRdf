@@ -14,7 +14,7 @@
 using System;
 using System.Linq;
 
-namespace LinqToRdf 
+namespace LinqToRdf
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Property)]
 	public class OwlResourceSupertypeAttribute : Attribute
