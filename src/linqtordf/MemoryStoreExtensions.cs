@@ -46,6 +46,14 @@ namespace LinqToRdf
         }
         private static void AddPropertyToStore(OwlInstanceSupertype track, PropertyInfo pi, MemoryStore ms)
         {
+            if (track == null)
+                throw new ArgumentNullException("track cannot be null");
+            if (pi == null)
+                throw new ArgumentNullException("pi cannot be null");
+            if (ms == null)
+                throw new ArgumentNullException("ms cannot be null");
+
+            if (pi.GetValue(track, null) != null)
             Add(track.InstanceUri, OwlClassSupertype.GetPropertyUri(pi.ReflectedType, pi.Name), pi.GetValue(track, null).ToString(), ms);
         }
         public static void Add(string s, string p, string o, MemoryStore ms)
