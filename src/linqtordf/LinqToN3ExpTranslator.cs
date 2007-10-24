@@ -540,16 +540,16 @@ namespace LinqToRdf
 
 		public void GreaterThan(Expression e)
 		{
+			BinaryExpression be = e as BinaryExpression;
+			if (be != null)
+			{
+				QueryAppend(tripleFormatString, be.Left, " > ", be.Right);
+				Console.WriteLine(string.Format(tripleFormatString, InstancePlaceholderName+"!"+be.Left, ">", be.Right));
+			}
+			Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 			/*
-						BinaryExpression be = e as BinaryExpression;
-						if (be != null)
-						{
-							QueryAppend(tripleFormatString, be.Left, ">", be.Right);
-							Console.WriteLine(string.Format(tripleFormatString, InstancePlaceholderName+"!"+be.Left, ">", be.Right));
-						}
-						Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
-			*/
 			throw new NotImplementedException("operation > is not supported");
+			*/
 		}
 
 		public void GreaterThanOrEqual(Expression e)

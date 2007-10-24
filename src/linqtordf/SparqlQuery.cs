@@ -174,7 +174,7 @@ namespace LinqToRdf.Sparql
 				sb.Append("SELECT ");
 				foreach (MemberInfo mi in projectionParameters)
 				{
-					sb.Append("?");
+					sb.Append(" ?");
 					sb.Append(mi.Name);
 				}
 			}
@@ -204,11 +204,16 @@ namespace LinqToRdf.Sparql
 					}
 				}
 			}
-			if (parameters.Count > 0)
-			{
-				sb.AppendFormat("_:{0} ", instanceName);
-				sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
-			}
+            //if (parameters.Count > 0)
+            //{
+            //    sb.AppendFormat("_:{0} ", instanceName);
+            //    sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
+            //}
+            if (parameters.Count > 0)
+            {
+                sb.AppendFormat("[] a {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
+            }
+
 			for (int i = 0; i < parameters.Count; i++)
 			{
 				MemberInfo info = parameters[i];
@@ -241,7 +246,7 @@ namespace LinqToRdf.Sparql
 			if (parameters.Count > 0)
 			{
 				sb.AppendFormat("_:{0} ", instanceName);
-				sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {0}.\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
+				sb.AppendFormat(" a {0}.\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
 			}
 			for (int i = 0; i < parameters.Count; i++)
 			{

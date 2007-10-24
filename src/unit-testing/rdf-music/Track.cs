@@ -14,6 +14,7 @@
 using System;
 using ID3Lib;
 using LinqToRdf;
+using System.Data.Linq;
 
 namespace RdfMusic
 {
@@ -115,5 +116,7 @@ namespace RdfMusic
 		}
 
 		private string name;
+
+        public EntitySet<Track> Tracks { get; set; }
 	}
 }

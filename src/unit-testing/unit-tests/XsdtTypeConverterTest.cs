@@ -61,7 +61,7 @@ namespace RdfSerialisationTest
 
 
 		[TestMethod()]
-		public void GetTest()
+		public void TestXsdtTypeConversions()
 		{
 
 			XsdtTypeConverter target = new XsdtTypeConverter();
@@ -76,7 +76,7 @@ namespace RdfSerialisationTest
 			Assert.IsTrue(target.Get<Int16>(4).ToString() == "4^^xsdt:short");
 			Assert.IsTrue(target.Get(4).ToString() == "4");
 			Assert.IsTrue(target.Get<Int64>(4).ToString() == "4^^xsdt:long");
-			Assert.IsTrue(target.Get<Byte[]>(ASCIIEncoding.ASCII.GetBytes("hello")).ToString() == "\"hello\"^^xsdt:base64Binary");
+			Assert.IsTrue(target.Get<Byte[]>(ASCIIEncoding.ASCII.GetBytes("hello")).ToString() == "\"hello\"^^xsdt:hexBinary");
 		}
 
 		[TestMethod()]
@@ -101,7 +101,7 @@ namespace RdfSerialisationTest
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
 
-			Type t = null; // TODO: Initialize to an appropriate value
+			Type t = typeof(string); // TODO: Initialize to an appropriate value
 
 			XsdtPrimitiveDataType expected = XsdtPrimitiveDataType.XsdtString;
 			XsdtPrimitiveDataType actual;
@@ -109,16 +109,6 @@ namespace RdfSerialisationTest
 			actual = target.GetDataType(t);
 
 			Assert.AreEqual(expected, actual, "LinqToRdf.XsdtTypeConverter.GetDataType did not return the expected value.");
-			Assert.Inconclusive("Verify the correctness of this test method.");
-		}
-
-		[TestMethod()]
-		public void GetStringRepresentationForTest()
-		{
-			// Unit Test Generation Error: A private accessor could not be created for LinqToRdf.XsdtTypeConverter.GetStringRepresentationFor<T>: Private accessors cannot be created for generic members
-			Assert.Fail("Unit Test Generation Error: A private accessor could not be created for LinqToRdf" +
-					".XsdtTypeConverter.GetStringRepresentationFor<T>: Private accessors cannot be cr" +
-					"eated for generic members");
 		}
 
 		[DeploymentItem("linqtordf.dll")]
@@ -131,13 +121,12 @@ namespace RdfSerialisationTest
 
 			XsdtPrimitiveDataType dt = XsdtPrimitiveDataType.XsdtString; // TODO: Initialize to an appropriate value
 
-			XsdtAttribute expected = null;
+			XsdtAttribute expected = new XsdtAttribute(true, "string");
 			XsdtAttribute actual;
 
 			actual = accessor.GetXsdtAttrFor(dt);
 
 			Assert.AreEqual(expected, actual, "LinqToRdf.XsdtTypeConverter.GetXsdtAttrFor did not return the expected value.");
-			Assert.Inconclusive("Verify the correctness of this test method.");
 		}
 
 		[DeploymentItem("linqtordf.dll")]
@@ -148,20 +137,19 @@ namespace RdfSerialisationTest
 
 			RdfSerialisationTest.LinqToRdf_XsdtTypeConverterAccessor accessor = new RdfSerialisationTest.LinqToRdf_XsdtTypeConverterAccessor(target);
 
-			DateTime d = new DateTime(); // TODO: Initialize to an appropriate value
+			DateTime d = new DateTime(2007,10,17,19,42,01); // TODO: Initialize to an appropriate value
 
-			XsdtPrimitiveDataType dt = XsdtPrimitiveDataType.XsdtString; // TODO: Initialize to an appropriate value
+			XsdtPrimitiveDataType dt = XsdtPrimitiveDataType.XsdtDateTime; // TODO: Initialize to an appropriate value
 
-			XsdtAttribute attr = null; // TODO: Initialize to an appropriate value
+            XsdtAttribute attr = new XsdtAttribute(true, "dateTime"); // TODO: Initialize to an appropriate value
 
-			string expected = null;
+			string expected = "2007-10-17T19:42:01+10:00";
 			string actual;
 
 			actual = accessor.GetXsdtDateRepresentationFor(d, dt, attr);
 
 			Assert.AreEqual(expected, actual, "LinqToRdf.XsdtTypeConverter.GetXsdtDateRepresentationFor did not return the expec" +
 					"ted value.");
-			Assert.Inconclusive("Verify the correctness of this test method.");
 		}
 
 		[TestMethod()]

@@ -1,0 +1,16 @@
+﻿<!--DSL Tools Language Template-->
+<VSTemplate Version="2.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<TemplateData>
+		<Name Package="{a7e4491d-b92a-4607-a723-a9ea7dda12df}" ID="103"/>
+		<Description Package="{a7e4491d-b92a-4607-a723-a9ea7dda12df}" ID="102"/>
+		<Icon Package="{a7e4491d-b92a-4607-a723-a9ea7dda12df}" ID="201" />
+		<ProjectType>CSharp</ProjectType>
+		<SortOrder>360</SortOrder>
+		<DefaultName>LinqToRdfDesigner.rdfx</DefaultName>
+	</TemplateData>
+	<TemplateContent>
+		<ProjectItem TargetFileName="$fileinputname$.rdfx">rdfx.rdfx</ProjectItem>
+		<ProjectItem TargetFileName="$fileinputname$.rdfx.diagram">rdfx.diagram</ProjectItem>
+	</TemplateContent>
+</VSTemplate>
+

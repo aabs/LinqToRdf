@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using LinqToRdf;
 using SemWeb;
+using RdfSerialisationTest.Properties;
 
 namespace RdfSerialisationTest
 {
@@ -11,8 +12,8 @@ namespace RdfSerialisationTest
 
 		protected static void CreateMemoryStore()
 		{
-			string mp3s = @"C:\dev\semantic-web\linqtordf\src\unit-testing\unit-tests\store3.n3";
-			string musicOntology = @"C:\dev\semantic-web\linqtordf\src\unit-testing\unit-tests\store3.n3";
+			string mp3s = Settings.Default.testStoreLocation;
+            string musicOntology = Settings.Default.testStoreLocation;
 			store = new MemoryStore();
 //			store.AddReasoner(new Euler(new N3Reader(MusicConstants.OntologyURL)));
 			store.Import(new N3Reader(musicOntology));
@@ -31,7 +32,7 @@ namespace RdfSerialisationTest
 		protected TripleStore CreateOnlineTripleStore()
 		{
 			TripleStore ts = new TripleStore();
-			ts.EndpointUri = @"http://localhost/linqtordf/SparqlQuery.aspx";
+            ts.EndpointUri = @"http://localhost/linqtordf/SparqlQuery.aspx";
 			ts.QueryType = QueryType.RemoteSparqlStore;
 			return ts;
 		}

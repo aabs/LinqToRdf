@@ -1,0 +1,47 @@
+﻿<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation"  language="VB" debug="true" #>
+<#@ output extension=".txt" #>
+<#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='Sample.rdfx'"  #>
+
+Report template
+
+<#= Me.ModelRoot.Name 
+#>
+
+
+<#
+  REM When you change the DSL Definition, some of the code below may not work.
+
+  For Each type As ModelType In Me.ModelRoot.Types
+#>
+	<#= type.GetType().Name #> <#= type.Name #>
+<#
+	Dim modelClass As ModelClass = TryCast(type, ModelClass)
+	If Not (modelClass Is Nothing) Then
+	  If modelClass.Targets.Count > 0 Then
+#>
+		Classes linked by Associations:
+<#
+		REM Direct jump to linked elements (compare with the association loop below)
+		For Each target As ModelClass In modelClass.Targets
+#>
+			 <#= target.Name #>
+<#	    
+		Next
+	
+#>
+		Details of those Associations:
+<#
+		REM Step to link, then to its other end
+		For Each assoc As Association In Association.GetLinksToTargets(modelClass)
+#>
+			<#= assoc.GetType().Name #> {<#= assoc.SourceMultiplicity #> - <#= assoc.TargetMultiplicity #>}   <#= assoc.Target.Name #>
+<#
+		Next
+	  End If
+	Else
+#>  
+    No class
+<#
+	End If
+  Next
+#>

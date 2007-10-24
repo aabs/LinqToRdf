@@ -67,7 +67,7 @@ namespace LinqToRdf.Sparql
                     SparqlHttpSource source = new SparqlHttpSource(remoteConnection.Store.EndpointUri);
                     source.RunSparqlQuery(CommandText, sinkRemote);
                     ExtractResultsIntoList(results, sinkRemote);
-                    RegisterResults(remoteConnection.SparqlQuery, results);
+                RegisterResults(remoteConnection.SparqlQuery, results);
                     break;
 
                 default:

@@ -69,10 +69,33 @@ namespace LinqToRdf
 
 		#endregion
 
-		public void AcceptChanges()
-		{
-			throw new NotImplementedException();
-		}
+        public void AcceptChanges()
+        {
+            if (pendingQueue.Count == 0)
+                return;
+            if (store.QueryType != QueryType.LocalN3StoreInMemory)
+                throw new NotImplementedException("No protocol exists to persist data to a remote store via SPARQL (yet). Unable to continue");
+            MemoryStore ms = store.LocalTripleStore as MemoryStore;
+            foreach (OwlInstanceSupertype inst in pendingQueue)
+            {
+                ms.Add(inst);
+            }
+        }
+
+        public void DiscardChanges()
+        {
+            // cut loose the old queue (which should then be GCd)
+            pendingQueue = new Queue<OwlInstanceSupertype>();
+        }
+
+        private Queue<OwlInstanceSupertype> pendingQueue = new Queue<OwlInstanceSupertype>();
+        public void Add<T>(T entity) where T : OwlInstanceSupertype
+        {
+            if (entity == null)
+                throw new ArgumentNullException("entity cannot be null");
+    
+            pendingQueue.Enqueue(entity);
+        }
 
 		public IRdfQuery<T> ForType<T>()
 		{

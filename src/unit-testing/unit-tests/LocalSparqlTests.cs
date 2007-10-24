@@ -23,6 +23,7 @@ using RdfMusic;
 using SemWeb;
 using SemWeb.Inference;
 using SemWeb.Query;
+using RdfSerialisationTest.Properties;
 
 namespace RdfSerialisationTest
 {
@@ -52,7 +53,7 @@ FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest M
 		private static MemoryStore store;
 		private static void CreateMemoryStore()
 		{
-			string serialisedLocation = @"C:\dev\semantic-web\linqtordf\src\unit-testing\unit-tests\store3.n3";
+			string serialisedLocation = Settings.Default.testStoreLocation;
 			store = new MemoryStore();
 //			store.AddReasoner(new Euler(new N3Reader(MusicConstants.OntologyURL)));
 			store.Import(new N3Reader(serialisedLocation));

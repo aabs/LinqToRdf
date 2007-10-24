@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RdfSerialisationTest.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="testStoreLocation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\etc\dev\semantic-web\linqtordf\src\unit-testing\unit-tests\store3.n3</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -5,7 +5,8 @@ using LinqToRdf;
 using LinqToRdf.Sparql;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
-using SemWeb; 
+using SemWeb;
+using RdfSerialisationTest.Properties; 
 
 namespace RdfSerialisationTest
 {
@@ -69,7 +70,7 @@ namespace RdfSerialisationTest
 		private static Store CreateMemoryStore()
 		{
 			Store result = new MemoryStore();
-			string serialisedLocation = @"C:\dev\semantic-web\linqtordf\src\unit-testing\unit-tests\store3.n3";
+			string serialisedLocation = Settings.Default.testStoreLocation;
 			result.Import(new N3Reader(serialisedLocation));
 			return result;
 		}
@@ -103,7 +104,7 @@ namespace RdfSerialisationTest
 		private static TripleStore CreateOnlineSparqlTripleStore()
 		{
 			TripleStore ts = new TripleStore();
-			ts.EndpointUri = @"http://localhost/linqtordf/SparqlQuery.aspx";
+            ts.EndpointUri = @"http://localhost/linqtordf/SparqlQuery.asp";
 			ts.QueryType = QueryType.RemoteSparqlStore;
 			return ts;
 		}

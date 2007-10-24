@@ -1,0 +1,31 @@
+﻿
+Report template
+
+Library Model
+
+
+	ModelClass Item
+	ModelClass Title
+		Classes linked by Associations:
+			 Item
+		Details of those Associations:
+			BidirectionalAssociation {One - ZeroMany}   Item
+	ModelClass Book
+	ModelClass Member
+	ModelClass Library
+		Classes linked by Associations:
+			 Title
+			 Item
+			 Member
+		Details of those Associations:
+			Aggregation {ZeroMany - ZeroMany}   Title
+			Aggregation {ZeroOne - ZeroMany}   Item
+			Aggregation {ZeroMany - ZeroMany}   Member
+	ModelClass Loan
+	MultipleAssociation MultipleAssociation1
+  
+    No class
+	ModelClass Reservation
+	MultipleAssociation MultipleAssociation2
+  
+    No class

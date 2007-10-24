@@ -1,16 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TestRunConfiguration id="033801b6-1091-43df-bf63-c66a42337af5" name="codecoverage" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRunConfiguration name="codecoverage" id="033801b6-1091-43df-bf63-c66a42337af5" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
   <Description>This is a default test run configuration for a local test run.</Description>
-  <CodeCoverage enabled="true" instrumentInPlace="true">
-    <Regular>
-      <CodeCoverageItem binaryFile="src\linqtordf\bin\Debug\linqtordf.dll" pdbFile="src\linqtordf\bin\Debug\linqtordf.pdb" />
-    </Regular>
-    <AspNet />
-  </CodeCoverage>
-  <Timeouts runTimeout="0" testTimeout="300000" agentNotRespondingTimeout="300000" deploymentTimeout="300000" />
-  <Deployment />
-  <NamingScheme />
-  <Hosts />
+  <Timeouts testTimeout="300000" />
   <TestTypeSpecific>
     <WebTestRunConfiguration testTypeId="4e7599fa-5ecb-43e9-a887-cd63cf72d207">
       <Browser name="Internet Explorer 6.0">

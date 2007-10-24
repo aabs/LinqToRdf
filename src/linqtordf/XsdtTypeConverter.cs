@@ -14,6 +14,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace LinqToRdf
 {
@@ -48,7 +49,7 @@ namespace LinqToRdf
 		XsdtBoolean,
 		[Xsdt(false, "short")]
 		XsdtShort,
-		[Xsdt(false, "int")]
+		[Xsdt(false, "integer")]
 		XsdtInt,
 		[Xsdt(false, "long")]
 		XsdtLong,
@@ -145,12 +146,20 @@ namespace LinqToRdf
 				}
 				else return obj.ToString();
 			}
+            switch (t.FullName)
+            {
+                case "System.DateTime":
+				    result = GetXsdtDateRepresentationFor((DateTime)obj, dt, attr);
+                    break;
+                case "System.Byte[]":
+                    result = Encoding.ASCII.GetString((Byte[])obj);
+                    break;
+                default:
+				    result = GetStringRepresentationFor(obj, dt, attr);
+                    break;
+            }
 
-			if (t == typeof(DateTime))
-				result = GetXsdtDateRepresentationFor((DateTime)obj, dt, attr);
-			else
-				result = GetStringRepresentationFor(obj, dt, attr);
-			if (attr.IsQuoted)
+            if (attr.IsQuoted)
 			{
 				result = "\"" + result + "\"";
 			}
@@ -173,7 +182,12 @@ namespace LinqToRdf
 			return obj.ToString();
 		}
 
-		private  XsdtAttribute GetXsdtAttrFor(XsdtPrimitiveDataType dt)
+        internal XsdtAttribute GetXsdtAttrFor(Type t)
+        {
+            return GetXsdtAttrFor(GetDataType(t));
+        }
+
+		internal  XsdtAttribute GetXsdtAttrFor(XsdtPrimitiveDataType dt)
 		{
 			FieldInfo fi = dt.GetType().GetField(dt.ToString());
 			XsdtAttribute[] attrs = (XsdtAttribute[])fi.GetCustomAttributes(typeof(XsdtAttribute), false);
