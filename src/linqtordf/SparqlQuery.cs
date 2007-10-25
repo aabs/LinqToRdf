@@ -21,190 +21,198 @@ using System.Text;
 
 namespace LinqToRdf.Sparql
 {
-	public class SparqlQuery<T> : QuerySupertype<T>, IRdfQuery<T>
-	{
-		public SparqlQuery(IRdfContext context)
-		{
-			this.context = context;
-			tripleStore = null;
-			originalType = typeof(T);
-			parser = new LinqToSparqlExpTranslator<T>();
-		}
+    public class SparqlQuery<T> : QuerySupertype<T>, IRdfQuery<T>
+    {
+        public SparqlQuery(IRdfContext context)
+        {
+            this.context = context;
+            tripleStore = null;
+            originalType = typeof(T);
+            parser = new LinqToSparqlExpTranslator<T>();
+        }
 
-		private Expression expression;
+        private Expression expression;
 
-		private IQueryFormatTranslator parser;
+        private IQueryFormatTranslator parser;
 
-		private TripleStore tripleStore;
+        private TripleStore tripleStore;
 
-		public IQueryFormatTranslator Parser
-		{
-			get { return parser; }
-			set { parser = value; }
-		}
+        public IQueryFormatTranslator Parser
+        {
+            get { return parser; }
+            set { parser = value; }
+        }
 
-		public TripleStore TripleStore
-		{
-			get { return tripleStore; }
-			set { tripleStore = value; }
-		}
+        public TripleStore TripleStore
+        {
+            get { return tripleStore; }
+            set { tripleStore = value; }
+        }
 
-		protected void BuildQuery(Expression q)
-		{
-			StringBuilder sbPrefixes = new StringBuilder();
-			StringBuilder sbClauses = new StringBuilder();
-			StringBuilder sbQuery = new StringBuilder();
-			StringBuilder sbFilter = new StringBuilder();
-			ParseQuery(q, sbFilter);
+        protected void BuildQuery(Expression q)
+        {
+            StringBuilder sbPrefixes = new StringBuilder();
+            StringBuilder sbClauses = new StringBuilder();
+            StringBuilder sbQuery = new StringBuilder();
+            StringBuilder sbFilter = new StringBuilder();
+            ParseQuery(q, sbFilter);
 
-			foreach (string prefix in namespaceManager.namespaceUris.Keys)
-			{
-				sbPrefixes.AppendFormat("@prefix {0}: <{1}> .\n", prefix, namespaceManager.namespaceUris[prefix]);
-			}
+            foreach (string prefix in namespaceManager.namespaceUris.Keys)
+            {
+                sbPrefixes.AppendFormat("@prefix {0}: <{1}> .\n", prefix, namespaceManager.namespaceUris[prefix]);
+            }
 
-			foreach (PropertyInfo propInfo in OwlClassSupertype.GetAllPersistentProperties(originalType))
-			{
-				if (queryGraphParameters.Contains(propInfo))
-					sbClauses.AppendFormat("?{0} <{1}> ?{2} .\n", originalType.Name, OwlClassSupertype.GetPropertyUri(originalType, propInfo.Name), propInfo.Name);
-			}
-			//			sbQuery.AppendFormat("{0}\nSELECT {1} \nWHERE\n{{ {2} \n FILTER{{ {3} }}\n}}", sbPrefixes, GetParameterString(), sbClauses, FilterClause);
-			FilterClause = sbQuery.ToString();
-			Console.WriteLine(FilterClause);
-		}
+            foreach (PropertyInfo propInfo in OwlClassSupertype.GetAllPersistentProperties(originalType))
+            {
+                if (queryGraphParameters.Contains(propInfo))
+                    sbClauses.AppendFormat("?{0} <{1}> ?{2} .\n", originalType.Name, OwlClassSupertype.GetPropertyUri(originalType, propInfo.Name), propInfo.Name);
+            }
+            //			sbQuery.AppendFormat("{0}\nSELECT {1} \nWHERE\n{{ {2} \n FILTER{{ {3} }}\n}}", sbPrefixes, GetParameterString(), sbClauses, FilterClause);
+            FilterClause = sbQuery.ToString();
+            Console.WriteLine(FilterClause);
+        }
 
-		protected SparqlQuery<S> CloneQueryForNewType<S>()
-		{
-			SparqlQuery<S> newQuery = new SparqlQuery<S>(context);
-			newQuery.TripleStore = tripleStore;
-			newQuery.OriginalType = originalType;
-			newQuery.Projection = projection;
-			newQuery.QueryGraphParameters = queryGraphParameters;
-			newQuery.FilterClause = FilterClause;
-			newQuery.Logger = logger;
-			newQuery.QueryFactory = new QueryFactory<S>(QueryFactory.QueryType, context);
-			newQuery.Parser = QueryFactory.CreateExpressionTranslator();
-			newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
-			newQuery.Expressions = expressions;
-			return newQuery;
-		}
+        protected SparqlQuery<S> CloneQueryForNewType<S>()
+        {
+            SparqlQuery<S> newQuery = new SparqlQuery<S>(context);
+            newQuery.TripleStore = tripleStore;
+            newQuery.OriginalType = originalType;
+            newQuery.Projection = projection;
+            newQuery.QueryGraphParameters = queryGraphParameters;
+            newQuery.FilterClause = FilterClause;
+            newQuery.Logger = logger;
+            newQuery.QueryFactory = new QueryFactory<S>(QueryFactory.QueryType, context);
+            newQuery.Parser = QueryFactory.CreateExpressionTranslator();
+            newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
+            newQuery.Expressions = expressions;
+            return newQuery;
+        }
 
-		protected void ParseQuery(Expression expression, StringBuilder sb)
-		{
-			Log("#Query {0:d}", DateTime.Now);
-			StringBuilder tmp = Parser.StringBuilder;
-			Parser.StringBuilder = sb;
-			Parser.Dispatch(expression);
-			Parser.StringBuilder = tmp;
-		}
+        protected void ParseQuery(Expression expression, StringBuilder sb)
+        {
+            Log("#Query {0:d}", DateTime.Now);
+            StringBuilder tmp = Parser.StringBuilder;
+            Parser.StringBuilder = sb;
+            Parser.Dispatch(expression);
+            Parser.StringBuilder = tmp;
+        }
 
-		protected IEnumerator<T> RunQuery()
-		{
-			if (CachedResults != null && ShouldReuseResultset)
-				return CachedResults.GetEnumerator();
-			StringBuilder sb = new StringBuilder();
-			CreateQuery(sb);
-			IRdfConnection<T> conn = QueryFactory.CreateConnection(this);
-			IRdfCommand<T> cmd = conn.CreateCommand();
-			cmd.CommandText = sb.ToString();
-			return cmd.ExecuteQuery();
-		}
+        protected IEnumerator<T> RunQuery()
+        {
+            if (CachedResults != null && ShouldReuseResultset)
+                return CachedResults.GetEnumerator();
+            StringBuilder sb = new StringBuilder();
+            CreateQuery(sb);
+            IRdfConnection<T> conn = QueryFactory.CreateConnection(this);
+            IRdfCommand<T> cmd = conn.CreateCommand();
+            cmd.CommandText = sb.ToString();
+            return cmd.ExecuteQuery();
+        }
 
-		#region SPARQL Query Construction
+        #region SPARQL Query Construction
 
-		private void CreateQuery(StringBuilder sb)
-		{
-			if (Expressions.ContainsKey("Where"))
-			{
-				// first parse the where expression to get the list of parameters to/from the query.
-				StringBuilder sbTmp = new StringBuilder();
-				UnaryExpression ue = Expressions["Where"].Arguments[1] as UnaryExpression;
-				ParseQuery(ue.Operand, sbTmp);
-				//sbTmp now contains the FILTER clause so save it somewhere useful.
-				FilterClause = sbTmp.ToString();
-				// now store the parameters where they can be used later on.
-				if (Parser.Parameters != null)
-				{
-					foreach (var item in Parser.Parameters)
-					{
-						queryGraphParameters.Add(item);
-					}
-				}
-				// we need to add the original type to the prolog to allow elements of the where clause to be optimised
-			}
-			namespaceManager.RegisterType(OriginalType);
-			CreateProlog(sb);
-			CreateDataSetClause(sb);
-			CreateProjection(sb);
-			CreateWhereClause(sb);
-			CreateSolutionModifier(sb);
-		}
-
-		private void CreateProlog(StringBuilder sb)
-		{
-			// insert the standard prefixes as per http://www.w3.org/TR/rdf-sparql-query/#docNamespaces
-			sb.Append("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n");
-			sb.Append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n");
-			sb.Append("PREFIX xsdt: <http://www.w3.org/2001/XMLSchema#>\n"); // for the datatypes
-			sb.Append("PREFIX fn: <http://www.w3.org/2005/xpath-functions#> \n");
-
-			// now insert namespaces needed for the OwlClasses we're working with in this query
-			foreach (string prefix in namespaceManager.namespaceUris.Keys)
-			{
-				sb.AppendFormat("PREFIX {0}: <{1}>\n", prefix, namespaceManager.namespaceUris[prefix]);
-			}
-			sb.Append("\n");
-		}
-
-		private void CreateDataSetClause(StringBuilder sb)
-		{
-			return; // no named graphs just yet (issue #12 created - http://code.google.com/p/linqtordf/issues/detail?id=12&can=2&q=)
-		}
-
-		private void CreateProjection(StringBuilder sb)
-		{
-			if (Expressions.ContainsKey("Select"))
-				BuildProjection(Expressions["Select"]);
-
-			if (projectionParameters.Count == 0)
-			{
-				sb.Append("SELECT * ");
-			}
-			else
-			{
-				sb.Append("SELECT ");
-				foreach (MemberInfo mi in projectionParameters)
-				{
-					sb.Append(" ?");
-					sb.Append(mi.Name);
-				}
-			}
-			sb.Append('\n');
-		}
-
-		private void CreateWhereClause(StringBuilder sb)
-		{
+        private void CreateQuery(StringBuilder sb)
+        {
+            if (Expressions.ContainsKey("Where"))
+            {
+                // first parse the where expression to get the list of parameters to/from the query.
+                StringBuilder sbTmp = new StringBuilder();
+                UnaryExpression ue = Expressions["Where"].Arguments[1] as UnaryExpression;
+                ParseQuery(ue.Operand, sbTmp);
+                //sbTmp now contains the FILTER clause so save it somewhere useful.
+                FilterClause = sbTmp.ToString();
+                // now store the parameters where they can be used later on.
+                if (Parser.Parameters != null)
+                {
+                    foreach (var item in Parser.Parameters)
+                    {
+                        queryGraphParameters.Add(item);
+                    }
+                }
+                // we need to add the original type to the prolog to allow elements of the where clause to be optimised
+            }
+            namespaceManager.RegisterType(OriginalType);
+            CreateProlog(sb);
+            CreateDataSetClause(sb);
+            CreateProjection(sb);
             bool isIdentityProjection = OriginalType == typeof(T);
-            bool shouldUseOptionalForAllProperties = !(Expressions.ContainsKey("Where"));
-			if(shouldUseOptionalForAllProperties)
-			{
-				CreateOptionalWhereClause(sb);
-				return;
-			}
-			string instanceName = GetInstanceName();
-			sb.Append("WHERE {\n");
-			List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
+            bool shouldUseOptionalForAllProperties = !(Expressions.ContainsKey("Where")) || isIdentityProjection;
+            if (shouldUseOptionalForAllProperties)
+            {
+                CreateOptionalWhereClause(sb);
+            }
+            else
+            {
+                CreateWhereClause(sb);
+            }
 
-			if (parameters.Count == 0)
-			{
-				// is it an identity projection? If so, place all persistent properties into parameters
-				if (OriginalType == typeof(T))
-				{
-					foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
-					{
-						parameters.Add(info);
-					}
-				}
-			}
+            CreateSolutionModifier(sb);
+        }
+
+        private void CreateProlog(StringBuilder sb)
+        {
+            // insert the standard prefixes as per http://www.w3.org/TR/rdf-sparql-query/#docNamespaces
+            sb.Append("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n");
+            sb.Append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n");
+            sb.Append("PREFIX xsdt: <http://www.w3.org/2001/XMLSchema#>\n"); // for the datatypes
+            sb.Append("PREFIX fn: <http://www.w3.org/2005/xpath-functions#> \n");
+
+            // now insert namespaces needed for the OwlClasses we're working with in this query
+            foreach (string prefix in namespaceManager.namespaceUris.Keys)
+            {
+                sb.AppendFormat("PREFIX {0}: <{1}>\n", prefix, namespaceManager.namespaceUris[prefix]);
+            }
+            sb.Append("\n");
+        }
+
+        private void CreateDataSetClause(StringBuilder sb)
+        {
+            return; // no named graphs just yet (issue #12 created - http://code.google.com/p/linqtordf/issues/detail?id=12&can=2&q=)
+        }
+
+        private void CreateProjection(StringBuilder sb)
+        {
+            if (Expressions.ContainsKey("Select"))
+                BuildProjection(Expressions["Select"]);
+
+            if (projectionParameters.Count == 0)
+            {
+                sb.Append("SELECT ");
+                foreach (MemberInfo mi in OwlClassSupertype.GetAllPersistentProperties(typeof(T)))
+                {
+                    sb.Append(" ?");
+                    sb.Append(mi.Name);
+                }
+            }
+            else
+            {
+                sb.Append("SELECT ");
+                foreach (MemberInfo mi in projectionParameters)
+                {
+                    sb.Append(" ?");
+                    sb.Append(mi.Name);
+                }
+            }
+            sb.Append('\n');
+        }
+
+        private void CreateWhereClause(StringBuilder sb)
+        {
+            string instanceName = GetInstanceName();
+            sb.Append("WHERE {\n");
+            List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
+
+            if (parameters.Count == 0)
+            {
+                // is it an identity projection? If so, place all persistent properties into parameters
+                if (OriginalType == typeof(T))
+                {
+                    foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
+                    {
+                        parameters.Add(info);
+                    }
+                }
+            }
             //if (parameters.Count > 0)
             //{
             //    sb.AppendFormat("_:{0} ", instanceName);
@@ -215,192 +223,206 @@ namespace LinqToRdf.Sparql
                 sb.AppendFormat("[] a {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
             }
 
-			for (int i = 0; i < parameters.Count; i++)
-			{
-				MemberInfo info = parameters[i];
-				sb.AppendFormat("{0}{1} ?{2} ", namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
-				sb.AppendFormat((i < parameters.Count - 1) ? ";\n" : ".\n");
-			}
-			if (FilterClause != null && FilterClause.Length > 0)
-			{
-				sb.AppendFormat("FILTER(\n{0}\n)\n", FilterClause);
-			}
-			sb.Append("}\n");
-		}
-		private void CreateOptionalWhereClause(StringBuilder sb)
-		{
-			string instanceName = GetInstanceName();
-			sb.Append("WHERE {\n");
-			List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                MemberInfo info = parameters[i];
+                sb.AppendFormat("{0}{1} ?{2} ", namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
+                sb.AppendFormat((i < parameters.Count - 1) ? ";\n" : ".\n");
+            }
+            if (FilterClause != null && FilterClause.Length > 0)
+            {
+                sb.AppendFormat("FILTER(\n{0}\n)\n", FilterClause);
+            }
+            sb.Append("}\n");
+        }
 
-			if (parameters.Count == 0)
-			{
-				// is it an identity projection? If so, place all persistent properties into parameters
-				if (OriginalType == typeof(T))
-				{
-					foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
-					{
-						parameters.Add(info);
-					}
-				}
-			}
-			if (parameters.Count > 0)
-			{
-				sb.AppendFormat("_:{0} ", instanceName);
-				sb.AppendFormat(" a {0}.\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
-			}
-			for (int i = 0; i < parameters.Count; i++)
-			{
-				MemberInfo info = parameters[i];
-				sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
-			}
-			if (FilterClause != null && FilterClause.Length > 0)
-			{
-				sb.AppendFormat("FILTER(\n{0}\n)\n", FilterClause);
-			}
-			sb.Append("}\n");
-		}
+        private void CreateOptionalWhereClause(StringBuilder sb)
+        {
+            string instanceName = GetInstanceName();
+            sb.Append("WHERE {\n");
+            List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
 
-		private string GetInstanceName()
-		{
-			if (Expressions.ContainsKey("Where"))
-			{
-				MethodCallExpression whereExp = Expressions["Where"];
-				UnaryExpression ue = ((MethodCallExpression)whereExp).Arguments[1] as UnaryExpression;
-				LambdaExpression le = (LambdaExpression)ue.Operand;
-				ParameterExpression instance = le.Parameters[0];
-				return instance.Name;
-			}
-			else
-			{
-				// no name supplied by LINQ so just give one at random.
-				return "x";
-			}
-		}
+            if (parameters.Count == 0)
+            {
+                // is it an identity projection? If so, place all persistent properties into parameters
+                if (OriginalType == typeof(T))
+                {
+                    foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
+                    {
+                        parameters.Add(info);
+                    }
+                }
+            }
 
-		private void CreateSolutionModifier(StringBuilder sb)
-		{
-			CreateOrderClause(sb);
-			CreateLimitClause(sb);
-			CreateOffsetClause(sb);
-		}
+            if (parameters.Count > 0)
+            {
+                sb.AppendFormat("_:{0} ", instanceName);
+                sb.AppendFormat(" a {0}.\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
+            }
 
-		private void CreateOrderClause(StringBuilder sb)
-		{
-			if (Expressions.ContainsKey("OrderBy"))
-			{
-				MethodCallExpression orderExp = Expressions["OrderBy"];
-				UnaryExpression ue = (UnaryExpression)orderExp.Arguments[1];
-				LambdaExpression descriminatingFunction = (LambdaExpression)ue.Operand;
-				MemberExpression me = (MemberExpression)descriminatingFunction.Body;
-				sb.AppendFormat("ORDER BY ?{0}\n", me.Member.Name);
-			}
-		}
+            bool isIdentityProjection = OriginalType == typeof(T);
+            if (isIdentityProjection)
+            {
+                foreach (MemberInfo mi in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
+                {
+                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, mi.Name, true), mi.Name);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < parameters.Count; i++)
+                {
+                    MemberInfo info = parameters[i];
+                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
+                }
+            }
+            if (FilterClause != null && FilterClause.Length > 0)
+            {
+                sb.AppendFormat("FILTER(\n{0}\n)\n", FilterClause);
+            }
+            sb.Append("}\n");
+        }
 
-		private void CreateLimitClause(StringBuilder sb)
-		{
-			if (Expressions.ContainsKey("Take"))
-			{
-				MethodCallExpression takeExpression = Expressions["Take"];
-				ConstantExpression constantExpression = (ConstantExpression)takeExpression.Arguments[1];
-				if (constantExpression.Value != null)
-				{
-					sb.AppendFormat("LIMIT {0}\n", constantExpression.Value);
-				}
-			}
-		}
+        private string GetInstanceName()
+        {
+            if (Expressions.ContainsKey("Where"))
+            {
+                MethodCallExpression whereExp = Expressions["Where"];
+                UnaryExpression ue = ((MethodCallExpression)whereExp).Arguments[1] as UnaryExpression;
+                LambdaExpression le = (LambdaExpression)ue.Operand;
+                ParameterExpression instance = le.Parameters[0];
+                return instance.Name;
+            }
+            else
+            {
+                // no name supplied by LINQ so just give one at random.
+                return "x";
+            }
+        }
 
-		private void CreateOffsetClause(StringBuilder sb)
-		{
-			if (Expressions.ContainsKey("Skip"))
-			{
-				MethodCallExpression skipExpression = Expressions["Skip"];
-				ConstantExpression constantExpression = (ConstantExpression)skipExpression.Arguments[1];
-				if (constantExpression.Value != null)
-				{
-					sb.AppendFormat("OFFSET {0}\n", constantExpression.Value);
-				}
-			}
-		}
+        private void CreateSolutionModifier(StringBuilder sb)
+        {
+            CreateOrderClause(sb);
+            CreateLimitClause(sb);
+            CreateOffsetClause(sb);
+        }
 
-		#endregion
+        private void CreateOrderClause(StringBuilder sb)
+        {
+            if (Expressions.ContainsKey("OrderBy"))
+            {
+                MethodCallExpression orderExp = Expressions["OrderBy"];
+                UnaryExpression ue = (UnaryExpression)orderExp.Arguments[1];
+                LambdaExpression descriminatingFunction = (LambdaExpression)ue.Operand;
+                MemberExpression me = (MemberExpression)descriminatingFunction.Body;
+                sb.AppendFormat("ORDER BY ?{0}\n", me.Member.Name);
+            }
+        }
 
-		#region IOrderedQueryable<T> implementation
+        private void CreateLimitClause(StringBuilder sb)
+        {
+            if (Expressions.ContainsKey("Take"))
+            {
+                MethodCallExpression takeExpression = Expressions["Take"];
+                ConstantExpression constantExpression = (ConstantExpression)takeExpression.Arguments[1];
+                if (constantExpression.Value != null)
+                {
+                    sb.AppendFormat("LIMIT {0}\n", constantExpression.Value);
+                }
+            }
+        }
 
-		public Type ElementType
-		{
-			get { return originalType; }
-		}
+        private void CreateOffsetClause(StringBuilder sb)
+        {
+            if (Expressions.ContainsKey("Skip"))
+            {
+                MethodCallExpression skipExpression = Expressions["Skip"];
+                ConstantExpression constantExpression = (ConstantExpression)skipExpression.Arguments[1];
+                if (constantExpression.Value != null)
+                {
+                    sb.AppendFormat("OFFSET {0}\n", constantExpression.Value);
+                }
+            }
+        }
 
-		public Expression Expression
-		{
-			get { return System.Linq.Expressions.Expression.Constant(this); }
-		}
+        #endregion
 
-		public IQueryable<S> CreateQuery<S>(Expression expression)
-		{
-			SparqlQuery<S> newQuery = CloneQueryForNewType<S>();
+        #region IOrderedQueryable<T> implementation
 
-			MethodCallExpression call = expression as MethodCallExpression;
-			if (call != null)
-			{
-				newQuery.Expressions[call.Method.Name] = call;
-			}
-			return newQuery;
-		}
+        public Type ElementType
+        {
+            get { return originalType; }
+        }
 
-		public S Execute<S>(Expression expression)
-		{
-			this.expression = expression;
-			throw new NotImplementedException("Execute not implmented");
-		}
+        public Expression Expression
+        {
+            get { return System.Linq.Expressions.Expression.Constant(this); }
+        }
 
-		///<summary>
-		///Returns an enumerator that iterates through the collection.
-		///</summary>
-		///
-		///<returns>
-		///A <see cref="T:System.Collections.Generic.IEnumerator`1"></see> that can be used to iterate through the collection.
-		///</returns>
-		///<filterpriority>1</filterpriority>
-		IEnumerator<T> IEnumerable<T>.GetEnumerator()
-		{
-			return RunQuery();
-		}
+        public IQueryable<S> CreateQuery<S>(Expression expression)
+        {
+            SparqlQuery<S> newQuery = CloneQueryForNewType<S>();
 
-		///<summary>
-		///Returns an enumerator that iterates through a collection.
-		///</summary>
-		///
-		///<returns>
-		///An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
-		///</returns>
-		///<filterpriority>2</filterpriority>
-		public IEnumerator GetEnumerator()
-		{
-			return RunQuery();
-		}
+            MethodCallExpression call = expression as MethodCallExpression;
+            if (call != null)
+            {
+                newQuery.Expressions[call.Method.Name] = call;
+            }
+            return newQuery;
+        }
 
-		public IQueryable CreateQuery(Expression expression)
-		{
-			throw new NotImplementedException();
-		}
+        public S Execute<S>(Expression expression)
+        {
+            this.expression = expression;
+            throw new NotImplementedException("Execute not implmented");
+        }
 
-		public object Execute(Expression expression)
-		{
-			throw new NotImplementedException();
-		}
+        ///<summary>
+        ///Returns an enumerator that iterates through the collection.
+        ///</summary>
+        ///
+        ///<returns>
+        ///A <see cref="T:System.Collections.Generic.IEnumerator`1"></see> that can be used to iterate through the collection.
+        ///</returns>
+        ///<filterpriority>1</filterpriority>
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return RunQuery();
+        }
 
-		#endregion
+        ///<summary>
+        ///Returns an enumerator that iterates through a collection.
+        ///</summary>
+        ///
+        ///<returns>
+        ///An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        ///</returns>
+        ///<filterpriority>2</filterpriority>
+        public IEnumerator GetEnumerator()
+        {
+            return RunQuery();
+        }
 
-		#region IQueryable Members
+        public IQueryable CreateQuery(Expression expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object Execute(Expression expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region IQueryable Members
 
 
-		public IQueryProvider Provider
-		{
-			get { return this; }
-		}
+        public IQueryProvider Provider
+        {
+            get { return this; }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
