@@ -262,7 +262,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for QueryFactory (QueryType, IRdfContext)
 		///</summary>
-		[TestMethod]
+		[TestMethod, Ignore]
 		public void ConstructorTest()
 		{
 			// QueryType queryType = QueryType.LocalN3StoreInMemory; // TODO: Initialize to an appropriate value
@@ -279,7 +279,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for QueryType
 		///</summary>
-		[TestMethod]
+        [TestMethod, Ignore]
 		public void QueryTypeTest()
 		{
 			// QueryType queryType = QueryType.LocalN3StoreInMemory; // TODO: Initialize to an appropriate value
@@ -299,7 +299,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for TypeTranslator
 		///</summary>
-		[TestMethod]
+        [TestMethod, Ignore]
 		public void TypeTranslatorTest()
 		{
 			// QueryType queryType = QueryType.LocalN3StoreInMemory; // TODO: Initialize to an appropriate value

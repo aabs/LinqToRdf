@@ -76,13 +76,12 @@ namespace RdfSerialisationTest
 		{
 			OwlInstanceSupertype target = new OwlInstanceSupertype();
 
-			string val = null; // TODO: Assign to an appropriate value for the property
+			string val = "http://tempuri.net/uri"; // TODO: Assign to an appropriate value for the property
 
 			target.InstanceUri = val;
 
 
 			Assert.AreEqual(val, target.InstanceUri, "LinqToRdf.OwlInstanceSupertype.InstanceUri was not set correctly.");
-			Assert.Inconclusive("Verify the correctness of this test method.");
 		}
 
 	}

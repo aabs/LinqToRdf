@@ -75,6 +75,12 @@ namespace LinqToRdf
 							pi.SetValue(t, Convert.ChangeType(vVal, pi.PropertyType), null);
 						}
 					}
+                    catch (System.ArgumentException ae)
+                    {
+                        // required variable is NotFiniteNumberException present
+                        // we cannot fill the ValueType we're after.
+                        Console.WriteLine(ae);
+                    }
 					catch (Exception e)
 					{
 						Console.WriteLine(e);

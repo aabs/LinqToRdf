@@ -183,7 +183,8 @@ namespace LinqToRdf.Sparql
 
 		private void CreateWhereClause(StringBuilder sb)
 		{
-			bool shouldUseOptionalForAllProperties = !(Expressions.ContainsKey("Where"));
+            bool isIdentityProjection = OriginalType == typeof(T);
+            bool shouldUseOptionalForAllProperties = !(Expressions.ContainsKey("Where"));
 			if(shouldUseOptionalForAllProperties)
 			{
 				CreateOptionalWhereClause(sb);

@@ -80,23 +80,6 @@ namespace RdfSerialisationTest
 		}
 
 		[TestMethod()]
-		public void GetTest1()
-		{
-			// XsdtTypeConverter target = new XsdtTypeConverter();
-			// 
-			// T obj = 0; // TODO: Initialize to an appropriate value
-			// 
-			// object expected = null;
-			// object actual;
-			// 
-			// actual = target.Get(obj);
-			// 
-			// Assert.AreEqual(expected, actual, "LinqToRdf.XsdtTypeConverter.Get<T> did not return the expected value.");
-			// Assert.Inconclusive("Verify the correctness of this test method.");
-			Assert.Inconclusive("Generics testing must be manually provided.");
-		}
-
-		[TestMethod()]
 		public void GetDataTypeTest()
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
@@ -157,13 +140,12 @@ namespace RdfSerialisationTest
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
 
-			System.Collections.Generic.Dictionary<System.Type, LinqToRdf.XsdtPrimitiveDataType> val = null; // TODO: Assign to an appropriate value for the property
+			System.Collections.Generic.Dictionary<System.Type, LinqToRdf.XsdtPrimitiveDataType> val = new Dictionary<Type,XsdtPrimitiveDataType>(); // TODO: Assign to an appropriate value for the property
 
 			target.TypeLookup = val;
 
 
 			Assert.AreEqual(val, target.TypeLookup, "LinqToRdf.XsdtTypeConverter.TypeLookup was not set correctly.");
-			Assert.Inconclusive("Verify the correctness of this test method.");
 		}
 
 		[TestMethod()]
@@ -171,8 +153,8 @@ namespace RdfSerialisationTest
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
 
-			// TODO: Implement code to verify target
-			Assert.Inconclusive("TODO: Implement code to verify target");
+            Assert.IsNotNull(target);
+            Assert.IsNotNull(target.TypeLookup);
 		}
 
 	}

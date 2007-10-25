@@ -207,14 +207,11 @@ namespace RdfSerialisationTest
         {
             TripleStore ts = CreateOnlineTripleStore();
             IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); // should deduce that it is N3 and open correctly
-            var q = from t in qry
+            var q = (from t in qry
                     where Convert.ToInt32(t.Year) > 1998 &&
-                    t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
-                    select t;
-            foreach (Track track in q)
-            {
-                Console.WriteLine(track.Title + ": " + track.FileLocation);
-            }
+                    t.GenreName == "Rory Blyth: The Smartest Man in the World"
+                    select t).ToArray();
+            Assert.IsTrue(q.Length > 0);
         }
 
         [TestMethod]
