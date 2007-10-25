@@ -11,6 +11,9 @@
 	<TemplateContent>
 		<ProjectItem TargetFileName="$fileinputname$.rdfx">rdfx.rdfx</ProjectItem>
 		<ProjectItem TargetFileName="$fileinputname$.rdfx.diagram">rdfx.diagram</ProjectItem>
+
+		<ProjectItem TargetFileName="$fileinputname$.rdfx.entities.tt">rdfx.entities.tt</ProjectItem>
+		<ProjectItem TargetFileName="$fileinputname$.rdfx.n3.tt">rdfx.n3.tt</ProjectItem>
 	</TemplateContent>
 </VSTemplate>
 

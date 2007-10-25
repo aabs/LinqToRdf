@@ -1,157 +1,141 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Font Name="Tahoma" Size="8.25" />
   <Class Name="LinqToRdf.XsdtAttribute" Collapsed="true">
     <Position X="5.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>XsdtTypeConverter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQgAAAEIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XsdtTypeConverter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.XsdtTypeConverter" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="7" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>XsdtTypeConverter.cs</FileName>
       <HashCode>AAAEAgAABAAAAQBAAAAAAAAAAAAAAAQAAAAAAACAAAA=</HashCode>
+      <FileName>XsdtTypeConverter.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="LinqToRdf.LinqToN3ExpTranslator&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="5.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>IC4AAGCDIYhKQKgAwIEHgLEigKAQCAgjCMEECSTGACk=</HashCode>
       <FileName>LinqToN3ExpTranslator.cs</FileName>
-      <HashCode>JA4AAGCDIYgMSqgAQIAHgLEigKBQSAgiAEEEGAAGAAk=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="LinqToRdf.LinqToSparqlExpTranslator&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>LinqToSparqlExpTranslator.cs</FileName>
-      <HashCode>JA8AAGCDIYgMSqgAQIAHgLEigKhQSAgiAEEEGAAGAAk=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="LinqToRdf.NamespaceManager" Collapsed="true">
     <Position X="8.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>NamespaceManager.cs</FileName>
       <HashCode>QACAAAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAAABAAI=</HashCode>
+      <FileName>NamespaceManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.ObjectDeserialiserQuerySink" Collapsed="true">
     <Position X="10.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAIAQAAAAAEAAAAAAAAAgAAAAIAAAAAAAIAAAAiCAAA=</HashCode>
       <FileName>ObjectDeserialiser.cs</FileName>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAgAAAAIAAAAAAAIAAAAiAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.PrintQuerySink" Collapsed="true">
     <Position X="5.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>ObjectDeserialiser.cs</FileName>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjectDeserialiser.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.OwlClassSupertype" Collapsed="true">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>OwlClassSupertype.cs</FileName>
       <HashCode>AAAAAIAAAAAAAAAAAAAAQBAACAAGAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>OwlClassSupertype.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.OwlInstanceSupertype" Collapsed="true">
     <Position X="0.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>OwlInstanceSupertype.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAA=</HashCode>
+      <FileName>OwlInstanceSupertype.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.QueryFactory&lt;T&gt;" Collapsed="true">
     <Position X="7" Y="1.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAiAAAAAAAQAAEAMAAAAACAAIAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>QueryFactory.cs</FileName>
-      <HashCode>AAAgAAAAAAAQAAAAMAAAAACAAIAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.QuerySupertype&lt;T&gt;" Collapsed="true">
     <Position X="1.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>ARACAAcBAgIAgQACAIAAgAAFAIgAACAAAAAAAgAQAII=</HashCode>
       <FileName>QuerySupertype.cs</FileName>
-      <HashCode>ARIAAAEAAAIAAQACAAAAgAAEAIgAACgAAAAIAAASAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.TripleStore" Collapsed="true">
     <Position X="10.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <FileName>RDF.cs</FileName>
       <HashCode>AQAAAAEAAAAQAAAAEAIAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RDF.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LinqToRdf.RDF" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="8.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AJIAAAAAIAAAACAAAAAAEAAAAIAAAAABAAAAAQAAAAA=</HashCode>
       <FileName>RDF.cs</FileName>
-      <HashCode>AIAAAAAAAAAAAAAAAAAAEAAAAAAAAAABAAAAAQAAAAA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="LinqToRdf.RdfN3Query&lt;T&gt;" Collapsed="true">
     <Position X="2.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAgBQAAABAGABQAAAAAAASAABAAAAARAAgAAQEQIQA=</HashCode>
       <FileName>RdfN3Query.cs</FileName>
-      <HashCode>AAAgBQAAABACABQABAAAAASAABAAAAARAAgAAQAQIQA=</HashCode>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="LinqToRdf.RdfSparqlQuery&lt;T&gt;" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <FileName>RdfSparqlQuery.cs</FileName>
-      <HashCode>AAAgBBAAABACABQABAAQAASAABAAAAAQAAAAAAAAIQA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="LinqToRdf.ITypeTranslator" Collapsed="true">
     <Position X="10.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>XsdtTypeConverter.cs</FileName>
       <HashCode>AAAAAgAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XsdtTypeConverter.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="LinqToRdf.IQueryFormatTranslator" Collapsed="true">
     <Position X="5.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAQAAAAAAAAAACAIAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>IQueryFormatTranslator.cs</FileName>
-      <HashCode>AAgAAAAAAAAAQAAAAAAAAAACAIAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="LinqToRdf.IRdfContext" Collapsed="true">
     <Position X="7" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AIAAAAAAIAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IRdfContext.cs</FileName>
-      <HashCode>AIAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="LinqToRdf.IRdfQuery&lt;T&gt;" Collapsed="true">
     <Position X="8.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IRdfQuery.cs</FileName>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Enum Name="LinqToRdf.XsdtPrimitiveDataType" Collapsed="true">
     <Position X="7" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <FileName>XsdtTypeConverter.cs</FileName>
       <HashCode>BAIBAQAAABgEA0AAAAABAZAhAAAAAAAgAAoAQEAAAAI=</HashCode>
+      <FileName>XsdtTypeConverter.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="LinqToRdf.QueryType" Collapsed="true">
     <Position X="5.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAABAAAAAAAAAAABAAAAAAAAAAACA=</HashCode>
       <FileName>Enums.cs</FileName>
-      <HashCode>AAAAACAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
     </TypeIdentifier>
   </Enum>
+  <Font Name="Tahoma" Size="8.25" />
 </ClassDiagram>

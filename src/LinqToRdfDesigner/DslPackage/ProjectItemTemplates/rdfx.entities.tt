@@ -1,0 +1,56 @@
+﻿<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" debug="true"#>
+<#@ assembly name = "System.Core.dll" #>
+<#@ import namespace = "System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='Sample.rdfx'"  #>
+<#
+// prolog - set up some book-keeping variables
+string baseUri = this.ModelRoot.OntologyBaseUrl;
+HashSet<ModelClass> processedClasses = new HashSet<ModelClass>();
+
+#>
+using System;
+using LinqToRdf;
+using System.Data.Linq;
+
+<#
+  foreach (ModelType type in this.ModelRoot.Types)
+  {
+	ModelClass modelClass = type as ModelClass;
+	if (modelClass != null && !processedClasses.Contains(modelClass))
+	{
+#>
+
+[OntologyBaseUri("<#=baseUri#>")]
+[OwlClass("<#=modelClass.OwlClassUri#>", true)]
+public partial class <#= modelClass.Name #> : <#
+			WriteLine(modelClass.Superclass == null?"OwlInstanceSupertype":modelClass.Superclass.Name);
+ #>
+{
+<#
+		foreach(ModelAttribute attr in modelClass.Attributes)
+		{
+#>
+		[OwlProperty("<#=attr.OwlPropertyUri#>", true)]
+		public string <#=attr.Name#>{get;set;}
+<#
+		}
+		
+		foreach(Aggregation association in Aggregation.GetLinksToAggregationTargets(modelClass))
+		{
+				WriteLine("\tEntitySet<" + association.Target.Name + "> " + association.TargetRoleName + " { get; set; }");
+		}
+		
+		foreach(Composition comp in Composition.GetLinksToCompositionTargets(modelClass))
+		{
+				WriteLine(":"+comp.OwlObjectPropertyUri);
+				WriteLine("\trdfs:domain :" + modelClass.Name +";");
+				WriteLine("\trdfs:range :" + comp.Target.Name +".");
+		}
+
+#>
+}
+<#
+	}
+  }
+#>

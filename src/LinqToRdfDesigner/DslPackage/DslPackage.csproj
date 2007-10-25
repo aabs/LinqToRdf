@@ -156,17 +156,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <VSItemTemplate Include="ProjectItemTemplates\CSharp.vstemplate">
+    <VSItemTemplate Include="ProjectItemTemplates\LinqToRdf.CSharp.vstemplate">
       <OutputName>LinqToRdfDesigner</OutputName>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CSharp.tt</DependentUpon>
+      <DependentUpon>LinqToRdf.CSharp.tt</DependentUpon>
     </VSItemTemplate>
-    <VSItemTemplate Include="ProjectItemTemplates\VisualBasic.vstemplate">
+    <VSItemTemplate Include="ProjectItemTemplates\LinqToRdf.VisualBasic.vstemplate">
       <OutputName>LinqToRdfDesigner</OutputName>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VisualBasic.tt</DependentUpon>
+      <DependentUpon>LinqToRdf.VisualBasic.tt</DependentUpon>
     </VSItemTemplate>
     <None Include="Resources\File.ico" />
   </ItemGroup>
@@ -187,15 +187,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GeneratedVSCT.tt</DependentUpon>
     </Content>
-    <None Include="ProjectItemTemplates\CSharp.tt">
+    <None Include="ProjectItemTemplates\LinqToRdf.CSharp.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CSharp.vstemplate</LastGenOutput>
+      <LastGenOutput>LinqToRdf.CSharp.vstemplate</LastGenOutput>
+    </None>
+    <None Include="ProjectItemTemplates\rdfx.entities.tt">
+    </None>
+    <None Include="ProjectItemTemplates\rdfx.n3.tt">
     </None>
     <None Include="ProjectItemTemplates\rdfx.rdfx" />
     <None Include="ProjectItemTemplates\rdfx.diagram" />
-    <None Include="ProjectItemTemplates\VisualBasic.tt">
+    <None Include="ProjectItemTemplates\LinqToRdf.VisualBasic.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>VisualBasic.vstemplate</LastGenOutput>
+      <LastGenOutput>LinqToRdf.VisualBasic.vstemplate</LastGenOutput>
     </None>
     <VSCTCompile Include="Commands.vsct">
       <ResourceName>1000.ctmenu</ResourceName>

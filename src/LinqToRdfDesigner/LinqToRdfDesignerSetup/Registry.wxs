@@ -42,14 +42,14 @@
 
 			</Component>
 			<Component Id="_rdfx" Guid="90ff02cf-e485-0330-86fb-1d87cd35f15a">
-				<Registry Root="HKCR" Key=".rdfx" Id="FileExtensionRegistry1" Value="rdfx.1.0.0" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0" Id="FileExtensionRegistry2" Value="$(loc.FileDescription)" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0" Id="FileExtensionRegistry3" Name="AlwaysShowExt" Value="1" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\DefaultIcon" Id="FileExtensionRegistry4" Value="[TARGETDIR]\LinqToRdf.Design.DslPackage.dll,0" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\shell\Open\Command" Id="FileExtensionRegistry5" Type="string" Value="&quot;[VSINSTALLDIR]devenv.exe&quot; /dde &quot;%1&quot;" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\shell\Open\ddeexec" Id="FileExtensionRegistry6" Type="string" Value="Open(&quot;%1&quot;)" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\shell\Open\ddeexec\Application" Id="FileExtensionRegistry7" Type="string" Value="VisualStudio.9.0" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\shell\Open\ddeexec\Topic" Id="FileExtensionRegistry8" Type="string" Value="system" />
+				<Registry Root="HKCR" Key=".rdfx" Id="FileExtensionRegistry1" Value="rdfx.0.3.0" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.3.0" Id="FileExtensionRegistry2" Value="$(loc.FileDescription)" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.3.0" Id="FileExtensionRegistry3" Name="AlwaysShowExt" Value="1" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.3.0\DefaultIcon" Id="FileExtensionRegistry4" Value="[TARGETDIR]\LinqToRdf.Design.DslPackage.dll,0" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.3.0\shell\Open\Command" Id="FileExtensionRegistry5" Type="string" Value="&quot;[VSINSTALLDIR]devenv.exe&quot; /dde &quot;%1&quot;" />
+				<Registry Root="HKCR" Key="rdfx.0.3.0\shell\Open\ddeexec" Id="FileExtensionRegistry6" Type="string" Value="Open(&quot;%1&quot;)" />
+				<Registry Root="HKCR" Key="rdfx.0.3.0\shell\Open\ddeexec\Application" Id="FileExtensionRegistry7" Type="string" Value="VisualStudio.9.0" />
+				<Registry Root="HKCR" Key="rdfx.0.3.0\shell\Open\ddeexec\Topic" Id="FileExtensionRegistry8" Type="string" Value="system" />
 			</Component>
 
 		</DirectoryRef>
