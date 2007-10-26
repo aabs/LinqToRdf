@@ -1,8 +1,9 @@
 ﻿<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" debug="true"#>
 <#@ assembly name = "System.Core.dll" #>
+<#@ assembly name = "linqtordf.dll" #>
 <#@ import namespace = "System.Collections.Generic" #>
 <#@ output extension=".n3" #>
-<#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='Sample.rdfx'"  #>
+<#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='$fileinputname$.rdfx'"  #>
 <#
 // prolog - set up some book-keeping variables
 string baseUri = this.ModelRoot.OntologyBaseUrl;

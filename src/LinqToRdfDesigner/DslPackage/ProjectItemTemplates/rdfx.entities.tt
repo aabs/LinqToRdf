@@ -2,7 +2,7 @@
 <#@ assembly name = "System.Core.dll" #>
 <#@ import namespace = "System.Collections.Generic" #>
 <#@ output extension=".cs" #>
-<#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='Sample.rdfx'"  #>
+<#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='$fileinputname$.rdfx'"  #>
 <#
 // prolog - set up some book-keeping variables
 string baseUri = this.ModelRoot.OntologyBaseUrl;
