@@ -13,6 +13,8 @@ using System;
 using LinqToRdf;
 using System.Data.Linq;
 
+namespace $fileinputname$ 
+{
 <#
   foreach (ModelType type in this.ModelRoot.Types)
   {
@@ -31,7 +33,7 @@ public partial class <#= modelClass.Name #> : <#
 		foreach(ModelAttribute attr in modelClass.Attributes)
 		{
 #>
-		[OwlProperty("<#=attr.OwlPropertyUri#>", true)]
+		[OwlResource(OntologyName = "$fileinputname$ ", RelativeUriReference="<#=attr.OwlPropertyUri#>")]
 		public string <#=attr.Name#>{get;set;}
 <#
 		}
@@ -54,3 +56,4 @@ public partial class <#= modelClass.Name #> : <#
 	}
   }
 #>
+}

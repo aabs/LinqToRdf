@@ -177,7 +177,7 @@ namespace LinqToRdf
             {
                 filterClause +=
                     string.Format("?{0} <{1}> ?{2} .\n", originalType.Name,
-                                  OwlInstanceSupertype.GetPropertyUri(originalType, pi.Name), pi.Name);
+                                  pi.GetOwlResourceUri(), pi.Name);
             }
         }
 

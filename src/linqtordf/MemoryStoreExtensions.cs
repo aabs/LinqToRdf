@@ -34,16 +34,13 @@ namespace LinqToRdf
             ms.Add(new Statement((Entity)oc.InstanceUri, OntologyHelper.rdfType, (Entity)OwlClassSupertype.GetOwlClassUri(t)));
             foreach (PropertyInfo pi in pia)
             {
-                if(IsPersistentProperty(pi))
+                if(pi.IsOntologyResource())
                 {
                     AddPropertyToStore(oc, pi, ms);
                 }
             }
         }
-        private static bool IsPersistentProperty(PropertyInfo pi)
-        {
-            return pi.GetCustomAttributes(typeof (OwlPropertyAttribute), true).Length > 0;
-        }
+
         private static void AddPropertyToStore(OwlInstanceSupertype track, PropertyInfo pi, MemoryStore ms)
         {
             if (track == null)
@@ -54,7 +51,7 @@ namespace LinqToRdf
                 throw new ArgumentNullException("ms cannot be null");
 
             if (pi.GetValue(track, null) != null)
-            Add(track.InstanceUri, OwlClassSupertype.GetPropertyUri(pi.ReflectedType, pi.Name), pi.GetValue(track, null).ToString(), ms);
+                Add(track.InstanceUri, pi.GetOwlResourceUri(), pi.GetValue(track, null).ToString(), ms);
         }
         public static void Add(string s, string p, string o, MemoryStore ms)
         {

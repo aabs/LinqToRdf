@@ -65,7 +65,7 @@ namespace LinqToRdf.Sparql
             foreach (PropertyInfo propInfo in OwlClassSupertype.GetAllPersistentProperties(originalType))
             {
                 if (queryGraphParameters.Contains(propInfo))
-                    sbClauses.AppendFormat("?{0} <{1}> ?{2} .\n", originalType.Name, OwlClassSupertype.GetPropertyUri(originalType, propInfo.Name), propInfo.Name);
+                    sbClauses.AppendFormat("?{0} <{1}> ?{2} .\n", originalType.Name, propInfo.GetOwlResourceUri(), propInfo.Name);
             }
             //			sbQuery.AppendFormat("{0}\nSELECT {1} \nWHERE\n{{ {2} \n FILTER{{ {3} }}\n}}", sbPrefixes, GetParameterString(), sbClauses, FilterClause);
             FilterClause = sbQuery.ToString();
@@ -216,17 +216,17 @@ namespace LinqToRdf.Sparql
             //if (parameters.Count > 0)
             //{
             //    sb.AppendFormat("_:{0} ", instanceName);
-            //    sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
+            //    sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlResourceUri(originalType, true));
             //}
             if (parameters.Count > 0)
             {
-                sb.AppendFormat("[] a {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
+                sb.AppendFormat("[] a {0};\n", namespaceManager.typeMappings[originalType] + ":" + originalType.GetOwlResource().RelativeUriReference);
             }
 
             for (int i = 0; i < parameters.Count; i++)
             {
                 MemberInfo info = parameters[i];
-                sb.AppendFormat("{0}{1} ?{2} ", namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
+                sb.AppendFormat("{0}{1} ?{2} ", namespaceManager.typeMappings[originalType] + ":", info.GetOwlResource().RelativeUriReference, info.Name);
                 sb.AppendFormat((i < parameters.Count - 1) ? ";\n" : ".\n");
             }
             if (FilterClause != null && FilterClause.Length > 0)
@@ -257,7 +257,7 @@ namespace LinqToRdf.Sparql
             if (parameters.Count > 0)
             {
                 sb.AppendFormat("_:{0} ", instanceName);
-                sb.AppendFormat(" a {0}.\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlClassUri(originalType, true));
+                sb.AppendFormat(" a {0}.\n", namespaceManager.typeMappings[originalType] + ":" + originalType.GetOwlResource().RelativeUriReference);
             }
 
             bool isIdentityProjection = OriginalType == typeof(T);
@@ -265,7 +265,7 @@ namespace LinqToRdf.Sparql
             {
                 foreach (MemberInfo mi in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
                 {
-                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, mi.Name, true), mi.Name);
+                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", mi.GetOwlResource().RelativeUriReference, mi.Name);
                 }
             }
             else
@@ -273,7 +273,7 @@ namespace LinqToRdf.Sparql
                 for (int i = 0; i < parameters.Count; i++)
                 {
                     MemberInfo info = parameters[i];
-                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", OwlClassSupertype.GetPropertyUri(originalType, info.Name, true), info.Name);
+                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", info.GetOwlResource().RelativeUriReference, info.Name);
                 }
             }
             if (FilterClause != null && FilterClause.Length > 0)

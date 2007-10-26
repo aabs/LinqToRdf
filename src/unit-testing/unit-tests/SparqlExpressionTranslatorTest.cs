@@ -61,15 +61,15 @@ namespace RdfSerialisationTest
 		{
 			if (mi is FieldInfo)
 			{
-				return Expression.Field(Expression.Parameter(mi.DeclaringType, "t"), mi as FieldInfo);
+				return Expression.Field(Expression.Parameter(mi.DeclaringType, "mi"), mi as FieldInfo);
 			}
 			else if (mi is PropertyInfo)
 			{
-				return Expression.Property(Expression.Parameter(mi.DeclaringType, "t"), mi as PropertyInfo);
+				return Expression.Property(Expression.Parameter(mi.DeclaringType, "mi"), mi as PropertyInfo);
 			}
 			else if (mi is MethodInfo)
 			{
-				return Expression.Property(Expression.Parameter(mi.DeclaringType, "t"), mi as MethodInfo);
+				return Expression.Property(Expression.Parameter(mi.DeclaringType, "mi"), mi as MethodInfo);
 			}
 			else throw new NotImplementedException("Member type not supported");
 		}
@@ -612,7 +612,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.Call(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "(t.IntTestMethod(15)";
+			string expectedResult = "(mi.IntTestMethod(15)";
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -820,12 +820,12 @@ namespace RdfSerialisationTest
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
 			target.TypeTranslator = new XsdtTypeConverter();
-			Expression e = Expression.Parameter(GetType(), "t");
+			Expression e = Expression.Parameter(GetType(), "mi");
 			StringBuilder sb = new StringBuilder();
 			target.StringBuilder = sb;
 			target.Parameter(e);
 			string actualResult = sb.ToString();
-			string expectedResult = "t"; //  not sure that any output should be expected
+			string expectedResult = "mi"; //  not sure that any output should be expected
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
@@ -860,7 +860,7 @@ namespace RdfSerialisationTest
 			target.StringBuilder = sb;
 			target.RightShift(e);
 			string actualResult = sb.ToString();
-			string expectedResult = ""; //  shouldn't make it to here
+			string expectedResult = ""; //  shouldn'mi make it to here
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 

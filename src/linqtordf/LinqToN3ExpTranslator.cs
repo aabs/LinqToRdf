@@ -518,7 +518,7 @@ namespace LinqToRdf
 			{
 				MemberExpression me = be.Left as MemberExpression;
 				ConstantExpression ce = be.Right as ConstantExpression;
-				QueryAppend(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString());
+				QueryAppend(tripleFormatStringLiteral, InstancePlaceholderName, me.Member.GetOwlResourceUri(), ce.Value.ToString());
 				Console.WriteLine(string.Format(tripleFormatStringLiteral, be.Left, "=", be.Right));
 			}
 			MethodCallExpression mce = e as MethodCallExpression;
@@ -526,8 +526,8 @@ namespace LinqToRdf
 			{
 				MemberExpression me = mce.Arguments[0] as MemberExpression;
 				ConstantExpression ce = mce.Arguments[1] as ConstantExpression;
-				QueryAppend(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString());
-				Console.WriteLine(string.Format(tripleFormatStringLiteral, InstancePlaceholderName, OwlClassSupertype.GetPropertyUri(typeof(T), me.Member.Name), ce.Value.ToString()));
+                QueryAppend(tripleFormatStringLiteral, InstancePlaceholderName, me.Member.GetOwlResourceUri(), ce.Value.ToString());
+                Console.WriteLine(string.Format(tripleFormatStringLiteral, InstancePlaceholderName, me.Member.GetOwlResourceUri(), ce.Value.ToString()));
 			}
 			Console.WriteLine(string.Format("+ :{0} Handled", e.NodeType));
 		}

@@ -18,61 +18,60 @@ using System.Data.Linq;
 
 namespace RdfMusic
 {
-	[OntologyBaseUri("http://aabs.purl.org/ontologies/2007/04/music#")]
-	[OwlClass("Track", true)]
+	[OwlResource(OntologyName="Music", RelativeUriReference="Track")]
 	public class Track : OwlInstanceSupertype
 	{
 
-		[OwlProperty("title", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="title")]
 		public string Title
 		{
 			get { return title; }
 			set { title = value; }
 		}
 
-		[OwlProperty("artistName", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="artistName")]
 		public string ArtistName
 		{
 			get { return artistName; }
 			set { artistName = value; }
 		}
 
-		[OwlProperty("albumName", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="albumName")]
 		public string AlbumName
 		{
 			get { return albumName; }
 			set { albumName = value; }
 		}
 
-		[OwlProperty("year", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="year")]
 		public string Year
 		{
 			get { return year; }
 			set { year = value; }
 		}
 
-		[OwlProperty("genreName", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="genreName")]
 		public string GenreName
 		{
 			get { return genreName; }
 			set { genreName = value; }
 		}
 
-		[OwlProperty("comment", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="comment")]
 		public string Comment
 		{
 			get { return comment; }
 			set { comment = value; }
 		}
 
-		[OwlProperty("fileLocation", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="fileLocation")]
 		public string FileLocation
 		{
 			get { return fileLocation; }
 			set { fileLocation = value; }
 		}
 
-		[OwlProperty("rating", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="rating")]
 		public int Rating
 		{
 			get { return rating; }
@@ -104,11 +103,10 @@ namespace RdfMusic
 		}
 	}
 
-	[OntologyBaseUri("http://aabs.purl.org/ontologies/2007/04/music#")]
-	[OwlClass("Album", true)]
+    [OwlResource(OntologyName = "Music", RelativeUriReference = "Album")]
 	public class Album : OwlInstanceSupertype
 	{
-		[OwlProperty("name", true)]
+		[OwlResource(OntologyName = "Music", RelativeUriReference="name")]
 		public string Name
 		{
 			get { return name; }

@@ -41,7 +41,7 @@ PREFIX a: <http://aabs.purl.org/ontologies/2007/04/music#>
 
 SELECT ?Title ?FileLocation 
 WHERE {
-_:t a:year ?Year ;
+_:mi a:year ?Year ;
 a:genreName ?GenreName ;
 a:title ?Title ;
 a:fileLocation ?FileLocation .
