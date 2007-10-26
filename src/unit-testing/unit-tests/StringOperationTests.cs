@@ -20,8 +20,8 @@ namespace RdfSerialisationTest
 			List<Album> al = new List<Album>(q);
 			Assert.IsTrue(al.Count == 1);
 			Assert.IsTrue(al[0].Name == "Thomas Laqueur - History Lectures");
-
 		}
+
 		[TestMethod]
 		public void TestStartsWith()
 		{

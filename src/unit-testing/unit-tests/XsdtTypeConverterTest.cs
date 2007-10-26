@@ -36,7 +36,7 @@ namespace RdfSerialisationTest
 		//{
 		//}
 		//
-		//Use ClassCleanup to run code after all tests in a class have run
+		//Use ClassCleanup to run code after all tests in ontology class have run
 		//
 		//[ClassCleanup()]
 		//public static void MyClassCleanup()

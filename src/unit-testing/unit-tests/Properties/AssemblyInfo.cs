@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("RdfSerialisationTest")]
-[assembly: AssemblyDescription("Unit tests for a LINQ query provider for access to RDF triple stores using SPARQL")]
+[assembly: AssemblyDescription("Unit tests for ontology LINQ query provider for access to RDF triple stores using SPARQL")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andrew Matthews")]
 [assembly: AssemblyProduct("RdfSerialisationTest")]
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
-// to COM componenets.  If you need to access a type in this assembly from 
+// to COM componenets.  If you need to access ontology type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 

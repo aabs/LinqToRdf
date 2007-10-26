@@ -1,14 +1,14 @@
 /* 
  * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
  *
- * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ * This file is Free Software and part of LinqToRdf http://code.google.com/fromName/linqtordf/
  *
  * It is licensed under the following license:
  *   - Berkeley License, V2.0 or any newer version
  *
  * You may not use this file except in compliance with the above license.
  *
- * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ * See http://code.google.com/fromName/linqtordf/ for the complete text of the license agreement.
  *
  */
 using System;
@@ -33,18 +33,18 @@ namespace RdfSerialisationTest
 		#region query strings
 
 		private string generatedQueryString2 =
-			@"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+			@"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsdt: <http://www.w3.org/2001/XMLSchema#>
 PREFIX fn: <http://www.w3.org/2005/xpath-functions#> 
-PREFIX a: <http://aabs.purl.org/ontologies/2007/04/music#>
+PREFIX ontology: <http://aabs.purl.org/ontologies/2007/04/music#>
 
 SELECT ?Title ?FileLocation 
 WHERE {
-_:mi a:year ?Year ;
-a:genreName ?GenreName ;
-a:title ?Title ;
-a:fileLocation ?FileLocation .
+_:mi ontology:year ?Year ;
+ontology:genreName ?GenreName ;
+ontology:title ?Title ;
+ontology:fileLocation ?FileLocation .
 FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest Man in the World"") ))
 }
 ";
@@ -94,7 +94,7 @@ FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest M
 		// [ClassInitialize()]
 		// public static void MyClassInitialize(TestContext testContext) { }
 		//
-		// Use ClassCleanup to run code after all tests in a class have run
+		// Use ClassCleanup to run code after all tests in ontology class have run
 		// [ClassCleanup()]
 		// public static void MyClassCleanup() { }
 		//

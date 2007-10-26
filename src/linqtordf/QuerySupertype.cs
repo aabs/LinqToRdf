@@ -1,14 +1,14 @@
 /* 
  * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
  *
- * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ * This file is Free Software and part of LinqToRdf http://code.google.com/fromName/linqtordf/
  *
  * It is licensed under the following license:
  *   - Berkeley License, V2.0 or any newer version
  *
  * You may not use this file except in compliance with the above license.
  *
- * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ * See http://code.google.com/fromName/linqtordf/ for the complete text of the license agreement.
  *
  */
 using System;
@@ -105,6 +105,7 @@ namespace LinqToRdf
 			set { projection = value; }
 		}
 
+        public string QueryText { get; set; }
 
 		public QueryFactory<T> QueryFactory
 		{
@@ -131,7 +132,7 @@ namespace LinqToRdf
 		{
 			UnaryExpression ue = ((MethodCallExpression)expression).Arguments[1] as UnaryExpression;
 			LambdaExpression le = (LambdaExpression)ue.Operand;
-			if (le == null) throw new ApplicationException("Incompatible expression type found when building a projection");
+			if (le == null) throw new ApplicationException("Incompatible expression type found when building ontology projection");
 			projection = le.Compile();
 			NewExpression mie = le.Body as NewExpression;
 			if (le.Body is ParameterExpression) //  ie an identity projection
@@ -148,7 +149,8 @@ namespace LinqToRdf
 
 		private void FindProperties(MemberBinding e)
 		{
-			namespaceManager.RegisterType(OriginalType);
+            if (!namespaceManager.HasOntologyFor(OriginalType))
+			    namespaceManager.Add(OriginalType);
 			switch (e.BindingType)
 			{
 				case MemberBindingType.Assignment:

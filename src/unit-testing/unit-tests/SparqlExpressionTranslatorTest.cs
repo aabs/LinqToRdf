@@ -1,14 +1,14 @@
 /* 
  * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
  *
- * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ * This file is Free Software and part of LinqToRdf http://code.google.com/fromName/linqtordf/
  *
  * It is licensed under the following license:
  *   - Berkeley License, V2.0 or any newer version
  *
  * You may not use this file except in compliance with the above license.
  *
- * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ * See http://code.google.com/fromName/linqtordf/ for the complete text of the license agreement.
  *
  */
 using System;
@@ -76,7 +76,7 @@ namespace RdfSerialisationTest
 	}
 
 	/// <summary>
-	///This is a test class for RdfSerialisation.SparqlExpressionTranslator&lt;T&gt; and is intended
+	///This is ontology test class for RdfSerialisation.SparqlExpressionTranslator&lt;T&gt; and is intended
 	///to contain all RdfSerialisation.SparqlExpressionTranslator&lt;T&gt; Unit Tests
 	///</summary>
 	[TestClass()]
@@ -134,7 +134,7 @@ namespace RdfSerialisationTest
 		//{
 		//}
 		//
-		//Use ClassCleanup to run code after all tests in a class have run
+		//Use ClassCleanup to run code after all tests in ontology class have run
 		//
 		//[ClassCleanup()]
 		//public static void MyClassCleanup()
@@ -398,7 +398,7 @@ namespace RdfSerialisationTest
 			// 
 			// target.Funclet(e);
 			// 
-			// Assert.Inconclusive("A method that does not return a value cannot be verified.");
+			// Assert.Inconclusive("A method that does not return ontology value cannot be verified.");
 			Assert.Inconclusive("Generics testing must be manually provided.");
 		}
 
@@ -460,7 +460,7 @@ namespace RdfSerialisationTest
 		[Ignore, ExpectedException(typeof (NotImplementedException))]
 		public void InvokeTest()
 		{
-			// not sure how to construct a lambda expression
+			// not sure how to construct ontology lambda expression
 		}
 
 		/// <summary>
@@ -488,7 +488,7 @@ namespace RdfSerialisationTest
 		[Ignore, ExpectedException(typeof (NotImplementedException))]
 		public void LambdaTest()
 		{
-			// not sure how to construct a lambda expression
+			// not sure how to construct ontology lambda expression
 		}
 
 		/// <summary>

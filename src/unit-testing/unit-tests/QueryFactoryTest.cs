@@ -11,7 +11,7 @@ using RdfSerialisationTest.Properties;
 namespace RdfSerialisationTest
 {
 	/// <summary>
-	///This is a test class for LinqToRdf.QueryFactory&lt;T&gt; and is intended
+	///This is ontology test class for LinqToRdf.QueryFactory&lt;T&gt; and is intended
 	///to contain all LinqToRdf.QueryFactory&lt;T&gt; Unit Tests
 	///</summary>
 	[TestClass]
@@ -41,7 +41,7 @@ namespace RdfSerialisationTest
 		//{
 		//}
 		//
-		//Use ClassCleanup to run code after all tests in a class have run
+		//Use ClassCleanup to run code after all tests in ontology class have run
 		//
 		//[ClassCleanup()]
 		//public static void MyClassCleanup()

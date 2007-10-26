@@ -1,14 +1,14 @@
 /* 
  * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
  *
- * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ * This file is Free Software and part of LinqToRdf http://code.google.com/fromName/linqtordf/
  *
  * It is licensed under the following license:
  *   - Berkeley License, V2.0 or any newer version
  *
  * You may not use this file except in compliance with the above license.
  *
- * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ * See http://code.google.com/fromName/linqtordf/ for the complete text of the license agreement.
  *
  */
 using System;
@@ -91,7 +91,7 @@ namespace LinqToRdf
         }
 
         ///<summary>
-        ///Returns an enumerator that iterates through a collection.
+        ///Returns an enumerator that iterates through ontology collection.
         ///</summary>
         ///
         ///<returns>
@@ -170,7 +170,7 @@ namespace LinqToRdf
 
         private void PrepareQueryAndConnection()
         {
-            // create a ObjectDeserialiserQuerySink and attach it to the store
+            // create ontology ObjectDeserialiserQuerySink and attach it to the store
             string q = string.Format("@prefix m: <{0}> .\n", OwlInstanceSupertype.GetOntologyBaseUri(originalType));
             filterClause = q + filterClause;
             foreach (PropertyInfo pi in OwlClassSupertype.GetAllPersistentProperties(typeof (T)))

@@ -1,14 +1,14 @@
 /* 
  * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
  *
- * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ * This file is Free Software and part of LinqToRdf http://code.google.com/fromName/linqtordf/
  *
  * It is licensed under the following license:
  *   - Berkeley License, V2.0 or any newer version
  *
  * You may not use this file except in compliance with the above license.
  *
- * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ * See http://code.google.com/fromName/linqtordf/ for the complete text of the license agreement.
  *
  */
 using System;
@@ -518,7 +518,7 @@ namespace LinqToRdf.Sparql
             try
             {
                 StringBuilder = new StringBuilder();
-                // we can be confident that this really is a cast operation, therefore there will be only one parameter
+                // we can be confident that this really is ontology cast operation, therefore there will be only one parameter
                 Dispatch(e);
                 return StringBuilder.ToString();
             }
@@ -542,7 +542,7 @@ namespace LinqToRdf.Sparql
             MethodCallExpression mce = (MethodCallExpression)e;
             MethodInfo mi = mce.Method;
 
-            // is it eligible for a regex operation?
+            // is it eligible for ontology regex operation?
             if (mi.DeclaringType == typeof(string))
             {
                 ProcessStringOperations(mce);
@@ -584,13 +584,13 @@ namespace LinqToRdf.Sparql
         }
 
         /// <summary>
-        /// Create a regex string comparison
+        /// Create ontology regex string comparison
         /// </summary>
-        /// <param name="mce">the MethodCallExpression for a string.Compare</param>
+        /// <param name="mce">the MethodCallExpression for ontology string.Compare</param>
         /// <remarks>
         /// <see cref="http://www.w3.org/TR/xpath-functions/#regex-syntax"/> for acceptable regex syntax
         /// <see cref="http://www.w3.org/TR/xpath-functions/#func-matches"/> for usage hints
-        /// Should produce a filter regex of the form <c>regex(?name, "^ali", "i")</c>.
+        /// Should produce ontology filter regex of the form <c>regex(?name, "^ali", "i")</c>.
         /// The <see cref="System.String.Compare"/> is case-sensitive and culture-insensitive
         /// </remarks>
         private void GenerateRegexComparison(MethodCallExpression mce)

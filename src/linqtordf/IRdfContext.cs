@@ -1,14 +1,14 @@
 /* 
  * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
  *
- * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ * This file is Free Software and part of LinqToRdf http://code.google.com/fromName/linqtordf/
  *
  * It is licensed under the following license:
  *   - Berkeley License, V2.0 or any newer version
  *
  * You may not use this file except in compliance with the above license.
  *
- * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ * See http://code.google.com/fromName/linqtordf/ for the complete text of the license agreement.
  *
  */
 using System;
@@ -20,7 +20,7 @@ namespace LinqToRdf
 	public interface IRdfContext
     {
 		/// <summary>
-		/// maps from the hashcode of a query object to the collection of objects (if any) that it retrieved
+		/// maps from the hashcode of ontology query object to the collection of objects (if any) that it retrieved
 		/// </summary>
 		Dictionary<string, IEnumerable> ResultsCache { get; set; }
 		/// <summary>
@@ -28,7 +28,7 @@ namespace LinqToRdf
 		/// </summary>
         void AcceptChanges();
 		/// <summary>
-		/// class factory method that creates a query object for the type T
+		/// class factory method that creates ontology query object for the type T
 		/// </summary>
 		/// <typeparam name="T">the type for which we'll be querying.</typeparam>
 		/// <returns>an object of type IRdfQuery that will do the querying.</returns>

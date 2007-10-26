@@ -1,14 +1,14 @@
 /* 
  * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
  *
- * This file is Free Software and part of LinqToRdf http://code.google.com/p/linqtordf/
+ * This file is Free Software and part of LinqToRdf http://code.google.com/fromName/linqtordf/
  *
  * It is licensed under the following license:
  *   - Berkeley License, V2.0 or any newer version
  *
  * You may not use this file except in compliance with the above license.
  *
- * See http://code.google.com/p/linqtordf/ for the complete text of the license agreement.
+ * See http://code.google.com/fromName/linqtordf/ for the complete text of the license agreement.
  *
  */
 using System;
@@ -56,10 +56,9 @@ namespace LinqToRdf.Sparql
             StringBuilder sbQuery = new StringBuilder();
             StringBuilder sbFilter = new StringBuilder();
             ParseQuery(q, sbFilter);
-
-            foreach (string prefix in namespaceManager.namespaceUris.Keys)
+            foreach (var ont in namespaceManager.Ontologies)
             {
-                sbPrefixes.AppendFormat("@prefix {0}: <{1}> .\n", prefix, namespaceManager.namespaceUris[prefix]);
+                sbPrefixes.AppendFormat("PREFIX {0}: <{1}> .\n", ont.PreferredPrefix, ont.BaseUri);
             }
 
             foreach (PropertyInfo propInfo in OwlClassSupertype.GetAllPersistentProperties(originalType))
@@ -101,11 +100,15 @@ namespace LinqToRdf.Sparql
         {
             if (CachedResults != null && ShouldReuseResultset)
                 return CachedResults.GetEnumerator();
-            StringBuilder sb = new StringBuilder();
-            CreateQuery(sb);
+            if (QueryText == null)
+            {
+                StringBuilder sb = new StringBuilder();
+                CreateQuery(sb);
+                QueryText = sb.ToString();
+            }
             IRdfConnection<T> conn = QueryFactory.CreateConnection(this);
             IRdfCommand<T> cmd = conn.CreateCommand();
-            cmd.CommandText = sb.ToString();
+            cmd.CommandText = QueryText;
             return cmd.ExecuteQuery();
         }
 
@@ -131,7 +134,6 @@ namespace LinqToRdf.Sparql
                 }
                 // we need to add the original type to the prolog to allow elements of the where clause to be optimised
             }
-            namespaceManager.RegisterType(OriginalType);
             CreateProlog(sb);
             CreateDataSetClause(sb);
             CreateProjection(sb);
@@ -152,22 +154,32 @@ namespace LinqToRdf.Sparql
         private void CreateProlog(StringBuilder sb)
         {
             // insert the standard prefixes as per http://www.w3.org/TR/rdf-sparql-query/#docNamespaces
-            sb.Append("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n");
-            sb.Append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n");
-            sb.Append("PREFIX xsdt: <http://www.w3.org/2001/XMLSchema#>\n"); // for the datatypes
-            sb.Append("PREFIX fn: <http://www.w3.org/2005/xpath-functions#> \n");
-
-            // now insert namespaces needed for the OwlClasses we're working with in this query
-            foreach (string prefix in namespaceManager.namespaceUris.Keys)
+            //sb.Append("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#>\n");
+            //sb.Append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n");
+            //sb.Append("PREFIX xsdt: <http://www.w3.org/2001/XMLSchema#>\n"); // for the datatypes
+            //sb.Append("PREFIX fn: <http://www.w3.org/2005/xpath-functions#> \n");
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
-                sb.AppendFormat("PREFIX {0}: <{1}>\n", prefix, namespaceManager.namespaceUris[prefix]);
+                foreach (OntologyAttribute ontology in assembly.GetAllOntologies())
+                {
+                    if (namespaceManager[ontology.Name] != null && namespaceManager[ontology.Name].BaseUri != ontology.BaseUri)
+                    {
+                        ontology.PreferredPrefix = namespaceManager.CreateNewPrefixFor(ontology);
+                    }
+                    namespaceManager[ontology.PreferredPrefix] = ontology;
+                }
+            }
+            // now insert namespaces needed for the OwlClasses we're working with in this query
+            foreach (var ont in namespaceManager.Ontologies)
+            {
+                sb.AppendFormat("PREFIX {0}: <{1}>\n", ont.PreferredPrefix, ont.BaseUri);
             }
             sb.Append("\n");
         }
 
         private void CreateDataSetClause(StringBuilder sb)
         {
-            return; // no named graphs just yet (issue #12 created - http://code.google.com/p/linqtordf/issues/detail?id=12&can=2&q=)
+            return; // no named graphs just yet (issue #12 created - http://code.google.com/fromName/linqtordf/issues/detail?id=12&can=2&q=)
         }
 
         private void CreateProjection(StringBuilder sb)
@@ -216,17 +228,17 @@ namespace LinqToRdf.Sparql
             //if (parameters.Count > 0)
             //{
             //    sb.AppendFormat("_:{0} ", instanceName);
-            //    sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> {0};\n", namespaceManager.typeMappings[originalType] + ":" + OwlClassSupertype.GetOwlResourceUri(originalType, true));
+            //    sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#type> {0};\n", namespaceManager.typeMappings[t] + ":" + OwlClassSupertype.GetOwlResourceUri(t, true));
             //}
             if (parameters.Count > 0)
             {
-                sb.AppendFormat("[] a {0};\n", namespaceManager.typeMappings[originalType] + ":" + originalType.GetOwlResource().RelativeUriReference);
+                sb.AppendFormat("[] a {0};\n", originalType.GetOntology().PreferredPrefix + ":" + originalType.GetOwlResource().RelativeUriReference);
             }
 
             for (int i = 0; i < parameters.Count; i++)
             {
                 MemberInfo info = parameters[i];
-                sb.AppendFormat("{0}{1} ?{2} ", namespaceManager.typeMappings[originalType] + ":", info.GetOwlResource().RelativeUriReference, info.Name);
+                sb.AppendFormat("{0}{1} ?{2} ", originalType.GetOntology().PreferredPrefix + ":", info.GetOwlResource().RelativeUriReference, info.Name);
                 sb.AppendFormat((i < parameters.Count - 1) ? ";\n" : ".\n");
             }
             if (FilterClause != null && FilterClause.Length > 0)
@@ -257,7 +269,7 @@ namespace LinqToRdf.Sparql
             if (parameters.Count > 0)
             {
                 sb.AppendFormat("_:{0} ", instanceName);
-                sb.AppendFormat(" a {0}.\n", namespaceManager.typeMappings[originalType] + ":" + originalType.GetOwlResource().RelativeUriReference);
+                sb.AppendFormat(" a {0}.\n", originalType.GetOntology().PreferredPrefix + ":" + originalType.GetOwlResource().RelativeUriReference);
             }
 
             bool isIdentityProjection = OriginalType == typeof(T);
@@ -265,7 +277,7 @@ namespace LinqToRdf.Sparql
             {
                 foreach (MemberInfo mi in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
                 {
-                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", mi.GetOwlResource().RelativeUriReference, mi.Name);
+                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, originalType.GetOntology().PreferredPrefix + ":", mi.GetOwlResource().RelativeUriReference, mi.Name);
                 }
             }
             else
@@ -273,7 +285,7 @@ namespace LinqToRdf.Sparql
                 for (int i = 0; i < parameters.Count; i++)
                 {
                     MemberInfo info = parameters[i];
-                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, namespaceManager.typeMappings[originalType] + ":", info.GetOwlResource().RelativeUriReference, info.Name);
+                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, originalType.GetOntology().PreferredPrefix + ":", info.GetOwlResource().RelativeUriReference, info.Name);
                 }
             }
             if (FilterClause != null && FilterClause.Length > 0)
@@ -296,7 +308,7 @@ namespace LinqToRdf.Sparql
             else
             {
                 // no name supplied by LINQ so just give one at random.
-                return "x";
+                return "tmpInt";
             }
         }
 
@@ -391,7 +403,7 @@ namespace LinqToRdf.Sparql
         }
 
         ///<summary>
-        ///Returns an enumerator that iterates through a collection.
+        ///Returns an enumerator that iterates through ontology collection.
         ///</summary>
         ///
         ///<returns>
