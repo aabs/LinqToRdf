@@ -58,7 +58,7 @@ namespace LinqToRdf.Sparql
             ParseQuery(q, sbFilter);
             foreach (var ont in namespaceManager.Ontologies)
             {
-                sbPrefixes.AppendFormat("PREFIX {0}: <{1}> .\n", ont.PreferredPrefix, ont.BaseUri);
+                sbPrefixes.AppendFormat("PREFIX {0}: <{1}> .\n", ont.Prefix, ont.BaseUri);
             }
 
             foreach (PropertyInfo propInfo in OwlClassSupertype.GetAllPersistentProperties(originalType))
@@ -164,15 +164,15 @@ namespace LinqToRdf.Sparql
                 {
                     if (namespaceManager[ontology.Name] != null && namespaceManager[ontology.Name].BaseUri != ontology.BaseUri)
                     {
-                        ontology.PreferredPrefix = namespaceManager.CreateNewPrefixFor(ontology);
+                        ontology.Prefix = namespaceManager.CreateNewPrefixFor(ontology);
                     }
-                    namespaceManager[ontology.PreferredPrefix] = ontology;
+                    namespaceManager[ontology.Prefix] = ontology;
                 }
             }
             // now insert namespaces needed for the OwlClasses we're working with in this query
             foreach (var ont in namespaceManager.Ontologies)
             {
-                sb.AppendFormat("PREFIX {0}: <{1}>\n", ont.PreferredPrefix, ont.BaseUri);
+                sb.AppendFormat("PREFIX {0}: <{1}>\n", ont.Prefix, ont.BaseUri);
             }
             sb.Append("\n");
         }
@@ -232,13 +232,13 @@ namespace LinqToRdf.Sparql
             //}
             if (parameters.Count > 0)
             {
-                sb.AppendFormat("[] a {0};\n", originalType.GetOntology().PreferredPrefix + ":" + originalType.GetOwlResource().RelativeUriReference);
+                sb.AppendFormat("[] a {0};\n", originalType.GetOntology().Prefix + ":" + originalType.GetOwlResource().RelativeUriReference);
             }
 
             for (int i = 0; i < parameters.Count; i++)
             {
                 MemberInfo info = parameters[i];
-                sb.AppendFormat("{0}{1} ?{2} ", originalType.GetOntology().PreferredPrefix + ":", info.GetOwlResource().RelativeUriReference, info.Name);
+                sb.AppendFormat("{0}{1} ?{2} ", originalType.GetOntology().Prefix + ":", info.GetOwlResource().RelativeUriReference, info.Name);
                 sb.AppendFormat((i < parameters.Count - 1) ? ";\n" : ".\n");
             }
             if (FilterClause != null && FilterClause.Length > 0)
@@ -269,7 +269,7 @@ namespace LinqToRdf.Sparql
             if (parameters.Count > 0)
             {
                 sb.AppendFormat("_:{0} ", instanceName);
-                sb.AppendFormat(" a {0}.\n", originalType.GetOntology().PreferredPrefix + ":" + originalType.GetOwlResource().RelativeUriReference);
+                sb.AppendFormat(" a {0}.\n", originalType.GetOntology().Prefix + ":" + originalType.GetOwlResource().RelativeUriReference);
             }
 
             bool isIdentityProjection = OriginalType == typeof(T);
@@ -277,7 +277,7 @@ namespace LinqToRdf.Sparql
             {
                 foreach (MemberInfo mi in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
                 {
-                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, originalType.GetOntology().PreferredPrefix + ":", mi.GetOwlResource().RelativeUriReference, mi.Name);
+                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, originalType.GetOntology().Prefix + ":", mi.GetOwlResource().RelativeUriReference, mi.Name);
                 }
             }
             else
@@ -285,7 +285,7 @@ namespace LinqToRdf.Sparql
                 for (int i = 0; i < parameters.Count; i++)
                 {
                     MemberInfo info = parameters[i];
-                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, originalType.GetOntology().PreferredPrefix + ":", info.GetOwlResource().RelativeUriReference, info.Name);
+                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, originalType.GetOntology().Prefix + ":", info.GetOwlResource().RelativeUriReference, info.Name);
                 }
             }
             if (FilterClause != null && FilterClause.Length > 0)

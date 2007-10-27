@@ -53,7 +53,7 @@ namespace LinqToRdf
         /// Note that while the prefix will be used whereever possible, there may be prefix clashes
         /// that will require ontology substitution
         /// </remarks>
-        public string PreferredPrefix { get; set; }
+        public string Prefix { get; set; }
         /// <summary>
         /// The base internal URI used in the ontology.
         /// </summary>

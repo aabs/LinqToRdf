@@ -58,7 +58,7 @@ namespace LinqToRdf
             if(!Empty(s) && !Empty(p) && !Empty(o))
                 ms.Add(new Statement(new Entity(s), new Entity(p), new Literal(o), Statement.DefaultMeta));
         }
-        private static bool Empty(string s)
+        public static bool Empty(this string s)
         {
             return (s == null || s.Length == 0);
         }

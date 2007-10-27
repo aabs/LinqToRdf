@@ -23,8 +23,7 @@ namespace $fileinputname$
 	{
 #>
 
-[OntologyBaseUri("<#=baseUri#>")]
-[OwlClass("<#=modelClass.OwlClassUri#>", true)]
+[OwlResource(OntologyName="$fileinputname$", RelativeUriReference="<#=modelClass.OwlClassUri#>")]
 public partial class <#= modelClass.Name #> : <#
 			WriteLine(modelClass.Superclass == null?"OwlInstanceSupertype":modelClass.Superclass.Name);
  #>
@@ -34,7 +33,7 @@ public partial class <#= modelClass.Name #> : <#
 		{
 #>
 		[OwlResource(OntologyName = "$fileinputname$ ", RelativeUriReference="<#=attr.OwlPropertyUri#>")]
-		public string <#=attr.Name#>{get;set;}
+		public <#=attr.Type #> <#=attr.Name#>{get;set;}
 <#
 		}
 		

@@ -38,21 +38,21 @@ using LinqToRdf;
 [assembly: Ontology(
     BaseUri = "http://aabs.purl.org/ontologies/2007/04/music#",
     Name = "Music",
-    PreferredPrefix = "music",
+    Prefix = "music",
     UrlOfOntology = "file:///C:/dev/prototypes/semantic-web/ontologies/2007/04/music/music.n3")]
 [assembly: Ontology(
-    PreferredPrefix = "rdf", 
+    Prefix = "rdf", 
     BaseUri = "http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#", 
     Name = "RDF")]
 [assembly: Ontology(
-    PreferredPrefix = "rdfs", 
+    Prefix = "rdfs", 
     BaseUri = "http://www.w3.org/2000/01/rdf-schema#", 
     Name = "RDFS")]
 [assembly: Ontology(
-    PreferredPrefix = "xsdt", 
+    Prefix = "xsdt", 
     BaseUri = "http://www.w3.org/2001/XMLSchema#", 
     Name = "Data Types")]
 [assembly: Ontology(
-    PreferredPrefix = "fn", 
+    Prefix = "fn", 
     BaseUri = "http://www.w3.org/2005/xpath-functions#", 
     Name = "XPath Functions")]

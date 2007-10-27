@@ -79,7 +79,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri1",
                 GraphName = "GraphName1",
                 Name = "Name1",
-                PreferredPrefix = "PreferredPrefix1",
+                Prefix = "Prefix1",
                 UrlOfOntology = "UrlOfOntology1"
             };
             dict["Name2"] = new OntologyAttribute
@@ -87,7 +87,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri2",
                 GraphName = "GraphName2",
                 Name = "Name2",
-                PreferredPrefix = "PreferredPrefix2",
+                Prefix = "Prefix2",
                 UrlOfOntology = "UrlOfOntology2"
             };
             dict["Name3"] = new OntologyAttribute
@@ -95,7 +95,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri3",
                 GraphName = "GraphName3",
                 Name = "Name3",
-                PreferredPrefix = "PreferredPrefix3",
+                Prefix = "Prefix3",
                 UrlOfOntology = "UrlOfOntology3"
             };
             dict["Name4"] = new OntologyAttribute
@@ -103,7 +103,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri4",
                 GraphName = "GraphName4",
                 Name = "Name4",
-                PreferredPrefix = "PreferredPrefix4",
+                Prefix = "Prefix4",
                 UrlOfOntology = "UrlOfOntology4"
             };
             return dict;
@@ -174,7 +174,7 @@ namespace RdfSerialisationTest
                 Assert.IsTrue(ont.BaseUri == "BaseUri" + counter.ToString());
                 Assert.IsTrue(ont.GraphName == "GraphName" + counter.ToString());
                 Assert.IsTrue(ont.Name  == "Name" + counter.ToString());
-                Assert.IsTrue(ont.PreferredPrefix == "PreferredPrefix" + counter.ToString());
+                Assert.IsTrue(ont.Prefix == "Prefix" + counter.ToString());
                 Assert.IsTrue(ont.UrlOfOntology == "UrlOfOntology" + counter.ToString());
             }
             Assert.IsTrue(counter == 4);
@@ -196,7 +196,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri4",
                 GraphName = "GraphName4",
                 Name = "Name4",
-                PreferredPrefix = "PreferredPrefix4",
+                Prefix = "Prefix4",
                 UrlOfOntology = "UrlOfOntology4"
             };
             Assert.IsNotNull(nsm[""]);
@@ -212,7 +212,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri4",
                 GraphName = "GraphName4",
                 Name = "Name4",
-                PreferredPrefix = "PreferredPrefix4",
+                Prefix = "Prefix4",
                 UrlOfOntology = "UrlOfOntology4"
             };
             Assert.IsNotNull(nsm[""]);
@@ -238,7 +238,7 @@ namespace RdfSerialisationTest
                 BaseUri = "mytest",
                 GraphName = "mytest",
                 Name = "mytest",
-                PreferredPrefix = "mytest",
+                Prefix = "mytest",
                 UrlOfOntology = "mytest"
             };
             Assert.IsNotNull(nsm["mytest"]);
@@ -258,7 +258,7 @@ namespace RdfSerialisationTest
                     BaseUri = "BaseUri1",
                     GraphName = "GraphName1",
                     Name = "Name1",
-                    PreferredPrefix = "PreferredPrefix1",
+                    Prefix = "Prefix1",
                     UrlOfOntology = "UrlOfOntology1"
                 };
                 Assert.Fail("Should have thrown an exception");
@@ -285,7 +285,7 @@ namespace RdfSerialisationTest
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
             nsm = new NamespaceManager(dict);
-            Assert.IsTrue(nsm["Name1"].PreferredPrefix == "PreferredPrefix1");
+            Assert.IsTrue(nsm["Name1"].Prefix == "Prefix1");
         }
         [TestMethod]
         public void TestQueryOntologyUri()
@@ -305,7 +305,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri5",
                 GraphName = "GraphName5",
                 Name = "Name5",
-                PreferredPrefix = "PreferredPrefix5",
+                Prefix = "Prefix5",
                 UrlOfOntology = "UrlOfOntology5"
             };
             Assert.IsTrue(nsm.HasDefault == true);
@@ -322,7 +322,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri5",
                 GraphName = "GraphName5",
                 Name = "Name5",
-                PreferredPrefix = "PreferredPrefix5",
+                Prefix = "Prefix5",
                 UrlOfOntology = "UrlOfOntology5"
             };
             nsm.Default = new OntologyAttribute
@@ -330,7 +330,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri6",
                 GraphName = "GraphName6",
                 Name = "Name6",
-                PreferredPrefix = "PreferredPrefix6",
+                Prefix = "Prefix6",
                 UrlOfOntology = "UrlOfOntology6"
             };
         }
@@ -345,7 +345,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri5",
                 GraphName = "GraphName5",
                 Name = "Name5",
-                PreferredPrefix = "PreferredPrefix5",
+                Prefix = "Prefix5",
                 UrlOfOntology = "UrlOfOntology5"
             };
             Assert.IsTrue(nsm.HasDefault == true);
@@ -374,7 +374,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri5",
                 GraphName = "GraphName5",
                 Name = "Name5",
-                PreferredPrefix = "PreferredPrefix5",
+                Prefix = "Prefix5",
                 UrlOfOntology = "UrlOfOntology5"
             };
             Assert.IsTrue(nsm.HasDefault == true);
@@ -384,7 +384,7 @@ namespace RdfSerialisationTest
                 BaseUri = "BaseUri5",
                 GraphName = "GraphName5",
                 Name = "Name5",
-                PreferredPrefix = "PreferredPrefix5",
+                Prefix = "Prefix5",
                 UrlOfOntology = "UrlOfOntology5"
             }, "NewName");
             Assert.IsTrue(nsm.HasDefault == true);
