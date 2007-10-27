@@ -49,28 +49,6 @@ namespace LinqToRdf.Sparql
             set { tripleStore = value; }
         }
 
-        protected void BuildQuery(Expression q)
-        {
-            StringBuilder sbPrefixes = new StringBuilder();
-            StringBuilder sbClauses = new StringBuilder();
-            StringBuilder sbQuery = new StringBuilder();
-            StringBuilder sbFilter = new StringBuilder();
-            ParseQuery(q, sbFilter);
-            foreach (var ont in namespaceManager.Ontologies)
-            {
-                sbPrefixes.AppendFormat("PREFIX {0}: <{1}> .\n", ont.Prefix, ont.BaseUri);
-            }
-
-            foreach (PropertyInfo propInfo in OwlClassSupertype.GetAllPersistentProperties(originalType))
-            {
-                if (queryGraphParameters.Contains(propInfo))
-                    sbClauses.AppendFormat("?{0} <{1}> ?{2} .\n", originalType.Name, propInfo.GetOwlResourceUri(), propInfo.Name);
-            }
-            //			sbQuery.AppendFormat("{0}\nSELECT {1} \nWHERE\n{{ {2} \n FILTER{{ {3} }}\n}}", sbPrefixes, GetParameterString(), sbClauses, FilterClause);
-            FilterClause = sbQuery.ToString();
-            Console.WriteLine(FilterClause);
-        }
-
         protected SparqlQuery<S> CloneQueryForNewType<S>()
         {
             SparqlQuery<S> newQuery = new SparqlQuery<S>(context);
@@ -153,11 +131,6 @@ namespace LinqToRdf.Sparql
 
         private void CreateProlog(StringBuilder sb)
         {
-            // insert the standard prefixes as per http://www.w3.org/TR/rdf-sparql-query/#docNamespaces
-            //sb.Append("PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#>\n");
-            //sb.Append("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n");
-            //sb.Append("PREFIX xsdt: <http://www.w3.org/2001/XMLSchema#>\n"); // for the datatypes
-            //sb.Append("PREFIX fn: <http://www.w3.org/2005/xpath-functions#> \n");
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 foreach (OntologyAttribute ontology in assembly.GetAllOntologies())
@@ -179,7 +152,13 @@ namespace LinqToRdf.Sparql
 
         private void CreateDataSetClause(StringBuilder sb)
         {
-            return; // no named graphs just yet (issue #12 created - http://code.google.com/fromName/linqtordf/issues/detail?id=12&can=2&q=)
+            // related Issue: #12 http://code.google.com/p/linqtordf/issues/detail?id=12
+            string graph = OriginalType.GetOntology().GraphName;
+            if (!graph.Empty())
+            {
+                sb.AppendFormat("FROM NAMED <{0}>\n", graph);
+            }
+            return; // no named graphs just yet ()
         }
 
         private void CreateProjection(StringBuilder sb)
