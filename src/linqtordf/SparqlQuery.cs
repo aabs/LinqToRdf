@@ -31,8 +31,6 @@ namespace LinqToRdf.Sparql
             parser = new LinqToSparqlExpTranslator<T>();
         }
 
-        private Expression expression;
-
         private IQueryFormatTranslator parser;
 
         private TripleStore tripleStore;
@@ -81,7 +79,7 @@ namespace LinqToRdf.Sparql
             if (QueryText == null)
             {
                 StringBuilder sb = new StringBuilder();
-                CreateQuery(sb);
+                CreateSelectQuery(sb);
                 QueryText = sb.ToString();
             }
             IRdfConnection<T> conn = QueryFactory.CreateConnection(this);
@@ -90,9 +88,7 @@ namespace LinqToRdf.Sparql
             return cmd.ExecuteQuery();
         }
 
-        #region SPARQL Query Construction
-
-        private void CreateQuery(StringBuilder sb)
+        private void CreateSelectQuery(StringBuilder sb)
         {
             if (Expressions.ContainsKey("Where"))
             {
@@ -204,14 +200,10 @@ namespace LinqToRdf.Sparql
                     }
                 }
             }
-            //if (parameters.Count > 0)
-            //{
-            //    sb.AppendFormat("_:{0} ", instanceName);
-            //    sb.AppendFormat(" <http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#type> {0};\n", namespaceManager.typeMappings[t] + ":" + OwlClassSupertype.GetOwlResourceUri(t, true));
-            //}
+
             if (parameters.Count > 0)
             {
-                sb.AppendFormat("[] a {0};\n", originalType.GetOntology().Prefix + ":" + originalType.GetOwlResource().RelativeUriReference);
+                sb.AppendFormat("$a a {0};\n", originalType.GetOntology().Prefix + ":" + originalType.GetOwlResource().RelativeUriReference);
             }
 
             for (int i = 0; i < parameters.Count; i++)
@@ -247,7 +239,7 @@ namespace LinqToRdf.Sparql
 
             if (parameters.Count > 0)
             {
-                sb.AppendFormat("_:{0} ", instanceName);
+                sb.AppendFormat("${0} ", instanceName);
                 sb.AppendFormat(" a {0}.\n", originalType.GetOntology().Prefix + ":" + originalType.GetOwlResource().RelativeUriReference);
             }
 
@@ -336,10 +328,6 @@ namespace LinqToRdf.Sparql
             }
         }
 
-        #endregion
-
-        #region IOrderedQueryable<T> implementation
-
         public Type ElementType
         {
             get { return originalType; }
@@ -364,7 +352,7 @@ namespace LinqToRdf.Sparql
 
         public S Execute<S>(Expression expression)
         {
-            this.expression = expression;
+            //this.expression = expression;
             throw new NotImplementedException("Execute not implmented");
         }
 
@@ -396,7 +384,7 @@ namespace LinqToRdf.Sparql
 
         public IQueryable CreateQuery(Expression expression)
         {
-            throw new NotImplementedException();
+            return this.CreateQuery<T>(expression);
         }
 
         public object Execute(Expression expression)
@@ -404,16 +392,9 @@ namespace LinqToRdf.Sparql
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        #region IQueryable Members
-
-
         public IQueryProvider Provider
         {
             get { return this; }
         }
-
-        #endregion
     }
 }
