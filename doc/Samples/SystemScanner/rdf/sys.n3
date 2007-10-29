@@ -1,0 +1,44 @@
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix string: <http://www.w3.org/2000/10/swap/string#>.
+@prefix os: <http://www.w3.org/2000/10/swap/os#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix n: <needs.n3#>.
+@prefix : <#>.
+
+###########[Class Artifact]############
+
+:Artifact a owl:Class .
+:filePath 
+	rdfs:domain :Artifact;
+	rdfs:range xsdt:string.
+:dateCreated
+	rdfs:domain :Artifact;
+	rdfs:range xsdt:datetime .
+:dateLastModified
+	rdfs:domain :Artifact;
+	rdfs:range xsdt:datetime .
+:hasACL
+	rdfs:domain :Artifact;
+	rdfs:range xsdt:string .
+:isReadOnly
+	rdfs:domain :Artifact;
+	rdfs:range xsdt:boolean .
+:hasDependencyOn
+	rdfs:domain :Artifact;
+	rdfs:range :Artifact.
+:artifactExists
+	rdfs:domain :Artifact;
+	rdfs:range xsdt:boolean.
+
+###########[Class Assembly]############
+:Assembly a :Artifact .
+:version
+	rdfs:domain :Assembly ;
+	rdfs:range	xsdt:string .
+:isSigned
+	rdfs:domain :Assembly ;
+	rdfs:range xsdt:boolean .
+:strongKey
+	rdfs:domain :Assembly ;
+	rdfs:range xsdt:string .
+

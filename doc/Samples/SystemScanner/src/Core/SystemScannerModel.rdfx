@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelRoot dslVersion="1.0.0.0" name="" xmlns="http://schemas.microsoft.com/dsltools/LinqToRdfDesigner">
+  <types>
+    <modelClass name="Artifact" owlClassUri="Artifact">
+      <attributes>
+        <modelAttribute name="ArtifactExists" description="Indicates whether the artifact was found or is reachable" type="bool" initialValue="false" owlPropertyUri="artifactExists" />
+        <modelAttribute name="DateCreated" type="DateTime" owlPropertyUri="dateCreated" />
+        <modelAttribute name="DateLastModified" type="DateTime" owlPropertyUri="dateLastModified" />
+        <modelAttribute name="FilePath" type="string" owlPropertyUri="filePath" />
+        <modelAttribute name="IsReadOnly" type="bool" owlPropertyUri="isReadOnly" />
+      </attributes>
+      <subclasses>
+        <generalization>
+          <modelClassMoniker name="//Assembly" />
+        </generalization>
+      </subclasses>
+    </modelClass>
+    <modelClass name="Assembly" owlClassUri="assembly">
+      <attributes>
+        <modelAttribute name="IsSigned" type="bool" owlPropertyUri="isSigned" />
+        <modelAttribute name="StrongKey" type="string" owlPropertyUri="strongKey" />
+        <modelAttribute name="Version" type="string" owlPropertyUri="version" />
+      </attributes>
+    </modelClass>
+  </types>
+</modelRoot>
