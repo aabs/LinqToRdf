@@ -19,11 +19,11 @@ namespace LinqToRdf
 {
     public class OwlClassSupertype
     {
-        public IEnumerable<PropertyInfo> AllPersistentProperties
+        public IEnumerable<MemberInfo> AllPersistentProperties
         {
             get
             {
-                foreach (PropertyInfo propertyInfo in GetType().GetProperties())
+                foreach (MemberInfo propertyInfo in GetType().GetProperties())
                 {
                     if (propertyInfo.IsOntologyResource())
                     {
@@ -32,9 +32,9 @@ namespace LinqToRdf
                 }
             }
         }
-        public static IEnumerable<PropertyInfo> GetAllPersistentProperties(Type t)
+        public static IEnumerable<MemberInfo> GetAllPersistentProperties(Type t)
         {
-            foreach (PropertyInfo propertyInfo in t.GetProperties())
+            foreach (MemberInfo propertyInfo in t.GetProperties())
             {
                 if (propertyInfo.IsOntologyResource())
                 {

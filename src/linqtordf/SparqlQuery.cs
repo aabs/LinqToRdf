@@ -111,16 +111,7 @@ namespace LinqToRdf.Sparql
             CreateProlog(sb);
             CreateDataSetClause(sb);
             CreateProjection(sb);
-            bool isIdentityProjection = OriginalType == typeof(T);
-            bool shouldUseOptionalForAllProperties = !(Expressions.ContainsKey("Where")) || isIdentityProjection;
-            if (shouldUseOptionalForAllProperties)
-            {
-                CreateOptionalWhereClause(sb);
-            }
-            else
-            {
-                CreateWhereClause(sb);
-            }
+            CreateWhereClause(sb);
 
             CreateSolutionModifier(sb);
         }
@@ -185,83 +176,73 @@ namespace LinqToRdf.Sparql
 
         private void CreateWhereClause(StringBuilder sb)
         {
-            string instanceName = GetInstanceName();
-            sb.Append("WHERE {\n");
-            List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
-
-            if (parameters.Count == 0)
-            {
-                // is it an identity projection? If so, place all persistent properties into parameters
-                if (OriginalType == typeof(T))
-                {
-                    foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
-                    {
-                        parameters.Add(info);
-                    }
-                }
-            }
-
-            if (parameters.Count > 0)
-            {
-                sb.AppendFormat("$a a {0};\n", originalType.GetOntology().Prefix + ":" + originalType.GetOwlResource().RelativeUriReference);
-            }
-
-            for (int i = 0; i < parameters.Count; i++)
-            {
-                MemberInfo info = parameters[i];
-                sb.AppendFormat("{0}{1} ?{2} ", originalType.GetOntology().Prefix + ":", info.GetOwlResource().RelativeUriReference, info.Name);
-                sb.AppendFormat((i < parameters.Count - 1) ? ";\n" : ".\n");
-            }
-            if (FilterClause != null && FilterClause.Length > 0)
-            {
-                sb.AppendFormat("FILTER(\n{0}\n)\n", FilterClause);
-            }
-            sb.Append("}\n");
-        }
-
-        private void CreateOptionalWhereClause(StringBuilder sb)
-        {
-            string instanceName = GetInstanceName();
-            sb.Append("WHERE {\n");
-            List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
-
-            if (parameters.Count == 0)
-            {
-                // is it an identity projection? If so, place all persistent properties into parameters
-                if (OriginalType == typeof(T))
-                {
-                    foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
-                    {
-                        parameters.Add(info);
-                    }
-                }
-            }
-
-            if (parameters.Count > 0)
-            {
-                sb.AppendFormat("${0} ", instanceName);
-                sb.AppendFormat(" a {0}.\n", originalType.GetOntology().Prefix + ":" + originalType.GetOwlResource().RelativeUriReference);
-            }
-
+            // if using an identity projection then every available property of the type must be returned
             bool isIdentityProjection = OriginalType == typeof(T);
-            if (isIdentityProjection)
+            // if there is no where clause then we want every instance back (and we won't be filtering)
+            // the logic around this is a little tricky (or debatable) - 
+            // Given that you could have instances that are partially complete in the triple store (i.e. not all triples are present)
+            // you need to be able to ensure that a query that does not explicitly include the missing properties does not
+            // exclude any instances where those properties are missing.
+            // I've reasoned that if you perform an identity projection, then you're saying "get me whatever you can", whereas if 
+            // you specifically request a certain property (via a projection) then you really must want a value for that, and thus
+            // instances must be excluded where there is no value _known_ - Hence the '|| IsIdentityProjection'.
+            bool getAnythingThatYouCan = !(Expressions.ContainsKey("Where")) || isIdentityProjection/* */;
+            // using "$" distinguishes this varName from anything that could be introduced from the properties of the type
+            // therefore the varName is 'safe' in the sense that there can never be a name clash.
+            string varName = "$"+GetInstanceName();
+
+            sb.Append("WHERE {\n");
+            // if parameters have been defined somewhere. If using an identity projection then we will not be getting anything from projectionParameters
+            // if we have no WHERE expression, then we also won't be getting anything from queryGraphParameters
+            List<MemberInfo> parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
+
+            if (parameters.Count == 0)
             {
-                foreach (MemberInfo mi in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
+                // is it an identity projection? If so, place all persistent properties into parameters
+                if (isIdentityProjection)
                 {
-                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, originalType.GetOntology().Prefix + ":", mi.GetOwlResource().RelativeUriReference, mi.Name);
+                    foreach (PropertyInfo info in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
+                    {
+                        parameters.Add(info);
+                    }
                 }
+            }
+
+            if (parameters.Count > 0)
+            {
+                sb.AppendFormat("{0} a {1}:{2}.\n", varName, originalType.GetOntology().Prefix, originalType.GetOwlResource().RelativeUriReference);
             }
             else
             {
-                for (int i = 0; i < parameters.Count; i++)
-                {
-                    MemberInfo info = parameters[i];
-                    sb.AppendFormat("OPTIONAL {{_:{0} {1}{2} ?{3}. }}\n", instanceName, originalType.GetOntology().Prefix + ":", info.GetOwlResource().RelativeUriReference, info.Name);
-                }
+                // I don't think there is any way to get into to this point unless the object is persistent, but has no 
+                throw new ApplicationException("No persistent properties defined on the entity. Unable to generate a query.");
             }
+
+            // temp var to get the object variables list
+            IEnumerable<MemberInfo> args = null;
+            // a temp string to get the tripleFormat that will be used to generate query triples.
+            string tripleFormat = "OPTIONAL{{{0} {1}:{2} ?{3}.}}\n";
+
+            if (!getAnythingThatYouCan)
+                tripleFormat = "{0} {1}:{2} ?{3} .\n";
+
+            if (isIdentityProjection)
+                args = OwlClassSupertype.GetAllPersistentProperties(OriginalType) as IEnumerable<MemberInfo>;
+            else
+                args = parameters;
+
+            foreach (var arg in args)
+            {
+                sb.AppendFormat(tripleFormat, 
+                    varName, 
+                    originalType.GetOntology().Prefix, 
+                    arg.GetOwlResource().RelativeUriReference, 
+                    arg.Name);
+            }
+
             if (FilterClause != null && FilterClause.Length > 0)
             {
-                sb.AppendFormat("FILTER(\n{0}\n)\n", FilterClause);
+                sb.AppendFormat("FILTER( {0} )\n", FilterClause);
             }
             sb.Append("}\n");
         }

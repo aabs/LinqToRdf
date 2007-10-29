@@ -50,7 +50,7 @@ namespace LinqToRdf
 			if (originalType == null) throw new ApplicationException("need ontology type to create");
 			object t;
 
-			IEnumerable<PropertyInfo> props;
+			IEnumerable<MemberInfo> props;
 			if(originalType == instanceType) //  i.e. identity projection, meaning we can use GetAllPersistentProperties safely
 			{
 				props = OwlClassSupertype.GetAllPersistentProperties(OriginalType);
