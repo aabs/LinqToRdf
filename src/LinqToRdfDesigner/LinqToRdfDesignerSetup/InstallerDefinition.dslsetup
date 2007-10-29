@@ -12,7 +12,7 @@ For more specific information, see the Error List window.
 <installerDefinition xmlns="http://schemas.microsoft.com/VisualStudio/2005/DslTools/InstallerDefinitionModel" 
   productUrl="http://code.google.com/p/linqtordf/"
   defaultDirectoryName="LinqToRdf"
-  productVersion="0.3.0"
+  productVersion="0.4.0"
   requiresCSharp="true"
   requiresVisualBasic="true"
   productCode="de7066bc-e6b8-4166-a9b4-01c1cf543bdf"
