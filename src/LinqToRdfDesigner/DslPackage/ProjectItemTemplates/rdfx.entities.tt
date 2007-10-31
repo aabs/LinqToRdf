@@ -32,9 +32,19 @@ public partial class <#= modelClass.Name #> : <#
 		foreach(ModelAttribute attr in modelClass.Attributes)
 		{
 #>
-		[OwlResource(OntologyName = "$fileinputname$ ", RelativeUriReference="<#=attr.OwlPropertyUri#>")]
+		[OwlResource(OntologyName = "SystemScannerModel ", RelativeUriReference="<#=attr.OwlPropertyUri#>")]
+<# if(attr.Multiplicity.ToString() == "1")
+{
+#>
 		public <#=attr.Type #> <#=attr.Name#>{get;set;}
 <#
+}
+else
+{
+#>
+		public EntitySet<<#=attr.Type #>> <#=attr.Name#>{get;set;}
+<#
+}
 		}
 		
 		foreach(Aggregation association in Aggregation.GetLinksToAggregationTargets(modelClass))

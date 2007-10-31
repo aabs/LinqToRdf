@@ -22,6 +22,12 @@
 :isReadOnly
 	rdfs:domain :Artifact;
 	rdfs:range :bool.
+:hasACL
+	rdfs:domain :Artifact;
+	rdfs:range :string.
+:hasDependencyOn
+	rdfs:domain :Artifact;
+	rdfs:range :Artifact.
 :Assembly a owl:Class ;
 	rdfs:subClassOf :Artifact .
 :isSigned

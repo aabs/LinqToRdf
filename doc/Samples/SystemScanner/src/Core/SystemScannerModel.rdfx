@@ -8,6 +8,8 @@
         <modelAttribute name="DateLastModified" type="DateTime" owlPropertyUri="dateLastModified" />
         <modelAttribute name="FilePath" type="string" owlPropertyUri="filePath" />
         <modelAttribute name="IsReadOnly" type="bool" owlPropertyUri="isReadOnly" />
+        <modelAttribute name="HasACL" type="string" owlPropertyUri="hasACL" />
+        <modelAttribute name="HasDependencyOn" type="Artifact" multiplicity="*" owlPropertyUri="hasDependencyOn" />
       </attributes>
       <subclasses>
         <generalization>
