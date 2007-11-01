@@ -9,22 +9,22 @@
 :Artifact a owl:Class .
 :artifactExists
 	rdfs:domain :Artifact;
-	rdfs:range :bool.
+	rdfs:range xsdt:boolean.
 :dateCreated
 	rdfs:domain :Artifact;
-	rdfs:range :DateTime.
+	rdfs:range xsdt:dateTime.
 :dateLastModified
 	rdfs:domain :Artifact;
-	rdfs:range :DateTime.
+	rdfs:range xsdt:dateTime.
 :filePath
 	rdfs:domain :Artifact;
-	rdfs:range :string.
+	rdfs:range xsdt:string.
 :isReadOnly
 	rdfs:domain :Artifact;
-	rdfs:range :bool.
+	rdfs:range xsdt:boolean.
 :hasACL
 	rdfs:domain :Artifact;
-	rdfs:range :string.
+	rdfs:range xsdt:string.
 :hasDependencyOn
 	rdfs:domain :Artifact;
 	rdfs:range :Artifact.
@@ -32,10 +32,10 @@
 	rdfs:subClassOf :Artifact .
 :isSigned
 	rdfs:domain :Assembly;
-	rdfs:range :bool.
+	rdfs:range xsdt:boolean.
 :strongKey
 	rdfs:domain :Assembly;
-	rdfs:range :string.
+	rdfs:range xsdt:string.
 :version
 	rdfs:domain :Assembly;
-	rdfs:range :string.
+	rdfs:range xsdt:string.

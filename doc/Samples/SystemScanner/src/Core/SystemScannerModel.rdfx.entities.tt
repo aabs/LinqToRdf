@@ -1,13 +1,15 @@
 ﻿<#@ template inherits="Microsoft.VisualStudio.TextTemplating.VSHost.ModelingTextTransformation" debug="true"#>
 <#@ assembly name = "System.Core.dll" #>
+<#@ assembly name = "linqtordf.dll" #>
 <#@ import namespace = "System.Collections.Generic" #>
+<#@ import namespace = "LinqToRdf" #>
 <#@ output extension=".cs" #>
 <#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='SystemScannerModel.rdfx'"  #>
 <#
 // prolog - set up some book-keeping variables
 string baseUri = this.ModelRoot.OntologyBaseUrl;
 HashSet<ModelClass> processedClasses = new HashSet<ModelClass>();
-
+ITypeTranslator2 tt = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.DotNet);
 #>
 using System;
 using LinqToRdf;
@@ -31,18 +33,32 @@ public partial class <#= modelClass.Name #> : <#
 <#
 		foreach(ModelAttribute attr in modelClass.Attributes)
 		{
+		
+				PrimitiveDataType dt = PrimitiveDataType.UNKNOWN;
+				bool isPrimitive = tt.IsPrimitiveType(attr.Type);
+				string typename = "";
+				if(isPrimitive)
+				{
+					dt = (PrimitiveDataType)Enum.Parse(typeof(PrimitiveDataType), attr.Type.ToUpper());
+					typename = tt[dt];
+				}
+				else
+				{
+					typename = attr.Type;
+				}
+		
 #>
 		[OwlResource(OntologyName = "SystemScannerModel ", RelativeUriReference="<#=attr.OwlPropertyUri#>")]
 <# if(attr.Multiplicity.ToString() == "1")
 {
 #>
-		public <#=attr.Type #> <#=attr.Name#>{get;set;}
+		public <#=typename #> <#=attr.Name#>{get;set;}
 <#
 }
 else
 {
 #>
-		public EntitySet<<#=attr.Type #>> <#=attr.Name#>{get;set;}
+		public EntitySet<<#=typename #>> <#=attr.Name#>{get;set;}
 <#
 }
 		}

@@ -99,13 +99,13 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="linqtordf, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="linqtordf, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\src\linqtordf\bin\Debug\linqtordf.dll</HintPath>
     </Reference>
     <Reference Include="SemWeb, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\src\linqtordf\bin\Debug\SemWeb.dll</HintPath>
+      <HintPath>..\..\..\..\..\lib\SemWeb.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

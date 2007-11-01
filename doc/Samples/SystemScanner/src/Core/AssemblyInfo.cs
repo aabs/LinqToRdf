@@ -28,21 +28,5 @@ using LinqToRdf;
 [assembly: Ontology(
     BaseUri = "http://aabs.purl.org/ontologies/2007/10/system-scanner#",
     Name = "SystemScanner",
-    PreferredPrefix = "syscan",
+    Prefix = "syscan",
     UrlOfOntology = "file:///C:/etc/dev/semantic-web/linqtordf/doc/Samples/SystemScanner/rdf/sys.n3")]
-[assembly: Ontology(
-    PreferredPrefix = "rdf",
-    BaseUri = "http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#",
-    Name = "RDF")]
-[assembly: Ontology(
-    PreferredPrefix = "rdfs",
-    BaseUri = "http://www.w3.org/2000/01/rdf-schema#",
-    Name = "RDFS")]
-[assembly: Ontology(
-    PreferredPrefix = "xsdt",
-    BaseUri = "http://www.w3.org/2001/XMLSchema#",
-    Name = "Data Types")]
-[assembly: Ontology(
-    PreferredPrefix = "fn",
-    BaseUri = "http://www.w3.org/2005/xpath-functions#",
-    Name = "XPath Functions")]
