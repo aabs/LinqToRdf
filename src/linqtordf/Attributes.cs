@@ -98,6 +98,15 @@ namespace LinqToRdf
         {
             return assembly.GetAttributes<OntologyAttribute>();
         }
+        public static OntologyAttribute[] GetAllOntologies(this AppDomain ad)
+        {
+            List<OntologyAttribute> tmp = new List<OntologyAttribute>();
+            foreach (var asm in ad.GetAssemblies())
+            {
+                tmp.AddRange(asm.GetAllOntologies());
+            }
+            return tmp.ToArray();
+        }
         public static OntologyAttribute GetOntology(this Assembly assembly, string ontologyName)
         {
             return (from a in assembly.GetAllOntologies() where a.Name == ontologyName select a).FirstOrDefault();
@@ -125,6 +134,18 @@ namespace LinqToRdf
         public static string GetOwlResourceUri(this MemberInfo mi)
         {
             return mi.GetOntology().BaseUri + mi.GetOwlResource().RelativeUriReference;
+        }
+        /// <summary>
+        /// Gets all ontologoies declared for all app domains and finds the one 
+        /// with the matching name to Name and returns the current prefix for it.
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public static string GetOntologyPrefix(string Name)
+        {
+            return (from o in AppDomain.CurrentDomain.GetAllOntologies() 
+                    where o.Name == Name 
+                    select o).First().Prefix;
         }
     }
 }

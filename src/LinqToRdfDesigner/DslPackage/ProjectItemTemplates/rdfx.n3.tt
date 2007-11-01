@@ -2,13 +2,15 @@
 <#@ assembly name = "System.Core.dll" #>
 <#@ assembly name = "linqtordf.dll" #>
 <#@ import namespace = "System.Collections.Generic" #>
+<#@ import namespace = "LinqToRdf" #>
 <#@ output extension=".n3" #>
 <#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='$fileinputname$.rdfx'"  #>
 <#
 // prolog - set up some book-keeping variables
 string baseUri = this.ModelRoot.OntologyBaseUrl;
 HashSet<ModelClass> processedClasses = new HashSet<ModelClass>();
-
+string XsdtPrefix = AttributeExtensions.GetOntologyPrefix("Data Types");
+ITypeTranslator2 tt = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.XmlSchemaDatatypes);
 
 #>
 @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns\#> .
@@ -45,7 +47,15 @@ HashSet<ModelClass> processedClasses = new HashSet<ModelClass>();
 			{
 				WriteLine(":"+attr.OwlPropertyUri);
 				WriteLine("\trdfs:domain :" + modelClass.Name +";");
-				WriteLine("\trdfs:range :" + attr.Type +".");
+				if(tt.IsPrimitiveType(attr.Type))
+				{
+					PrimitiveDataType dt = (PrimitiveDataType)Enum.Parse(typeof(PrimitiveDataType), attr.Type.ToUpper());
+					WriteLine("\trdfs:range " + XsdtPrefix + ":" + tt[dt] +".");
+				}
+				else
+				{
+					WriteLine("\trdfs:range :" + attr.Type +".");
+				}
 			}
 		}
 		

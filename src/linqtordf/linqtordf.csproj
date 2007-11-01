@@ -82,6 +82,7 @@
     <Compile Include="LinqToSparqlExpTranslator.cs" />
     <Compile Include="SparqlCommand.cs" />
     <Compile Include="SparqlConnection.cs" />
+    <Compile Include="TypeCalculations.cs" />
     <Compile Include="XsdtTypeConverter.cs" />
   </ItemGroup>
   <ItemGroup>

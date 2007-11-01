@@ -49,6 +49,10 @@
     <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Modeling.Sdk.Diagrams.GraphObject, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
     <Reference Include="Microsoft.VisualStudio.TextTemplating, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="SemWeb, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -249,4 +253,10 @@
     <StartAction>Program</StartAction>
     <StartArguments>/ranu /rootsuffix Exp /DesignTimeRun "..\..\..\Debugging\Debugging.sln"</StartArguments>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\linqtordf\linqtordf.csproj">
+      <Project>{DCB04931-F2F1-45CA-B857-233D7B0AC615}</Project>
+      <Name>linqtordf</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

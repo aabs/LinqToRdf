@@ -74,6 +74,8 @@
     <Compile Include="QueryFactoryTest.cs" />
     <Compile Include="SparqlExpressionTranslatorTest.cs" />
     <Compile Include="StringOperationTests.cs" />
+    <Compile Include="TestExtensions.cs" />
+    <Compile Include="TestTypeTranslator2.cs" />
     <Compile Include="VSCodeGenAccessors.cs" />
     <Compile Include="XsdtTypeConverterTest.cs" />
   </ItemGroup>

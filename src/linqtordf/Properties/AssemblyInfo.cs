@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
+using LinqToRdf;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -38,3 +39,19 @@ using System.Security.Permissions;
 //[assembly: IsolatedStorageFilePermission(SecurityAction.RequestMinimum, UserQuota = 1048576)]
 //[assembly: SecurityPermission(SecurityAction.RequestRefuse, UnmanagedCode = true)]
 //[assembly: FileIOPermission(SecurityAction.RequestOptional, Unrestricted = true)]
+[assembly: Ontology(
+    Prefix = "rdf",
+    BaseUri = "http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#",
+    Name = "RDF")]
+[assembly: Ontology(
+    Prefix = "rdfs",
+    BaseUri = "http://www.w3.org/2000/01/rdf-schema#",
+    Name = "RDFS")]
+[assembly: Ontology(
+    Prefix = "xsdt",
+    BaseUri = "http://www.w3.org/2001/XMLSchema#",
+    Name = "Data Types")]
+[assembly: Ontology(
+    Prefix = "fn",
+    BaseUri = "http://www.w3.org/2005/xpath-functions#",
+    Name = "XPath Functions")]
