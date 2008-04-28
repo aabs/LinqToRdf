@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<RegexProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Regex>((?'val'\d*)|\"(?'val'[^\"]+)\")
+(\^\^(\&lt;http://www.w3.org/2001/XMLSchema[#](?'type'.*)\&gt;|
+((?'nsprefix'.*)\:(?'type'.*))))?$</Regex>
+  <Input>10^^xsdt:integer
+10
+10^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;
+"hello world"
+"hello world"^^xsdt:string
+"hello world"^^&lt;http://www.w3.org/2001/XMLSchema#double&gt;
+"P1D"^^xsdt:duration
+"P1D"^^&lt;http://www.w3.org/2001/XMLSchema#duration&gt;
+"10"^^&lt;http://www.w3.org/2001/XMLSchema#double&gt;
+"10"^^xsdt:double</Input>
+  <Options>IgnoreCase Multiline IgnorePatternWhitespace</Options>
+  <FileName>C:\dev\linqtordf\doc\xsdt.express</FileName>
+  <ReplaceString />
+  <InputFilename>xsdt:blah</InputFilename>
+  <UpdateEventsEnabled>true</UpdateEventsEnabled>
+</RegexProject>

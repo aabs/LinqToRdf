@@ -1,0 +1,10 @@
+test for explicit decl:
+^.*\^\^((\w:\w)||(\<"http://www.w3.org/xmlschema#"\>\w))
+
+split whole:
+((?'nqval'.*)|(\"(?'qval'.*)\")^^(?'typeDecl'
+	(
+		((?'ns'\w):(?'type'\w))|
+		(\<"http://www.w3.org/xmlschema#"(?'type'\w)\>)
+	)
+)
