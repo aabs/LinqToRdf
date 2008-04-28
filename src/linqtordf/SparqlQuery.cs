@@ -18,6 +18,7 @@ using System.Linq.Expressions;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using SemWeb.Query;
 
 namespace LinqToRdf.Sparql
 {
@@ -84,6 +85,7 @@ namespace LinqToRdf.Sparql
             }
             IRdfConnection<T> conn = QueryFactory.CreateConnection(this);
             IRdfCommand<T> cmd = conn.CreateCommand();
+            cmd.ElideDuplicates = Expressions.ContainsKey("Distinct");
             cmd.CommandText = QueryText;
             return cmd.ExecuteQuery();
         }
@@ -150,12 +152,16 @@ namespace LinqToRdf.Sparql
 
         private void CreateProjection(StringBuilder sb)
         {
-            if (Expressions.ContainsKey("Select"))
-                BuildProjection(Expressions["Select"]);
+            string distinct = Expressions.ContainsKey("Distinct") ? "DISTINCT " : "";
 
+            if (Expressions.ContainsKey("Select"))
+            {
+                BuildProjection(Expressions["Select"]);
+            }
+
+            sb.Append("SELECT " + distinct);
             if (projectionParameters.Count == 0)
             {
-                sb.Append("SELECT ");
                 foreach (MemberInfo mi in OwlClassSupertype.GetAllPersistentProperties(typeof(T)))
                 {
                     sb.Append(" ?");
@@ -164,7 +170,6 @@ namespace LinqToRdf.Sparql
             }
             else
             {
-                sb.Append("SELECT ");
                 foreach (MemberInfo mi in projectionParameters)
                 {
                     sb.Append(" ?");
@@ -189,7 +194,7 @@ namespace LinqToRdf.Sparql
             bool getAnythingThatYouCan = !(Expressions.ContainsKey("Where")) || isIdentityProjection/* */;
             // using "$" distinguishes this varName from anything that could be introduced from the properties of the type
             // therefore the varName is 'safe' in the sense that there can never be a name clash.
-            string varName = "$"+GetInstanceName();
+            string varName = "$" + GetInstanceName();
 
             sb.Append("WHERE {\n");
             // if parameters have been defined somewhere. If using an identity projection then we will not be getting anything from projectionParameters
@@ -233,10 +238,10 @@ namespace LinqToRdf.Sparql
 
             foreach (var arg in args)
             {
-                sb.AppendFormat(tripleFormat, 
-                    varName, 
-                    originalType.GetOntology().Prefix, 
-                    arg.GetOwlResource().RelativeUriReference, 
+                sb.AppendFormat(tripleFormat,
+                    varName,
+                    originalType.GetOntology().Prefix,
+                    arg.GetOwlResource().RelativeUriReference,
                     arg.Name);
             }
 

@@ -18,16 +18,16 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using LinqToRdf;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RdfMusic;
 using SemWeb;
 using SemWeb.Inference;
 using SemWeb.Query;
-using RdfSerialisationTest.Properties;
+using UnitTests.Properties;
 
-namespace RdfSerialisationTest
+namespace UnitTests
 {
-	[TestClass]
+	[TestFixture]
 	public class LocalSparqlTests
 	{
 		#region query strings
@@ -59,12 +59,12 @@ FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest M
 			store.Import(new N3Reader(serialisedLocation));
 		}
 
-		[TestMethod]
+		[Test]
 		public void LocalSparqlQuery1()
 		{
 			CreateMemoryStore();
 			var x = new {Title="foo", FileLocation="bar"};
-			ObjectDeserialiserQuerySink sink = new ObjectDeserialiserQuerySink(typeof(Track), x.GetType());
+			ObjectDeserialiserQuerySink sink = new ObjectDeserialiserQuerySink(typeof(Track), x.GetType(), false, null);
 			string qry = CreateQueryForArtist("Rory Blythe");
 			Query query = new SparqlEngine(qry);
 //			Query query = new GraphMatch(new N3Reader(new StringReader(qry)));
@@ -95,15 +95,15 @@ FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest M
 		// public static void MyClassInitialize(TestContext testContext) { }
 		//
 		// Use ClassCleanup to run code after all tests in ontology class have run
-		// [ClassCleanup()]
+		// [TearDown]
 		// public static void MyClassCleanup() { }
 		//
 		// Use TestInitialize to run code before running each test 
-		// [TestInitialize()]
+		// [SetUp]
 		// public void MyTestInitialize() { }
 		//
 		// Use TestCleanup to run code after each test has run
-		[TestCleanup()]
+		[TearDown]
 		public void MyTestCleanup()
 		{
 			if (store != null)

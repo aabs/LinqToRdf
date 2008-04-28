@@ -40,7 +40,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(ProgramFiles)\Microsoft Visual Studio 2008 SDK\VisualStudioIntegration\Tools\Build\Microsoft.VsSDK.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\VSSDK\Microsoft.VsSDK.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\DSLTools\v2.1\Microsoft.DSLTools.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

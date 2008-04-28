@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using LinqToRdf;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -10,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andrew Matthews")]
 [assembly: AssemblyProduct("RdfSerialisationTest")]
-[assembly: AssemblyCopyright("Copyright ©  2007 Andrew Matthews")]
+[assembly: AssemblyCopyright("Copyright ©  2008 Andrew Matthews")]
 [assembly: AssemblyTrademark("LinqToRdf")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +32,11 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("0.4.0.0")]
-[assembly: AssemblyFileVersion("0.4.0.0")]
+[assembly: AssemblyVersion("0.5.0.0")]
+[assembly: AssemblyFileVersion("0.5.0.0")]
+
+[assembly: Ontology(
+    BaseUri = "http://aabs.purl.org/ontologies/2007/11/tasks#",
+    Name = "Tasks",
+    Prefix = "tasks",
+    UrlOfOntology = "file:///C:/etc/dev/semantic-web/linqtordf/src/unit-testing/standard-test-data/tasks.n3")]

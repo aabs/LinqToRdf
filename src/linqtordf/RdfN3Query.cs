@@ -157,7 +157,7 @@ namespace LinqToRdf
         private void PresentQuery(string qry)
         {
             Store ms = store;
-            ObjectDeserialiserQuerySink sink = new ObjectDeserialiserQuerySink(originalType, typeof (T));
+            ObjectDeserialiserQuerySink sink = new ObjectDeserialiserQuerySink(originalType, typeof (T), this.Expressions.ContainsKey("Distinct"), Expressions["Select"]);
             Query graphMatchQuery = new GraphMatch(new N3Reader(new StringReader(qry)));
             graphMatchQuery.Run(ms, sink);
             List<T> list = new List<T>();

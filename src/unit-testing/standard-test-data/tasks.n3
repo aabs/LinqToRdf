@@ -8,7 +8,7 @@
 @prefix log: <http://www.w3.org/2000/10/swap/log#> .
 @prefix math: <http://www.w3.org/2000/10/swap/math#>.
 
-@prefix : <#> .
+@prefix : <http://aabs.purl.org/ontologies/2007/11/tasks#> .
 
 # NamedThing
 :NamedThing a owl:Class.
@@ -28,7 +28,7 @@
 :startDate rdfs:domain :Task; rdfs:range xsdt:date.
 :endDate rdfs:domain :Task; rdfs:range xsdt:date.
 :dueDate = :endDate.
-:predecessor a daml:TransitiveProperty; rdfs:domain :Task; rdfs:range :Task.
+:predecessor a daml:TransitiveProperty, owl:ObjectProperty; rdfs:domain :Task; rdfs:range :Task.
 :successor daml:inverseOf :predecessor.
 :isConcurrentWith a owl:SymmetricProperty; rdfs:domain :Task; rdfs:range :Task.
 
@@ -53,26 +53,28 @@
 ## a successor must happen after its predecessor
 {
 	?T1 :successor ?T2.
-	?T1.:dueDate math:greaterThan ?T2.:dueDate.
+	?T1!:dueDate math:greaterThan ?T2!:dueDate.
 } a log:falsehood.
 
 ## A task's end date is its start date plus its duration
 {
-	(?T1.:startDate ?T1.:duration) math:sum ?e.
+	(?T1!:startDate ?T1!:duration) math:sum ?e.
 } => {
 	?T1 :endDate ?e .
-}
+}.
 
 ## two tasks can be concurrent
 {
-	?T1.:startDate math:lessThan ?T2.startDate .
-	?T2.:startDate math:notGreaterThan ?T1.endDate .
+	?T1!:startDate math:lessThan ?T2!:startDate .
+	?T2!:startDate math:notGreaterThan ?T1!:endDate .
 } => {
 	?T1 :isConcurrentWith ?T2.
-}
+}.
 
 ## can't have successor/predecessor from a different project
 {
 	?T1 :successor ?T2.
-	?T1.:inProject log:notEqualTo ?T2.:inProject.
+	?T1 :inProject ?P1.
+	?T2 :inProject ?P2.
+	?P1 log:notEqualTo ?P2.
 } a log:falsehood .

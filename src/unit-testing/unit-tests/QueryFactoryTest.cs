@@ -3,68 +3,22 @@
 using System;
 using LinqToRdf;
 using LinqToRdf.Sparql;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RdfMusic;
 using SemWeb;
-using RdfSerialisationTest.Properties; 
+using UnitTests.Properties;
+using Rhino.Mocks;
+using UnitTests.TaskEntityModel; 
 
-namespace RdfSerialisationTest
+namespace UnitTests
 {
 	/// <summary>
 	///This is ontology test class for LinqToRdf.QueryFactory&lt;T&gt; and is intended
 	///to contain all LinqToRdf.QueryFactory&lt;T&gt; Unit Tests
 	///</summary>
-	[TestClass]
+	[TestFixture]
 	public class QueryFactoryTest
 	{
-		private TestContext testContextInstance;
-
-		/// <summary>
-		///Gets or sets the test context which provides
-		///information about and functionality for the current test run.
-		///</summary>
-		public TestContext TestContext
-		{
-			get { return testContextInstance; }
-			set { testContextInstance = value; }
-		}
-
-		#region Additional test attributes
-
-		// 
-		//You can use the following additional attributes as you write your tests:
-		//
-		//Use ClassInitialize to run code before running the first test in the class
-		//
-		//[ClassInitialize()]
-		//public static void MyClassInitialize(TestContext testContext)
-		//{
-		//}
-		//
-		//Use ClassCleanup to run code after all tests in ontology class have run
-		//
-		//[ClassCleanup()]
-		//public static void MyClassCleanup()
-		//{
-		//}
-		//
-		//Use TestInitialize to run code before running each test
-		//
-		//[TestInitialize()]
-		//public void MyTestInitialize()
-		//{
-		//}
-		//
-		//Use TestCleanup to run code after each test has run
-		//
-		//[TestCleanup()]
-		//public void MyTestCleanup()
-		//{
-		//}
-		//
-
-		#endregion
-
 		#region helpers
 
 		private static Store CreateMemoryStore()
@@ -77,36 +31,22 @@ namespace RdfSerialisationTest
 
 		private static TripleStore CreateInMemoryTripleStore()
 		{
-			Store store = CreateMemoryStore();
-			TripleStore ts = new TripleStore();
-			ts.LocalTripleStore = store;
-			ts.QueryType = QueryType.LocalN3StoreInMemory;
-			return ts;
+            return new TripleStore(CreateMemoryStore(), QueryType.LocalN3StoreInMemory);
 		}
 
 		private static TripleStore CreatePersistentTripleStore()
 		{
-			TripleStore ts = new TripleStore();
-			ts.EndpointUri = @"some dummy connection string";
-			ts.QueryType = QueryType.LocalN3StorePersistent;
-			return ts;
+            return new TripleStore(@"some dummy connection string", QueryType.LocalN3StorePersistent);
 		}
 
 		private static TripleStore CreateInMemorySparqlTripleStore()
 		{
-			Store store = CreateMemoryStore();
-			TripleStore ts = new TripleStore();
-			ts.LocalTripleStore = store;
-			ts.QueryType = QueryType.LocalSparqlStore;
-			return ts;
+            return new TripleStore(CreateMemoryStore(), QueryType.LocalSparqlStore);
 		}
 
 		private static TripleStore CreateOnlineSparqlTripleStore()
 		{
-			TripleStore ts = new TripleStore();
-            ts.EndpointUri = @"http://localhost/linqtordf/SparqlQuery.asp";
-			ts.QueryType = QueryType.RemoteSparqlStore;
-			return ts;
+			return new TripleStore(@"http://localhost/linqtordf/SparqlQuery.asp");
 		}
 
 		#endregion
@@ -116,7 +56,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateConnectionTest_InMemorySparqlTripleStore()
 		{
 			TestConnectionCreationForTripleStore(CreateInMemorySparqlTripleStore());
@@ -125,7 +65,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateConnectionTest_OnlineSparqlTripleStore()
 		{
 			TestConnectionCreationForTripleStore(CreateOnlineSparqlTripleStore());
@@ -134,8 +74,8 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[TestMethod]
-		[ExpectedException(typeof(ApplicationException), "Only sparql queries currently support the ADO.NET style APIs")]
+		[Test]
+		[ExpectedException(typeof(ApplicationException))]
 		public void CreateConnectionTest_InMemoryTripleStore()
 		{
 			TestConnectionCreationForTripleStore(CreateInMemoryTripleStore());
@@ -144,8 +84,8 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[TestMethod]
-		[ExpectedException(typeof(ApplicationException), "Only sparql queries currently support the ADO.NET style APIs")]
+		[Test]
+		[ExpectedException(typeof(ApplicationException))]
 		public void CreateConnectionTest_PersistentTripleStore()
 		{
 			TestConnectionCreationForTripleStore(CreatePersistentTripleStore());
@@ -167,7 +107,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for CreateExpressionTranslator ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateExpressionTranslatorTest()
 		{
 			TripleStore ts = CreateOnlineSparqlTripleStore();
@@ -176,13 +116,13 @@ namespace RdfSerialisationTest
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IQueryFormatTranslator translator = factory.CreateExpressionTranslator();
 			Assert.IsNotNull(translator);
-			Assert.IsInstanceOfType(translator, typeof(LinqToSparqlExpTranslator<Track>));
+			Assert.IsInstanceOfType(typeof(LinqToSparqlExpTranslator<Track>), translator);
 		}
 
 		/// <summary>
 		///A test for CreateExpressionTranslator ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateExpressionTranslatorTest2()
 		{
 			TripleStore ts = CreateInMemoryTripleStore();
@@ -191,7 +131,7 @@ namespace RdfSerialisationTest
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IQueryFormatTranslator translator = factory.CreateExpressionTranslator();
 			Assert.IsNotNull(translator);
-			Assert.IsInstanceOfType(translator, typeof(LinqToN3ExpTranslator<Track>));
+			Assert.IsInstanceOfType(typeof(LinqToN3ExpTranslator<Track>), translator);
 		}
 
 		#endregion
@@ -201,7 +141,7 @@ namespace RdfSerialisationTest
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateQueryTest_OnlineSparqlTripleStore()
 		{
 			TripleStore ts = CreateOnlineSparqlTripleStore();
@@ -210,13 +150,13 @@ namespace RdfSerialisationTest
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-			Assert.IsInstanceOfType(query, typeof(SparqlQuery<Track>));
+			Assert.IsInstanceOfType( typeof(SparqlQuery<Track>), query);
 		}
 
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateQueryTest_InMemorySparqlTripleStore()
 		{
 			TripleStore ts = CreateInMemorySparqlTripleStore();
@@ -225,13 +165,13 @@ namespace RdfSerialisationTest
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-			Assert.IsInstanceOfType(query, typeof(SparqlQuery<Track>));
+			Assert.IsInstanceOfType( typeof(SparqlQuery<Track>), query);
 		}
 
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateQueryTest_InMemoryTripleStore()
 		{
 			TripleStore ts = CreateInMemoryTripleStore();
@@ -240,13 +180,13 @@ namespace RdfSerialisationTest
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-			Assert.IsInstanceOfType(query, typeof(RdfN3Query<Track>));
+			Assert.IsInstanceOfType(typeof(RdfN3Query<Track>), query);
 		}
 
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateQueryTest_PersistentTripleStore()
 		{
 			TripleStore ts = CreatePersistentTripleStore();
@@ -255,65 +195,38 @@ namespace RdfSerialisationTest
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-			Assert.IsInstanceOfType(query, typeof(RdfN3Query<Track>));
+			Assert.IsInstanceOfType(typeof(RdfN3Query<Track>), query);
 		}
 
 		#endregion
+		protected MockRepository mocks;
 		/// <summary>
 		///A test for QueryFactory (QueryType, IRdfContext)
 		///</summary>
-		[TestMethod, Ignore]
+		[Test]
 		public void ConstructorTest()
 		{
-			// QueryType queryType = QueryType.LocalN3StoreInMemory; // TODO: Initialize to an appropriate value
-			// 
-			// IRdfContext context = null; // TODO: Initialize to an appropriate value
-			// 
-			// QueryFactory<T> target = new QueryFactory<T>(queryType, context);
-			// 
-			// // TODO: Implement code to verify target
-			// Assert.Inconclusive("TODO: Implement code to verify target");
-			Assert.Inconclusive("Generics testing must be manually provided.");
+			mocks = new MockRepository();
+			TripleStore ts = mocks.CreateMock<TripleStore>("http://www.tempuri.com");
+			IRdfContext context = mocks.CreateMock<RDF>(ts);
+			QueryFactory<Track> factory = new QueryFactory<Track>(ts.QueryType, context);
+			Assert.IsNotNull(factory); 
 		}
 
 		/// <summary>
 		///A test for QueryType
 		///</summary>
-        [TestMethod, Ignore]
+        [Test]
 		public void QueryTypeTest()
 		{
-			// QueryType queryType = QueryType.LocalN3StoreInMemory; // TODO: Initialize to an appropriate value
-			// 
-			// IRdfContext context = null; // TODO: Initialize to an appropriate value
-			// 
-			// QueryFactory<T> target = new QueryFactory<T>(queryType, context);
-			// 
-			// QueryType val = QueryType.LocalN3StoreInMemory; // TODO: Assign to an appropriate value for the property
-			// 
-			// 
-			// Assert.AreEqual(val, target.QueryType, "LinqToRdf.QueryFactory<T>.QueryType was not set correctly.");
-			// Assert.Inconclusive("Verify the correctness of this test method.");
-			Assert.Inconclusive("Generics testing must be manually provided.");
-		}
-
-		/// <summary>
-		///A test for TypeTranslator
-		///</summary>
-        [TestMethod, Ignore]
-		public void TypeTranslatorTest()
-		{
-			// QueryType queryType = QueryType.LocalN3StoreInMemory; // TODO: Initialize to an appropriate value
-			// 
-			// IRdfContext context = null; // TODO: Initialize to an appropriate value
-			// 
-			// QueryFactory<T> target = new QueryFactory<T>(queryType, context);
-			// 
-			// ITypeTranslator val = null; // TODO: Assign to an appropriate value for the property
-			// 
-			// 
-			// Assert.AreEqual(val, target.TypeTranslator, "LinqToRdf.QueryFactory<T>.TypeTranslator was not set correctly.");
-			// Assert.Inconclusive("Verify the correctness of this test method.");
-			Assert.Inconclusive("Generics testing must be manually provided.");
+			mocks = new MockRepository();
+			QueryType queryType = QueryType.RemoteSparqlStore; // TODO: Initialize to an appropriate value
+			TripleStore ts = new TripleStore("http://www.tempuri.com");
+			IRdfContext context = mocks.CreateMock<RDF>(ts);
+			QueryFactory<Task> target = new QueryFactory<Task>(queryType, context);
+			QueryType val = QueryType.RemoteSparqlStore; // TODO: Assign to an appropriate value for the property
+			Assert.AreEqual(val, target.QueryType, "LinqToRdf.QueryFactory<T>.QueryType was not set correctly.");
+//			Assert.Fail("Generics testing must be manually provided.");
 		}
 	}
 }

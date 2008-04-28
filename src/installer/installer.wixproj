@@ -4,14 +4,16 @@
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{0c57e91d-545d-449d-ae16-e6951447b276}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>LinqToRdf-0.3</OutputName>
+    <OutputName>LinqToRdf-0.5</OutputName>
     <OutputType>Package</OutputType>
     <WixToolPath>$(ProgramFiles)\Windows Installer XML v3\bin\</WixToolPath>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\Debug\</IntermediateOutputPath>
-    <DefineConstants>Debug</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <IncludeSearchPaths>
     </IncludeSearchPaths>
     <Pedantic>False</Pedantic>
@@ -51,6 +53,9 @@
     <LinkerVerboseOutput>False</LinkerVerboseOutput>
     <WixVariables>
     </WixVariables>
+    <LibBindFiles>False</LibBindFiles>
+    <SuppressPdbOutput>False</SuppressPdbOutput>
+    <SuppressAllWarnings>False</SuppressAllWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -90,7 +95,9 @@
     <Compile Include="installer.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <WixExtension Include="C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll" />
+    <WixExtension Include="WixUIExtension">
+      <HintPath>C:\Program Files\Windows Installer XML v3\bin\WixUIExtension.dll</HintPath>
+    </WixExtension>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets" />
   <!--
@@ -101,4 +108,10 @@
 	<Target Name="AfterBuild">
 	</Target>
 	-->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

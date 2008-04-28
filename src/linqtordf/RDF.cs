@@ -19,55 +19,64 @@ using SemWeb;
 
 namespace LinqToRdf
 {
-	public class TripleStore
-	{
-		private QueryType queryType;
-		private string endpointUri;
-		private Store localTripleStore;
+    /// <summary>
+    /// A structure for storing the location and query idiom for a triple store
+    /// </summary>
+    /// <example>
+    /// There a several special purpose ctors to allow you to easily construct an instance
+    /// using typical values. the following example instantiates a local in-memory triple 
+    /// store from locations stored in tasksontology and tasks. The query idiom will default to 
+    /// LocalSparqlStore.
+    /// <code language="csharp">
+    /// MemoryStore store = new MemoryStore();
+    /// store.AddReasoner(new Euler(new N3Reader(tasksOntology)));
+    /// store.Import(new N3Reader(tasksOntology));
+    /// store.Import(new N3Reader(tasks));
+    /// TripleStore ts = new TripleStore(store);
+    /// </code>
+    /// </example>
+    public class TripleStore
+    {
+        public TripleStore(Store localStore, string endpointUri, QueryType queryType)
+        {
+            QueryType = queryType;
+            LocalTripleStore = localStore;
+            EndpointUri = endpointUri;
+        }
+        public TripleStore(Store localStore, QueryType queryType) : this(localStore, null, queryType) { }
+        public TripleStore(string endpointUri, QueryType queryType) : this(null, endpointUri, queryType) { }
+        public TripleStore(Store localStore) : this(localStore, null, QueryType.LocalSparqlStore) { }
+        public TripleStore(string endpointUri) : this(null, endpointUri, QueryType.RemoteSparqlStore) { }
 
-		public QueryType QueryType
-		{
-			get { return queryType; }
-			set { queryType = value; }
-		}
+        public QueryType QueryType { get; set; }
+        public string EndpointUri { get; set; }
+        public Store LocalTripleStore { get; set; }
+    }
+    public class RDF : IRdfContext
+    {
+        public RDF(TripleStore store)
+        {
+            this.store = store;
+        }
 
-		public string EndpointUri
-		{
-			get { return endpointUri; }
-			set { endpointUri = value; }
-		}
+        private Dictionary<string, IEnumerable> resultsCache = new Dictionary<string, IEnumerable>();
+        protected TripleStore store;
 
-		public Store LocalTripleStore
-		{
-			get { return localTripleStore; }
-			set { localTripleStore = value; }
-		}
-	}
-	public class RDF : IRdfContext
-	{
-		public RDF(TripleStore store)
-		{
-			this.store = store;
-		}
+        public Dictionary<string, IEnumerable> ResultsCache
+        {
+            get { return resultsCache; }
+            set { resultsCache = value; }
+        }
 
-		private Dictionary<string, IEnumerable> resultsCache = new Dictionary<string, IEnumerable>();
-		protected TripleStore store;
+        public TripleStore Store
+        {
+            get { return store; }
+            set { store = value; }
+        }
 
-		public Dictionary<string, IEnumerable> ResultsCache
-		{
-			get { return resultsCache; }
-			set { resultsCache = value; }
-		}
+        #region IRdfContext Members
 
-		public TripleStore Store
-		{
-			get { return store; }
-			set { store = value; }
-		}
-
-		#region IRdfContext Members
-
-		#endregion
+        #endregion
 
         public void AcceptChanges()
         {
@@ -93,34 +102,34 @@ namespace LinqToRdf
         {
             if (entity == null)
                 throw new ArgumentNullException("entity cannot be null");
-    
+
             pendingQueue.Enqueue(entity);
         }
 
-		public IRdfQuery<T> ForType<T>()
-		{
-			QueryFactory<T> qf = new QueryFactory<T>(Store.QueryType, this);
-			switch (Store.QueryType)
-			{
-				case QueryType.LocalN3StoreInMemory:
-				case QueryType.LocalN3StorePersistent:
-					RdfN3Query<T> tmp = (RdfN3Query<T>) qf.CreateQuery<T>();
-					tmp.Store = Store.LocalTripleStore;
-					tmp.QueryFactory = qf;
-					return tmp;
-				case QueryType.RemoteSparqlStore:
-					SparqlQuery<T> tmp2 = (SparqlQuery<T>)qf.CreateQuery<T>();
-					tmp2.TripleStore = Store;
-					tmp2.QueryFactory = qf;
-					return tmp2;
-				case QueryType.LocalSparqlStore:
-					SparqlQuery<T> tmp3 = (SparqlQuery<T>)qf.CreateQuery<T>();
-					tmp3.TripleStore = Store;
-					tmp3.QueryFactory = qf;
-					return tmp3;
-				default:
-					throw new ApplicationException("unrecognised query type requested");
-			}
-		}
-	}
+        public IRdfQuery<T> ForType<T>()
+        {
+            QueryFactory<T> qf = new QueryFactory<T>(Store.QueryType, this);
+            switch (Store.QueryType)
+            {
+                case QueryType.LocalN3StoreInMemory:
+                case QueryType.LocalN3StorePersistent:
+                    RdfN3Query<T> tmp = (RdfN3Query<T>)qf.CreateQuery<T>();
+                    tmp.Store = Store.LocalTripleStore;
+                    tmp.QueryFactory = qf;
+                    return tmp;
+                case QueryType.RemoteSparqlStore:
+                    SparqlQuery<T> tmp2 = (SparqlQuery<T>)qf.CreateQuery<T>();
+                    tmp2.TripleStore = Store;
+                    tmp2.QueryFactory = qf;
+                    return tmp2;
+                case QueryType.LocalSparqlStore:
+                    SparqlQuery<T> tmp3 = (SparqlQuery<T>)qf.CreateQuery<T>();
+                    tmp3.TripleStore = Store;
+                    tmp3.QueryFactory = qf;
+                    return tmp3;
+                default:
+                    throw new ApplicationException("unrecognised query type requested");
+            }
+        }
+    }
 }

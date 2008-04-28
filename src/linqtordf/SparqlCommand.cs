@@ -13,6 +13,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using SemWeb.Query;
 using SemWeb.Remote;
 
@@ -39,13 +40,18 @@ namespace LinqToRdf.Sparql
 
         public IEnumerator<T> ExecuteQuery()
         {
+            MethodCallExpression e = null;
             IList<T> results = new List<T>();
             switch (Connection.Store.QueryType)
             {
                 case QueryType.LocalSparqlStore:
                     SparqlLocalConnection<T> localConnection = (SparqlLocalConnection<T>) Connection;
+                    if (localConnection.SparqlQuery.Expressions.ContainsKey("Select"))
+                    {
+                        e = localConnection.SparqlQuery.Expressions["Select"];
+                    }
                     ObjectDeserialiserQuerySink sinkLocal =
-                        new ObjectDeserialiserQuerySink(localConnection.SparqlQuery.OriginalType, typeof (T));
+                        new ObjectDeserialiserQuerySink(localConnection.SparqlQuery.OriginalType, typeof (T), ElideDuplicates, e);
                     DateTime beforeQueryCompilation = DateTime.Now;
                     Query query = new SparqlEngine(CommandText);
                     DateTime afterQueryCompilation = DateTime.Now;
@@ -62,18 +68,28 @@ namespace LinqToRdf.Sparql
 
                 case QueryType.RemoteSparqlStore:
                     SparqlConnection<T> remoteConnection = (SparqlConnection<T>) Connection;
+                    if (remoteConnection.SparqlQuery.Expressions.ContainsKey("Select"))
+                    {
+                        e = remoteConnection.SparqlQuery.Expressions["Select"];
+                    }
                     ObjectDeserialiserQuerySink sinkRemote =
-                        new ObjectDeserialiserQuerySink(remoteConnection.SparqlQuery.OriginalType, typeof (T));
+                        new ObjectDeserialiserQuerySink(remoteConnection.SparqlQuery.OriginalType, typeof(T), ElideDuplicates, e);
                     SparqlHttpSource source = new SparqlHttpSource(remoteConnection.Store.EndpointUri);
                     source.RunSparqlQuery(CommandText, sinkRemote);
                     ExtractResultsIntoList(results, sinkRemote);
-                RegisterResults(remoteConnection.SparqlQuery, results);
+                    RegisterResults(remoteConnection.SparqlQuery, results);
                     break;
 
                 default:
                     break;
             }
             return results.GetEnumerator();
+        }
+
+        public bool ElideDuplicates
+        {
+            get;
+            set;
         }
 
         #endregion

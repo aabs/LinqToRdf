@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LinqToRdf;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RdfMusic;
 
-namespace RdfSerialisationTest
+namespace UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class JosekiTests
     {
-        [TestMethod]
+        [Test]
         public void JosekiQueryWithProjection()
         {
-			TripleStore ts = CreateOnlineTripleStore();
+            TripleStore ts = new TripleStore(@"http://localhost:2020/music");
 			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
 			var q = from t in qry
 							where t.Year == "2007" &&
@@ -25,14 +25,5 @@ namespace RdfSerialisationTest
 				Console.WriteLine(track.Title + ": " + track.FileLocation);
 			}
         }
-
-        protected TripleStore CreateOnlineTripleStore()
-        {
-            TripleStore ts = new TripleStore();
-            ts.EndpointUri = @"http://localhost:2020/music";
-            ts.QueryType = QueryType.RemoteSparqlStore;
-            return ts;
-        }
-
     }
 }

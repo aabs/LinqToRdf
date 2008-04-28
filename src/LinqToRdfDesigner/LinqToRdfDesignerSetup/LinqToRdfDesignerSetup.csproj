@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.20706</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9462CB6B-05E4-491F-A829-E0571CB890AC}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -14,7 +14,7 @@
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
-    <AssemblyName>LinqToRdfDesignerSetup</AssemblyName>
+    <AssemblyName>LinqToRdfDesigner-0.5</AssemblyName>
     <RootNamespace>LinqToRdfDesignerSetup</RootNamespace>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RdfSerialisationTest.Properties {
+namespace UnitTests.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -29,6 +29,33 @@ namespace RdfSerialisationTest.Properties {
         public string testStoreLocation {
             get {
                 return ((string)(this["testStoreLocation"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\etc\\dev\\semantic-web\\linqtordf\\src\\unit-testing\\standard-test-data")]
+        public string taskStorePath {
+            get {
+                return ((string)(this["taskStorePath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("tasks.n3")]
+        public string tasksOntologyName {
+            get {
+                return ((string)(this["tasksOntologyName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("task-data.n3")]
+        public string tasksDataName {
+            get {
+                return ((string)(this["tasksDataName"]));
             }
         }
     }

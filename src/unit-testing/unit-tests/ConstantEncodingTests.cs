@@ -15,16 +15,16 @@ using System;
 using System.Linq.Expressions;
 using System.Text;
 using LinqToRdf.Sparql;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RdfMusic;
 using LinqToRdf;
 
-namespace RdfSerialisationTest
+namespace UnitTests
 {
-	[TestClass()]
+	[TestFixture()]
 	public class ConstantEncodingTests
 	{
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_string()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -35,10 +35,10 @@ namespace RdfSerialisationTest
 			target.Constant(ce);
 			string actualResult = sb.ToString();
 			string expectedResult = "\"hello world\"";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_char()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -49,10 +49,10 @@ namespace RdfSerialisationTest
 			target.Constant(ce);
 			string actualResult = sb.ToString();
 			string expectedResult = "\"a\"";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_short()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -63,10 +63,10 @@ namespace RdfSerialisationTest
 			target.Constant(ce);
 			string actualResult = sb.ToString();
 			string expectedResult = "4^^xsdt:short";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_int()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -77,10 +77,10 @@ namespace RdfSerialisationTest
 			target.Constant(ce);
 			string actualResult = sb.ToString();
 			string expectedResult = "4";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_long()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -91,10 +91,10 @@ namespace RdfSerialisationTest
 			target.Constant(ce);
 			string actualResult = sb.ToString();
 			string expectedResult = "4^^xsdt:long";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_float()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -105,10 +105,10 @@ namespace RdfSerialisationTest
 			target.Constant(ce);
 			string actualResult = sb.ToString();
 			string expectedResult = "3.14^^xsdt:float";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_double()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -119,10 +119,10 @@ namespace RdfSerialisationTest
 			target.Constant(ce);
 			string actualResult = sb.ToString();
 			string expectedResult = "3.14^^xsdt:double";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_decimal()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -133,13 +133,13 @@ namespace RdfSerialisationTest
 			target.Constant(ce);
 			string actualResult = sb.ToString();
 			string expectedResult = "3.14^^xsdt:decimal";
-			Assert.AreEqual(expectedResult, actualResult, false, "invalid SPARQL Expression created for ExpressionType.And");
+			Assert.AreEqual(expectedResult, actualResult);
 		}
 
 		/// <summary>
 		///  warning this ontology very fragle test that only works from Australia during daylight savings time :-(
 		/// </summary>
-		[TestMethod()]
+		[Test]
 		public void ConstantTest_DateTime()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();

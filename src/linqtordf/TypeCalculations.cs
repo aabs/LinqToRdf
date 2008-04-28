@@ -84,15 +84,10 @@ namespace LinqToRdf
                 return false;
             }
         }
-
-        
     }
     public sealed class DotnetTypeTranslator : TypeTranslatorBase, ITypeTranslator2
     {
-
-        #region ITypeTranslator2 Members
-
-        public string this[PrimitiveDataType val]
+    	public string this[PrimitiveDataType val]
         {
             get
             {
@@ -147,15 +142,10 @@ namespace LinqToRdf
                 }
             }
         }
-
-        #endregion
     }
     public sealed class XsdtTypeTranslator : TypeTranslatorBase, ITypeTranslator2
     {
-
-        #region ITypeTranslator2 Members
-
-        public string this[PrimitiveDataType val]
+    	public string this[PrimitiveDataType val]
         {
             get
             {
@@ -212,7 +202,5 @@ namespace LinqToRdf
                 }
             }
         }
-
-        #endregion
     }
 }

@@ -12,7 +12,7 @@ using LinqToRdf;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Andrew Matthews")]
 [assembly: AssemblyProduct("LinqToRdf")]
-[assembly: AssemblyCopyright("Copyright ©  2007 Andrew Matthews")]
+[assembly: AssemblyCopyright("Copyright ©  2008 Andrew Matthews")]
 [assembly: AssemblyTrademark("LinqToRdf")]
 [assembly: AssemblyCulture("")]
 
@@ -33,15 +33,15 @@ using LinqToRdf;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("0.4.0.0")]
-[assembly: AssemblyFileVersion("0.4.0.0")]
+[assembly: AssemblyVersion("0.5.0.0")]
+[assembly: AssemblyFileVersion("0.5.0.0")]
 
 //[assembly: IsolatedStorageFilePermission(SecurityAction.RequestMinimum, UserQuota = 1048576)]
 //[assembly: SecurityPermission(SecurityAction.RequestRefuse, UnmanagedCode = true)]
 //[assembly: FileIOPermission(SecurityAction.RequestOptional, Unrestricted = true)]
 [assembly: Ontology(
     Prefix = "rdf",
-    BaseUri = "http://www.w3.org/1999/02/22-rdf-syntax-generatedNamespaceChar#",
+    BaseUri = "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     Name = "RDF")]
 [assembly: Ontology(
     Prefix = "rdfs",

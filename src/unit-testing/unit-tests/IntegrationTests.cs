@@ -18,18 +18,18 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RdfMusic;
 using LinqToRdf;
 using SemWeb;
 using SemWeb.Inference;
 
-namespace RdfSerialisationTest
+namespace UnitTests
 {
     /// <summary>
     /// Summary description for IntegrationTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class IntegrationTests : HighLevelTests
     {
         public IntegrationTests()
@@ -48,31 +48,27 @@ namespace RdfSerialisationTest
         // public static void MyClassInitialize(TestContext testContext) { }
         //
         // Use ClassCleanup to run code after all tests in ontology class have run
-        // [ClassCleanup()]
+        // [TearDown]
         // public static void MyClassCleanup() { }
         //
         // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
+        // [SetUp]
         // public void MyTestInitialize() { }
         //
         // Use TestCleanup to run code after each test has run
-        [TestCleanup()]
+       [TearDown]
         public void MyTestCleanup()
         {
-            if (store != null)
-                store = null;
         }
 
         #endregion
 
         #region working tests
 
-        [TestMethod]
+        [Test]
         public void QueryWithProjection()
         {
-            CreateMemoryStore();
-            TripleStore ts = new TripleStore();
-            ts.LocalTripleStore = store;
+            TripleStore ts = new TripleStore(CreateMemoryStore());
             IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
             var q = from t in qry
                     where t.Year == "2006" &&
@@ -88,7 +84,7 @@ namespace RdfSerialisationTest
 
         #region current tests
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryAll()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -102,7 +98,7 @@ namespace RdfSerialisationTest
             Assert.IsTrue(lt.Count > 1);
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQuery()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -117,7 +113,7 @@ namespace RdfSerialisationTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryUsingHttp()
         {
             TripleStore ts = CreateOnlineTripleStore();
@@ -132,7 +128,7 @@ namespace RdfSerialisationTest
             }
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryUsingCachedResults()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -151,7 +147,7 @@ namespace RdfSerialisationTest
                 Console.WriteLine("Title: " + track.Title);
             }
         }
-        [TestMethod]
+        [Test]
         public void SparqlQueryWithTheLot()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -168,7 +164,7 @@ namespace RdfSerialisationTest
         }
 
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryOrdered()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -188,12 +184,10 @@ namespace RdfSerialisationTest
 
         #region unstarted tests
 
-        [TestMethod]
+        [Test]
         public void Query1()
         {
-            CreateMemoryStore();
-            TripleStore ts = new TripleStore();
-            ts.LocalTripleStore = store;
+            TripleStore ts = new TripleStore(CreateMemoryStore());
             IQueryable<Track> qry = new RDF(ts).ForType<Track>();
             var q = from t in qry
                     where t.ArtistName == "Thomas Laqueur"
@@ -202,7 +196,7 @@ namespace RdfSerialisationTest
             resultList.AddRange(q);
         }
 
-        [TestMethod]
+        [Test]
         public void Query3()
         {
             TripleStore ts = CreateOnlineTripleStore();
@@ -214,7 +208,7 @@ namespace RdfSerialisationTest
             Assert.IsTrue(q.Length > 0);
         }
 
-        [TestMethod]
+        [Test]
         public void Query5()
         {
             TripleStore ts = CreateOnlineTripleStore();

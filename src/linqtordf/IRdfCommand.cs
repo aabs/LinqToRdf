@@ -17,6 +17,7 @@ namespace LinqToRdf
 {
 	public interface IRdfCommand<T>
 	{
+        bool ElideDuplicates { get; set; }
 		string CommandText { get; set; }
 		IEnumerator<T> ExecuteQuery();
 	}
