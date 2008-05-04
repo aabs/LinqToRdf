@@ -15,41 +15,41 @@
 			<ComponentRef Id="_rdfx" />
 		</FeatureRef>
 		<DirectoryRef Id="TARGETDIR">
-			<Component Id="_LinqToRdfDesignerReg" Guid="81be6c48-3053-fd3c-814b-caf125abff6b">
+			<Component Id="_LinqToRdfDesignerReg" Guid="116ace04-fa26-6931-9799-165760aace4d">
 				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Projects\{F184B08F-C81C-45F6-A57F-5ABD9991F28F}\RelatedFiles\.rdfx' Id='g36353dc1_7f5a_a535_aaf3_1d536e750a49' Name='.diagram' Value='2' Type='integer' />
 				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Projects\{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\RelatedFiles\.rdfx' Id='ge9fecbca_db1a_e63c_a4ba_b8b99f689db0' Name='.diagram' Value='2' Type='integer' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\DslTools\Packages\{a7e4491d-b92a-4607-a723-a9ea7dda12df}' Id='g53315ba2_0437_0631_9f9d_a791ee2aa026' Type='string' Value='LinqToRdf.Design.DslPackage.LinqToRdfDesignerPackage' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{a7e4491d-b92a-4607-a723-a9ea7dda12df}' Id='g63d90d18_4f32_8c33_92c4_5e53b8786310' Type='string' Value='LinqToRdf.Design.DslPackage.LinqToRdfDesignerPackage, LinqToRdf.Design.DslPackage, Version=0.5.0.0, Culture=neutral, PublicKeyToken=d71affce5169c495' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{a7e4491d-b92a-4607-a723-a9ea7dda12df}' Id='g8f196a94_108b_8b30_bb28_0691e17220e8' Name='InprocServer32' Value='[SystemFolder]mscoree.dll' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{a7e4491d-b92a-4607-a723-a9ea7dda12df}' Id='gb56ef717_59cd_ca39_b955_e2d03ab4238f' Name='Class' Value='LinqToRdf.Design.DslPackage.LinqToRdfDesignerPackage' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{a7e4491d-b92a-4607-a723-a9ea7dda12df}' Id='g2b2dc1d9_8518_903d_8075_83cc706f80af' Name='Assembly' Value='LinqToRdf.Design.DslPackage, Version=0.5.0.0, Culture=neutral, PublicKeyToken=d71affce5169c495' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{419a8cdc-5ef5-4e85-9800-f03d677e2b99}' Id='g7f5d2108_1238_c134_9c33_b54a4c7dfef3' Name='Package' Value='{a7e4491d-b92a-4607-a723-a9ea7dda12df}' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{419a8cdc-5ef5-4e85-9800-f03d677e2b99}\Extensions' Id='g64365528_6e4d_d63a_b4f0_08ccaafaf36d' Name='rdfx' Value='32' Type='integer' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{419a8cdc-5ef5-4e85-9800-f03d677e2b99}' Id='g9cfb9eb9_714b_ba3a_b53a_0e4ecb6184ee' Type='string' Value='LinqToRdfDesignerEditorFactory' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{419a8cdc-5ef5-4e85-9800-f03d677e2b99}' Id='g4cf8b9fb_1c84_f034_9e58_7cce0958572d' Name='DisplayName' Value='#103' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{419a8cdc-5ef5-4e85-9800-f03d677e2b99}' Id='gf6e41b9f_8684_2134_a953_3f678f0b1776' Name='EditorTrustLevel' Value='1' Type='integer' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Menus' Id='g30959450_068e_c83f_a382_5f3db113f8da' Name='{a7e4491d-b92a-4607-a723-a9ea7dda12df}' Value=', 1000.ctmenu, 1' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{aeaba33a-2773-4ce5-92af-eb22707bd577}' Id='g0874d81a_3dd3_cb3c_a508_baf77f0b83eb' Type='string' Value='{a7e4491d-b92a-4607-a723-a9ea7dda12df}' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{aeaba33a-2773-4ce5-92af-eb22707bd577}' Id='g3c696ba7_f3b5_5232_80fb_a1011a499ac4' Name='Name' Value='LinqToRdf.Design.DslPackage.LinqToRdfDesignerExplorerToolWindow' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{aeaba33a-2773-4ce5-92af-eb22707bd577}' Id='gaa65a894_2f52_0f3f_8b9c_8da008bbadac' Name='Orientation' Value='Right' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{aeaba33a-2773-4ce5-92af-eb22707bd577}' Id='g6c851834_8e79_2231_8195_5311afbfdf6e' Name='Style' Value='Tabbed' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{aeaba33a-2773-4ce5-92af-eb22707bd577}' Id='ga936645b_04b8_1833_b233_2c5c57f9a658' Name='Window' Value='{3ae79031-e1bc-11d0-8f78-00a0c9110057}' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{aeaba33a-2773-4ce5-92af-eb22707bd577}\Visibility' Id='geac8e5c2_94c3_a13f_a650_dd7947f3674e' Name='{419a8cdc-5ef5-4e85-9800-f03d677e2b99}' Value='0' Type='integer' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{a7e4491d-b92a-4607-a723-a9ea7dda12df}\Toolbox' Id='g59b4dad3_3d0f_cf32_91d4_5d0b8a741343' Name='Default Items' Value='1' Type='integer' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\DslTools\Packages\{6ad84c5c-3372-4914-9b69-1549024de6c1}' Id='gbe8f0f4c_3629_f23f_bcf9_cdf08afa4755' Type='string' Value='LinqToRdf.Designer.DslPackage.LinqToRdfDesignerPackage' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{6ad84c5c-3372-4914-9b69-1549024de6c1}' Id='g7b38b746_7bfd_5739_a0a6_a8ea31987bb3' Type='string' Value='LinqToRdf.Designer.DslPackage.LinqToRdfDesignerPackage, LinqToRdf.Designer.DslPackage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{6ad84c5c-3372-4914-9b69-1549024de6c1}' Id='gec4f4c96_cdce_f63c_81a0_6ab1edc84f5b' Name='InprocServer32' Value='[SystemFolder]mscoree.dll' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{6ad84c5c-3372-4914-9b69-1549024de6c1}' Id='g19f66fe8_5b58_6831_926f_60851ccace1e' Name='Class' Value='LinqToRdf.Designer.DslPackage.LinqToRdfDesignerPackage' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{6ad84c5c-3372-4914-9b69-1549024de6c1}' Id='gadfc3ff6_dcf2_c037_828f_ea245cfc174b' Name='Assembly' Value='LinqToRdf.Designer.DslPackage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{22955610-001e-4786-a89f-fe02bb69fd4a}' Id='g2f7542ef_e32b_3037_b830_41e66c229e11' Name='Package' Value='{6ad84c5c-3372-4914-9b69-1549024de6c1}' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{22955610-001e-4786-a89f-fe02bb69fd4a}\Extensions' Id='g6f07c6ad_2571_0436_a735_66978ebe50f2' Name='rdfx' Value='32' Type='integer' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{22955610-001e-4786-a89f-fe02bb69fd4a}' Id='g93ed2b99_90b3_ac3c_8d05_3a1e93aafd79' Type='string' Value='LinqToRdfDesignerEditorFactory' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{22955610-001e-4786-a89f-fe02bb69fd4a}' Id='g3f6fbc8c_26c1_5636_a6d1_db9fdbfc36e4' Name='DisplayName' Value='#103' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Editors\{22955610-001e-4786-a89f-fe02bb69fd4a}' Id='g2e4bdf0d_3481_2433_b7c6_0b31eb199d0c' Name='EditorTrustLevel' Value='1' Type='integer' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Menus' Id='g0fccb8d3_0290_ca33_b544_8c4c2c400c0e' Name='{6ad84c5c-3372-4914-9b69-1549024de6c1}' Value=', 1000.ctmenu, 1' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{14cbe2d0-c58a-43b8-9e52-ba76db753d54}' Id='g971938f0_7948_8f3a_b19d_968f77305365' Type='string' Value='{6ad84c5c-3372-4914-9b69-1549024de6c1}' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{14cbe2d0-c58a-43b8-9e52-ba76db753d54}' Id='gadcd499e_312f_a43d_9802_39c15d656aaf' Name='Name' Value='LinqToRdf.Designer.DslPackage.LinqToRdfDesignerExplorerToolWindow' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{14cbe2d0-c58a-43b8-9e52-ba76db753d54}' Id='g797f636a_1745_813b_b770_05778acff9cb' Name='Orientation' Value='Right' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{14cbe2d0-c58a-43b8-9e52-ba76db753d54}' Id='g5c0dcfc9_8ae4_e937_9f60_242548ef8704' Name='Style' Value='Tabbed' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{14cbe2d0-c58a-43b8-9e52-ba76db753d54}' Id='gbe777a29_27dc_db3f_bee2_dd5f25676ae5' Name='Window' Value='{3ae79031-e1bc-11d0-8f78-00a0c9110057}' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\ToolWindows\{14cbe2d0-c58a-43b8-9e52-ba76db753d54}\Visibility' Id='g49d4e2b9_97e9_b838_84ff_be7a27328b2f' Name='{22955610-001e-4786-a89f-fe02bb69fd4a}' Value='0' Type='integer' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Packages\{6ad84c5c-3372-4914-9b69-1549024de6c1}\Toolbox' Id='g0c77e08a_30a7_6233_9e7c_6bf77574e03c' Name='Default Items' Value='1' Type='integer' />
 				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\TextTemplating\DirectiveProcessors\LinqToRdfDesignerDirectiveProcessor' Id='gcf7a4e13_3960_2f3a_81ef_b6e73233fe9d' Type='string' Value='A directive processor that provides access to LinqToRdfDesigner files' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\TextTemplating\DirectiveProcessors\LinqToRdfDesignerDirectiveProcessor' Id='gfc134120_a5cc_f033_bdcd_6e600e7d73bb' Name='Class' Value='LinqToRdf.Design.LinqToRdfDesignerDirectiveProcessor' Type='string' />
-				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\TextTemplating\DirectiveProcessors\LinqToRdfDesignerDirectiveProcessor' Id='gdb54c774_707b_2a32_ae9c_88269681f1c8' Name='Assembly' Value='LinqToRdf.Design.Dsl, Version=0.5.0.0, Culture=neutral, PublicKeyToken=d71affce5169c495' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\TextTemplating\DirectiveProcessors\LinqToRdfDesignerDirectiveProcessor' Id='gfc134120_a5cc_f033_bdcd_6e600e7d73bb' Name='Class' Value='LinqToRdf.Designer.LinqToRdfDesignerDirectiveProcessor' Type='string' />
+				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\TextTemplating\DirectiveProcessors\LinqToRdfDesignerDirectiveProcessor' Id='gdb54c774_707b_2a32_ae9c_88269681f1c8' Name='Assembly' Value='LinqToRdf.Designer.Dsl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1' Type='string' />
 
 			</Component>
-			<Component Id="_rdfx" Guid="90ff02cf-e485-0330-86fb-1d87cd35f15a">
-				<Registry Root="HKCR" Key=".rdfx" Id="FileExtensionRegistry1" Value="rdfx.0.4.0" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.0.4.0" Id="FileExtensionRegistry2" Value="$(loc.FileDescription)" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.0.4.0" Id="FileExtensionRegistry3" Name="AlwaysShowExt" Value="1" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.0.4.0\DefaultIcon" Id="FileExtensionRegistry4" Value="[TARGETDIR]\LinqToRdf.Design.DslPackage.dll,0" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.0.4.0\shell\Open\Command" Id="FileExtensionRegistry5" Type="string" Value="&quot;[VSINSTALLDIR]devenv.exe&quot; /dde &quot;%1&quot;" />
-				<Registry Root="HKCR" Key="rdfx.0.4.0\shell\Open\ddeexec" Id="FileExtensionRegistry6" Type="string" Value="Open(&quot;%1&quot;)" />
-				<Registry Root="HKCR" Key="rdfx.0.4.0\shell\Open\ddeexec\Application" Id="FileExtensionRegistry7" Type="string" Value="VisualStudio.9.0" />
-				<Registry Root="HKCR" Key="rdfx.0.4.0\shell\Open\ddeexec\Topic" Id="FileExtensionRegistry8" Type="string" Value="system" />
+			<Component Id="_rdfx" Guid="b1ac8701-c199-063c-afe1-ee239704930c">
+				<Registry Root="HKCR" Key=".rdfx" Id="FileExtensionRegistry1" Value="rdfx.0.6.0" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.6.0" Id="FileExtensionRegistry2" Value="$(loc.FileDescription)" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.6.0" Id="FileExtensionRegistry3" Name="AlwaysShowExt" Value="1" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.6.0\DefaultIcon" Id="FileExtensionRegistry4" Value="[TARGETDIR]\LinqToRdf.Designer.DslPackage.dll,0" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.6.0\shell\Open\Command" Id="FileExtensionRegistry5" Type="string" Value="&quot;[VSINSTALLDIR]devenv.exe&quot; /dde &quot;%1&quot;" />
+				<Registry Root="HKCR" Key="rdfx.0.6.0\shell\Open\ddeexec" Id="FileExtensionRegistry6" Type="string" Value="Open(&quot;%1&quot;)" />
+				<Registry Root="HKCR" Key="rdfx.0.6.0\shell\Open\ddeexec\Application" Id="FileExtensionRegistry7" Type="string" Value="VisualStudio.9.0" />
+				<Registry Root="HKCR" Key="rdfx.0.6.0\shell\Open\ddeexec\Topic" Id="FileExtensionRegistry8" Type="string" Value="system" />
 			</Component>
 
 		</DirectoryRef>

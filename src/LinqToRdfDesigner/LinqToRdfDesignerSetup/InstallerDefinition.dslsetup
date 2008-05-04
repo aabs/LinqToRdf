@@ -12,18 +12,18 @@ For more specific information, see the Error List window.
 <installerDefinition xmlns="http://schemas.microsoft.com/VisualStudio/2005/DslTools/InstallerDefinitionModel" 
   productUrl="http://code.google.com/p/linqtordf/"
   defaultDirectoryName="LinqToRdf"
-  productVersion="0.4.0"
+  productVersion="0.6.0"
   requiresCSharp="true"
   requiresVisualBasic="true"
   productCode="de7066bc-e6b8-4166-a9b4-01c1cf543bdf"
   upgradeCode="d57e2636-2390-43b6-bb8e-1f00de484803"
   localeId="1033">
-	<dslPackage name="LinqToRdfDesigner" project="DslPackage" assemblyPath="LinqToRdf.Design.DslPackage.dll" registryRoot="SOFTWARE\Microsoft\VisualStudio\9.0">
+	<dslPackage name="LinqToRdfDesigner" project="DslPackage" assemblyPath="LinqToRdf.Designer.DslPackage.dll" registryRoot="SOFTWARE\Microsoft\VisualStudio\9.0">
 		<fileExtensions>
 			<fileExtension name="rdfx" extension="rdfx" descriptionKey="FileDescription" hasIcon="true" iconId="0"/>
 		</fileExtensions>
 		<supportingAssemblies>
-			<supportingAssembly name="Dsl" project="Dsl" assemblyPath="LinqToRdf.Design.Dsl.dll"/>
+			<supportingAssembly name="Dsl" project="Dsl" assemblyPath="LinqToRdf.Designer.Dsl.dll"/>
 		</supportingAssemblies>
 	</dslPackage>
 	<licenseAgreement filePath="Files\EULA.rtf" isEmbedded="true" />
@@ -32,7 +32,6 @@ For more specific information, see the Error List window.
 	</supportingFiles>
 	<vsItemTemplates>
 		<vsItemTemplate localeId="1033" targetDirectories="CSharp" project="DslPackage" templatePath="CSharp\1033\LinqToRdfDesigner.zip"/>
-		<vsItemTemplate localeId="1033" targetDirectories="VisualBasic" project="DslPackage" templatePath="VisualBasic\1033\LinqToRdfDesigner.zip"/>
 	</vsItemTemplates>
 	<dslSchemas>
 		<dslSchema project="Dsl" filePath="GeneratedCode\LinqToRdfDesignerSchema.xsd"/>

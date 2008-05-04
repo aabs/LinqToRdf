@@ -65,6 +65,7 @@
     <Compile Include="IQueryFormatTranslator.cs" />
     <Compile Include="IRdfCommand.cs" />
     <Compile Include="IRdfConnection.cs" />
+    <Compile Include="LazyRelationship.cs" />
     <Compile Include="LinqToN3ExpTranslator.cs" />
     <Compile Include="IRdfContext.cs" />
     <Compile Include="IRdfQuery.cs" />

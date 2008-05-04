@@ -235,8 +235,7 @@ namespace LinqToRdf
 		public static readonly string regexForFullyQualifiedXsdtType =
 			"\\\"(?\'val\'[^\\\"]+)\\\"\\^\\^\\<(?\'uri\'.*)[#](?\'type\'.*)\\>";
 
-		private static readonly string XsdtNamespaceUri = "http://www.w3.org/2001/XMLSchema#";
-		private Dictionary<XsdtPrimitiveDataType, Type> typeLookup = new Dictionary<XsdtPrimitiveDataType, Type>();
+	    private Dictionary<XsdtPrimitiveDataType, Type> typeLookup = new Dictionary<XsdtPrimitiveDataType, Type>();
 
 		#region Conversion from .NET to Xsdt (string)
 
