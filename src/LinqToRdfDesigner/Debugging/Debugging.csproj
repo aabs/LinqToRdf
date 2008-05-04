@@ -44,34 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LinqToRdfDesigner1.entities.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LinqToRdfDesigner1.entities.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LinqToRdfDesigner1.entities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LinqToRdfDesigner1.entities.cs</LastGenOutput>
-    </None>
-    <None Include="LinqToRdfDesigner1.n3.n3">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LinqToRdfDesigner1.n3.tt</DependentUpon>
-    </None>
-    <None Include="LinqToRdfDesigner1.n3.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LinqToRdfDesigner1.n3.n3</LastGenOutput>
-    </None>
-    <None Include="LinqToRdfDesigner1.rdfx" />
-    <None Include="LinqToRdfDesigner1.rdfx.diagram">
-      <DependentUpon>LinqToRdfDesigner1.rdfx</DependentUpon>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
