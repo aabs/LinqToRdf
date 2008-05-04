@@ -1,0 +1,19 @@
+﻿@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix daml: <http://www.daml.org/2001/03/daml+oil#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsdt: <http://www.w3.org/2001/XMLSchema#>.
+@prefix : <http://tempuri.com/ontology/> .
+
+:ModelClass1 a owl:Class .
+:attr1
+	rdfs:domain :ModelClass1;
+	rdfs:range xsdt:string.
+:someRelationship
+	rdfs:domain :ModelClass1;
+	rdfs:range :ModelClass2.
+:ModelClass2 a owl:Class .
+:attr2
+	rdfs:domain :ModelClass2;
+	rdfs:range xsdt:integer.

@@ -1,0 +1,31 @@
+<Configuration>
+  <UnitTestRunner>
+    <CustomStartDirectory>
+    </CustomStartDirectory>
+    <UseShadowCopy>True</UseShadowCopy>
+    <UseCustomFolder>False</UseCustomFolder>
+    <EnableUnitTesting>True</EnableUnitTesting>
+    <Providers />
+  </UnitTestRunner>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="0" scrollPosition="0|0" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="680" scrollPosition="0|6" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="1050" scrollPosition="0|6" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <CompletionStatisticsManager />
+  <CodeCleanup RecentlyUsed="" />
+</Configuration>

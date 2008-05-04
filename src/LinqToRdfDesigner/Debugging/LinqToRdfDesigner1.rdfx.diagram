@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<classDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="LinqToRdfDesigner1">
+  <modelRootMoniker name="/" />
+  <nestedChildShapes>
+    <classShape Id="3ca4272a-2495-459f-ac8b-fd2bcda0ef30" absoluteBounds="3, 1.5, 1.5, 0.99926432291666645">
+      <modelClassMoniker name="//ModelClass1" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8ffe04a4-09eb-4871-98be-c37bc4564df0" absoluteBounds="3.0149999999999997, 1.8099999999999996, 1.4700000000000002, 0.37180582682291663" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="7f73ac41-2871-479e-b119-8a6d178214b5" absoluteBounds="3.0149999999999997, 2.1918058268229164, 1.4700000000000002, 0.20745849609375" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="998e1c12-d6fe-46eb-b09c-28cd221004e2" absoluteBounds="7, 1.5, 1.5, 0.99926432291666645">
+      <modelClassMoniker name="//ModelClass2" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6d6f0273-74eb-4e4e-9555-6f608b173e10" absoluteBounds="7.015, 1.81, 1.4700000000000002, 0.37180582682291663" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="cbb48ed4-2db6-40ec-a602-8983634c6d62" absoluteBounds="7.015, 2.1918058268229164, 1.4700000000000002, 0.20745849609375" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <aggregationConnector edgePoints="[(4.5 : 1.99963216145833); (7 : 1.99963216145833)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <aggregationMoniker Id="cbfe9de4-d1ed-481f-8f6a-1082546d2417" />
+      <relativeChildShapes />
+      <nodes>
+        <classShapeMoniker Id="3ca4272a-2495-459f-ac8b-fd2bcda0ef30" />
+        <classShapeMoniker Id="998e1c12-d6fe-46eb-b09c-28cd221004e2" />
+      </nodes>
+    </aggregationConnector>
+  </nestedChildShapes>
+</classDiagram>
