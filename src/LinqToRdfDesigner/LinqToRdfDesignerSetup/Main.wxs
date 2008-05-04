@@ -10,17 +10,22 @@
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
 	<Product UpgradeCode="d57e2636-2390-43b6-bb8e-1f00de484803" Name="$(loc.ProductName)" Id="de7066bc-e6b8-4166-a9b4-01c1cf543bdf" Version="0.4.0" Manufacturer="$(loc.Manufacturer)" Language="1033" >
-		<Package Id="012d047b-d563-490b-9a9c-fb4e2d9fdeb3" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
+		<Package Id="01661075-eb01-4c35-8863-d92c53a33c22" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 		<!-- 
 			Launch conditions and corresponding properties.
-		-->
+		-->		
+		<!-- If on Vista then must be running elevated -->
+		<Condition Message="$(loc.ElevatedProcessRequired)"><![CDATA[MsiRunningElevated=1 OR (VersionNT < 600)]]></Condition>
+		<!-- If on earlier version of XP then must be an admin -->
+		<Condition Message="$(loc.AdminUserRequired)"><![CDATA[Privileged OR (VersionNT >= 600)]]></Condition>
+
 		<Property Id="VSINSTALLREG">
 			<RegistrySearch Id="VSInstalledRegistry" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\9.0" Name="InstallDir" Type="directory" />
 		</Property>
-		<Condition Message="$(loc.VisualStudio2005Required)">VSINSTALLREG OR Installed</Condition>
+		<Condition Message="$(loc.VisualStudio2008Required)">VSINSTALLREG OR Installed</Condition>
 		<Property Id="FXINSTALLED">
-			<RegistrySearch Id="FxInstalledRegistry" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v2.0.50727" Name="Install" Root="HKLM" Type="raw"/>
+			<RegistrySearch Id="FxInstalledRegistry" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v3.5" Name="Install" Root="HKLM" Type="raw"/>
 		</Property>
 		<Condition Message="$(loc.NetFrameworkRequired)">FXINSTALLED OR Installed</Condition>
 		
@@ -95,7 +100,7 @@
 		<CustomAction Id="ERRCA_ADMINORADVERTISED" Return="check" Error="[ADMINORADVERTISEDMSG]" />
 		<!-- Custom action for running devenv /setup. -->
 		<CustomAction Id="SET_DEVENV" Return="check" Execute="immediate" Property="DEVENV" Value="[VSINSTALLDIR]devenv.exe" />
-		<CustomAction Id="DEVENV_SETUP" Property="DEVENV" Execute="commit" ExeCommand="/setup" Return="ignore" Impersonate="no" />
+		<CustomAction Id="DEVENV_SETUP" Property="DEVENV" ExeCommand="/setup" Return="ignore" />
 		<!-- Custom actions for opening supporting files after install. -->	
 		<CustomAction Id="FIND_EXPLORER" Return="check" Execute="firstSequence" Property="EXPLORER" Value="[WindowsFolder]explorer.exe" />
 	
@@ -136,8 +141,8 @@
 			<Custom Action="SET_DEVENV" After="DIRCA_VSINSTALLDIR">DEVENV=""</Custom>
 			<Custom Action="DIRCA_VSROOTDIR" After="SET_DEVENV">VSROOTDIR=""</Custom>
 			<Custom Action="ERRCA_CANCELEXISTINGVERSION" After="FindRelatedProducts">EXISTINGPRODUCTFOUND AND NOT Installed</Custom>
-			<!-- Following action must be run after MsiPublishAssemblies, because it depends on assemblies published to the GAC. -->
-			<Custom Action="DEVENV_SETUP" After="MsiPublishAssemblies" />
+			<!-- Following action must be run after InstallFinalize, because it depends on assemblies published to the GAC. -->
+			<Custom Action="DEVENV_SETUP" After="InstallFinalize" />
 		</InstallExecuteSequence>
 
 		<!-- 

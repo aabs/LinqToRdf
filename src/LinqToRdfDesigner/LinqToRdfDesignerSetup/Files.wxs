@@ -34,10 +34,10 @@
 				<Component Id="_LinqToRdfDesigner_GAC" Guid="642a580b-5eb6-be31-8def-b267968b632c" DiskId="1">
 					<File Id="_LinqToRdfDesignerDll_GAC" KeyPath="yes" Name="LinqToR2.dll" LongName="LinqToRdf.Design.DslPackage.dll" src="SourceDir\..\DslPackage\bin\Debug\LinqToRdf.Design.DslPackage.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msil" AssemblyManifest="_LinqToRdfDesignerDll_GAC">
 						<AssemblyName Id="Name" Value="LinqToRdf.Design.DslPackage" />
-						<AssemblyName Id="Version" Value="0.4.0.0" />
+						<AssemblyName Id="Version" Value="0.5.0.0" />
 						<AssemblyName Id="Culture" Value="neutral" />
 						<AssemblyName Id="PublicKeyToken" Value="D71AFFCE5169C495" />
-						<AssemblyName Id="FileVersion" Value="0.4.0.0"/>
+						<AssemblyName Id="FileVersion" Value="0.5.0.0"/>
 						<AssemblyName Id="ProcessorArchitecture" Value="MSIL" />
 					</File>
 				</Component>
@@ -45,10 +45,10 @@
 				<Component Id="_Dsl_GAC" Guid="334f6426-277e-7c39-9397-e044d49ea08c" DiskId="1">
 					<File Id="_DslDll_GAC" KeyPath="yes" Name="LinqToR3.dll" LongName="LinqToRdf.Design.Dsl.dll" src="SourceDir\..\Dsl\bin\Debug\LinqToRdf.Design.Dsl.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msil" AssemblyManifest="_DslDll_GAC">
 						<AssemblyName Id="Name" Value="LinqToRdf.Design.Dsl" />
-						<AssemblyName Id="Version" Value="0.4.0.0" />
+						<AssemblyName Id="Version" Value="0.5.0.0" />
 						<AssemblyName Id="Culture" Value="neutral" />
 						<AssemblyName Id="PublicKeyToken" Value="D71AFFCE5169C495" />
-						<AssemblyName Id="FileVersion" Value="0.4.0.0"/>
+						<AssemblyName Id="FileVersion" Value="0.5.0.0"/>
 						<AssemblyName Id="ProcessorArchitecture" Value="MSIL" />
 					</File>
 				</Component>

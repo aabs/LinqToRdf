@@ -79,4 +79,8 @@ Click "Next" to start the installation.</String>
 	<String Id="InstallFilesInUseBodyText">{\VSI_MS_Sans_Serif13.0_0_0}The following applications are using files which the installer must update. You can either close the applications and click "Try Again", or click "Continue" so that the installer continues the installation, and replaces these files when your system restarts.</String>
 	<String Id="RemoveFilesInUseBodyText">{\VSI_MS_Sans_Serif13.0_0_0}The following applications are using files which the installer must remove. You can either close the applications and click "Try Again", or click "Continue" so that the installer continues the installation, and replaces these files when your system restarts.</String>
 	<String Id="FilesInUseTitle">[ProductName] Files in Use</String>
+
+  <String Id="ElevatedProcessRequired">Elevated Process Required (AABS - not sure about this one)</String>
+  <String Id="VisualStudio2008Required">Visual Studio 2008 Required (AABS - not sure about this one)</String>
+  <String Id="AdminUserRequired">Admin User Required (AABS - not sure about this one)</String>
 </WixLocalization>
