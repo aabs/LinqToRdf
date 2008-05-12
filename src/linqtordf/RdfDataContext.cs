@@ -52,9 +52,9 @@ namespace LinqToRdf
         public string EndpointUri { get; set; }
         public Store LocalTripleStore { get; set; }
     }
-    public class RDF : IRdfContext
+    public class RdfDataContext : IRdfContext
     {
-        public RDF(TripleStore store)
+        public RdfDataContext(TripleStore store)
         {
             this.store = store;
         }

@@ -119,7 +119,7 @@ namespace UnitTests
         [Test]
         public void TestGetAllTasks()
         {
-            RDF ctx = new RDF(CreateSparqlTripleStore());
+            RdfDataContext ctx = new RdfDataContext(CreateSparqlTripleStore());
             var q = (from t in ctx.ForType<Task>()
                     select t).Distinct();
             List<Task> l = q.ToList();

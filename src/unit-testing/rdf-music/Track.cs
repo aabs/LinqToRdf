@@ -12,109 +12,117 @@
  *
  */
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using ID3Lib;
 using LinqToRdf;
 using System.Data.Linq;
 
 namespace RdfMusic
 {
-	[OwlResource(OntologyName="Music", RelativeUriReference="Track")]
+    public class MusicDataContext : RdfDataContext
+    {
+        public MusicDataContext(TripleStore store) : base(store)
+        {
+        }
+        public MusicDataContext(string store) : base(new TripleStore(store))
+        {
+        }
+
+
+        public IQueryable<Album> Albums
+        {
+            get
+            {
+                return ForType<Album>();
+            }
+        }
+
+        public IQueryable<Track> Tracks
+        {
+            get
+            {
+                return ForType<Track>();
+            }
+        }
+    }
+
+    [OwlResource(OntologyName="Music", RelativeUriReference="Track")]
 	public class Track : OwlInstanceSupertype
 	{
 
-		[OwlResource(OntologyName = "Music", RelativeUriReference="title")]
-		public string Title
-		{
-			get { return title; }
-			set { title = value; }
-		}
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "title")]
+        public string Title { get; set; }
 
 		[OwlResource(OntologyName = "Music", RelativeUriReference="artistName")]
-		public string ArtistName
-		{
-			get { return artistName; }
-			set { artistName = value; }
-		}
+        public string ArtistName { get; set; }
 
 		[OwlResource(OntologyName = "Music", RelativeUriReference="albumName")]
-		public string AlbumName
-		{
-			get { return albumName; }
-			set { albumName = value; }
-		}
+        public string AlbumName { get; set; }
 
 		[OwlResource(OntologyName = "Music", RelativeUriReference="year")]
-		public string Year
-		{
-			get { return year; }
-			set { year = value; }
-		}
+        public string Year { get; set; }
 
 		[OwlResource(OntologyName = "Music", RelativeUriReference="genreName")]
-		public string GenreName
-		{
-			get { return genreName; }
-			set { genreName = value; }
-		}
+        public string GenreName { get; set; }
 
 		[OwlResource(OntologyName = "Music", RelativeUriReference="comment")]
-		public string Comment
-		{
-			get { return comment; }
-			set { comment = value; }
-		}
+        public string Comment { get; set; }
 
 		[OwlResource(OntologyName = "Music", RelativeUriReference="fileLocation")]
-		public string FileLocation
-		{
-			get { return fileLocation; }
-			set { fileLocation = value; }
-		}
+        public string FileLocation { get; set; }
 
 		[OwlResource(OntologyName = "Music", RelativeUriReference="rating")]
-		public int Rating
-		{
-			get { return rating; }
-			set { rating = value; }
-		}
-
-		private string title;
-		private string artistName;
-		private string albumName;
-		private string year;
-		private string genreName;
-		private string comment;
-		private string fileLocation;
-		private int rating;
+        public int Rating { get; set; }
 
 		public Track(TagHandler th, string fileLocation)
 		{
-			this.fileLocation = fileLocation;
-			title = th.Track;
-			artistName = th.Artist;
-			albumName = th.Album;
-			year = th.Year;
-			genreName = th.Genere;
-			comment = th.Comment;
+			FileLocation = fileLocation;
+			Title = th.Track;
+			ArtistName = th.Artist;
+			AlbumName = th.Album;
+			Year = th.Year;
+			GenreName = th.Genere;
+			Comment = th.Comment;
 		}
 
+        private EntityRef<Album> AlbumER { get; set; }
+        public Album Album
+        {
+            get
+            {
+                if(!AlbumER.HasLoadedOrAssignedValue && DataContext != null)
+                {
+		            var ctx = DataContext as MusicDataContext;
+                    var q1 = from a in ctx.Albums where a.Name == AlbumName select a;
+                    var x = q1.ToArray();
+                    if(x == null || x.Length == 0)
+                        return null;
+                    AlbumER = new EntityRef<Album>(x[0]);
+                }
+                return AlbumER.Entity;
+            }
+        }
 		public Track()
 		{
+
 		}
 	}
 
     [OwlResource(OntologyName = "Music", RelativeUriReference = "Album")]
 	public class Album : OwlInstanceSupertype
 	{
+        public Album()
+        {
+//		    var ctx = DataContext as MusicDataContext;
+//            var q1 = from t in ctx.Tracks where t.AlbumName == Name select t;
+//            Tracks.SetSource(q1);
+        }
+
 		[OwlResource(OntologyName = "Music", RelativeUriReference="name")]
-		public string Name
-		{
-			get { return name; }
-			set { name = value; }
-		}
+        public string Name { get; set; }
 
-		private string name;
-
-        public EntitySet<Track> Tracks { get; set; }
+//        public EntitySet<Track> Tracks = new EntitySet<Track>();
 	}
 }

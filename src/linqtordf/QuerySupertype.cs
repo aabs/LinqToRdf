@@ -13,48 +13,41 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq.Expressions;
 using System.IO;
+using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 
 namespace LinqToRdf
 {
     public class QuerySupertype<T>
     {
-        protected IRdfContext context;
         protected Dictionary<string, MethodCallExpression> expressions;
+        protected string filterClause;
         protected TextWriter logger;
         protected NamespaceManager namespaceManager = new NamespaceManager();
-        protected Type originalType = typeof(T);
+        protected Type originalType = typeof (T);
         protected Delegate projection;
-        protected HashSet<MemberInfo> queryGraphParameters = new HashSet<MemberInfo>();
         protected HashSet<MemberInfo> projectionParameters = new HashSet<MemberInfo>();
-        protected string filterClause;
         protected QueryFactory<T> queryFactory;
-        private bool shouldReuseResultset = false;
-
-        public IRdfContext Context
-        {
-            get { return context; }
-        }
+        protected HashSet<MemberInfo> queryGraphParameters = new HashSet<MemberInfo>();
+        private bool shouldReuseResultset;
+        public IRdfContext DataContext { get; set; }
 
         public IEnumerable<T> CachedResults
         {
             get
             {
                 string hashcode = GetHashCode().ToString();
-                if (Context.ResultsCache.ContainsKey(hashcode))
+                if (DataContext.ResultsCache.ContainsKey(hashcode))
                 {
-                    return Context.ResultsCache[hashcode] as IEnumerable<T>;
+                    return DataContext.ResultsCache[hashcode] as IEnumerable<T>;
                 }
                 return null;
             }
             set
             {
                 string hashcode = GetHashCode().ToString();
-                Context.ResultsCache[hashcode] = value;
+                DataContext.ResultsCache[hashcode] = value;
             }
         }
 
@@ -120,21 +113,22 @@ namespace LinqToRdf
             {
                 shouldReuseResultset = value;
                 // if we stop caching & we already have results then erase them
-                if (shouldReuseResultset == false && Context.ResultsCache != null)
+                if (shouldReuseResultset == false && DataContext.ResultsCache != null)
                 {
-                    Context.ResultsCache.Clear();
-                    Context.ResultsCache = null;
+                    DataContext.ResultsCache.Clear();
+                    DataContext.ResultsCache = null;
                 }
             }
         }
 
         protected void BuildProjection(Expression expression)
         {
-            UnaryExpression ue = ((MethodCallExpression)expression).Arguments[1] as UnaryExpression;
-            LambdaExpression le = (LambdaExpression)ue.Operand;
-            if (le == null) throw new ApplicationException("Incompatible expression type found when building ontology projection");
+            var ue = ((MethodCallExpression) expression).Arguments[1] as UnaryExpression;
+            var le = (LambdaExpression) ue.Operand;
+            if (le == null)
+                throw new ApplicationException("Incompatible expression type found when building ontology projection");
             projection = le.Compile();
-            NewExpression mie = le.Body as NewExpression;
+            var mie = le.Body as NewExpression;
             if (le.Body is ParameterExpression) //  ie an identity projection
             {
                 foreach (PropertyInfo i in OwlClassSupertype.GetAllPersistentProperties(originalType))
@@ -142,7 +136,7 @@ namespace LinqToRdf
             }
             else if (le.Body is MemberExpression)
             {
-                MemberExpression memex = le.Body as MemberExpression;
+                var memex = le.Body as MemberExpression;
                 projectionParameters.Add(memex.Member);
             }
             else

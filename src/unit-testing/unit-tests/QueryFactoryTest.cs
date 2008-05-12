@@ -93,7 +93,7 @@ namespace UnitTests
 
 		private static void TestConnectionCreationForTripleStore(TripleStore ts1)
 		{
-			IRdfContext context = new RDF(ts1);
+			IRdfContext context = new RdfDataContext(ts1);
 			QueryFactory<Track> factory = new QueryFactory<Track>(ts1.QueryType, context);
 			IRdfQuery<Track> qry1 = context.ForType<Track>();
 			IRdfConnection<Track> rdfConnection = factory.CreateConnection(qry1);
@@ -111,7 +111,7 @@ namespace UnitTests
 		public void CreateExpressionTranslatorTest()
 		{
 			TripleStore ts = CreateOnlineSparqlTripleStore();
-			IRdfContext context = new RDF(ts);
+			IRdfContext context = new RdfDataContext(ts);
 			QueryFactory<Track> factory = new QueryFactory<Track>(ts.QueryType, context);
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IQueryFormatTranslator translator = factory.CreateExpressionTranslator();
@@ -126,7 +126,7 @@ namespace UnitTests
 		public void CreateExpressionTranslatorTest2()
 		{
 			TripleStore ts = CreateInMemoryTripleStore();
-			IRdfContext context = new RDF(ts);
+			IRdfContext context = new RdfDataContext(ts);
 			QueryFactory<Track> factory = new QueryFactory<Track>(ts.QueryType, context);
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IQueryFormatTranslator translator = factory.CreateExpressionTranslator();
@@ -145,7 +145,7 @@ namespace UnitTests
 		public void CreateQueryTest_OnlineSparqlTripleStore()
 		{
 			TripleStore ts = CreateOnlineSparqlTripleStore();
-			IRdfContext context = new RDF(ts);
+			IRdfContext context = new RdfDataContext(ts);
 			QueryFactory<Track> factory = new QueryFactory<Track>(ts.QueryType, context);
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
@@ -160,7 +160,7 @@ namespace UnitTests
 		public void CreateQueryTest_InMemorySparqlTripleStore()
 		{
 			TripleStore ts = CreateInMemorySparqlTripleStore();
-			IRdfContext context = new RDF(ts);
+			IRdfContext context = new RdfDataContext(ts);
 			QueryFactory<Track> factory = new QueryFactory<Track>(ts.QueryType, context);
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
@@ -175,7 +175,7 @@ namespace UnitTests
 		public void CreateQueryTest_InMemoryTripleStore()
 		{
 			TripleStore ts = CreateInMemoryTripleStore();
-			IRdfContext context = new RDF(ts);
+			IRdfContext context = new RdfDataContext(ts);
 			QueryFactory<Track> factory = new QueryFactory<Track>(ts.QueryType, context);
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
@@ -190,7 +190,7 @@ namespace UnitTests
 		public void CreateQueryTest_PersistentTripleStore()
 		{
 			TripleStore ts = CreatePersistentTripleStore();
-			IRdfContext context = new RDF(ts);
+			IRdfContext context = new RdfDataContext(ts);
 			QueryFactory<Track> factory = new QueryFactory<Track>(ts.QueryType, context);
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
@@ -208,7 +208,7 @@ namespace UnitTests
 		{
 			mocks = new MockRepository();
 			TripleStore ts = mocks.CreateMock<TripleStore>("http://www.tempuri.com");
-			IRdfContext context = mocks.CreateMock<RDF>(ts);
+			IRdfContext context = mocks.CreateMock<RdfDataContext>(ts);
 			QueryFactory<Track> factory = new QueryFactory<Track>(ts.QueryType, context);
 			Assert.IsNotNull(factory); 
 		}
@@ -222,7 +222,7 @@ namespace UnitTests
 			mocks = new MockRepository();
 			QueryType queryType = QueryType.RemoteSparqlStore; // TODO: Initialize to an appropriate value
 			TripleStore ts = new TripleStore("http://www.tempuri.com");
-			IRdfContext context = mocks.CreateMock<RDF>(ts);
+			IRdfContext context = mocks.CreateMock<RdfDataContext>(ts);
 			QueryFactory<Task> target = new QueryFactory<Task>(queryType, context);
 			QueryType val = QueryType.RemoteSparqlStore; // TODO: Assign to an appropriate value for the property
 			Assert.AreEqual(val, target.QueryType, "LinqToRdf.QueryFactory<T>.QueryType was not set correctly.");

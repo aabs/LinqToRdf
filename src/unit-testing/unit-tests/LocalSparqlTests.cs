@@ -64,7 +64,7 @@ FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest M
 		{
 			CreateMemoryStore();
 			var x = new {Title="foo", FileLocation="bar"};
-			ObjectDeserialiserQuerySink sink = new ObjectDeserialiserQuerySink(typeof(Track), x.GetType(), false, null);
+			ObjectDeserialiserQuerySink sink = new ObjectDeserialiserQuerySink(typeof(Track), x.GetType(), false, null, null);
 			string qry = CreateQueryForArtist("Rory Blythe");
 			Query query = new SparqlEngine(qry);
 //			Query query = new GraphMatch(new N3Reader(new StringReader(qry)));

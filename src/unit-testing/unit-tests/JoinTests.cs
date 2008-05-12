@@ -26,7 +26,7 @@ namespace UnitTests
 		public void TestMethod1()
 		{
 			TripleStore ts = CreateSparqlTripleStore();
-			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); 
+			IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>(); 
 	        var q = from t in qry
 				where t.Year == "2007" &&
 				t.GenreName == "Rory Blyth: The Smartest Man in the World" 

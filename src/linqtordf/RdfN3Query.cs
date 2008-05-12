@@ -14,9 +14,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using SemWeb;
@@ -26,14 +26,13 @@ namespace LinqToRdf
 {
     public class RdfN3Query<T> : QuerySupertype<T>, IRdfQuery<T>
     {
-        private Expression expression;
         private IQueryFormatTranslator parser;
 
         private Store store;
 
         public RdfN3Query(IRdfContext context)
         {
-            this.context = context;
+            DataContext = context;
             originalType = typeof (T);
             parser = new LinqToN3ExpTranslator<T>();
         }
@@ -66,7 +65,7 @@ namespace LinqToRdf
         {
             RdfN3Query<TElement> newQuery = CloneQueryForNewType<TElement>();
 
-            MethodCallExpression call = expression as MethodCallExpression;
+            var call = expression as MethodCallExpression;
             if (call != null)
             {
                 switch (call.Method.Name)
@@ -86,7 +85,6 @@ namespace LinqToRdf
 
         public S Execute<S>(Expression expression)
         {
-            this.expression = expression;
             throw new NotImplementedException("Execute not implmented");
         }
 
@@ -125,18 +123,23 @@ namespace LinqToRdf
             return RunQuery();
         }
 
+        public IQueryProvider Provider
+        {
+            get { return this; }
+        }
+
         #endregion
 
         protected RdfN3Query<TElement> CloneQueryForNewType<TElement>()
         {
-            RdfN3Query<TElement> newQuery = new RdfN3Query<TElement>(context);
+            var newQuery = new RdfN3Query<TElement>(DataContext);
             newQuery.Store = store;
             newQuery.OriginalType = originalType;
             newQuery.Projection = projection;
             newQuery.QueryGraphParameters = queryGraphParameters;
             newQuery.FilterClause = FilterClause;
             newQuery.Logger = logger;
-            newQuery.QueryFactory = new QueryFactory<TElement>(QueryFactory.QueryType, context);
+            newQuery.QueryFactory = new QueryFactory<TElement>(QueryFactory.QueryType, DataContext);
             newQuery.Parser = QueryFactory.CreateExpressionTranslator();
             newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
             return newQuery;
@@ -157,10 +160,11 @@ namespace LinqToRdf
         private void PresentQuery(string qry)
         {
             Store ms = store;
-            ObjectDeserialiserQuerySink sink = new ObjectDeserialiserQuerySink(originalType, typeof (T), this.Expressions.ContainsKey("Distinct"), Expressions["Select"]);
+            var sink = new ObjectDeserialiserQuerySink(originalType, typeof (T), Expressions.ContainsKey("Distinct"),
+                                                       Expressions["Select"], (RdfDataContext) DataContext);
             Query graphMatchQuery = new GraphMatch(new N3Reader(new StringReader(qry)));
             graphMatchQuery.Run(ms, sink);
-            List<T> list = new List<T>();
+            var list = new List<T>();
             foreach (T t in sink.DeserialisedObjects)
             {
                 list.Add(t);
@@ -171,7 +175,7 @@ namespace LinqToRdf
         private void PrepareQueryAndConnection()
         {
             // create ontology ObjectDeserialiserQuerySink and attach it to the store
-            string q = string.Format("@prefix m: <{0}> .\n", OwlInstanceSupertype.GetOntologyBaseUri(originalType));
+            string q = string.Format("@prefix m: <{0}> .\n", OwlClassSupertype.GetOntologyBaseUri(originalType));
             filterClause = q + filterClause;
             foreach (PropertyInfo pi in OwlClassSupertype.GetAllPersistentProperties(typeof (T)))
             {
@@ -188,7 +192,7 @@ namespace LinqToRdf
 
         private void BuildQuery(Expression q)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             ParseQuery(q, sb);
             FilterClause = Parser.StringBuilder.ToString();
             Log(FilterClause);
@@ -199,15 +203,5 @@ namespace LinqToRdf
             sb.Append("#Query - " + DateTime.Now.ToLongTimeString());
             Parser.Dispatch(expression);
         }
-
-				#region IQueryable Members
-
-
-				public IQueryProvider Provider
-				{
-					get { return this; }
-				}
-
-				#endregion
-		}
+    }
 }

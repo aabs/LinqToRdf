@@ -10,7 +10,7 @@
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
 	<Product UpgradeCode="91fb2736-237e-49cf-bf4f-a45c56baf5c5" Name="$(loc.ProductName)" Id="6271fbc1-5f7a-4619-bd49-7dbb6fbd25ea" Version="1.0.0" Manufacturer="$(loc.Manufacturer)" Language="1033" >
-		<Package Id="cd9b74b0-d57a-4b9c-925e-a57042f2a6e1" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
+		<Package Id="2ffca880-9a1e-4bfe-9067-2c1a7ab7792b" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 		<!-- 
 			Launch conditions and corresponding properties.
@@ -64,12 +64,12 @@
 			<ComponentRef Id="CreateTargetDirectory"/>
 			<ComponentRef Id="_LinqToRdfDesigner_GAC"/>
 			<ComponentRef Id="_LinqToRdfDesigner"/>
-			<ComponentRef Id="SupportingFiles"/>
 		
 			<ComponentRef Id="_Dsl_GAC"/>
 			<ComponentRef Id="_Dsl"/>
 			
 			<ComponentRef Id="ItemTemplate1"/>
+			<ComponentRef Id="ProjectTemplate1"/>
 			<ComponentRef Id="Schemas"/>
 		</Feature>
 
@@ -100,10 +100,6 @@
 		<!-- Custom action for running devenv /setup. -->
 		<CustomAction Id="SET_DEVENV" Return="check" Execute="immediate" Property="DEVENV" Value="[VSINSTALLDIR]devenv.exe" />
 		<CustomAction Id="DEVENV_SETUP" Property="DEVENV" ExeCommand="/setup" Return="ignore" />
-		<!-- Custom actions for opening supporting files after install. -->	
-		<CustomAction Id="FIND_EXPLORER" Return="check" Execute="firstSequence" Property="EXPLORER" Value="[WindowsFolder]explorer.exe" />
-	
-		<CustomAction Id="OpenCA_Readme" Property="EXPLORER" ExeCommand='"[TARGETDIR]Readme.htm"' Return="asyncNoWait"/>
 
 
 		<!-- 
@@ -115,7 +111,6 @@
 			<Custom Action="DIRCA_TARGETDIR" After="ValidateProductID">TARGETDIR=""</Custom>
 			<Custom Action="DIRCA_VSINSTALLDIR" After="DIRCA_TARGETDIR">VSINSTALLDIR=""</Custom>
 			<Custom Action="DIRCA_VSROOTDIR" After="DIRCA_VSINSTALLDIR">VSROOTDIR=""</Custom>
-			<Custom Action="FIND_EXPLORER" After="DIRCA_VSROOTDIR">EXPLORER=""</Custom>
 			<Show Dialog="ResumeForm" After="IsolateComponents">Installed="" AND RESUME</Show>
 			<Show Dialog="MaintenanceForm" After="ResumeForm"><![CDATA[Installed<>""]]></Show>
 			<Show Dialog="WelcomeForm" After="CostFinalize">Installed="" AND NOT RESUME</Show>
@@ -123,8 +118,6 @@
 			<Show Dialog="FatalErrorForm" OnExit="error">NOT HideFatalErrorForm</Show>
 			<Show Dialog="UserExitForm" OnExit="cancel" />
 			<Show Dialog="FinishedForm" OnExit="success" />
-	
-			<Custom Action="OpenCA_Readme" After="ExecuteAction">NOT Installed</Custom>
 		</InstallUISequence>
 		<AdminExecuteSequence>
 			<Custom Action="ERRCA_ADMINORADVERTISED" Before="CostInitialize" />
@@ -151,6 +144,5 @@
 		<Binary Id="UpFldrBtn" src="Resources\UpFldrBtn.bmp" />
 		<Binary Id="NewFldrBtn" src="Resources\NewFldrBtn.bmp" />
 		<Icon Id="Product.ico" src="Resources\Product.ico" />
-		<Icon Id="_ReadmeShortcut.ico" src="Resources\ReadmeShortcut.ico" />
 	</Product>
 </Wix>

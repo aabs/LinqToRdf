@@ -79,8 +79,6 @@
         </xsd:attribute>
         <!-- Property: OntologyUri -->
         <xsd:attribute name="ontologyUri" type="xsd:string" />
-        <!-- Property: ModelName -->
-        <xsd:attribute name="modelName" type="xsd:string" />
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>

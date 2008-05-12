@@ -25,13 +25,17 @@ EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "installer", "src\installer\installer.wixproj", "{0C57E91D-545D-449D-AE16-E6951447B276}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DCB04931-F2F1-45CA-B857-233D7B0AC615} = {DCB04931-F2F1-45CA-B857-233D7B0AC615}
+		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B} = {FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dsl", "src\LinqToRdfDesigner\Dsl\Dsl.csproj", "{D1DAE61C-25BF-4F7B-B408-196824C979F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DslPackage", "src\LinqToRdfDesigner\DslPackage\DslPackage.csproj", "{0CB2434E-958D-473D-8163-AFBD6AE64C1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToRdfDesignerSetup", "src\LinqToRdfDesigner\LinqToRdfDesignerSetup\LinqToRdfDesignerSetup.csproj", "{9462CB6B-05E4-491F-A829-E0571CB890AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToRdfDesignerSetup", "src\LinqToRdfDesigner\LinqToRdfDesignerSetup\LinqToRdfDesignerSetup.csproj", "{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DCB04931-F2F1-45CA-B857-233D7B0AC615} = {DCB04931-F2F1-45CA-B857-233D7B0AC615}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -70,10 +74,10 @@ Global
 		{0CB2434E-958D-473D-8163-AFBD6AE64C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CB2434E-958D-473D-8163-AFBD6AE64C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CB2434E-958D-473D-8163-AFBD6AE64C1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9462CB6B-05E4-491F-A829-E0571CB890AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9462CB6B-05E4-491F-A829-E0571CB890AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9462CB6B-05E4-491F-A829-E0571CB890AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9462CB6B-05E4-491F-A829-E0571CB890AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

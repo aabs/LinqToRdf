@@ -116,7 +116,6 @@ namespace LinqToRdf.Designer
 			{
 				new DomainMemberInfo(typeof(NamedElement), "Name", NamedElement.NameDomainPropertyId, typeof(NamedElement.NamePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelRoot), "OntologyUri", ModelRoot.OntologyUriDomainPropertyId, typeof(ModelRoot.OntologyUriPropertyHandler)),
-				new DomainMemberInfo(typeof(ModelRoot), "ModelName", ModelRoot.ModelNameDomainPropertyId, typeof(ModelRoot.ModelNamePropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "Kind", ModelClass.KindDomainPropertyId, typeof(ModelClass.KindPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "IsAbstract", ModelClass.IsAbstractDomainPropertyId, typeof(ModelClass.IsAbstractPropertyHandler)),
 				new DomainMemberInfo(typeof(ModelClass), "ResourceUri", ModelClass.ResourceUriDomainPropertyId, typeof(ModelClass.ResourceUriPropertyHandler)),

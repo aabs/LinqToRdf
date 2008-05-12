@@ -26,30 +26,40 @@ namespace LinqToRdf
 {
 	public class ObjectDeserialiserQuerySink : QueryResultSink
 	{
-		public IList DeserialisedObjects
-		{
-			get { return deserialisedObjects; }
-		}
-        MethodCallExpression SelectExpression { get; set; }
-		private IList deserialisedObjects = new ArrayList();
+	    public IList DeserialisedObjects
+	    {
+	        get { return deserialisedObjects; }
+	    }
 
-        public ObjectDeserialiserQuerySink(Type originalType, Type instanceType, bool elideDuplicates, MethodCallExpression selectExpression)
-		{
-            SelectExpression = selectExpression;
-            this.originalType = originalType;
-			this.instanceType = instanceType;
-		    this.elideDuplicates = elideDuplicates;
-		}
+	    MethodCallExpression SelectExpression { get; set; }
 
-		public Type OriginalType
-		{
-			get { return originalType; }
-			set { originalType = value; }
-		}
+	    public Type OriginalType
+	    {
+	        get { return originalType; }
+	        set { originalType = value; }
+	    }
 
-		private Type originalType;
+	    private IList deserialisedObjects = new ArrayList();
+
+	    private Type originalType;
 		private readonly Type instanceType;
 	    private readonly bool elideDuplicates;
+
+	    public ObjectDeserialiserQuerySink(
+            Type originalType, 
+            Type instanceType, 
+            bool elideDuplicates, 
+            MethodCallExpression selectExpression,
+            RdfDataContext context)
+	    {
+	        SelectExpression = selectExpression;
+	        this.originalType = originalType;
+	        this.instanceType = instanceType;
+	        this.elideDuplicates = elideDuplicates;
+	        DataContext = context;
+	    }
+
+	    private RdfDataContext DataContext { get; set; }
 
 	    public override bool Add(VariableBindings result)
 		{
@@ -74,6 +84,8 @@ namespace LinqToRdf
 			if (originalType == instanceType)
 			{
 				t = Activator.CreateInstance(instanceType);
+			    AssignDataContextToOwlInstanceType(t as OwlInstanceSupertype, DataContext);
+
 				foreach (PropertyInfo pi in props)
 				{
 					if (pi.PropertyType.IsGenericType && pi.PropertyType.GetGenericTypeDefinition().Name.StartsWith("Entity"))
@@ -156,7 +168,20 @@ namespace LinqToRdf
 			return true;
 		}
 
-        private bool ObjectIsUniqueSoFar(object t)
+        /// <summary>
+        /// Assigns the data context to the instance in case it needs it to lazily load references later on.
+        /// </summary>
+        /// <param name="inst">the object that has just been deserialised.</param>
+        /// <param name="context">The context through which the query was run that led to the instance being deserialised.</param>
+	    private void AssignDataContextToOwlInstanceType(OwlInstanceSupertype inst, RdfDataContext context)
+	    {
+	        if (inst != null)
+	        {
+	            inst.DataContext = DataContext;
+	        }
+	    }
+
+	    private bool ObjectIsUniqueSoFar(object t)
         {
             // 1. get the instance URI for t
             OwlInstanceSupertype oo = t as OwlInstanceSupertype;
@@ -242,9 +267,7 @@ namespace LinqToRdf
             }
             return null;
         }
-
-
-    }
+	}
 
 	public class PrintQuerySink : QueryResultSink
 	{

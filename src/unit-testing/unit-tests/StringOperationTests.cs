@@ -15,7 +15,7 @@ namespace UnitTests
 		public void TestCompare()
 		{
 			TripleStore ts = CreateSparqlTripleStore();
-			IRdfQuery<Album> qry = new RDF(ts).ForType<Album>();
+			IRdfQuery<Album> qry = new RdfDataContext(ts).ForType<Album>();
 			var q = from a in qry where a.Name.Contains("Thomas") select a;
 			List<Album> al = new List<Album>(q);
 			Assert.IsTrue(al.Count == 1);
@@ -26,7 +26,7 @@ namespace UnitTests
 		public void TestStartsWith()
 		{
 			TripleStore ts = CreateSparqlTripleStore();
-			IRdfQuery<Album> qry = new RDF(ts).ForType<Album>();
+			IRdfQuery<Album> qry = new RdfDataContext(ts).ForType<Album>();
 			var q = from a in qry where a.Name.StartsWith("Thomas") select a;
 			List<Album> al = new List<Album>(q);
 			Assert.IsTrue(al.Count == 1);
@@ -36,7 +36,7 @@ namespace UnitTests
 		public void TestEndsWith()
 		{
 			TripleStore ts = CreateSparqlTripleStore();
-			IRdfQuery<Album> qry = new RDF(ts).ForType<Album>();
+			IRdfQuery<Album> qry = new RdfDataContext(ts).ForType<Album>();
 			var q = from a in qry where a.Name.EndsWith("podcasts") select a;
 			List<Album> al = new List<Album>(q);
 			Assert.IsTrue(al.Count == 1);

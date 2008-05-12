@@ -8,7 +8,7 @@
 <#
 // prolog - set up some book-keeping variables
 string baseUri = this.ModelRoot.OntologyUri;
-string modelName = this.ModelRoot.ModelName;
+string modelName = this.ModelRoot.Name;
 HashSet<ModelClass> processedClasses = new HashSet<ModelClass>();
 ITypeTranslator2 tt = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.DotNet);
 

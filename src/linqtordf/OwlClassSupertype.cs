@@ -19,6 +19,7 @@ namespace LinqToRdf
 {
     public class OwlClassSupertype
     {
+        public IRdfContext DataContext { get; set; }
         public IEnumerable<MemberInfo> AllPersistentProperties
         {
             get

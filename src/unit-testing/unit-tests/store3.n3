@@ -8,7 +8,7 @@ ns1:Album_2 a ns1:Album;
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -18,7 +18,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -143,7 +143,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -151,7 +151,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -271,7 +271,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -279,7 +279,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -399,7 +399,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -407,7 +407,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -527,7 +527,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -535,7 +535,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -655,7 +655,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -663,7 +663,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -783,7 +783,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -791,7 +791,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -911,7 +911,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -919,7 +919,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1039,7 +1039,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1047,7 +1047,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1167,7 +1167,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1175,7 +1175,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1295,7 +1295,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1303,7 +1303,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1423,7 +1423,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1431,7 +1431,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1551,7 +1551,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1559,7 +1559,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1679,7 +1679,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1687,7 +1687,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1807,7 +1807,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1815,7 +1815,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1935,7 +1935,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -1943,7 +1943,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2063,7 +2063,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2071,7 +2071,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2191,7 +2191,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2199,7 +2199,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2319,7 +2319,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2327,7 +2327,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2447,7 +2447,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2455,7 +2455,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2575,7 +2575,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2583,7 +2583,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2703,7 +2703,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2711,7 +2711,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2831,7 +2831,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2839,7 +2839,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2959,7 +2959,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -2967,7 +2967,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -3087,7 +3087,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -3095,7 +3095,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -3215,7 +3215,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -3223,7 +3223,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -3343,7 +3343,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -3351,7 +3351,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -3471,7 +3471,7 @@ ns1:Track_-1145269335 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Trac
 ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
@@ -3479,7 +3479,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ns1:Track ;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
-	ns1:albumName "History 5 | Fall 2006 | UC Berkeley" ;
+	ns1:albumName "Thomas Laqueur - History Lectures" ;
 	ns1:year "2006" ;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;

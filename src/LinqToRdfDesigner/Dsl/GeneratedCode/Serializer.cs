@@ -653,23 +653,6 @@ namespace LinqToRdf.Designer
 					}
 				}
 			}
-			// ModelName
-			if (!serializationContext.Result.Failed)
-			{
-				string attribModelName = reader.GetAttribute("modelName");
-				if (attribModelName != null)
-				{
-					global::System.String valueOfModelName;
-					if (DslModeling::SerializationUtilities.TryGetValue<global::System.String>(DslModeling::SerializationUtilities.UnescapeXmlString(attribModelName), out valueOfModelName))
-					{
-						instanceOfModelRoot.ModelName = valueOfModelName;
-					}
-					else
-					{	// Invalid property value, ignored.
-						LinqToRdfDesignerSerializationBehaviorSerializationMessages.IgnoredPropertyValue(serializationContext, reader, "modelName", typeof(global::System.String), attribModelName);
-					}
-				}
-			}
 		}
 	
 		/// <summary>
@@ -1205,16 +1188,6 @@ namespace LinqToRdf.Designer
 					{	// No need to write the value out if it's the same as default value.
 						writer.WriteAttributeString("ontologyUri", propValue);
 					}
-				}
-			}
-			// ModelName
-			if (!serializationContext.Result.Failed)
-			{
-				global::System.String propValue = instanceOfModelRoot.ModelName;
-				if (!serializationContext.Result.Failed)
-				{
-					if (!string.IsNullOrEmpty(propValue))
-						writer.WriteAttributeString("modelName", propValue);
 				}
 			}
 		}

@@ -8,8 +8,12 @@
     <Providers />
   </UnitTestRunner>
   <RecentFiles>
-    <RecentFiles />
-    <RecentEdits />
+    <RecentFiles>
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdf.entities.cs" caret="0" scrollPosition="0|0" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdf.entities.cs" caret="1249" scrollPosition="0|13" />
+    </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
     <NAntPath value="" />

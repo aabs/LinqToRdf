@@ -11,11 +11,11 @@ namespace UnitTests
     [TestFixture]
     public class JosekiTests
     {
-        [Test]
+        [Test, Ignore("Need to find a way to automate the Joseki tests")]
         public void JosekiQueryWithProjection()
         {
             TripleStore ts = new TripleStore(@"http://localhost:2020/music");
-			IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+			IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
 			var q = from t in qry
 							where t.Year == "2007" &&
 							t.GenreName == "Rory Blyth: The Smartest Man in the World"

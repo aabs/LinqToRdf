@@ -27,12 +27,12 @@ For more specific information, see the Error List window.
 		</supportingAssemblies>
 	</dslPackage>
 	<licenseAgreement filePath="Files\EULA.rtf" isEmbedded="true" />
-	<supportingFiles>
-		<supportingFile name="Readme" filePath="Files\Readme.htm" installShortcut="true" shortcutIconPath="Resources\ReadmeShortcut.ico" openAfterInstall="true" />
-	</supportingFiles>
 	<vsItemTemplates>
 		<vsItemTemplate localeId="1033" targetDirectories="CSharp" project="DslPackage" templatePath="CSharp\1033\LinqToRdfDesigner.zip"/>
 	</vsItemTemplates>
+  <vsProjectTemplates>
+    <vsProjectTemplate localeId="1033" targetDirectories="CSharp" templatePath="LinqToRdf Project.zip"/>
+  </vsProjectTemplates>
 	<dslSchemas>
 		<dslSchema project="Dsl" filePath="GeneratedCode\LinqToRdfDesignerSchema.xsd"/>
 	</dslSchemas>

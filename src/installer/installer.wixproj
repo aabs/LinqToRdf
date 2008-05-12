@@ -4,7 +4,7 @@
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{0c57e91d-545d-449d-ae16-e6951447b276}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>LinqToRdf-0.5</OutputName>
+    <OutputName>LinqToRdf-0.6</OutputName>
     <OutputType>Package</OutputType>
     <WixToolPath>$(ProgramFiles)\Windows Installer XML v3\bin\</WixToolPath>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
@@ -58,7 +58,7 @@
     <SuppressAllWarnings>False</SuppressAllWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\Release\</IntermediateOutputPath>
     <AllowIdenticalRows>False</AllowIdenticalRows>
     <CabinetCachePath>
@@ -90,6 +90,16 @@
     <LinkerVerboseOutput>False</LinkerVerboseOutput>
     <WixVariables>
     </WixVariables>
+    <DefineConstants>
+    </DefineConstants>
+    <LibBindFiles>False</LibBindFiles>
+    <SuppressPdbOutput>False</SuppressPdbOutput>
+    <SuppressSpecificWarnings>
+    </SuppressSpecificWarnings>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <VerboseOutput>False</VerboseOutput>
+    <SuppressAllWarnings>False</SuppressAllWarnings>
+    <Pedantic>False</Pedantic>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="installer.wxs" />

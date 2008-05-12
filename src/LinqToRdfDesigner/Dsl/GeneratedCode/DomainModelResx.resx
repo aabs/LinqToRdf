@@ -161,14 +161,6 @@
     <value>Code</value>
     <comment>Category for DomainProperty &apos;OntologyUri&apos; on DomainClass &apos;ModelRoot&apos;</comment>
   </data>
-  <data name="LinqToRdf.Designer.ModelRoot/ModelName.Description" xml:space="preserve">
-    <value>Description for LinqToRdf.Designer.ModelRoot.Model Name</value>
-    <comment>Description for DomainProperty &apos;ModelName&apos; on DomainClass &apos;ModelRoot&apos;</comment>
-  </data>
-  <data name="LinqToRdf.Designer.ModelRoot/ModelName.DisplayName" xml:space="preserve">
-    <value>Model Name</value>
-    <comment>DisplayName for DomainProperty &apos;ModelName&apos; on DomainClass &apos;ModelRoot&apos;</comment>
-  </data>
   <data name="LinqToRdf.Designer.ModelClass.Description" xml:space="preserve">
     <value></value>
     <comment>Description for DomainClass &apos;ModelClass&apos;</comment>

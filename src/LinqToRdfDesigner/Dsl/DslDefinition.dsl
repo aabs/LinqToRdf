@@ -20,11 +20,6 @@
             <ExternalTypeMoniker Name="/System/String" />
           </Type>
         </DomainProperty>
-        <DomainProperty Id="af400d3c-7a5f-496f-a4f5-551bf12f7b5b" Description="Description for LinqToRdf.Designer.ModelRoot.Model Name" Name="ModelName" DisplayName="Model Name">
-          <Type>
-            <ExternalTypeMoniker Name="/System/String" />
-          </Type>
-        </DomainProperty>
       </Properties>
       <ElementMergeDirectives>
         <ElementMergeDirective>
@@ -743,9 +738,6 @@
           </XmlRelationshipData>
           <XmlPropertyData XmlName="ontologyUri">
             <DomainPropertyMoniker Name="ModelRoot/OntologyUri" />
-          </XmlPropertyData>
-          <XmlPropertyData XmlName="modelName">
-            <DomainPropertyMoniker Name="ModelRoot/ModelName" />
           </XmlPropertyData>
         </ElementData>
       </XmlClassData>

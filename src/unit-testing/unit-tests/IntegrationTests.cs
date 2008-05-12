@@ -12,17 +12,11 @@
  *
  */
 using System;
-using System.Diagnostics;
-using System.Linq.Expressions;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Collections.Generic;
+using System.Linq;
+using LinqToRdf;
 using NUnit.Framework;
 using RdfMusic;
-using LinqToRdf;
-using SemWeb;
-using SemWeb.Inference;
 
 namespace UnitTests
 {
@@ -32,14 +26,6 @@ namespace UnitTests
     [TestFixture]
     public class IntegrationTests : HighLevelTests
     {
-        public IntegrationTests()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        #region Additional test attributes
         //
         // You can use the following additional attributes as you write your tests:
         //
@@ -56,42 +42,87 @@ namespace UnitTests
         // public void MyTestInitialize() { }
         //
         // Use TestCleanup to run code after each test has run
-       [TearDown]
+
+        [TearDown]
         public void MyTestCleanup()
         {
         }
 
-        #endregion
+        [Test]
+        public void Query1()
+        {
+            var ts = new TripleStore(CreateMemoryStore());
+            IQueryable<Track> qry = new RdfDataContext(ts).ForType<Track>();
+            IQueryable<Track> q = from t in qry
+                                  where t.ArtistName == "Thomas Laqueur"
+                                  select t;
+            var resultList = new List<Track>();
+            resultList.AddRange(q);
+        }
 
-        #region working tests
+        [Test]
+        public void Query3()
+        {
+            TripleStore ts = CreateOnlineTripleStore();
+            IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
+                // should deduce that it is N3 and open correctly
+            Track[] q = (from t in qry
+                         where Convert.ToInt32(t.Year) > 1998 &&
+                               t.GenreName == "Rory Blyth: The Smartest Man in the World"
+                         select t).ToArray();
+            Assert.IsTrue(q.Length > 0);
+        }
+
+        [Test]
+        public void Query5()
+        {
+            TripleStore ts = CreateOnlineTripleStore();
+            var ctx = new RdfDataContext(ts);
+            IRdfQuery<Track> qry = ctx.ForType<Track>();
+            IQueryable<Track> q = from t in qry
+                                  where t.GenreName == "Rory Blyth: The Smartest Man in the World"
+                                  select t;
+            foreach (Track track in q)
+            {
+                track.Rating = 5;
+            }
+            ctx.AcceptChanges();
+        }
 
         [Test]
         public void QueryWithProjection()
         {
-            TripleStore ts = new TripleStore(CreateMemoryStore());
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
-            var q = from t in qry
+            var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
+            var q = from t in ctx.Tracks
                     where t.Year == "2006" &&
-                            t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
-                    select new { t.Title, t.FileLocation };
+                          t.GenreName == "History 5"
+                    select new {t.Title, t.FileLocation};
+            Assert.IsTrue(q.ToList().Count() == 2);
+        }
+
+        [Test]
+        public void SparqlQuery()
+        {
+            TripleStore ts = CreateSparqlTripleStore();
+            IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
+            var q = from t in qry
+                    where t.Year == "2007" &&
+                          t.GenreName == "Rory Blyth: The Smartest Man in the World"
+                    select new {t.Title, t.FileLocation};
             foreach (var track in q)
             {
                 Console.WriteLine(track.Title + ": " + track.FileLocation);
             }
         }
 
-        #endregion
-
-        #region current tests
-
         [Test]
         public void SparqlQueryAll()
         {
             TripleStore ts = CreateSparqlTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
-            var q = from t in qry select t;
-            List<Track> lt = new List<Track>(q);
-            foreach (var track in q)
+            IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
+            IQueryable<Track> q = from t in qry select t;
+            var lt = new List<Track>(q);
+            foreach (Track track in q)
             {
                 Console.WriteLine("Track: " + track.Title);
             }
@@ -99,29 +130,15 @@ namespace UnitTests
         }
 
         [Test]
-        public void SparqlQuery()
+        public void SparqlQueryOrdered()
         {
             TripleStore ts = CreateSparqlTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+            IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
             var q = from t in qry
-                    where t.Year == "2007" &&
-                    t.GenreName == "Rory Blyth: The Smartest Man in the World"
-                    select new { t.Title, t.FileLocation };
-            foreach (var track in q)
-            {
-                Console.WriteLine(track.Title + ": " + track.FileLocation);
-            }
-        }
-
-        [Test]
-        public void SparqlQueryUsingHttp()
-        {
-            TripleStore ts = CreateOnlineTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
-            var q = from t in qry
-                    where t.Year == "2007" &&
-                    t.GenreName == "Rory Blyth: The Smartest Man in the World"
-                    select new { t.Title, t.FileLocation };
+                    where t.Year == "2006" &&
+                          t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
+                    orderby t.FileLocation
+                    select new {t.Title, t.FileLocation};
             foreach (var track in q)
             {
                 Console.WriteLine(track.Title + ": " + track.FileLocation);
@@ -132,11 +149,11 @@ namespace UnitTests
         public void SparqlQueryUsingCachedResults()
         {
             TripleStore ts = CreateSparqlTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+            IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
             var q = from t in qry
                     where t.Year == "2007" &&
-                    t.GenreName == "Rory Blyth: The Smartest Man in the World"
-                    select new { t.Title, t.FileLocation };
+                          t.GenreName == "Rory Blyth: The Smartest Man in the World"
+                    select new {t.Title, t.FileLocation};
             foreach (var track in q)
             {
                 Console.WriteLine(track.Title + ": " + track.FileLocation);
@@ -147,87 +164,36 @@ namespace UnitTests
                 Console.WriteLine("Title: " + track.Title);
             }
         }
+
+        [Test]
+        public void SparqlQueryUsingHttp()
+        {
+            TripleStore ts = CreateOnlineTripleStore();
+            IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
+            var q = from t in qry
+                    where t.Year == "2007" &&
+                          t.GenreName == "Rory Blyth: The Smartest Man in the World"
+                    select new {t.Title, t.FileLocation};
+            foreach (var track in q)
+            {
+                Console.WriteLine(track.Title + ": " + track.FileLocation);
+            }
+        }
+
         [Test]
         public void SparqlQueryWithTheLot()
         {
             TripleStore ts = CreateSparqlTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
+            IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
             var q = (from t in qry
                      where t.Year == "2006" &&
-                     t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
+                           t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
                      orderby t.FileLocation
-                     select new { t.Title, t.FileLocation }).Skip(10).Take(5);
+                     select new {t.Title, t.FileLocation}).Skip(10).Take(5);
             foreach (var track in q)
             {
                 Console.WriteLine(track.Title + ": " + track.FileLocation);
             }
         }
-
-
-        [Test]
-        public void SparqlQueryOrdered()
-        {
-            TripleStore ts = CreateSparqlTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>();
-            var q = from t in qry
-                    where t.Year == "2006" &&
-                    t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
-                    orderby t.FileLocation
-                    select new { t.Title, t.FileLocation };
-            foreach (var track in q)
-            {
-                Console.WriteLine(track.Title + ": " + track.FileLocation);
-            }
-        }
-
-        #endregion
-
-        #region unstarted tests
-
-        [Test]
-        public void Query1()
-        {
-            TripleStore ts = new TripleStore(CreateMemoryStore());
-            IQueryable<Track> qry = new RDF(ts).ForType<Track>();
-            var q = from t in qry
-                    where t.ArtistName == "Thomas Laqueur"
-                    select t;
-            List<Track> resultList = new List<Track>();
-            resultList.AddRange(q);
-        }
-
-        [Test]
-        public void Query3()
-        {
-            TripleStore ts = CreateOnlineTripleStore();
-            IRdfQuery<Track> qry = new RDF(ts).ForType<Track>(); // should deduce that it is N3 and open correctly
-            var q = (from t in qry
-                    where Convert.ToInt32(t.Year) > 1998 &&
-                    t.GenreName == "Rory Blyth: The Smartest Man in the World"
-                    select t).ToArray();
-            Assert.IsTrue(q.Length > 0);
-        }
-
-        [Test]
-        public void Query5()
-        {
-            TripleStore ts = CreateOnlineTripleStore();
-            RDF ctx = new RDF(ts);
-            IRdfQuery<Track> qry = ctx.ForType<Track>();
-            var q = from t in qry
-                    where t.GenreName == "Rory Blyth: The Smartest Man in the World"
-                    select t;
-            foreach (Track track in q)
-            {
-                track.Rating = 5;
-            }
-            ctx.AcceptChanges();
-        }
-
-        #endregion
-
-        #region Helpers
-
-        #endregion
     }
 }

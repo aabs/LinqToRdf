@@ -29,9 +29,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="linqtordf, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="linqtordf, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\linqtordf\bin\Debug\linqtordf.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files\LinqToRdf\linqtordf.dll</HintPath>
+    </Reference>
+    <Reference Include="SemWeb, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\..\Program Files\LinqToRdf\SemWeb.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -44,10 +48,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LinqToRdf.entities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqToRdf.entities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LinqToRdf.entities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LinqToRdf.entities.cs</LastGenOutput>
+    </None>
+    <None Include="LinqToRdf.n3.n3">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqToRdf.n3.tt</DependentUpon>
+    </None>
+    <None Include="LinqToRdf.n3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LinqToRdf.n3.n3</LastGenOutput>
+    </None>
+    <None Include="LinqToRdf.rdfx" />
+    <None Include="LinqToRdf.rdfx.diagram">
+      <DependentUpon>LinqToRdf.rdfx</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
