@@ -87,21 +87,19 @@ namespace RdfMusic
 			Comment = th.Comment;
 		}
 
-        private EntityRef<Album> AlbumER { get; set; }
+        private EntityRef<Album> _Album { get; set; }
         public Album Album
         {
             get
             {
-                if(!AlbumER.HasLoadedOrAssignedValue && DataContext != null)
+                if (_Album.HasLoadedOrAssignedValue)
+                    return _Album.Entity;
+                if (DataContext != null)
                 {
-		            var ctx = DataContext as MusicDataContext;
-                    var q1 = from a in ctx.Albums where a.Name == AlbumName select a;
-                    var x = q1.ToArray();
-                    if(x == null || x.Length == 0)
-                        return null;
-                    AlbumER = new EntityRef<Album>(x[0]);
+                    _Album = new EntityRef<Album>(from a in ((MusicDataContext)DataContext).Albums where a.Name == AlbumName select a);
+                    return _Album.Entity;
                 }
-                return AlbumER.Entity;
+                return null;
             }
         }
 		public Track()

@@ -86,6 +86,11 @@ namespace LinqToRdf
 
     public static class AttributeExtensions
     {
+        public static bool IsOwlClass(this Type t)
+        {
+            var attributes = t.GetCustomAttributes(typeof (OwlResourceAttribute), true);
+            return (attributes != null && attributes.Length > 0);
+        }
         public static bool IsOntologyResource(this MemberInfo pi)
         {
             return ((pi is PropertyInfo)&&(pi.GetCustomAttributes(typeof(OwlResourceAttribute), true).Count() > 0));

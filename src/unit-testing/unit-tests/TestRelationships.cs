@@ -44,7 +44,6 @@ namespace UnitTests
                     select a).ToList().First();
             Assert.IsNotNull(album);
             Assert.IsTrue(album.Tracks.ToList().Count() > 1);
-             
         }
   
     }
