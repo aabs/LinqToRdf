@@ -33,5 +33,19 @@ namespace UnitTests
             Assert.IsTrue(ta[0].AlbumName == "Thomas Laqueur - History Lectures");
             Assert.IsTrue(ta[0].Album != null);
         }
+
+
+        [Test]
+        public void TestAlbumToTracks()
+        {
+            var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
+            var album = (from a in ctx.Albums
+                    where a.Name.StartsWith("Thomas")
+                    select a).ToList().First();
+            Assert.IsNotNull(album);
+            Assert.IsTrue(album.Tracks.ToList().Count() > 1);
+             
+        }
+  
     }
 }

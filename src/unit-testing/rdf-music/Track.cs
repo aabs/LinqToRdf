@@ -115,14 +115,24 @@ namespace RdfMusic
 	{
         public Album()
         {
-//		    var ctx = DataContext as MusicDataContext;
-//            var q1 = from t in ctx.Tracks where t.AlbumName == Name select t;
-//            Tracks.SetSource(q1);
         }
 
 		[OwlResource(OntologyName = "Music", RelativeUriReference="name")]
         public string Name { get; set; }
 
-//        public EntitySet<Track> Tracks = new EntitySet<Track>();
+        private EntitySet<Track> _Tracks = new EntitySet<Track>();
+        public EntitySet<Track> Tracks
+        {
+            get
+            {
+                if (_Tracks.HasLoadedOrAssignedValues)
+                    return _Tracks;
+                if (DataContext != null)
+                {
+                    _Tracks.SetSource(from t in ((MusicDataContext)DataContext).Tracks where t.AlbumName == Name select t);
+                }
+                return _Tracks;
+            }
+        }
 	}
 }
