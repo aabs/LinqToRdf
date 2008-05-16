@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
+
 /*
  * Taken from Matt Warren's Blog
  */
+
 namespace LinqToRdf
 {
     public static class Evaluator

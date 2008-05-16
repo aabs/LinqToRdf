@@ -74,9 +74,8 @@ namespace LinqToRdf.Sparql
 
         public S Execute<S>(Expression expression)
         {
-            // ToDo - implement support for Count here.
-            //this.expression = expression;
-            throw new NotImplementedException("Execute not implmented");
+            var q = CreateQuery(expression);
+            return default(S);
         }
 
         ///<summary>
@@ -161,6 +160,7 @@ namespace LinqToRdf.Sparql
             IRdfCommand<T> cmd = conn.CreateCommand();
             cmd.ElideDuplicates = Expressions.ContainsKey("Distinct");
             cmd.CommandText = QueryText;
+            cmd.InstanceName = GetInstanceName();
             return cmd.ExecuteQuery();
         }
 
@@ -172,8 +172,16 @@ namespace LinqToRdf.Sparql
                 var sbTmp = new StringBuilder();
                 var ue = Expressions["Where"].Arguments[1] as UnaryExpression;
                 ParseQuery(ue.Operand, sbTmp);
-                //sbTmp now contains the FILTER clause so save it somewhere useful.
-                FilterClause = sbTmp.ToString();
+
+                if (ExpressionIsObjectPropertyReference(ue.Operand))
+                {
+                    PropertyReferenceTriple = sbTmp.ToString();
+                }
+                else
+                {
+                    //sbTmp now contains the FILTER clause so save it somewhere useful.
+                    FilterClause = sbTmp.ToString();
+                }
                 // now store the parameters where they can be used later on.
                 if (Parser.Parameters != null)
                 {
@@ -190,6 +198,23 @@ namespace LinqToRdf.Sparql
             CreateWhereClause(sb);
 
             CreateSolutionModifier(sb);
+        }
+
+        private bool ExpressionIsObjectPropertyReference(Expression e)
+        {
+            if (e is LambdaExpression)
+            {
+                LambdaExpression le = (LambdaExpression) e;
+                if (le.Body is MethodCallExpression)
+                {
+                    MethodCallExpression mce = (MethodCallExpression) le.Body;
+                    if (mce.Method.Name == "HavingSubjectUri")
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private void CreateProlog(StringBuilder sb)
@@ -251,7 +276,8 @@ namespace LinqToRdf.Sparql
                     sb.Append(mi.Name);
                 }
             }
-            sb.Append('\n');
+
+            sb.AppendLine(" $" + GetInstanceName());
         }
 
         private void CreateWhereClause(StringBuilder sb)
@@ -322,10 +348,16 @@ namespace LinqToRdf.Sparql
                                 arg.Name);
             }
 
+            if (!string.IsNullOrEmpty(PropertyReferenceTriple))
+            {
+                sb.AppendLine(PropertyReferenceTriple);
+            }
+
             if (!string.IsNullOrEmpty(FilterClause))
             {
                 sb.AppendFormat("FILTER( {0} )\n", FilterClause);
             }
+
             sb.Append("}\n");
         }
 

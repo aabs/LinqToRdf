@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 
-namespace linqtordf
+namespace LinqToRdf
 {
     public static class FunctionalExtensions
     {
@@ -15,6 +16,15 @@ namespace linqtordf
         public static Func<T, T> On<T>(this Func<T, T> inner, Func<T, T> outer)
         {
             return t => outer(inner(t));
+        }
+
+        public static bool HavingSubjectUri<T>(this EntitySet<T> set, string Uri) where T : class
+        {
+            return true;
+        }
+        public static bool HavingSubjectUri(this OwlInstanceSupertype set, string Uri)
+        {
+            return true;
         }
     }
 

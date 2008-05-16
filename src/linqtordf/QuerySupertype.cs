@@ -68,6 +68,8 @@ namespace LinqToRdf
             set { filterClause = value; }
         }
 
+        public string PropertyReferenceTriple { get; set; }
+
         public TextWriter Logger
         {
             get { return logger; }

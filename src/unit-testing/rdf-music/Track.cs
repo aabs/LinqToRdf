@@ -88,6 +88,7 @@ namespace RdfMusic
 		}
 
         private EntityRef<Album> _Album { get; set; }
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
         public Album Album
         {
             get
@@ -119,6 +120,7 @@ namespace RdfMusic
         public string Name { get; set; }
 
         private EntitySet<Track> _Tracks = new EntitySet<Track>();
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
         public EntitySet<Track> Tracks
         {
             get

@@ -19,6 +19,7 @@ namespace LinqToRdf
 	{
         bool ElideDuplicates { get; set; }
 		string CommandText { get; set; }
-		IEnumerator<T> ExecuteQuery();
+	    string InstanceName { get; set; }
+	    IEnumerator<T> ExecuteQuery();
 	}
 }

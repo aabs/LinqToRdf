@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Ideas.htm = Ideas.htm
 		doc\LinqToRdf - Issue Log.url = doc\LinqToRdf - Issue Log.url
 		linqtordf.vsmdi = linqtordf.vsmdi
+		src\unit-testing\unit-tests\music.n3 = src\unit-testing\unit-tests\music.n3
+		src\unit-testing\unit-tests\store3.n3 = src\unit-testing\unit-tests\store3.n3
 		src\unit-testing\standard-test-data\task-data.n3 = src\unit-testing\standard-test-data\task-data.n3
 		src\unit-testing\standard-test-data\tasks.n3 = src\unit-testing\standard-test-data\tasks.n3
 	EndProjectSection
@@ -63,7 +65,6 @@ Global
 		{97996711-8EFC-4F00-AB3C-6D32E5BEB10D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97996711-8EFC-4F00-AB3C-6D32E5BEB10D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0C57E91D-545D-449D-AE16-E6951447B276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C57E91D-545D-449D-AE16-E6951447B276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C57E91D-545D-449D-AE16-E6951447B276}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C57E91D-545D-449D-AE16-E6951447B276}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1DAE61C-25BF-4F7B-B408-196824C979F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -75,7 +76,6 @@ Global
 		{0CB2434E-958D-473D-8163-AFBD6AE64C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CB2434E-958D-473D-8163-AFBD6AE64C1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

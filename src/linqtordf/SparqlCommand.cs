@@ -26,7 +26,7 @@ namespace LinqToRdf.Sparql
         #region IRdfCommand<T> Members
 
         public string CommandText { get; set; }
-
+        public string InstanceName { get; set; }
         public IEnumerator<T> ExecuteQuery()
         {
             MethodCallExpression e = null;
@@ -40,7 +40,7 @@ namespace LinqToRdf.Sparql
                         e = localConnection.SparqlQuery.Expressions["Select"];
                     }
                     ObjectDeserialiserQuerySink sinkLocal =
-                        new ObjectDeserialiserQuerySink(localConnection.SparqlQuery.OriginalType, typeof (T), ElideDuplicates, e, (RdfDataContext) localConnection.SparqlQuery.DataContext);
+                        new ObjectDeserialiserQuerySink(localConnection.SparqlQuery.OriginalType, typeof (T), InstanceName, ElideDuplicates, e, (RdfDataContext) localConnection.SparqlQuery.DataContext);
                     DateTime beforeQueryCompilation = DateTime.Now;
                     Query query = new SparqlEngine(CommandText);
                     DateTime afterQueryCompilation = DateTime.Now;
@@ -62,7 +62,7 @@ namespace LinqToRdf.Sparql
                         e = remoteConnection.SparqlQuery.Expressions["Select"];
                     }
                     ObjectDeserialiserQuerySink sinkRemote =
-                        new ObjectDeserialiserQuerySink(remoteConnection.SparqlQuery.OriginalType, typeof(T), ElideDuplicates, e, (RdfDataContext)remoteConnection.SparqlQuery.DataContext);
+                        new ObjectDeserialiserQuerySink(remoteConnection.SparqlQuery.OriginalType, typeof(T), InstanceName, ElideDuplicates, e, (RdfDataContext)remoteConnection.SparqlQuery.DataContext);
                     SparqlHttpSource source = new SparqlHttpSource(remoteConnection.Store.EndpointUri);
                     source.RunSparqlQuery(CommandText, sinkRemote);
                     ExtractResultsIntoList(results, sinkRemote);

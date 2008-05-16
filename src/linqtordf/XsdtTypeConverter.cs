@@ -352,6 +352,15 @@ namespace LinqToRdf
 					x.TypePart = "integer";
 			}
 
+		    if (x.RawInput.StartsWith("<") && x.RawInput.EndsWith(">"))
+		    {
+		        x.NetType = typeof (Uri);
+		        x.ValuePart = x.RawInput.Substring(1, x.RawInput.Length - 2);
+                x.XsdtTypeName = XsdtPrimitiveDataType.XsdtAnyUri;
+			    ConvertValueToNet(x);
+		        return;
+		    }
+
 			x.XsdtTypeName = XsdtPrimitiveDataType.XsdtUnknown;
 
 			foreach (int i in Enum.GetValues(typeof (XsdtPrimitiveDataType)))

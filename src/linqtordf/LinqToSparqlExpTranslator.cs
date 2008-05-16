@@ -486,6 +486,20 @@ namespace LinqToRdf.Sparql
             }
             switch (mce.Method.Name)
             {
+                case "HavingSubjectUri":
+                    // well we caught it. Now What?
+                    // 1 get the parameter name of the child instance
+                    MemberExpression me = (MemberExpression)mce.Arguments[0];
+                    ParameterExpression pe = (ParameterExpression)me.Expression;
+                    string name = pe.Name;
+                    // 2 get the URI of the relationship
+                    string relnUri = me.Member.GetOwlResourceUri();
+                    // 3 get the URI of the parent instance
+                    string instanceUri = ((ConstantExpression)mce.Arguments[1]).Value.ToString();
+
+                    QueryAppend("${0} <{1}> <{2}>.", name, relnUri, instanceUri);
+
+                    break;
                 case "ToInt16":
                 case "ToInt32":
                 case "ToInt64":
