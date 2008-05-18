@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using LinqToRdf;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 
 namespace UnitTests
 {
-    [TestFixture]
+    [TestClass]
     public class JosekiTests
     {
-        [Test, Ignore("Need to find a way to automate the Joseki tests")]
+        [TestMethod, Ignore]
         public void JosekiQueryWithProjection()
         {
             TripleStore ts = new TripleStore(@"http://localhost:2020/music");

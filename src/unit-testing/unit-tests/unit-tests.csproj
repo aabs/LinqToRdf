@@ -88,6 +88,7 @@
     <Compile Include="StringOperationTests.cs" />
     <Compile Include="TestExtensions.cs" />
     <Compile Include="TestRelationships.cs" />
+    <Compile Include="TestSQOSupport.cs" />
     <Compile Include="TestTypeTranslator2.cs" />
     <Compile Include="VSCodeGenAccessors.cs">
       <SubType>Code</SubType>

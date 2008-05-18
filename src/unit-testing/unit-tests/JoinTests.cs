@@ -3,7 +3,7 @@ using System.Collections;
 using System.Text;
 using System.Collections.Generic;
 using LinqToRdf;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 using System.Linq;
 
@@ -12,7 +12,7 @@ namespace UnitTests
 	/// <summary>
 	/// Summary description for JoinTests
 	/// </summary>
-	[TestFixture]
+	[TestClass]
 	public class JoinTests : HighLevelTests
 	{
 		public JoinTests()
@@ -22,7 +22,7 @@ namespace UnitTests
 			//
 		}
 
-		[Test]
+		[TestMethod]
 		public void TestMethod1()
 		{
 			TripleStore ts = CreateSparqlTripleStore();

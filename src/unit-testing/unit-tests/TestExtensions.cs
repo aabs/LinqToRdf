@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LinqToRdf;
 
 namespace UnitTests
@@ -10,7 +10,7 @@ namespace UnitTests
     /// <summary>
     /// Summary description for TestExtensions
     /// </summary>
-    [TestFixture]
+    [TestClass]
     public class TestExtensions
     {
         public TestExtensions()
@@ -20,7 +20,7 @@ namespace UnitTests
             //
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetPrefix()
         {
             Assert.AreEqual("xsdt", AttributeExtensions.GetOntologyPrefix("Data Types"));

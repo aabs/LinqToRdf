@@ -18,7 +18,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using LinqToRdf;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 using SemWeb;
 using SemWeb.Inference;
@@ -27,7 +27,7 @@ using UnitTests.Properties;
 
 namespace UnitTests
 {
-	[TestFixture]
+	[TestClass]
 	public class LocalSparqlTests
 	{
 		#region query strings
@@ -59,7 +59,7 @@ FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest M
 			store.Import(new N3Reader(serialisedLocation));
 		}
 
-		[Test]
+		[TestMethod]
 		public void LocalSparqlQuery1()
 		{
 			CreateMemoryStore();
@@ -95,15 +95,15 @@ FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest M
 		// public static void MyClassInitialize(TestContext testContext) { }
 		//
 		// Use ClassCleanup to run code after all tests in ontology class have run
-		// [TearDown]
+		// [TestCleanup]
 		// public static void MyClassCleanup() { }
 		//
 		// Use TestInitialize to run code before running each test 
-		// [SetUp]
+		// [TestInitialize]
 		// public void MyTestInitialize() { }
 		//
 		// Use TestCleanup to run code after each test has run
-		[TearDown]
+		[TestCleanup]
 		public void MyTestCleanup()
 		{
 			if (store != null)

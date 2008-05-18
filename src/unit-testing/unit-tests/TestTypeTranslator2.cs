@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using LinqToRdf;
 
 namespace UnitTests
@@ -10,7 +10,7 @@ namespace UnitTests
     /// <summary>
     /// Summary description for TestTypeTranslator2
     /// </summary>
-    [TestFixture]
+    [TestClass]
     public class TestTypeTranslator2
     {
         public TestTypeTranslator2()
@@ -20,19 +20,19 @@ namespace UnitTests
             //
         }
 
-		[Test, Category("XsdtTypeConverter")]
+		[TestMethod]
         public void TestFactoryWorks()
         {
             ITypeTranslator2 tt1 = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.DotNet);
             Assert.IsNotNull(tt1);
-            Assert.IsInstanceOfType(typeof(DotnetTypeTranslator), tt1);
+            Assert.IsTrue(tt1 is DotnetTypeTranslator);
             ITypeTranslator2 tt2 = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.XmlSchemaDatatypes);
             Assert.IsNotNull(tt2);
-            Assert.IsInstanceOfType(typeof(XsdtTypeTranslator), tt2);
+            Assert.IsTrue(tt2 is XsdtTypeTranslator);
             Assert.AreNotEqual(tt1, tt2);
         }
 
-		[Test, Category("XsdtTypeConverter")]
+		[TestMethod]
         public void TestDotNetTypeTranslator()
         {
             ITypeTranslator2 tt1 = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.DotNet);
@@ -58,14 +58,14 @@ namespace UnitTests
             Assert.AreEqual("string", tt1[PrimitiveDataType.ANYURI]);
             Assert.AreEqual("string", tt1[PrimitiveDataType.QNAME]);
         }
-        [Test, ExpectedException(typeof(NotImplementedException))]
+        [TestMethod, ExpectedException(typeof(NotImplementedException))]
         public void TestDotNetTypeTranslatorThrowsOk()
         {
             ITypeTranslator2 tt1 = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.DotNet);
             Assert.AreEqual("string", tt1[PrimitiveDataType.NOTATION]);
         }
 
-		[Test, Category("XsdtTypeConverter")]
+		[TestMethod]
         public void TestXsdtTypeTranslator()
         {
             ITypeTranslator2 tt1 = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.XmlSchemaDatatypes);
@@ -96,12 +96,11 @@ namespace UnitTests
         }
 
 
-		[Test, Category("XsdtTypeConverter")]
+		[TestMethod]
 		public void TestXsdtToNet()
 		{
 			XsdtTypeConverter tc = new XsdtTypeConverter();
-			double dbl = 10;
-			//Assert.AreSame(dbl, tc.Parse("\"10\"^^xsdt:double"));
+		    //Assert.AreSame(dbl, tc.Parse("\"10\"^^xsdt:double"));
 			Assert.AreEqual(tc.Parse("\"10\"^^<http://www.w3.org/2001/XMLSchema#double>"), tc.Parse("\"10\"^^xsdt:double"));
 			var f = tc.Parse("\"10\"^^<http://www.w3.org/2001/XMLSchema#float>");
 			var d = tc.Parse("\"10\"^^xsdt:double");

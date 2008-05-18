@@ -3,7 +3,7 @@
 using System;
 using LinqToRdf;
 using LinqToRdf.Sparql;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 using SemWeb;
 using UnitTests.Properties;
@@ -16,7 +16,7 @@ namespace UnitTests
 	///This is ontology test class for LinqToRdf.QueryFactory&lt;T&gt; and is intended
 	///to contain all LinqToRdf.QueryFactory&lt;T&gt; Unit Tests
 	///</summary>
-	[TestFixture]
+	[TestClass]
 	public class QueryFactoryTest
 	{
 		#region helpers
@@ -56,7 +56,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void CreateConnectionTest_InMemorySparqlTripleStore()
 		{
 			TestConnectionCreationForTripleStore(CreateInMemorySparqlTripleStore());
@@ -65,7 +65,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void CreateConnectionTest_OnlineSparqlTripleStore()
 		{
 			TestConnectionCreationForTripleStore(CreateOnlineSparqlTripleStore());
@@ -74,7 +74,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[Test]
+		[TestMethod]
 		[ExpectedException(typeof(ApplicationException))]
 		public void CreateConnectionTest_InMemoryTripleStore()
 		{
@@ -84,7 +84,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[Test]
+		[TestMethod]
 		[ExpectedException(typeof(ApplicationException))]
 		public void CreateConnectionTest_PersistentTripleStore()
 		{
@@ -107,7 +107,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateExpressionTranslator ()
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void CreateExpressionTranslatorTest()
 		{
 			TripleStore ts = CreateOnlineSparqlTripleStore();
@@ -116,13 +116,13 @@ namespace UnitTests
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IQueryFormatTranslator translator = factory.CreateExpressionTranslator();
 			Assert.IsNotNull(translator);
-			Assert.IsInstanceOfType(typeof(LinqToSparqlExpTranslator<Track>), translator);
+            Assert.IsTrue(translator is LinqToSparqlExpTranslator<Track>);
 		}
 
 		/// <summary>
 		///A test for CreateExpressionTranslator ()
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void CreateExpressionTranslatorTest2()
 		{
 			TripleStore ts = CreateInMemoryTripleStore();
@@ -131,7 +131,7 @@ namespace UnitTests
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IQueryFormatTranslator translator = factory.CreateExpressionTranslator();
 			Assert.IsNotNull(translator);
-			Assert.IsInstanceOfType(typeof(LinqToN3ExpTranslator<Track>), translator);
+			Assert.IsTrue(translator is LinqToN3ExpTranslator<Track>);
 		}
 
 		#endregion
@@ -141,7 +141,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void CreateQueryTest_OnlineSparqlTripleStore()
 		{
 			TripleStore ts = CreateOnlineSparqlTripleStore();
@@ -150,13 +150,13 @@ namespace UnitTests
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-			Assert.IsInstanceOfType( typeof(SparqlQuery<Track>), query);
+            Assert.IsTrue(query is SparqlQuery<Track>);
 		}
 
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void CreateQueryTest_InMemorySparqlTripleStore()
 		{
 			TripleStore ts = CreateInMemorySparqlTripleStore();
@@ -165,13 +165,13 @@ namespace UnitTests
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-			Assert.IsInstanceOfType( typeof(SparqlQuery<Track>), query);
-		}
+            Assert.IsTrue(query is SparqlQuery<Track>);
+        }
 
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void CreateQueryTest_InMemoryTripleStore()
 		{
 			TripleStore ts = CreateInMemoryTripleStore();
@@ -180,13 +180,13 @@ namespace UnitTests
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-			Assert.IsInstanceOfType(typeof(RdfN3Query<Track>), query);
-		}
+            Assert.IsTrue(query is SparqlQuery<Track>);
+        }
 
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void CreateQueryTest_PersistentTripleStore()
 		{
 			TripleStore ts = CreatePersistentTripleStore();
@@ -195,15 +195,15 @@ namespace UnitTests
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-			Assert.IsInstanceOfType(typeof(RdfN3Query<Track>), query);
-		}
+            Assert.IsTrue(query is SparqlQuery<Track>);
+        }
 
 		#endregion
 		protected MockRepository mocks;
 		/// <summary>
 		///A test for QueryFactory (QueryType, IRdfContext)
 		///</summary>
-		[Test]
+		[TestMethod]
 		public void ConstructorTest()
 		{
 			mocks = new MockRepository();
@@ -216,7 +216,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for QueryType
 		///</summary>
-        [Test]
+        [TestMethod]
 		public void QueryTypeTest()
 		{
 			mocks = new MockRepository();

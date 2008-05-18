@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using LinqToRdf;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests
 {
-	[TestFixture()]
+	[TestClass]
 	public class XsdtTypeConverterTest
 	{
-		[Test]
+		[TestMethod]
 		public void ConstructorTest()
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
@@ -20,7 +20,7 @@ namespace UnitTests
 			Assert.IsNotNull(target.TypeLookup);
 		}
 
-		[Test]
+		[TestMethod]
 		public void GetDataTypeTest()
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
@@ -35,7 +35,7 @@ namespace UnitTests
 			Assert.AreEqual(expected, actual, "LinqToRdf.XsdtTypeConverter.GetDataType did not return the expected value.");
 		}
 
-		[Test]
+		[TestMethod]
 		public void GetXsdtAttrForTest()
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
@@ -52,7 +52,7 @@ namespace UnitTests
 			Assert.AreEqual(expected, actual, "LinqToRdf.XsdtTypeConverter.GetXsdtAttrFor did not return the expected value.");
 		}
 
-		[Test]
+		[TestMethod]
 		public void GetXsdtDateRepresentationForTest()
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
@@ -75,7 +75,7 @@ namespace UnitTests
 			                "ted value.");
 		}
 
-		[Test]
+		[TestMethod]
 		public void TestXsdtTypeConversions()
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();
@@ -93,7 +93,7 @@ namespace UnitTests
 			Assert.IsTrue(target.Get<Byte[]>(ASCIIEncoding.ASCII.GetBytes("hello")).ToString() == "\"hello\"^^xsdt:hexBinary");
 		}
 
-		[Test]
+		[TestMethod]
 		public void TypeLookupTest()
 		{
 			XsdtTypeConverter target = new XsdtTypeConverter();

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SemWeb;
 using UnitTests.Properties;
 using System.IO;
@@ -70,7 +70,7 @@ namespace UnitTests
             public string Email { get; set; }
         }
     }
-    [TestFixture]
+    [TestClass]
     public class ProjectsAndTasksTests1
     {
         #region housekeeping
@@ -93,14 +93,14 @@ namespace UnitTests
         // Use ClassCleanup to run code after all tests in a class have run
         //
         // Use TestInitialize to run code before running each test 
-        [SetUp]
+        [TestInitialize]
         public void MyTestInitialize() 
         {
             CreateSparqlTripleStore();
         }
         //
         // Use TestCleanup to run code after each test has run
-       [TearDown]
+       [TestCleanup]
         public void MyTestCleanup() { }
         //
 
@@ -116,7 +116,7 @@ namespace UnitTests
         }
         #endregion
 
-        [Test]
+        [TestMethod]
         public void TestGetAllTasks()
         {
             RdfDataContext ctx = new RdfDataContext(CreateSparqlTripleStore());

@@ -15,16 +15,16 @@ using System;
 using System.Linq.Expressions;
 using System.Text;
 using LinqToRdf.Sparql;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 using LinqToRdf;
 
 namespace UnitTests
 {
-	[TestFixture()]
+	[TestClass]
 	public class ConstantEncodingTests
 	{
-		[Test]
+		[TestMethod]
 		public void ConstantTest_string()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -38,7 +38,7 @@ namespace UnitTests
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ConstantTest_char()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -52,7 +52,7 @@ namespace UnitTests
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ConstantTest_short()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -66,7 +66,7 @@ namespace UnitTests
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ConstantTest_int()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -80,7 +80,7 @@ namespace UnitTests
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ConstantTest_long()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -94,7 +94,7 @@ namespace UnitTests
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ConstantTest_float()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -108,7 +108,7 @@ namespace UnitTests
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ConstantTest_double()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -122,7 +122,7 @@ namespace UnitTests
 			Assert.AreEqual(expectedResult, actualResult);
 		}
 
-		[Test]
+		[TestMethod]
 		public void ConstantTest_decimal()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -139,7 +139,7 @@ namespace UnitTests
 		/// <summary>
 		///  warning this ontology very fragle test that only works from Australia during daylight savings time :-(
 		/// </summary>
-		[Test]
+		[TestMethod]
 		public void ConstantTest_DateTime()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();

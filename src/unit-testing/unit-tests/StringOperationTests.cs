@@ -2,16 +2,16 @@ using System.Collections;
 using System.Text;
 using System.Collections.Generic;
 using LinqToRdf;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 using System.Linq;
 
 namespace UnitTests
 {
-	[TestFixture]
+	[TestClass]
 	public class StringOperationTests : HighLevelTests
 	{
-		[Test]
+		[TestMethod]
 		public void TestCompare()
 		{
 			TripleStore ts = CreateSparqlTripleStore();
@@ -22,7 +22,7 @@ namespace UnitTests
 			Assert.IsTrue(al[0].Name == "Thomas Laqueur - History Lectures");
 		}
 
-		[Test]
+		[TestMethod]
 		public void TestStartsWith()
 		{
 			TripleStore ts = CreateSparqlTripleStore();
@@ -32,7 +32,7 @@ namespace UnitTests
 			Assert.IsTrue(al.Count == 1);
 			Assert.IsTrue(al[0].Name == "Thomas Laqueur - History Lectures");
 		}
-		[Test]
+		[TestMethod]
 		public void TestEndsWith()
 		{
 			TripleStore ts = CreateSparqlTripleStore();

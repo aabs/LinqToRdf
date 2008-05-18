@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using LinqToRdf;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 
 namespace UnitTests
@@ -9,44 +9,44 @@ namespace UnitTests
     /// <summary>
     /// Summary description for TestRelationships
     /// </summary>
-    [TestFixture]
+    [TestClass]
     public class TestRelationships
     {
-        [Test]
+        [TestMethod]
         public void TestAlbumToTracks()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
             Album album = (from a in ctx.Albums
                            where a.Name.StartsWith("Thomas")
-                           select a).ToList().First();
+                           select a).First();
             Assert.IsNotNull(album);
-            Assert.IsTrue(album.Tracks.ToList().Count() > 1);
+            Assert.IsTrue(album.Tracks.Count() > 1);
         }
 
 
-        [Test]
+        [TestMethod]
         public void TestDirectReference()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
             IQueryable<Album> q = from a in ctx.Albums
                                   where a.Tracks.HavingSubjectUri("http://SomeUri.tempuri.com")
                                   select a;
-            Assert.IsTrue(q.AsEnumerable().Count() > 0);
+            Assert.IsTrue(q.Count() > 0);
         }
 
-        [Test]
+        [TestMethod]
         public void TestParentToChild()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
             var album = (from a in ctx.Albums
                           where a.Name.StartsWith("Thomas")
-                          select a).AsEnumerable().First();
+                          select a).First();
 
             var tracks = from t in ctx.Tracks
                          where t.Album.HavingSubjectUri(album.InstanceUri)
                          select t;
 
-            Assert.IsTrue(tracks.AsEnumerable().Count()>0);
+            Assert.IsTrue(tracks.Count()>0);
             Console.WriteLine("Album: " + album.Name);
             foreach (var track in tracks)
             {
@@ -54,7 +54,7 @@ namespace UnitTests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetAlbum()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
@@ -63,7 +63,7 @@ namespace UnitTests
             Assert.IsTrue(aa.Count() == 1);
         }
 
-        [Test]
+        [TestMethod]
         public void TestTrackToAlbum1()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");

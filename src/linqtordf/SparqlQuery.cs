@@ -61,7 +61,11 @@ namespace LinqToRdf.Sparql
 
         public IQueryable<S> CreateQuery<S>(Expression expression)
         {
-            Expression exp = Evaluator.PartialEval(expression);
+            Expression exp;
+            if (!ExpressionWillCauseInfiniteLoop(expression))
+                exp = Evaluator.PartialEval(expression);
+            else
+                exp = expression;
             SparqlQuery<S> newQuery = CloneQueryForNewType<S>();
 
             var call = exp as MethodCallExpression;
@@ -72,10 +76,43 @@ namespace LinqToRdf.Sparql
             return newQuery;
         }
 
+        private bool ExpressionWillCauseInfiniteLoop(Expression e)
+        {
+            MethodCallExpression mce = e as MethodCallExpression;
+            if(mce == null) return false;
+            if (mce.Method.Name == "Skip")
+                return true;
+            if (mce.Method.Name == "Take")
+                return true;
+            return false;
+        }
+
         public S Execute<S>(Expression expression)
         {
-            var q = CreateQuery(expression);
-            return default(S);
+            var e = this.AsEnumerable();
+            MethodCallExpression mce = expression as MethodCallExpression;
+            object x = null;
+            if (mce != null)
+            {
+                switch(mce.Method.Name)
+                {
+                    case "Skip":
+                        return (S) e.Skip<T>(1);
+                        break;
+                    case "Count":
+                        x = e.Count();
+                        break;
+                    case "First":
+                        x = e.First();
+                        break;
+                    case "FirstOrDefault":
+                        x = e.FirstOrDefault();
+                        break;
+                    default:
+                        throw new NotSupportedException();
+                }
+            }
+            return (S)x;
         }
 
         ///<summary>

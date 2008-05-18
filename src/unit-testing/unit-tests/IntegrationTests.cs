@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LinqToRdf;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RdfMusic;
 
 namespace UnitTests
@@ -23,7 +23,7 @@ namespace UnitTests
     /// <summary>
     /// Summary description for IntegrationTests
     /// </summary>
-    [TestFixture]
+    [TestClass]
     public class IntegrationTests : HighLevelTests
     {
         //
@@ -34,21 +34,21 @@ namespace UnitTests
         // public static void MyClassInitialize(TestContext testContext) { }
         //
         // Use ClassCleanup to run code after all tests in ontology class have run
-        // [TearDown]
+        // [TestCleanup]
         // public static void MyClassCleanup() { }
         //
         // Use TestInitialize to run code before running each test 
-        // [SetUp]
+        // [TestInitialize]
         // public void MyTestInitialize() { }
         //
         // Use TestCleanup to run code after each test has run
 
-        [TearDown]
+        [TestCleanup]
         public void MyTestCleanup()
         {
         }
 
-        [Test]
+        [TestMethod]
         public void Query1()
         {
             var ts = new TripleStore(CreateMemoryStore());
@@ -60,7 +60,7 @@ namespace UnitTests
             resultList.AddRange(q);
         }
 
-        [Test]
+        [TestMethod]
         public void Query3()
         {
             TripleStore ts = CreateOnlineTripleStore();
@@ -73,7 +73,7 @@ namespace UnitTests
             Assert.IsTrue(q.Length > 0);
         }
 
-        [Test]
+        [TestMethod]
         public void Query5()
         {
             TripleStore ts = CreateOnlineTripleStore();
@@ -89,7 +89,7 @@ namespace UnitTests
             ctx.AcceptChanges();
         }
 
-        [Test]
+        [TestMethod]
         public void QueryWithProjection()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
@@ -100,7 +100,7 @@ namespace UnitTests
             Assert.IsTrue(q.ToList().Count() == 2);
         }
 
-        [Test]
+        [TestMethod]
         public void SparqlQuery()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -115,7 +115,7 @@ namespace UnitTests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void SparqlQueryAll()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -129,7 +129,7 @@ namespace UnitTests
             Assert.IsTrue(lt.Count > 1);
         }
 
-        [Test]
+        [TestMethod]
         public void SparqlQueryOrdered()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -145,7 +145,7 @@ namespace UnitTests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void SparqlQueryUsingCachedResults()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -165,7 +165,7 @@ namespace UnitTests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void SparqlQueryUsingHttp()
         {
             TripleStore ts = CreateOnlineTripleStore();
@@ -180,12 +180,12 @@ namespace UnitTests
             }
         }
 
-        [Test]
+        [TestMethod]
         public void SparqlQueryWithTheLot()
         {
             TripleStore ts = CreateSparqlTripleStore();
-            IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>();
-            var q = (from t in qry
+            MusicDataContext ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
+            var q = (from t in ctx.Tracks
                      where t.Year == "2006" &&
                            t.GenreName == "History 5 | Fall 2006 | UC Berkeley"
                      orderby t.FileLocation
