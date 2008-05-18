@@ -180,7 +180,7 @@ namespace UnitTests
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-            Assert.IsTrue(query is SparqlQuery<Track>);
+            Assert.IsTrue(query is RdfN3Query<Track>);
         }
 
 		/// <summary>
@@ -195,7 +195,7 @@ namespace UnitTests
 			Assert.AreEqual(factory.QueryType, ts.QueryType);
 			IRdfQuery<Track> query = factory.CreateQuery<Track>();
 			Assert.IsNotNull(query);
-            Assert.IsTrue(query is SparqlQuery<Track>);
+            Assert.IsTrue(query is RdfN3Query<Track>);
         }
 
 		#endregion

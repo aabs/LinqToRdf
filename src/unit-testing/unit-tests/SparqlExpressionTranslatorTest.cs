@@ -492,7 +492,7 @@ namespace UnitTests
 		///A test for LShift (Expression)
 		///</summary>
 		[TestMethod]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof(NotImplementedException))]
 		public void LShiftTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
