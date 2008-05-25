@@ -26,6 +26,10 @@ namespace LinqToRdf
         {
             return true;
         }
+        public static bool HasInstanceUri(this OwlInstanceSupertype set, string Uri)
+        {
+            return true;
+        }
     }
 
 }

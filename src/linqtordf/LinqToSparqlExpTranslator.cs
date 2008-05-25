@@ -500,6 +500,20 @@ namespace LinqToRdf.Sparql
                     QueryAppend("${0} <{1}> <{2}>.", name, relnUri, instanceUri);
 
                     break;
+                case "HasInstanceUri":
+                    // well we caught it. Now What?
+                    // 1 get the parameter name of the child instance
+                    ParameterExpression pe2 = (ParameterExpression)mce.Arguments[0];
+                    string name2 = pe2.Name;
+                    // 2 get the URI of the relationship
+                    
+                    string relnUri2 = pe2.Type.GetOwlResourceUri();
+                    // 3 get the URI of the parent instance
+                    string instanceUri2 = ((ConstantExpression)mce.Arguments[1]).Value.ToString();
+
+                    QueryAppend("${0} = <{2}>", name2, relnUri2, instanceUri2);
+
+                    break;
                 case "ToInt16":
                 case "ToInt32":
                 case "ToInt64":

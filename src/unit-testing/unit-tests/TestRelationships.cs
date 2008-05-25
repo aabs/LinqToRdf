@@ -28,14 +28,34 @@ namespace UnitTests
         public void TestDirectReference()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
-            IQueryable<Album> q = from a in ctx.Albums
-                                  where a.Tracks.HavingSubjectUri("http://SomeUri.tempuri.com")
-                                  select a;
-            Assert.IsTrue(q.Count() > 0);
+            IQueryable<Track> q = from t in ctx.Tracks
+                                  where t.HasInstanceUri("http://aabs.purl.org/ontologies/2007/04/music#Track_-861912094")
+                                  select t;
+            Assert.IsTrue(q.Count() == 1);
         }
 
         [TestMethod]
         public void TestParentToChild()
+        {
+            var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
+            var album = (from a in ctx.Albums
+                          where a.Name.StartsWith("Thomas")
+                          select a).First();
+
+            var tracks = from t in ctx.Tracks
+                         where t.Album.HavingSubjectUri(album.InstanceUri)
+                         select t;
+
+            Assert.IsTrue(tracks.Count()>0);
+            Console.WriteLine("Album: " + album.Name);
+            foreach (var track in tracks)
+            {
+                Console.WriteLine("Track: " + track.FileLocation);
+            }
+        }
+
+        [TestMethod]
+        public void TestChildToParent()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
             var album = (from a in ctx.Albums

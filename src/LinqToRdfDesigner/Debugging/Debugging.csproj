@@ -48,10 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LinqToRdf.entities.cs">
+    <Compile Include="LinqToRdfDesigner1.entities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LinqToRdf.entities.tt</DependentUpon>
+      <DependentUpon>LinqToRdfDesigner1.entities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,22 +59,22 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LinqToRdf.entities.tt">
+    <None Include="LinqToRdfDesigner1.entities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LinqToRdf.entities.cs</LastGenOutput>
+      <LastGenOutput>LinqToRdfDesigner1.entities.cs</LastGenOutput>
     </None>
-    <None Include="LinqToRdf.n3.n3">
+    <None Include="LinqToRdfDesigner1.n3.n3">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LinqToRdf.n3.tt</DependentUpon>
+      <DependentUpon>LinqToRdfDesigner1.n3.tt</DependentUpon>
     </None>
-    <None Include="LinqToRdf.n3.tt">
+    <None Include="LinqToRdfDesigner1.n3.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LinqToRdf.n3.n3</LastGenOutput>
+      <LastGenOutput>LinqToRdfDesigner1.n3.n3</LastGenOutput>
     </None>
-    <None Include="LinqToRdf.rdfx" />
-    <None Include="LinqToRdf.rdfx.diagram">
-      <DependentUpon>LinqToRdf.rdfx</DependentUpon>
+    <None Include="LinqToRdfDesigner1.rdfx" />
+    <None Include="LinqToRdfDesigner1.rdfx.diagram">
+      <DependentUpon>LinqToRdfDesigner1.rdfx</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

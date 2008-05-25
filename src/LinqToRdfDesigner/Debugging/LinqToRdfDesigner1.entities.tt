@@ -4,7 +4,7 @@
 <#@ import namespace = "System.Collections.Generic" #>
 <#@ import namespace = "LinqToRdf" #>
 <#@ output extension=".cs" #>
-<#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='$fileinputname$.rdfx'"  #>
+<#@ LinqToRdfDesigner processor="LinqToRdfDesignerDirectiveProcessor" requires="fileName='LinqToRdfDesigner1.rdfx'"  #>
 <#
 // prolog - set up some book-keeping variables
 string baseUri = this.ModelRoot.OntologyUri;
@@ -94,9 +94,12 @@ else
 }
 		}
 		
-		foreach(Aggregation association in Aggregation.GetLinksToAggregationSources(modelClass))
-		{
-			WriteLine("Create Child to Parenmt code for " + association.ResourceUri);
+		foreach(ModelClass src in modelClass.AggregationSources){
+			WriteLine("Aggregation Source: "+src.Name);
+		}
+		
+		foreach(ModelClass trgt in modelClass.AggregationTargets){
+			WriteLine("Aggregation target: "+trgt.Name);
 		}
 		
 		foreach(Aggregation association in Aggregation.GetLinksToAggregationTargets(modelClass))
