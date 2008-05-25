@@ -73,6 +73,9 @@ namespace RdfMusic
 		[OwlResource(OntologyName = "Music", RelativeUriReference="fileLocation")]
         public string FileLocation { get; set; }
 
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+        public string AlbumUri { get; set; }
+
 		[OwlResource(OntologyName = "Music", RelativeUriReference="rating")]
         public int Rating { get; set; }
 
@@ -97,7 +100,8 @@ namespace RdfMusic
                     return _Album.Entity;
                 if (DataContext != null)
                 {
-                    _Album = new EntityRef<Album>(from a in ((MusicDataContext)DataContext).Albums where a.Name == AlbumName select a);
+                    var ctx = (MusicDataContext)DataContext;
+                    _Album = new EntityRef<Album>(from a in ctx.Albums where a.HasInstanceUri(AlbumUri) select a);
                     return _Album.Entity;
                 }
                 return null;

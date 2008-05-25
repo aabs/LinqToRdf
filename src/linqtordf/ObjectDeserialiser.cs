@@ -106,7 +106,7 @@ namespace LinqToRdf
 //								vVal = DecodeXsdtString(vVal);
                             if (x is IConvertible)
                                 pi.SetValue(t, Convert.ChangeType(x, pi.PropertyType), null);
-
+                            else 
                             // if it's not convertible, it could be because the type is an MS XSDT type rather than a .NET primitive 
                             if (x.GetType().Namespace == "System.Runtime.Remoting.Metadata.W3cXsd2001")
                             {
@@ -119,6 +119,10 @@ namespace LinqToRdf
                                     default:
                                         break;
                                 }
+                            }
+                            else if(pi.PropertyType == typeof(string) )
+                            {
+                                pi.SetValue(t, x.ToString(), null);
                             }
                         }
                     }

@@ -9,6 +9,7 @@
   <TestList name="CurrentTests" id="13d2f1c7-140c-4f8c-9620-05940303ff6d" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
     <TestLinks>
       <TestLink id="8ed37359-a06a-9ce8-c28b-362fcdd06c88" name="TestDirectReference" storage="src\unit-testing\unit-tests\bin\debug\rdfserialisationtest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="a747f5b9-d131-03d4-3d53-8da1156e5312" name="TestChildToParent" storage="src\unit-testing\unit-tests\bin\debug\rdfserialisationtest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
     </TestLinks>
   </TestList>
   <TestList name="Regression Tests" id="3ea7c706-f9a9-4b3c-b93c-a81bf194d2e0" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
