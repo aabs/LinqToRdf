@@ -1,0 +1,1 @@
+"c:\program Files\Microsoft\ILMerge\ilmerge.exe" /keyfile:..\src\linqtordf\key.snk /t:library /ndebug /copyattrs /useFullPublicKeyForReferences /out:semweb.merged.dll SemWeb.dll SemWeb.Sparql.dll sparql-core.dll IKVM.GNU.Classpath.dll IKVM.Runtime.dll
