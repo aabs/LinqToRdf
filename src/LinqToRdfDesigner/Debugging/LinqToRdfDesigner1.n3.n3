@@ -4,10 +4,19 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:  <http://www.w3.org/2002/07/owl#> .
 @prefix xsdt: <http://www.w3.org/2001/XMLSchema#>.
-@prefix : <http://tempuri.com/ontology/> .
+@prefix : <http://aabs.purl.org/ontologies/2007/04/music#> .
 
-:ModelClass1 a owl:Class .
-:hasParent
-	rdfs:domain :ModelClass1;
-	rdfs:range :ModelClass2.
-:ModelClass2 a owl:Class .
+:Album a owl:Class .
+:name
+	rdfs:domain :Album;
+	rdfs:range xsdt:string.
+:isTrackOn
+	rdfs:domain :Album;
+	rdfs:range :Track.
+:Track a owl:Class .
+:title
+	rdfs:domain :Track;
+	rdfs:range xsdt:string.
+:fileLocation
+	rdfs:domain :Track;
+	rdfs:range xsdt:string.

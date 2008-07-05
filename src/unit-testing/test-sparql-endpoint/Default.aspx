@@ -8,24 +8,17 @@
 <body>
 	<form id="form1" runat="server">
 	</form>
-	<form action="/linqtordf/SparqlQuery.aspx" method="post">
+	<form action="http://localhost/linqtordf/SparqlQuery.aspx" method="post">
 		<input type="hidden" name="outputMimeType" value="text/xml" />
 		<textarea name="query" rows="30" cols="80">
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX xsdt: <http://www.w3.org/2001/XMLSchema#>
-PREFIX fn: <http://www.w3.org/2005/xpath-functions#> 
-PREFIX a: <http://aabs.purl.org/ontologies/2007/04/music#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
 
-SELECT * 
-WHERE {
-_:t  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> a:Track;
-a:year ?Year ;
-a:genreName ?GenreName .
-FILTER(
-((xsdt:integer(?Year))>(1998))&&(regex(?GenreName, "History 5 | Fall 2006 | UC Berkeley") )
-)
-}
+SELECT ?u
+WHERE
+	{
+	?u a owl:Class .
+	}
+    
         </textarea>
 		<p>
 			<input type="submit" /></p>

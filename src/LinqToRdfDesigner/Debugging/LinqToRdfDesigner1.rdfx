@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<modelRoot dslVersion="1.0.0.0" name="" xmlns="http://schemas.microsoft.com/dsltools/LinqToRdfDesigner">
+<modelRoot dslVersion="1.0.0.0" name="Music" ontologyUri="http://aabs.purl.org/ontologies/2007/04/music#" xmlns="http://schemas.microsoft.com/dsltools/LinqToRdfDesigner">
   <types>
-    <modelClass name="ModelClass1" resourceUri="class1">
+    <modelClass name="Album" resourceUri="Album">
+      <attributes>
+        <modelAttribute name="Name" type="string" resourceUri="name" />
+      </attributes>
       <aggregationTargets>
-        <aggregation Id="5234edc9-51a3-47da-8796-785da57fb5d5" sourceRoleName="parent" targetRoleName="child" resourceUri="hasParent">
-          <modelClassMoniker name="//ModelClass2" />
+        <aggregation Id="6fd097ab-a0af-4f27-8909-b5157bf8d579" resourceUri="isTrackOn">
+          <modelClassMoniker name="/Music/Track" />
         </aggregation>
       </aggregationTargets>
     </modelClass>
-    <modelClass name="ModelClass2" resourceUri="class2" />
+    <modelClass name="Track" resourceUri="Track">
+      <attributes>
+        <modelAttribute name="Title" type="string" resourceUri="title" />
+        <modelAttribute name="FileLocation" type="string" resourceUri="fileLocation" />
+      </attributes>
+    </modelClass>
   </types>
 </modelRoot>

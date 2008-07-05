@@ -5,7 +5,8 @@
 	http://aabs.wordpress.com/semantic-web}
 \title{The LinqToRdf Tutorial}
 \date{\today}
-\newcommand{\cs}{C\#}
+\newcommand{\cs}{C\texttt{\#}}
+\def\spq{SPARQL}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -37,7 +38,7 @@ Application working.
 \end{figure}
 
 LinqToRdf uses the SemWeb.NET framework by Joshua Tauberer, which provides a
-platform for working with OWL and SPARQL. It also uses the .NET 3.5 namespace
+platform for working with OWL and \spq{}. It also uses the .NET 3.5 namespace
 System.Linq which will be released as part of Visual Studio .NET 2008. The
 current version at time of writing is targeted at Visual Studio .NET 2008 beta
 2.
@@ -198,9 +199,9 @@ Since the uptake of semantic web technologies has been pretty patchy in the
 .NET domain your best bet for industrial strength RDF triple stores will (for
 now) lie in the Java domain, and there are various triple store solutions that
 can be used. For this guide I shall stick to .NET by using Joshua Tauberer’s
-SPARQL enabled HttpHandler for ASP.NET, which is sufficient to demonstrate how
-LinqToRdf can connect to a SPARQL compatible triple store. LinqToRdf has been
-tested with the Joseki SPARQL interface to Jena, which runs on Java. LinqToRdf
+\spq{} enabled HttpHandler for ASP.NET, which is sufficient to demonstrate how
+LinqToRdf can connect to a \spq{} compatible triple store. LinqToRdf has been
+tested with the Joseki \spq{} interface to Jena, which runs on Java. LinqToRdf
 is  platform independent.
 
 To use the HttpHandler as a triple store for music.n3, create an ASP.NET
@@ -227,13 +228,13 @@ Next, add the following to the body of the body of the config file beneath the r
 
 The name SparqlQuery.aspx doesn’t matter – it doesn’t exist. You can call it
 whatever you want. What this does is link the URL for the file SparqlQuery.aspx
-to the SPARQL HttpHandler that we next add to the system.web section of the
+to the \spq{} HttpHandler that we next add to the system.web section of the
 web.config:
 
 \begin{verbatim}
 <httpHandlers>
-   <!-- This line associates the SPARQL Protocol implementation with a path on
-   your website. With this, you get a SPARQL server at
+   <!-- This line associates the \spq{} Protocol implementation with a path on
+   your website. With this, you get a \spq{} server at
    http://yourdomain.com/sparql.  -->
    <add verb="*" path="SparqlQuery.aspx"
    type="SemWeb.Query.SparqlProtocolServerHandler, SemWeb.Sparql" />
@@ -241,7 +242,7 @@ web.config:
 
 \end{verbatim}
 
-This uses the HttpHandler defined in SemWeb to accept SPARQL queries and run
+This uses the HttpHandler defined in SemWeb to accept \spq{} queries and run
 them against the triples defined in mp3s.n3. That’s all that’s needed to turn
 your ASP.NET into a semantic web triple store! Yes, it’s that easy. To use the
 HttpHandler you give the URL (/[your vdir here]/SparqlQuery.aspx in the example
@@ -261,7 +262,7 @@ the triple store located at ts.EndpointUri.
 \subsection{Linking to the ontology from .NET}
 
 Now we have an ontology defined, and somewhere to host it that understands
-SPARQL we can start using LinqToRdf. References to ontologies are defined at
+\spq{} we can start using LinqToRdf. References to ontologies are defined at
 the assembly level to prevent repetition (as was the case in earlier versions
 of LinqToRdf). You create an Ontology Attribute for each of the ontologies that
 are referenced in the application or ontology. Below is an example from the
@@ -429,7 +430,7 @@ table and column names.
 That’s all you need to be able to model your ontology classes in .NET. Now we
 will move on to the techniques needed to query your RDF triple store.
 
-\subsection{Querying the ontology using SPARQL}
+\subsection{Querying the ontology using \spq{}}
 
 The steps to start making queries are also pretty simple. First just create a
 simple LINQ enabled console application called MyRdfTest. Open up Program.cs up
@@ -443,7 +444,7 @@ using System.Linq;
 
 \end{verbatim}
 
-In Main, create a TripleStore object with the location of the SPARQL server:
+In Main, create a TripleStore object with the location of the \spq{} server:
 
 \begin{verbatim}
 private static void Main(string[] args)
@@ -457,7 +458,7 @@ private static void Main(string[] args)
 TripleStore is used to carry any information needed about the triple store for
 later use by the query. In this case I set up an IIS virtual directory on my
 local machine called linqtordf, and followed the steps outlined early. The
-QueryType just indicates to the query context that we will be using SPARQL over
+QueryType just indicates to the query context that we will be using \spq{} over
 HTTP. That tells it what types of connections, commands, XML data types and the
 query language to use.
 
@@ -728,5 +729,199 @@ REFERENCE MATERIAL
 
 
 
+
+\section{Navigating relationships in LinqToRdf}
+The representation and querying of relationships in RDF is very different from
+the model employed in relational databases. At first glance, looking at LINQ to
+SQL, you might think that that LINQ itself was tied to the relational model,
+but that is not the case. LINQ is a fully extensible platform allowing us to represent
+other kinds of relationship through the use of query operators.
+
+In LinqToRdf you can use the \verb|HavingSubjectUri| and \verb|HasInstanceUri| to
+instruct it to navigate the relationships using \spq{} syntax. here is an
+example of \verb|HavingSubjectUri| in action:
+
+\begin{verbatim}
+var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
+var album = (from a in ctx.Albums
+              where a.Name.StartsWith("Thomas")
+              select a).First();
+
+var tracks = from t in ctx.Tracks
+             where t.Album.HavingSubjectUri(album.InstanceUri)
+             select t;
+\end{verbatim}
+
+Given an object called \verb|album| whose instance URI we already know, we can
+select through properties that we know reference that URI. The definition of
+property \verb|Album| in class \verb|Track| looks like this:
+
+\begin{verbatim}
+[OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+public Album Album
+{
+    get
+    {
+	//...
+	
+\end{verbatim}
+
+The combination of \verb|t|, \verb|Album| and \verb|HavingSubjectUri| is enough
+for LinqToRdf to be able to generate \spq{} with a triple like this:
+
+\begin{verbatim}
+$t ns1:isTrackOn ns1:Album_2 .
+\end{verbatim}
+
+Which will filter all tracks except those that are tracks on \verb|ns1:Album_2|.
+To support this, LinqToRdf automatically retrieves and stores the instance URIs
+for all ontology classes. If you use projections, then you don't get the
+\verb|InstanceUri| property, so you will have to construct your collections
+manually.
+
+LinqToRdf also stores a reference to the DataContext from an instance was
+retrieved with the instance itself. An instance can therefore define parent
+child collections like this:
+
+\begin{verbatim}
+private EntitySet<Track> _Tracks = new EntitySet<Track>();
+
+[OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+public EntitySet<Track> Tracks
+{
+    get
+    {
+        if (_Tracks.HasLoadedOrAssignedValues)
+            return _Tracks;
+        if (DataContext != null)
+        {
+	    var ctx = (MusicDataContext)DataContext;
+            _Tracks.SetSource(from t in ctx.Tracks 
+	    	where t.HavingSubjectUri(this.InstanceUri) 
+		select t);
+        }
+        return _Tracks;
+    }
+}
+
+\end{verbatim}
+
+This uses the EntitySet container that can be primed with a query based on the
+\verb|DataContext| and \verb|InstanceUri| of \verb|this|. It will store the
+query and only invoke it on first demand. You need to beware that the
+\verb|DataContext| has not gone out of scope before the query gets invoked. That
+constraint is in common with LINQ to SQL.
+
+
+\begin{verbatim}
+using System.Data.Linq;
+using System.Linq;
+using LinqToRdf;
+
+[assembly : Ontology(
+    BaseUri = "http://aabs.purl.org/ontologies/2007/04/music#",
+    Name = "Music",
+    Prefix = "Music",
+    UrlOfOntology = "http://aabs.purl.org/ontologies/2007/04/music#")]
+
+namespace Music
+{
+    public partial class MusicDataContext : RdfDataContext
+    {
+        public MusicDataContext(string store) : base(new TripleStore(store))
+        {
+        }
+
+        public IQueryable<Album> Albums
+        {
+            get { return ForType<Album>(); }
+        }
+
+        public IQueryable<Track> Tracks
+        {
+            get { return ForType<Track>(); }
+        }
+    }
+
+
+    [OwlResource(OntologyName = "Music", RelativeUriReference = "album")]
+    public partial class Album : OwlInstanceSupertype
+    {
+        private readonly EntitySet<Track> _Tracks = new EntitySet<Track>();
+
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "name")]
+        public string Name { get; set; }
+
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+        public EntitySet<Track> Tracks
+        {
+            get
+            {
+                if (_Tracks.HasLoadedOrAssignedValues)
+                    return _Tracks;
+                if (DataContext != null)
+                {
+                    var ctx = (MusicDataContext) DataContext;
+                    _Tracks.SetSource(from t in ctx.Tracks
+                                      where t.Album.HavingSubjectUri(InstanceUri)
+                                      select t);
+                }
+                return _Tracks;
+            }
+        }
+    }
+
+    [OwlResource(OntologyName = "Music", RelativeUriReference = "track")]
+    public partial class Track : OwlInstanceSupertype
+    {
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "title")]
+        public string Title { get; set; }
+
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "fileLocation")]
+        public string FileLocation { get; set; }
+
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+        public string AlbumUri { get; set; }
+
+        private EntityRef<Album> _Album { get; set; }
+
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+        public Album Album
+        {
+            get
+            {
+                if (_Album.HasLoadedOrAssignedValue)
+                    return _Album.Entity;
+                if (DataContext != null)
+                {
+                    var ctx = (MusicDataContext) DataContext;
+                    _Album = new EntityRef<Album>(from x in ctx.Albums where x.HasInstanceUri(AlbumUri) select x);
+                    return _Album.Entity;
+                }
+                return null;
+            }
+        }
+    }
+}
+
+\end{verbatim}
+
+\begin{verbatim}
+public static void Main()
+{
+    var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
+    var track = (from t in ctx.Tracks
+            where t.HasInstanceUri("http://aabs.purl.org/ontologies/2007/04/music#Track_-861912094")
+            select t).First();
+
+    Debug.WriteLine("Track was " + track.Title);
+    Debug.WriteLine("Album was " + track.Album.Name);
+
+    foreach (var t in track.Album.Tracks)
+    {
+        Debug.WriteLine("Album Track was " + track.Title);
+    }
+}
+\end{verbatim}<++>
 
 \end{document}

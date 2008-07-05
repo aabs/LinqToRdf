@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using LinqToRdf;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,7 +23,6 @@ namespace UnitTests
             Assert.IsNotNull(album);
             Assert.IsTrue(album.Tracks.Count() > 1);
         }
-
 
         [TestMethod]
         public void TestDirectReference()
@@ -58,7 +58,9 @@ namespace UnitTests
         public void TestChildToParent()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
-            Track track = (from t in ctx.Tracks where t.HasInstanceUri("http://aabs.purl.org/ontologies/2007/04/music#Track_-861912094") select t).First();
+            Track track = (from t in ctx.Tracks 
+                           where t.HasInstanceUri("http://aabs.purl.org/ontologies/2007/04/music#Track_-861912094") 
+                           select t).First();
             Assert.IsNotNull(track.Album); 
         }
 

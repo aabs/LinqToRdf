@@ -37,15 +37,7 @@
   <ItemGroup>
     <Reference Include="SemWeb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\SemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="SemWeb.Sparql, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\SemWeb.Sparql.dll</HintPath>
-    </Reference>
-    <Reference Include="sparql-core, Version=0.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\sparql-core.dll</HintPath>
+      <HintPath>..\..\..\lib\semweb.merged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

@@ -23,23 +23,23 @@
 			<!-- Install required assemblies to the GAC. Place components in an "Install" subdirectory to prevent MSI validation errors. -->
 			<Directory Id="Install" Name="Install">
 				<Component Id="_LinqToRdfDesigner_GAC" Guid="4b9ac49c-10b0-f73e-a8be-d13bb6025f6f" DiskId="1">
-					<File Id="_LinqToRdfDesignerDll_GAC" KeyPath="yes" Name="LinqToR1.dll" LongName="LinqToRdf.Designer.DslPackage.dll" src="SourceDir\..\DslPackage\bin\Debug\LinqToRdf.Designer.DslPackage.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msil" AssemblyManifest="_LinqToRdfDesignerDll_GAC">
+					<File Id="_LinqToRdfDesignerDll_GAC" KeyPath="yes" Name="LinqToR1.dll" LongName="LinqToRdf.Designer.DslPackage.dll" src="SourceDir\..\DslPackage\bin\Release\LinqToRdf.Designer.DslPackage.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msil" AssemblyManifest="_LinqToRdfDesignerDll_GAC">
 						<AssemblyName Id="Name" Value="LinqToRdf.Designer.DslPackage" />
-						<AssemblyName Id="Version" Value="1.0.0.0" />
+						<AssemblyName Id="Version" Value="0.7.1.0" />
 						<AssemblyName Id="Culture" Value="neutral" />
 						<AssemblyName Id="PublicKeyToken" Value="B4817EA031BA32F1" />
-						<AssemblyName Id="FileVersion" Value="1.0.0.0"/>
+						<AssemblyName Id="FileVersion" Value="0.7.1.0"/>
 						<AssemblyName Id="ProcessorArchitecture" Value="MSIL" />
 					</File>
 				</Component>
 				
 				<Component Id="_Dsl_GAC" Guid="fbff050d-f6c5-043c-8341-49ab462a8d92" DiskId="1">
-					<File Id="_DslDll_GAC" KeyPath="yes" Name="LinqToR2.dll" LongName="LinqToRdf.Designer.Dsl.dll" src="SourceDir\..\Dsl\bin\Debug\LinqToRdf.Designer.Dsl.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msil" AssemblyManifest="_DslDll_GAC">
+					<File Id="_DslDll_GAC" KeyPath="yes" Name="LinqToR2.dll" LongName="LinqToRdf.Designer.Dsl.dll" src="SourceDir\..\Dsl\bin\Release\LinqToRdf.Designer.Dsl.dll" Vital="yes" Assembly=".net" ProcessorArchitecture="msil" AssemblyManifest="_DslDll_GAC">
 						<AssemblyName Id="Name" Value="LinqToRdf.Designer.Dsl" />
-						<AssemblyName Id="Version" Value="1.0.0.0" />
+						<AssemblyName Id="Version" Value="0.7.1.0" />
 						<AssemblyName Id="Culture" Value="neutral" />
 						<AssemblyName Id="PublicKeyToken" Value="B4817EA031BA32F1" />
-						<AssemblyName Id="FileVersion" Value="1.0.0.0"/>
+						<AssemblyName Id="FileVersion" Value="0.7.1.0"/>
 						<AssemblyName Id="ProcessorArchitecture" Value="MSIL" />
 					</File>
 				</Component>
@@ -47,10 +47,10 @@
 			
 			<!-- Install required assemblies to disk. -->
 			<Component Id="_LinqToRdfDesigner" Guid="854bacf3-1802-c935-bd5d-87c92d265aac" DiskId="1">
-						<File Id="_LinqToRdfDesignerDll" KeyPath="yes" Name="LinqToR3.dll" LongName="LinqToRdf.Designer.DslPackage.dll" src="SourceDir\..\DslPackage\bin\Debug\LinqToRdf.Designer.DslPackage.dll" Vital="yes" />
+						<File Id="_LinqToRdfDesignerDll" KeyPath="yes" Name="LinqToR3.dll" LongName="LinqToRdf.Designer.DslPackage.dll" src="SourceDir\..\DslPackage\bin\Release\LinqToRdf.Designer.DslPackage.dll" Vital="yes" />
 			</Component>
 			<Component Id="_Dsl" Guid="1ab977e4-0d95-fe30-87d4-57c160d111ec" DiskId="1">
-						<File Id="_DslDll" KeyPath="yes" Name="LinqToR4.dll" LongName="LinqToRdf.Designer.Dsl.dll" src="SourceDir\..\Dsl\bin\Debug\LinqToRdf.Designer.Dsl.dll" Vital="yes" />
+						<File Id="_DslDll" KeyPath="yes" Name="LinqToR4.dll" LongName="LinqToRdf.Designer.Dsl.dll" src="SourceDir\..\Dsl\bin\Release\LinqToRdf.Designer.Dsl.dll" Vital="yes" />
 			</Component>
 			<Directory Id="VSINSTALLDIR" Name="VSINSTAL" LongName="VSInstallDir">
 				<!-- Install project item templates -->
@@ -58,7 +58,7 @@
 					<Directory Id="_CSharpDirectory1" Name="CSharp">
 						<Directory Id="_1033Directory1" Name="1033">
 							<Component Id="ItemTemplate1" Guid="c3bf697b-1a6f-2432-ae74-da3e616d4410" DiskId="1">
-								<File Id="_Zip1" Name="LinqToR5.zip" LongName="LinqToRdfDesigner.zip" src="SourceDir\..\DslPackage\bin\Debug\CSharp\1033\LinqToRdfDesigner.zip" Vital="yes" />
+								<File Id="_Zip1" Name="LinqToR5.zip" LongName="LinqToRdfDesigner.zip" src="SourceDir\..\DslPackage\bin\Release\CSharp\1033\LinqToRdfDesigner.zip" Vital="yes" />
 							</Component>
 						</Directory>
 					</Directory>
@@ -80,7 +80,7 @@
 				<Directory Id="XmlDirectory" Name="XML" LongName="xml">
 					<Directory Id="SchemasDirectory" Name="SCHEMAS" LongName="schemas">
 						<Component Id="Schemas" Guid="e8bcecc8-6343-ce3f-8467-fafee0457c6c" DiskId="1">
-							<File Id="_Schema1" Name="LinqToR7.xsd" LongName="LinqToRdfDesignerSchema.xsd" src="SourceDir\..\Dsl\bin\Debug\GeneratedCode\LinqToRdfDesignerSchema.xsd" Vital="yes" />
+							<File Id="_Schema1" Name="LinqToR7.xsd" LongName="LinqToRdfDesignerSchema.xsd" src="SourceDir\..\Dsl\bin\Release\GeneratedCode\LinqToRdfDesignerSchema.xsd" Vital="yes" />
 						</Component>
 					</Directory>
 				</Directory>

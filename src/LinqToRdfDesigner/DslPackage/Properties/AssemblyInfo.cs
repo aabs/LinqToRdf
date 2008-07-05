@@ -13,13 +13,13 @@ using System.Runtime.ConstrainedExecution;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle(@"")]
-[assembly: AssemblyDescription(@"")]
+[assembly: AssemblyTitle("LinqToRdf DSL Package")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany(@"Andrew Matthews")]
-[assembly: AssemblyProduct(@"LinqToRdf")]
-[assembly: AssemblyCopyright("")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Andrew Matthews")]
+[assembly: AssemblyProduct("LinqToRdf")]
+[assembly: AssemblyCopyright("Copyright 2008 Andrew Matthews")]
+[assembly: AssemblyTrademark("LinqToRdf")]
 [assembly: AssemblyCulture("")]
 [assembly: System.Resources.NeutralResourcesLanguage("en")]
 
@@ -34,7 +34,8 @@ using System.Runtime.ConstrainedExecution;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion(@"1.0.0.0")]
+[assembly: AssemblyVersion("0.7.1.0")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: ReliabilityContract(Consistency.MayCorruptProcess, Cer.None)]
+[assembly: AssemblyFileVersionAttribute("0.7.1.0")]

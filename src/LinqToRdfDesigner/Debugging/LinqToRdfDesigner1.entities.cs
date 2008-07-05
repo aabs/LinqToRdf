@@ -4,56 +4,82 @@ using System.Linq;
 using LinqToRdf;
 
 [assembly: Ontology(
-    BaseUri = "http://tempuri.com/ontology/",
-    Name = "",
-    Prefix = "",
-    UrlOfOntology = "http://tempuri.com/ontology/")]
+    BaseUri = "http://aabs.purl.org/ontologies/2007/04/music#",
+    Name = "Music",
+    Prefix = "Music",
+    UrlOfOntology = "http://aabs.purl.org/ontologies/2007/04/music#")]
 
-namespace 
+namespace Music
 {
 
-    public class DataContext : RDF
+    public partial class MusicDataContext : RdfDataContext
     {
-        public DataContext(string store) : base(new TripleStore(store))
+        public MusicDataContext(string store) : base(new TripleStore(store))
         {}
-        public IQueryable<ModelClass1> ModelClass1s
+        public IQueryable<Album> Albums
         {
-            get { return ForType<ModelClass1>(); }
+            get { return ForType<Album>(); }
         }
-        public IQueryable<ModelClass2> ModelClass2s
+        public IQueryable<Track> Tracks
         {
-            get { return ForType<ModelClass2>(); }
+            get { return ForType<Track>(); }
         }
   }
 
 
-[OwlResource(OntologyName="", RelativeUriReference="class1")]
-public partial class ModelClass1 : OwlInstanceSupertype
+[OwlResource(OntologyName="Music", RelativeUriReference="Album")]
+public partial class Album : OwlInstanceSupertype
 {
-Aggregation target: ModelClass2
+[OwlResource(OntologyName="Music", RelativeUriReference="name")]
+		public string Name{get;set;}
 		
-        private EntitySet<ModelClass2> _ModelClass2s = new EntitySet<ModelClass2>();
-        [OwlResource(OntologyName = "", RelativeUriReference = "hasParent")]
-        public EntitySet<ModelClass2> ModelClass2s
+        private EntitySet<Track> _Tracks = new EntitySet<Track>();
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+        public EntitySet<Track> Tracks
         {
             get
             {
-                if (_ModelClass2s.HasLoadedOrAssignedValues)
-                    return _ModelClass2s;
+                if (_Tracks.HasLoadedOrAssignedValues)
+                    return _Tracks;
                 if (DataContext != null)
                 {
-                    _ModelClass2s.SetSource(from t in DataContext.ModelClass2s
-													where t.ModelClass1.HavingSubjectUri(this.InstanceUri)
+                    var ctx = (MusicDataContext)DataContext;
+                    _Tracks.SetSource(from t in ctx.Tracks
+													where t.Album.HavingSubjectUri(this.InstanceUri)
 													select t);
                 }
-                return _ModelClass2s;
+                return _Tracks;
             }
         }
 }
 
-[OwlResource(OntologyName="", RelativeUriReference="class2")]
-public partial class ModelClass2 : OwlInstanceSupertype
+[OwlResource(OntologyName="Music", RelativeUriReference="Track")]
+public partial class Track : OwlInstanceSupertype
 {
-Aggregation Source: ModelClass1
-}
+[OwlResource(OntologyName="Music", RelativeUriReference="title")]
+		public string Title{get;set;}
+[OwlResource(OntologyName="Music", RelativeUriReference="fileLocation")]
+		public string FileLocation{get;set;}
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+        public string AlbumUri { get; set; }
+
+        private EntityRef<Album> _Album { get; set; }
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+        public Album Album
+        {
+            get
+            {
+                if (_Album.HasLoadedOrAssignedValue)
+                    return _Album.Entity;
+                if (DataContext != null)
+                {
+                    var ctx = (MusicDataContext)DataContext;
+                    _Album = new EntityRef<Album>(from x in ctx.Albums where x.HasInstanceUri(AlbumUri) select x);
+                    return _Album.Entity;
+                }
+                return null;
+            }
+        }
+		
+		}
 }

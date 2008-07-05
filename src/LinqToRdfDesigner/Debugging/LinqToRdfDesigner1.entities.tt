@@ -27,7 +27,7 @@ using LinqToRdf;
 namespace <#=modelName#>
 {
 
-    public class <#=modelName#>DataContext : RDF
+    public partial class <#=modelName#>DataContext : RdfDataContext
     {
         public <#=modelName#>DataContext(string store) : base(new TripleStore(store))
         {}
@@ -94,12 +94,32 @@ else
 }
 		}
 		
-		foreach(ModelClass src in modelClass.AggregationSources){
-			WriteLine("Aggregation Source: "+src.Name);
-		}
+		foreach(Aggregation association in Aggregation.GetLinksToAggregationSources(modelClass))
+		{
+		string aggSrcTypeName = association.Source.Name;
+		#>
+        [OwlResource(OntologyName = "<#=modelName#>", RelativeUriReference = "<#=association.ResourceUri#>")]
+        public string <#= aggSrcTypeName #>Uri { get; set; }
+
+        private EntityRef<<#= aggSrcTypeName #>> _<#= aggSrcTypeName #> { get; set; }
+        [OwlResource(OntologyName = "<#= modelName #>", RelativeUriReference = "<#=association.ResourceUri#>")]
+        public <#= aggSrcTypeName #> <#= aggSrcTypeName #>
+        {
+            get
+            {
+                if (_<#= aggSrcTypeName #>.HasLoadedOrAssignedValue)
+                    return _<#= aggSrcTypeName #>.Entity;
+                if (DataContext != null)
+                {
+                    var ctx = (<#=modelName#>DataContext)DataContext;
+                    _<#= aggSrcTypeName #> = new EntityRef<<#= aggSrcTypeName #>>(from x in ctx.<#= aggSrcTypeName #>s where x.HasInstanceUri(<#= aggSrcTypeName #>Uri) select x);
+                    return _<#= aggSrcTypeName #>.Entity;
+                }
+                return null;
+            }
+        }
 		
-		foreach(ModelClass trgt in modelClass.AggregationTargets){
-			WriteLine("Aggregation target: "+trgt.Name);
+		<#
 		}
 		
 		foreach(Aggregation association in Aggregation.GetLinksToAggregationTargets(modelClass))
@@ -119,7 +139,8 @@ else
                     return <#= privateVarName #>;
                 if (DataContext != null)
                 {
-                    <#= privateVarName #>.SetSource(from t in DataContext.<#= typeName #>s
+                    var ctx = (<#=modelName#>DataContext)DataContext;
+                    <#= privateVarName #>.SetSource(from t in ctx.<#= typeName #>s
 													where t.<#= srcTypeName #>.HavingSubjectUri(this.InstanceUri)
 													select t);
                 }

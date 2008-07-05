@@ -9,9 +9,24 @@
   </UnitTestRunner>
   <RecentFiles>
     <RecentFiles>
-      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="0" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.n3.n3" caret="0" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="2734" scrollPosition="0|24" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:Program.cs" caret="261" scrollPosition="0|0" />
     </RecentFiles>
-    <RecentEdits />
+    <RecentEdits>
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="2734" scrollPosition="0|17" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="2734" scrollPosition="0|17" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:Program.cs" caret="673" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:Program.cs" caret="673" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:Program.cs" caret="673" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="2734" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="2734" scrollPosition="0|24" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="2734" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:Program.cs" caret="300" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="2734" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:LinqToRdfDesigner1.entities.cs" caret="2734" scrollPosition="0|0" />
+      <File id="7F1F3C43-F6A3-4446-9868-58790FB03D13/f:Program.cs" caret="673" scrollPosition="0|0" />
+    </RecentEdits>
   </RecentFiles>
   <NAntValidationSettings>
     <NAntPath value="" />
@@ -20,9 +35,19 @@
     <string />
     <integer />
     <boolean>
+      <setting name="livetemplates.csharp.usevar">True</setting>
       <setting name="SolutionAnalysisEnabled">False</setting>
     </boolean>
   </SettingsComponent>
-  <CompletionStatisticsManager />
-  <CodeCleanup RecentlyUsed="" />
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="public" priority="0" />
+      <Item value="using" priority="0" />
+      <Item value="System" priority="0" />
+      <Item value="Linq" priority="0" />
+      <Item value="Title" priority="0" />
+      <Item value="Album" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <CodeCleanup RecentlyUsed="Full Cleanup" />
 </Configuration>

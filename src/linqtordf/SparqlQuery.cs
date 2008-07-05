@@ -351,18 +351,18 @@ namespace LinqToRdf.Sparql
                 }
             }
 
-            if (parameters.Count > 0)
-            {
+//            if (parameters.Count > 0)
+//            {
                 sb.AppendFormat("{0} a {1}:{2}.\n", varName, originalType.GetOntology().Prefix,
                                 originalType.GetOwlResource().RelativeUriReference);
-            }
-            else
-            {
-                // I don't think there is any way to get into to this point unless the object is persistent, but has no 
-                throw new ApplicationException(
-                    "No persistent properties defined on the entity. Unable to generate a query.");
-            }
-
+//            }
+//            else
+//            {
+//                // I don't think there is any way to get into to this point unless the object is persistent, but has no 
+//                throw new ApplicationException(
+//                    "No persistent properties defined on the entity. Unable to generate a query.");
+//            }
+//
             // temp var to get the object variables list
             IEnumerable<MemberInfo> args;
             // a temp string to get the tripleFormat that will be used to generate query triples.

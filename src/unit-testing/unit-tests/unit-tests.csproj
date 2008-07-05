@@ -45,17 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\Rhino.Mocks.dll</HintPath>
     </Reference>
-    <Reference Include="SemWeb, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="semweb.merged, Version=1.0.5.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\SemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="SemWeb.Sparql, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\SemWeb.Sparql.dll</HintPath>
-    </Reference>
-    <Reference Include="sparql-core, Version=0.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\sparql-core.dll</HintPath>
+      <HintPath>..\..\..\lib\semweb.merged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -74,6 +66,7 @@
     <Compile Include="JosekiTests.cs" />
     <Compile Include="LocalSparqlTests.cs" />
     <Compile Include="NamespaceManagerTests.cs" />
+    <Compile Include="out.cs" />
     <Compile Include="OwlInstanceSupertypeTest.cs" />
     <Compile Include="ProjectsAndTasksTests1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +80,7 @@
     <Compile Include="SparqlExpressionTranslatorTest.cs" />
     <Compile Include="StringOperationTests.cs" />
     <Compile Include="TestExtensions.cs" />
+    <Compile Include="TestRdfMetalCode.cs" />
     <Compile Include="TestRelationships.cs" />
     <Compile Include="TestSQOSupport.cs" />
     <Compile Include="TestTypeTranslator2.cs" />

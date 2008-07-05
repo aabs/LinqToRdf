@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using LinqToRdf;
+using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -33,8 +34,8 @@ using LinqToRdf;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("0.6.0.0")]
-[assembly: AssemblyFileVersion("0.6.0.0")]
+[assembly: AssemblyVersion("0.7.1.0")]
+[assembly: AssemblyFileVersion("0.7.1.0")]
 
 //[assembly: IsolatedStorageFilePermission(SecurityAction.RequestMinimum, UserQuota = 1048576)]
 //[assembly: SecurityPermission(SecurityAction.RequestRefuse, UnmanagedCode = true)]
@@ -55,3 +56,4 @@ using LinqToRdf;
     Prefix = "fn",
     BaseUri = "http://www.w3.org/2005/xpath-functions#",
     Name = "XPath Functions")]
+[assembly: NeutralResourcesLanguageAttribute("en-US")]

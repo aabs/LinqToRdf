@@ -46,13 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\IKVM.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="SemWeb, Version=0.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="semweb.merged, Version=1.0.5.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\SemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="sparql-core, Version=0.0.0.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\sparql-core.dll</HintPath>
+      <HintPath>..\..\..\lib\semweb.merged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -73,13 +69,13 @@
     <Compile Include="Track.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\linqtordf\linqtordf.csproj">
       <Project>{DCB04931-F2F1-45CA-B857-233D7B0AC615}</Project>
       <Name>linqtordf</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

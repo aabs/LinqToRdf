@@ -10,7 +10,7 @@
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
 	<Product UpgradeCode="91fb2736-237e-49cf-bf4f-a45c56baf5c5" Name="$(loc.ProductName)" Id="6271fbc1-5f7a-4619-bd49-7dbb6fbd25ea" Version="1.0.0" Manufacturer="$(loc.Manufacturer)" Language="1033" >
-		<Package Id="0a3de624-aaa3-47b9-9b5e-2ab732e1cba7" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
+		<Package Id="a949a07d-b547-4a37-bc74-fbc13ee6136d" Manufacturer="$(loc.Manufacturer)" InstallerVersion="200" Platforms="Intel" Languages="1033" Compressed="yes" SummaryCodepage="1252" />
 
 		<!-- 
 			Launch conditions and corresponding properties.
@@ -35,10 +35,6 @@
 		<Condition Message="$(loc.CSharpRequired)">VCSINSTALLREG OR Installed</Condition>
 
 
-		<Property Id="VBINSTALLREG">
-			<RegistrySearch Id="VisualBasicInstalledRegistry" Root="HKLM" Key="SOFTWARE\Microsoft\VisualStudio\9.0\InstalledProducts\Microsoft Visual Basic" Name="DefaultProductAttribute" Type="raw" />
-		</Property>
-		<Condition Message="$(loc.VisualBasicRequired)">VBINSTALLREG OR Installed</Condition>
 		
 		<!-- 
 			Other properties used by the installer. 
@@ -51,7 +47,7 @@
 		<!-- Following properties provide Add/Remove Programs functionality. -->
 		<Property Id="ARPCONTACT"><![CDATA[$(loc.Manufacturer)]]></Property>
 		<Property Id="ARPPRODUCTICON">Product.ico</Property>
-		<Property Id="ARPURLINFOABOUT"><![CDATA[InsertProductUrlHere]]></Property>
+		<Property Id="ARPURLINFOABOUT"><![CDATA[http://code.google.com/p/linqtordf]]></Property>
 		<!-- Following properties define error messages used by custom actions. -->
 		<Property Id="NEWERVERSIONMSG"><![CDATA[$(loc.ExistingVersionInstalled)]]></Property>
 		<Property Id="ADMINORADVERTISEDMSG"><![CDATA[$(loc.AdminOrAdvertised)]]></Property>
@@ -92,7 +88,7 @@
 		<!-- 
 			Define custom actions.
 		-->
-		<CustomAction Id="DIRCA_TARGETDIR" Return="check" Execute="firstSequence" Property="TARGETDIR" Value="[ProgramFilesFolder]LinqToRdf" />
+		<CustomAction Id="DIRCA_TARGETDIR" Return="check" Execute="firstSequence" Property="TARGETDIR" Value="[ProgramFilesFolder]LinqToRdfDesigner" />
 		<CustomAction Id="DIRCA_VSINSTALLDIR" Return="check" Execute="firstSequence" Property="VSINSTALLDIR" Value="[VSINSTALLREG]" />
 		<CustomAction Id="DIRCA_VSROOTDIR" Return="check" Execute="firstSequence" Property="VSROOTDIR" Value="[VSROOTREG]" />
 		<CustomAction Id="ERRCA_CANCELEXISTINGVERSION" Return="check" Error="[EXISTINGVERSIONMSG]" />

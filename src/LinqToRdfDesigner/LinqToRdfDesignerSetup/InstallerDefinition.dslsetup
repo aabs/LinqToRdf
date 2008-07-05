@@ -10,11 +10,11 @@ If the .dsl file could not be found, you will need to edit this manifest to corr
 For more specific information, see the Error List window.
 -->
 <installerDefinition xmlns="http://schemas.microsoft.com/VisualStudio/2005/DslTools/InstallerDefinitionModel" 
-  productUrl="InsertProductUrlHere"
-  defaultDirectoryName="LinqToRdf"
+  productUrl="http://code.google.com/p/linqtordf"
+  defaultDirectoryName="LinqToRdfDesigner"
   productVersion="1.0.0"
   requiresCSharp="true"
-  requiresVisualBasic="true"
+  requiresVisualBasic="false"
   productCode="6271fbc1-5f7a-4619-bd49-7dbb6fbd25ea"
   upgradeCode="91fb2736-237e-49cf-bf4f-a45c56baf5c5"
   localeId="1033">

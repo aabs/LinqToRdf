@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <classDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="LinqToRdfDesigner1">
-  <modelRootMoniker name="/" />
+  <modelRootMoniker name="/Music" />
   <nestedChildShapes>
-    <classShape Id="c97eee0d-a7d7-46ee-9bfe-d4b1bd93dac9" absoluteBounds="2.25, 1, 1.5, 0.83491699218750037">
-      <modelClassMoniker name="//ModelClass1" />
+    <classShape Id="0ba6f7fb-b71c-4086-a467-8d5cce6dd3ad" absoluteBounds="1, 0.5, 1.5, 0.99926432291666667">
+      <modelClassMoniker name="/Music/Album" />
       <nestedChildShapes>
-        <elementListCompartment Id="fb02e79a-edd1-483f-ac33-07f727891054" absoluteBounds="2.2649999999999997, 1.31, 1.4700000000000002, 0.20745849609375006" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <elementListCompartment Id="92ca13c8-4d82-4365-8ef7-edeb2b07cc3d" absoluteBounds="2.2649999999999997, 1.5274584960937503, 1.4700000000000002, 0.20745849609375" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="efe04c34-1740-4195-9bd1-9a4239772b4a" absoluteBounds="1.0150000000000001, 0.81, 1.4700000000000002, 0.37180582682291663" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="1aecd56d-06f0-43aa-ae54-f29d50ecd4a1" absoluteBounds="1.015, 1.1918058268229166, 1.4700000000000002, 0.20745849609375" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="999e403e-a816-4bda-ae71-50e9a9c67123" absoluteBounds="6, 1.875, 1.5, 0.83491699218750037">
-      <modelClassMoniker name="//ModelClass2" />
+    <classShape Id="b9340944-7737-451f-9f38-b84556eeb09b" absoluteBounds="2.625, 2, 1.5, 1.1636116536458334">
+      <modelClassMoniker name="/Music/Track" />
       <nestedChildShapes>
-        <elementListCompartment Id="7a5f85bd-070e-4039-904e-525a79ec89e3" absoluteBounds="6.015, 2.185, 1.4700000000000002, 0.20745849609375006" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
-        <elementListCompartment Id="61ba92db-b0d0-49d3-a26a-60254ef48016" absoluteBounds="6.015, 2.4024584960937503, 1.4700000000000002, 0.20745849609375" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="64ee6b3a-44a3-402f-a01a-a821b9a9db07" absoluteBounds="2.6399999999999997, 2.31, 1.4700000000000002, 0.53615315755208326" name="AttributesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a3f50979-ffb2-4b02-aa37-bd653c0965b4" absoluteBounds="2.6399999999999997, 2.8561531575520833, 1.4700000000000002, 0.20745849609375" name="OperationsCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <aggregationConnector edgePoints="[(3.75 : 1.41745849609375); (6.75 : 1.41745849609375); (6.75 : 1.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <aggregationMoniker Id="5234edc9-51a3-47da-8796-785da57fb5d5" />
+    <aggregationConnector edgePoints="[(1.75 : 1.49926432291667); (1.75 : 2.58180582682292); (2.625 : 2.58180582682292)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <aggregationMoniker Id="6fd097ab-a0af-4f27-8909-b5157bf8d579" />
       <relativeChildShapes />
       <nodes>
-        <classShapeMoniker Id="c97eee0d-a7d7-46ee-9bfe-d4b1bd93dac9" />
-        <classShapeMoniker Id="999e403e-a816-4bda-ae71-50e9a9c67123" />
+        <classShapeMoniker Id="0ba6f7fb-b71c-4086-a467-8d5cce6dd3ad" />
+        <classShapeMoniker Id="b9340944-7737-451f-9f38-b84556eeb09b" />
       </nodes>
     </aggregationConnector>
   </nestedChildShapes>

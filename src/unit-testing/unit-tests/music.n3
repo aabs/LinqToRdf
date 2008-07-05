@@ -12,41 +12,42 @@
 :TemporalThing a owl:Class.
 :Person a owl:Class;
 	owl:subClassOf :NamedThing.
-:Musician owl:subClassOf :ProducerOfMusic, :Person.
-:Band a :ProducerOfMusic.
-:Studio a :SellerOfMusic, :NamedThing.
+:Musician owl:subClassOf :ProducerOfMusic, :Person, owl:Class.
+:Band a :ProducerOfMusic, owl:Class.
+:Studio a :SellerOfMusic, :NamedThing, owl:Class.
 :Label = :Studio.
 :Music a owl:Class.
-:Album a :NamedThing.
-:Track a :NamedThing.
-:Song a :NamedThing.
+:Album a :NamedThing, owl:Class.
+:Track a :NamedThing, owl:Class.
+:Song a :NamedThing, owl:Class.
 :Mp3File a owl:Class.
 :Genre a :NamedThing.
 :Style = :Genre.
-:title 
+
+:title a owl:DatatypeProperty;
 	rdfs:domain :Track;
 	rdfs:range  xsdt:string.
-:artistName
+:artistName a owl:DatatypeProperty;
 	rdfs:domain :Track;
 	rdfs:range  xsdt:string.
-:albumName 
+:albumName  a owl:DatatypeProperty;
 	rdfs:domain :Track;
 	rdfs:range  xsdt:string.
-:year 
+:year  a owl:DatatypeProperty;
 	rdfs:domain :Album;
 	rdfs:range  xsdt:integer.
-:genreName
+:genreName a owl:DatatypeProperty;
 	rdfs:domain :Track;
 	rdfs:range  xsdt:string.
-:comment 
+:comment  a owl:DatatypeProperty;
 	rdfs:domain :Track;
 	rdfs:range  xsdt:string.
-:isTrackOn 
+:isTrackOn  a owl:ObjectProperty;
 	rdfs:domain :Track;
 	rdfs:range  :Album.
-:fileLocation 
+:fileLocation  a owl:DatatypeProperty;
 	rdfs:domain :Track;
 	rdfs:range  xsdt:string.
-:name
+:name a owl:DatatypeProperty;
 	rdfs:domain	:NamedThing;
 	rdfs:range	xsdt:string.

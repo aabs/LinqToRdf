@@ -73,9 +73,6 @@ namespace RdfMusic
 		[OwlResource(OntologyName = "Music", RelativeUriReference="fileLocation")]
         public string FileLocation { get; set; }
 
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
-        public string AlbumUri { get; set; }
-
 		[OwlResource(OntologyName = "Music", RelativeUriReference="rating")]
         public int Rating { get; set; }
 
@@ -89,6 +86,9 @@ namespace RdfMusic
 			GenreName = th.Genere;
 			Comment = th.Comment;
 		}
+
+        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+        public string AlbumUri { get; set; }
 
         private EntityRef<Album> _Album { get; set; }
         [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
@@ -123,20 +123,20 @@ namespace RdfMusic
 		[OwlResource(OntologyName = "Music", RelativeUriReference="name")]
         public string Name { get; set; }
 
-        private EntitySet<Track> _Tracks = new EntitySet<Track>();
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
-        public EntitySet<Track> Tracks
+private EntitySet<Track> _Tracks = new EntitySet<Track>();
+[OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+public EntitySet<Track> Tracks
+{
+    get
+    {
+        if (_Tracks.HasLoadedOrAssignedValues)
+            return _Tracks;
+        if (DataContext != null)
         {
-            get
-            {
-                if (_Tracks.HasLoadedOrAssignedValues)
-                    return _Tracks;
-                if (DataContext != null)
-                {
-                    _Tracks.SetSource(from t in ((MusicDataContext)DataContext).Tracks where t.AlbumName == Name select t);
-                }
-                return _Tracks;
-            }
+            _Tracks.SetSource(from t in ((MusicDataContext)DataContext).Tracks where t.AlbumName == Name select t);
         }
+        return _Tracks;
+    }
+}
 	}
 }
