@@ -19,50 +19,49 @@
 							Id='LinqToRdfDll'
 							Name='linqtordf.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Release\linqtordf.dll'
+							Source='..\..\src\linqtordf\bin\Release\linqtordf.dll'
 							Vital='yes'/>
 
-						<File
+            <File
 							Id='SemWebDll'
 							Name='SemWeb.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Release\SemWeb.dll'
+							Source='..\..\lib\SemWeb.dll'
 							Vital='yes'/>
 
 						<File
 							Id='SemWebSparqlDll'
 							Name='SemWeb.Sparql.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Release\SemWeb.Sparql.dll'
+							Source='..\..\lib\SemWeb.Sparql.dll'
 							Vital='yes'/>
 
 						<File
 							Id='SparqlCoreDll'
 							Name='sparql-core.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Release\sparql-core.dll'
+							Source='..\..\lib\sparql-core.dll'
 							Vital='yes'/>
 
 						<File
 							Id='IkvmGnuClasspathDll'
 							Name='IKVM.GNU.Classpath.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Release\IKVM.GNU.Classpath.dll'
+							Source='..\..\lib\IKVM.GNU.Classpath.dll'
 							Vital='yes'/>
 						<File
 							Id='IkvmRuntimeDll'
 							Name='IKVM.Runtime.dll'
 							DiskId='1'
-							Source='..\unit-testing\unit-tests\bin\Release\IKVM.Runtime.dll'
+							Source='..\..\lib\IKVM.Runtime.dll'
 							Vital='yes'/>
-
 					</Component>
 					<Component Id='Documentation' Guid='2dd46927-3afd-4ce1-b5cd-aef293513cde'>
 						<File
-							Id='GettingStartedPdf'
+							Id='ManualPdf'
 							Name='Getting Started With LINQ to RDF.pdf'
 							DiskId='1'
-							Source='..\..\doc\Getting Started With LINQ to RDF.pdf'
+							Source='..\..\doc\manual\linqtordf-manual.pdf'
 							Vital='yes'/>
 
 					</Component>
@@ -92,7 +91,7 @@
 			<Feature 
 				Id='Documentation' 
 				Title='LinqToRdf Documentation' 
-				Description='Guide to working with LinqToRdf' Level='1000'>
+				Description='The LinqToRdf Manual, plus a guide on how to get started using the LinqToRdf Designer extension for Visual Studio .NET 2008' Level='1000'>
 				<ComponentRef Id='Documentation' />
 			</Feature>
 
