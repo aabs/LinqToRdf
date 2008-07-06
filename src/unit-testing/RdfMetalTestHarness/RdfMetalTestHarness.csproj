@@ -31,13 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="linqtordf, Version=0.7.0.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\linqtordf\src\linqtordf\bin\Debug\linqtordf.dll</HintPath>
-    </Reference>
     <Reference Include="semweb.merged, Version=1.0.5.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\linqtordf\lib\semweb.merged.dll</HintPath>
+      <HintPath>..\..\..\lib\semweb.merged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -60,6 +56,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\linqtordf\linqtordf.csproj">
+      <Project>{DCB04931-F2F1-45CA-B857-233D7B0AC615}</Project>
+      <Name>linqtordf</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -69,7 +71,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)$(OutDir)RdfMetal.exe -e:http://localhost/LINQTORDF/SparqlQuery.aspx -i -n http://aabs.purl.org/ontologies/2007/04/music# -o "C:\shared.datastore\repository\personal\dev\projects\semantic-web\LinqToRdf.Prototypes\TestHarness\music.cs" -m "C:\shared.datastore\repository\personal\dev\projects\semantic-web\LinqToRdf.Prototypes\TestHarness\music.xml" -N:RdfMetal.Music -h music
+    <PreBuildEvent>$(SolutionDir)src\RdfMetal\$(OutDir)RdfMetal.exe -e:http://localhost/LINQTORDF/SparqlQuery.aspx -i -n http://aabs.purl.org/ontologies/2007/04/music# -o "$(ProjectDir)music.xml" -N:RdfMetal.Music -h music
 </PreBuildEvent>
   </PropertyGroup>
 </Project>

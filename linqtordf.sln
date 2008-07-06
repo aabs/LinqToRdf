@@ -38,6 +38,10 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LinqToRdfInstaller", "src\L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "website", "src\website\website.csproj", "{27A77018-E35F-445F-9C2F-437CEDE691D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdfMetal", "src\RdfMetal\RdfMetal.csproj", "{C7765FC0-D249-47F4-9F99-7C7E8ADEA1FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdfMetalTestHarness", "src\unit-testing\RdfMetalTestHarness\RdfMetalTestHarness.csproj", "{EB146F7D-C547-4D5E-9053-9348FAF8B859}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = linqtordf.vsmdi
@@ -76,6 +80,14 @@ Global
 		{27A77018-E35F-445F-9C2F-437CEDE691D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27A77018-E35F-445F-9C2F-437CEDE691D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27A77018-E35F-445F-9C2F-437CEDE691D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7765FC0-D249-47F4-9F99-7C7E8ADEA1FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7765FC0-D249-47F4-9F99-7C7E8ADEA1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7765FC0-D249-47F4-9F99-7C7E8ADEA1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7765FC0-D249-47F4-9F99-7C7E8ADEA1FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB146F7D-C547-4D5E-9053-9348FAF8B859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB146F7D-C547-4D5E-9053-9348FAF8B859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB146F7D-C547-4D5E-9053-9348FAF8B859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB146F7D-C547-4D5E-9053-9348FAF8B859}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
