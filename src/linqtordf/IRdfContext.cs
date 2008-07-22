@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace LinqToRdf
 {
-	public interface IRdfContext
+	public interface IRdfContext : IDisposable
     {
 		/// <summary>
 		/// maps from the hashcode of ontology query object to the collection of objects (if any) that it retrieved
@@ -26,7 +26,7 @@ namespace LinqToRdf
 		/// <summary>
 		/// to allow changes to be tracked and written back to the triple store (not implemented yet)
 		/// </summary>
-        void AcceptChanges();
+        void SubmitChanges();
 		/// <summary>
 		/// class factory method that creates ontology query object for the type T
 		/// </summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -17,7 +18,19 @@ namespace LinqToRdf
         {
             return t => outer(inner(t));
         }
-
+        public static void ForEach<T>(this IEnumerable<T> seq, Action<T> task)
+        {
+            foreach (T t in seq)
+            {
+                task(t);
+            }
+        }
+        public static bool ContainsAnyOf<T>(this IEnumerable<T> seq, IEnumerable<T> x)
+        {
+            bool result = false;
+            x.ForEach(a => result |= seq.Contains(a));
+            return result;
+        }
         public static bool HavingSubjectUri<T>(this EntitySet<T> set, string Uri) where T : class
         {
             return true;

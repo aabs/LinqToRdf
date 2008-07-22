@@ -64,6 +64,7 @@
     <Compile Include="HighLevelTestSuperclass.cs" />
     <Compile Include="JoinTests.cs" />
     <Compile Include="JosekiTests.cs" />
+    <Compile Include="LetTest.cs" />
     <Compile Include="LocalSparqlTests.cs" />
     <Compile Include="NamespaceManagerTests.cs" />
     <Compile Include="out.cs" />

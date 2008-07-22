@@ -86,7 +86,7 @@ namespace UnitTests
             {
                 track.Rating = 5;
             }
-            ctx.AcceptChanges();
+            ctx.SubmitChanges();
         }
 
         [TestMethod]

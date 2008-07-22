@@ -1,0 +1,320 @@
+\documentclass{article}
+\usepackage[dvips]{graphicx}
+\author{Andrew Matthews\\
+  matthews.andrew@gmail.com\\
+  http://code.google.com/p/linqtordf}
+\title{Using the \rm{} code generator}
+\date{\today}
+\newcommand{\cs}{C\texttt{\#}}
+\def\spq{SPARQL}
+\def\rm{\texttt{RdfMetal}}
+\def\l2r{\texttt{LinqToRdf}}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\rm\ is part of the \l2r{} tool suite. It reads an ontology in a semantic
+web database and generates \l2r{} compatible code from it. This walkthrough
+shows how to use it to generate code for your project.
+\end{abstract}
+
+\section{Overview \& Usage} 
+
+\rm{} works by querying a remote \spq{} enabled triple store to get information
+about the classes defined in a user specified ontology. It stores the results in
+a metadata file for use during a code generation phase. During a code generation
+phase the tool will read the metadata creating \cs{} source code from it.
+
+The two phases of process (metadata retrieval and code generation) are
+independent and can be invoked separately or together. The common thread that links
+them is the metadata file stored at the end of the metadata retrieval phase.
+
+\rm{} takes these options:
+
+\begin{verbatim}
+$ ./RdfMetal.exe /?
+RdfMetal  0.1.0.0 - Copyright (c) Andrew Matthews 2008
+A code generator for LinqToRdf
+
+Usage: RdfMetal [options] is used with the following options
+Options:
+  -e -endpoint:PARAM      The SPARQL endpoint to query.
+  -h -handle:PARAM        The ontology name to be used in 
+                          LinqToRdf for prefixing URIs and 
+			  disambiguating class names and 
+			  properties.
+  -? -help                Show this help list
+     -help2               Show an additional help list
+  -i -ignorebnodes        Ignore BNodes. Use this if you only 
+                          want to generate 
+                          code for named classes.
+  -m -metadata:PARAM      Where to place/get the collected 
+                          metadata.
+  -n -namespace:PARAM     The XML Namespace to extract classes 
+                          from.
+  -N -netnamespace:PARAM  The .NET namespace to place the 
+                          generated source in.
+  -o -output:PARAM        Where to place the generated code.
+  -r -references:PARAM    A comma separated list of namespaces to 
+                          reference in the generated source.
+     -usage               Show usage syntax and exit
+  -V -version             Display version and licensing informa-
+                          tion
+\end{verbatim}
+
+If you provide a \spq{} endpoint, \rm{} will connect to it and retrieve
+whatever domain model it can find there. If you provide a filename for the
+metadata to be stored in, it will save the metadata as XML in that file. If you
+want you can stop at that point and generate code later. If you don't provide a
+metadata storage location the data will be passed directly to the code
+generation part of the application, that will generate source from it. To generate
+source, you must provide an output location for the source. If no output
+location is provided, then no source is created and the application stops.
+
+The steps you need to follow are:
+
+\begin{list}{-}
+\item Locate the \spq{} endpoint where the data is stored
+\item Restrict the ontology namespace URI to the object model you are interested in.
+\item Invoke \rm{} to retrieve the class definitions from the remote \spq{} endpoint.
+\item Add the source \rm{} generates to your project
+\item Reference the \texttt{LinqToRdf.dll} assembly in your project
+\item Query the object model using LINQ.
+\end{list}
+
+\section*{Walkthrough}
+
+\subsection{Installing \rm{}}
+\rm{} is part of the \l2r{} tool suite. If you have the latest version of
+\l2r{}, then you should have a copy. If not, you should download and install
+the latest featured release of \l2r{} at
+\texttt{http://code.google.com/p/} \texttt{linqtordf}. After installing \l2r{} you
+should have a program files directory at \texttt{c:/Program Files/Andrew
+Matthews} \texttt{/LinqToRdf}.  Inside which is all that you need to be able to run \rm{}.
+It's a command line tool, so you will need to either put that directory in the
+path, or refer to the \rm{} executable using the full path, as we'll do in this
+walkthrough.
+
+\subsection{Finding the endpoint URI}
+The first thing you will require is the \spq{} endpoint URL of the semantic web
+database you're planning to work with. For this walkthrough, we'll be using the
+sample triple store that is used by the \l2r{} project for testing. In this
+case, you query it through the URL
+\texttt{http://localhost/linqtordf} \texttt{/SparqlQuery.aspx}. You can find out more
+about hosting your own ontologies in the \l2r{} manual, or in my article
+Understanding \spq{}.
+
+You need to know this endpoint URL because \rm{} will send a series of
+\spq{} queries to the database requesting information about the classes stored
+there and their properties and relationships.
+
+\subsection{Create a pre-build step in your project}
+
+In this walkthrough, we use \rm{} to generate code as part of a pre-build
+step. That means the metadata will be retrieved and used to generate source
+code every time your project gets built. This probably overkill, especially if
+the remote ontology is not subject to frequent changes. In that case you might
+want to perform these steps manually as required.
+
+This command line invokes \rm{} using the build step macro \$(ProjectDir)
+defined in Visual Studio.  Typically, you define the \spq{} endpoint as an
+initial phase, and then cache metadata gathered in an XML file. Once the
+metadata has been gathered, \cs{} source code can be generated from it. If the
+target ontology is static, you may choose not to continue using \rm{} after the
+initial source code generation. Here, we're simply gathering the metadata every
+time and storing it in a source file called \texttt{music.cs}.
+
+\begin{verbatim}
+"c:\Program Files\Andrew Matthews\RdfMetal\RdfMetal.exe"
+    -e:http://localhost/linqtordf/SparqlQuery.aspx
+    -i -n http://aabs.purl.org/ontologies/2007/04/music\#
+    -o "$(ProjectDir)music.cs" -N:RdfMetal.Music -h music
+\end{verbatim}
+
+\section{Using \rm{} with Visual Studio}
+\rm{}  was designed to used from a pre-build event in Visual Studio. The example
+above, shows how it can be used to generate source for the small ontology used
+to test \l2r{}.  It queries a local website called \texttt{LinqToRdf}. (You
+can get instructions on how to set up such a self hosted ontology from the
+\l2r{} manual.) I'm restricting the classes to only those defined in the
+\texttt{http://aabs.purl.org/ontologies/2007/04/music\#} namespace and am
+generating code in the \texttt{RdfMetal.Music} .NET namespace. The internal name
+I'm using is '\texttt{music}', and that's the preferred prefix to be used in any generated RDF or \spq{}.
+
+When \rm{} is run it outputs a list of the classes that it is generating source
+for, then writes 'done'. Here's some output from the music ontology:
+
+\begin{verbatim}
+------ Build started: Project: RdfMetalTestHarness
+C:\. . .\linqtordf\src\RdfMetal\bin\Debug\RdfMetal.exe
+  -e:http://localhost/LINQTORDF/SparqlQuery.aspx -i -n
+  http://aabs.purl.org/ontologies/2007/04/music\# -o
+  "C:\. . .\linqtordf\src\unit-testing\
+  RdfMetalTestHarness\music.xml" -N:RdfMetal.Music -h music
+
+ProducerOfMusic
+SellerOfMusic
+NamedThing
+TemporalThing
+Person
+Band
+Studio
+Music
+Album
+Track
+Song
+Mp3File
+Genre
+done.
+\end{verbatim}
+
+Each of these classes is defined in the \texttt{store.n3} file in the unit tests
+directory in the \l2r{} solution. The source that it generates will be in the
+file \texttt{music.cs}. The output is too long and repetitive to be worth including in
+full, but here's some edited highlights. The generator creates a \texttt{DataContext}
+class containing standard query properties for each of the class types found in
+the metadata extraction process. In this case the queries are included for
+\texttt{Album} and \texttt{Track} 
+
+\begin{verbatim}
+  public class musicDataContext : RdfDataContext
+  {
+    public musicDataContext(TripleStore store)
+      : base(store)
+    {
+    }
+
+    public musicDataContext(string store)
+      : base(new TripleStore(store))
+    {
+    }
+
+    public IQueryable<Album> Albums
+    {
+      get { return ForType<Album>(); }
+    }
+
+    public IQueryable<Track> Tracks
+    {
+      get { return ForType<Track>(); }
+    }
+
+\end{verbatim}
+
+In most cases the classes generated are empty, but in the test data the Track
+and Album classes have several DatatypeProperties as well as ObjectProperties.
+Here's the code generated for the \texttt{Track} class.
+
+\begin{verbatim}
+[OwlResource(OntologyName = "music", 
+             RelativeUriReference = "Track")]
+public class Track : OwlInstanceSupertype
+{
+    #region Datatype properties
+
+    [OwlResource(OntologyName = "music",
+                 RelativeUriReference = "title")]
+    public string title { get; set; } // Track
+    [OwlResource(OntologyName = "music", 
+                 RelativeUriReference = "artistName")]
+    public string artistName { get; set; } // Track
+    [OwlResource(OntologyName = "music", 
+                 RelativeUriReference = "albumName")]
+    public string albumName { get; set; } // Track
+    [OwlResource(OntologyName = "music", 
+                 RelativeUriReference = "genreName")]
+    public string genreName { get; set; } // Track
+    [OwlResource(OntologyName = "music", 
+                 RelativeUriReference = "comment")]
+    public string comment { get; set; } // Track
+    [OwlResource(OntologyName = "music", 
+                 RelativeUriReference = "fileLocation")]
+    public string fileLocation { get; set; } // Track
+
+    #endregion
+
+    #region Incoming relationships properties
+
+    #endregion
+
+    #region Object properties
+
+    [OwlResource(OntologyName = "music", 
+                 RelativeUriReference = "isTrackOn")]
+    public string isTrackOnUri { get; set; }
+
+    private EntityRef<Album> _isTrackOn { get; set; }
+
+    [OwlResource(OntologyName = "music", 
+                 RelativeUriReference = "isTrackOn")]
+    public Album isTrackOn
+    {
+        get
+        {
+            if (_isTrackOn.HasLoadedOrAssignedValue)
+                return _isTrackOn.Entity;
+            if (DataContext != null)
+            {
+               var ctx = (musicDataContext) DataContext;
+               _isTrackOn = new EntityRef<Album>(
+                     from x in ctx.Albums 
+                     where x.HasInstanceUri(isTrackOnUri) 
+                     select x);
+               return _isTrackOn.Entity;
+            }
+            return null;
+        }
+    }
+
+    #endregion
+}
+
+\end{verbatim}
+
+Note the use of the \texttt{EntityRef} in the \texttt{\_isTrackOn} field and the
+\texttt{isTrackOn} property to provide navigation across the object graph.
+
+\begin{verbatim}
+[OwlResource(OntologyName = "Music", 
+             RelativeUriReference = "Album")]
+public class Album : OwlInstanceSupertype
+{
+  public Album()
+  {
+  }
+
+  [OwlResource(OntologyName = "Music", 
+               RelativeUriReference="name")]
+  public string Name { get; set; }
+
+  private EntitySet<Track> _Tracks = new EntitySet<Track>();
+  [OwlResource(OntologyName = "Music", 
+               RelativeUriReference = "isTrackOn")]
+  public EntitySet<Track> Tracks
+  {
+    get
+    {
+      if (_Tracks.HasLoadedOrAssignedValues)
+        return _Tracks;
+      if (DataContext != null)
+      {
+        _Tracks.SetSource(from t in 
+          ((MusicDataContext)DataContext).Tracks 
+           where t.AlbumName == Name 
+           select t);
+      }
+      return _Tracks;
+    }
+  }
+}
+
+\end{verbatim}
+
+Again notice the use of \texttt{EntitySet}s to provide navigation. This time the
+navigation is from parent to child.
+
+Once the code is generated all you need to do is incorporate it into your
+project and use it like any other \l2r{} code. For instructions on how to do
+that, consult the \l2r{} manual for guidance.
+
+\end{document}

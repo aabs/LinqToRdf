@@ -406,10 +406,28 @@ namespace LinqToRdf.Sparql
                 var ue = (whereExp).Arguments[1] as UnaryExpression;
                 var le = (LambdaExpression) ue.Operand;
                 ParameterExpression instance = le.Parameters[0];
+                if (IsInvalidIdentifier(instance.Name))
+                    return CreateValidIdentifier(instance.Name);
                 return instance.Name;
             }
             // no name supplied by LINQ so just give one at random.
             return "tmpInt";
+        }
+
+        private string CreateValidIdentifier(string name)
+        {
+            return name.Replace("<", "")
+                       .Replace(">", "")
+                       .Replace(":", "")
+                       .Replace(",", "")
+                       .Replace(".", "")
+                       .Replace("{", "")
+                       .Replace("}", "");
+        }
+
+        private bool IsInvalidIdentifier(string name)
+        {
+            return name.ToCharArray().ContainsAnyOf(new[]{'<','>',':',',','.','{','}'});
         }
 
         private void CreateSolutionModifier(StringBuilder sb)
