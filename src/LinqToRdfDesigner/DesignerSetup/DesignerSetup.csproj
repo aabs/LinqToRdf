@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FC7A5C6C-78A1-41E8-8F30-179AAAB3200B}</ProjectGuid>
+    <ProjectGuid>{A325AB35-DD30-4C2C-BA63-194AF8A9DA55}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <OutputName>LinqToRdf</OutputName>
     <LocalizedStringFile>Strings.wxl</LocalizedStringFile>
@@ -14,8 +14,8 @@
     <OutputType>Library</OutputType>
     <StartupObject>
     </StartupObject>
-    <AssemblyName>LinqToRdfDesignerSetup</AssemblyName>
-    <RootNamespace>LinqToRdfDesignerSetup</RootNamespace>
+    <AssemblyName>DesignerSetup</AssemblyName>
+    <RootNamespace>DesignerSetup</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

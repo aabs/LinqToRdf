@@ -15,7 +15,7 @@
 			<ComponentRef Id="_rdfx" />
 		</FeatureRef>
 		<DirectoryRef Id="TARGETDIR">
-			<Component Id="_LinqToRdfDesignerReg" Guid="a50177f7-f906-ae39-aefa-099af3528872">
+			<Component Id="_LinqToRdfDesignerReg" Guid="a76f322c-c385-343f-b26e-fbdbf6967ab0">
 				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Projects\{F184B08F-C81C-45F6-A57F-5ABD9991F28F}\RelatedFiles\.rdfx' Id='g36353dc1_7f5a_a535_aaf3_1d536e750a49' Name='.diagram' Value='2' Type='integer' />
 				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\Projects\{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\RelatedFiles\.rdfx' Id='ge9fecbca_db1a_e63c_a4ba_b8b99f689db0' Name='.diagram' Value='2' Type='integer' />
 				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\DslTools\Packages\{6ad84c5c-3372-4914-9b69-1549024de6c1}' Id='gbe8f0f4c_3629_f23f_bcf9_cdf08afa4755' Type='string' Value='LinqToRdf.Designer.DslPackage.LinqToRdfDesignerPackage' />
@@ -41,15 +41,15 @@
 				<Registry Root='HKLM' Key='SOFTWARE\Microsoft\VisualStudio\9.0\TextTemplating\DirectiveProcessors\LinqToRdfDesignerDirectiveProcessor' Id='gdb54c774_707b_2a32_ae9c_88269681f1c8' Name='Assembly' Value='LinqToRdf.Designer.Dsl, Version=0.7.1.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1' Type='string' />
 
 			</Component>
-			<Component Id="_rdfx" Guid="adf1b59a-694b-953b-a4da-74999f885e47">
-				<Registry Root="HKCR" Key=".rdfx" Id="FileExtensionRegistry1" Value="rdfx.1.0.0" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0" Id="FileExtensionRegistry2" Value="$(loc.FileDescription)" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0" Id="FileExtensionRegistry3" Name="AlwaysShowExt" Value="1" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\DefaultIcon" Id="FileExtensionRegistry4" Value="[TARGETDIR]\LinqToRdf.Designer.DslPackage.dll,0" Type="string" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\shell\Open\Command" Id="FileExtensionRegistry5" Type="string" Value="&quot;[VSINSTALLDIR]devenv.exe&quot; /dde &quot;%1&quot;" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\shell\Open\ddeexec" Id="FileExtensionRegistry6" Type="string" Value="Open(&quot;%1&quot;)" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\shell\Open\ddeexec\Application" Id="FileExtensionRegistry7" Type="string" Value="VisualStudio.9.0" />
-				<Registry Root="HKCR" Key="rdfx.1.0.0\shell\Open\ddeexec\Topic" Id="FileExtensionRegistry8" Type="string" Value="system" />
+			<Component Id="_rdfx" Guid="cd2a217f-931a-6d30-adbc-aa3c98de4f28">
+				<Registry Root="HKCR" Key=".rdfx" Id="FileExtensionRegistry1" Value="rdfx.0.8.0" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.8.0" Id="FileExtensionRegistry2" Value="$(loc.FileDescription)" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.8.0" Id="FileExtensionRegistry3" Name="AlwaysShowExt" Value="1" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.8.0\DefaultIcon" Id="FileExtensionRegistry4" Value="[TARGETDIR]\LinqToRdf.Designer.DslPackage.dll,0" Type="string" />
+				<Registry Root="HKCR" Key="rdfx.0.8.0\shell\Open\Command" Id="FileExtensionRegistry5" Type="string" Value="&quot;[VSINSTALLDIR]devenv.exe&quot; /dde &quot;%1&quot;" />
+				<Registry Root="HKCR" Key="rdfx.0.8.0\shell\Open\ddeexec" Id="FileExtensionRegistry6" Type="string" Value="Open(&quot;%1&quot;)" />
+				<Registry Root="HKCR" Key="rdfx.0.8.0\shell\Open\ddeexec\Application" Id="FileExtensionRegistry7" Type="string" Value="VisualStudio.9.0" />
+				<Registry Root="HKCR" Key="rdfx.0.8.0\shell\Open\ddeexec\Topic" Id="FileExtensionRegistry8" Type="string" Value="system" />
 			</Component>
 
 		</DirectoryRef>

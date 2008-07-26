@@ -17,22 +17,31 @@ using System.Collections.Generic;
 
 namespace LinqToRdf
 {
-	public interface IRdfContext : IDisposable
+    /// <summary>
+    /// Implemented by classes which define a query context class.
+    /// </summary>
+	public interface IRdfContext
     {
 		/// <summary>
-		/// maps from the hashcode of ontology query object to the collection of objects (if any) that it retrieved
+		/// Maps from the hashcode of ontology query object to the collection of objects (if any) that it retrieved
 		/// </summary>
 		Dictionary<string, IEnumerable> ResultsCache { get; set; }
 		/// <summary>
-		/// to allow changes to be tracked and written back to the triple store (not implemented yet)
+		/// Allows changes to be tracked and written back to the triple store (not implemented yet)
 		/// </summary>
         void SubmitChanges();
 		/// <summary>
-		/// class factory method that creates ontology query object for the type T
+		/// Class factory method that creates an ontology query object for the type T
 		/// </summary>
-		/// <typeparam name="T">the type for which we'll be querying.</typeparam>
-		/// <returns>an object of type IRdfQuery that will do the querying.</returns>
-		/// <remarks>the results when found will be written back to ResultsCache for later re-iteration.</remarks>
+		/// <typeparam name="T">The type for which we'll be querying.</typeparam>
+		/// <returns>An object of type IRdfQuery that will do the querying.</returns>
+		/// <remarks>The results when found will be written back to ResultsCache for later re-iteration.</remarks>
     	IRdfQuery<T> ForType<T>();
+        /// <summary>
+        /// Default graph URI, without angle brackets. The default graph is 
+        /// used in the FROM clause of any SPARQL query used to retrieve
+        /// entities for this context.
+        /// </summary>
+        string DefaultGraph { get; set; }
     }
 }

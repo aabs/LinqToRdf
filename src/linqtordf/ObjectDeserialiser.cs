@@ -25,6 +25,7 @@ namespace LinqToRdf
 {
     public class ObjectDeserialiserQuerySink : QueryResultSink
     {
+		protected Logger Logger  = new Logger(typeof(ObjectDeserialiserQuerySink));
         private readonly IList deserialisedObjects = new ArrayList();
         private readonly bool elideDuplicates;
         private readonly Type instanceType;
@@ -38,6 +39,14 @@ namespace LinqToRdf
             MethodCallExpression selectExpression,
             RdfDataContext context)
         {
+			#region Tracing
+#line hidden
+			if (Logger.IsDebugEnabled)
+			{
+				Logger.Debug("Deserialising {0}.", instanceType.Name);
+			}
+#line default
+			#endregion
             SelectExpression = selectExpression;
             this.originalType = originalType;
             this.instanceType = instanceType;
@@ -65,6 +74,14 @@ namespace LinqToRdf
 
         public override bool Add(VariableBindings result)
         {
+			#region Tracing
+#line hidden
+			if (Logger.IsDebugEnabled)
+			{
+				Logger.Debug("Got Result {0}.", result.ToString());
+			}
+#line default
+			#endregion
             if (IsSelectMember(SelectExpression))
             {
                 deserialisedObjects.Add(ExtractMemberAccess(result));

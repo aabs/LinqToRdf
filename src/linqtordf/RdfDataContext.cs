@@ -20,12 +20,14 @@ using SemWeb;
 namespace LinqToRdf
 {
     /// <summary>
-    /// A structure for storing the location and query idiom for a triple store
+    /// A structure for storing the location and type of a triple store. The triple store type is specified
+    /// by the QueryType enum (the query 'idiom') and may be one of the following: 
+    /// in-memory N3 store, local persistent N3 store, local SPARQL store or remote SPARQL store.
     /// </summary>
     /// <example>
     /// There a several special purpose ctors to allow you to easily construct an instance
-    /// using typical values. the following example instantiates a local in-memory triple 
-    /// store from locations stored in tasksontology and tasks. The query idiom will default to 
+    /// using typical values. The following example instantiates a local in-memory triple 
+    /// store from locations stored in tasksOntology and tasks. The query idiom will default to 
     /// LocalSparqlStore.
     /// <code language="csharp">
     /// MemoryStore store = new MemoryStore();
@@ -43,37 +45,37 @@ namespace LinqToRdf
             LocalTripleStore = localStore;
             EndpointUri = endpointUri;
         }
-
-        public TripleStore(Store localStore, QueryType queryType) : this(localStore, null, queryType)
-        {
-        }
-
-        public TripleStore(string endpointUri, QueryType queryType) : this(null, endpointUri, queryType)
-        {
-        }
-
-        public TripleStore(Store localStore) : this(localStore, null, QueryType.LocalSparqlStore)
-        {
-        }
-
-        public TripleStore(string endpointUri) : this(null, endpointUri, QueryType.RemoteSparqlStore)
-        {
-        }
+        public TripleStore(Store localStore, QueryType queryType) : this(localStore, null, queryType) { }
+        public TripleStore(string endpointUri, QueryType queryType) : this(null, endpointUri, queryType) { }
+        public TripleStore(Store localStore) : this(localStore, null, QueryType.LocalSparqlStore) { }
+        public TripleStore(string endpointUri) : this(null, endpointUri, QueryType.RemoteSparqlStore) { }
 
         public QueryType QueryType { get; set; }
         public string EndpointUri { get; set; }
         public Store LocalTripleStore { get; set; }
     }
 
+    /// <summary>
+    /// RdfDataContext is the source of all entities from a triple store. It includes a query results cache 
+    /// and when used with a remote triple store, wraps a triple store connection. RdfDataContext also 
+    /// includes a class factory method IRdfQuery<T> ForType<T>( ) that creates ontology query objects for 
+    /// the type T.
+    /// </summary>
     public class RdfDataContext : IRdfContext
     {
-        private Queue<OwlInstanceSupertype> pendingQueue = new Queue<OwlInstanceSupertype>();
-        private Dictionary<string, IEnumerable> resultsCache = new Dictionary<string, IEnumerable>();
-        protected TripleStore store;
-
         public RdfDataContext(TripleStore store)
         {
             this.store = store;
+        }
+
+        private Dictionary<string, IEnumerable> resultsCache = new Dictionary<string, IEnumerable>();
+        protected TripleStore store;
+        protected string defaultGraph;
+
+        public Dictionary<string, IEnumerable> ResultsCache
+        {
+            get { return resultsCache; }
+            set { resultsCache = value; }
         }
 
         public TripleStore Store
@@ -84,59 +86,26 @@ namespace LinqToRdf
 
         #region IRdfContext Members
 
-        public Dictionary<string, IEnumerable> ResultsCache
-        {
-            get { return resultsCache; }
-            set { resultsCache = value; }
-        }
+        #endregion
 
         public void SubmitChanges()
         {
             if (pendingQueue.Count == 0)
                 return;
             if (store.QueryType != QueryType.LocalN3StoreInMemory)
-                throw new NotImplementedException(
-                    "No protocol exists to persist data to ontology remote store via SPARQL (yet). Unable to continue");
-            var ms = store.LocalTripleStore as MemoryStore;
+                throw new NotImplementedException("No protocol exists to persist data to ontology remote store via SPARQL (yet). Unable to continue");
+            MemoryStore ms = store.LocalTripleStore as MemoryStore;
             foreach (OwlInstanceSupertype inst in pendingQueue)
             {
                 ms.Add(inst);
             }
         }
 
-        public IRdfQuery<T> ForType<T>()
+        public string DefaultGraph 
         {
-            var qf = new QueryFactory<T>(Store.QueryType, this);
-            switch (Store.QueryType)
-            {
-                case QueryType.LocalN3StoreInMemory:
-                case QueryType.LocalN3StorePersistent:
-                    var tmp = (RdfN3Query<T>) qf.CreateQuery<T>();
-                    tmp.Store = Store.LocalTripleStore;
-                    tmp.QueryFactory = qf;
-                    return tmp;
-                case QueryType.RemoteSparqlStore:
-                    var tmp2 = (SparqlQuery<T>) qf.CreateQuery<T>();
-                    tmp2.TripleStore = Store;
-                    tmp2.QueryFactory = qf;
-                    return tmp2;
-                case QueryType.LocalSparqlStore:
-                    var tmp3 = (SparqlQuery<T>) qf.CreateQuery<T>();
-                    tmp3.TripleStore = Store;
-                    tmp3.QueryFactory = qf;
-                    return tmp3;
-                default:
-                    throw new ApplicationException("unrecognised query type requested");
-            }
+            get { return defaultGraph; }
+            set { defaultGraph = value; } 
         }
-
-        public void Dispose()
-        {
-            // any changes up to this point should be rolled back.
-            DiscardChanges();
-        }
-
-        #endregion
 
         public void DiscardChanges()
         {
@@ -144,12 +113,39 @@ namespace LinqToRdf
             pendingQueue = new Queue<OwlInstanceSupertype>();
         }
 
+        private Queue<OwlInstanceSupertype> pendingQueue = new Queue<OwlInstanceSupertype>();
         public void Add<T>(T entity) where T : OwlInstanceSupertype
         {
             if (entity == null)
                 throw new ArgumentNullException("entity cannot be null");
 
             pendingQueue.Enqueue(entity);
+        }
+
+        public IRdfQuery<T> ForType<T>()
+        {
+            QueryFactory<T> qf = new QueryFactory<T>(Store.QueryType, this);
+            switch (Store.QueryType)
+            {
+                case QueryType.LocalN3StoreInMemory:
+                case QueryType.LocalN3StorePersistent:
+                    RdfN3Query<T> tmp = (RdfN3Query<T>)qf.CreateQuery<T>();
+                    tmp.Store = Store.LocalTripleStore;
+                    tmp.QueryFactory = qf;
+                    return tmp;
+                case QueryType.RemoteSparqlStore:
+                    SparqlQuery<T> tmp2 = (SparqlQuery<T>)qf.CreateQuery<T>();
+                    tmp2.TripleStore = Store;
+                    tmp2.QueryFactory = qf;
+                    return tmp2;
+                case QueryType.LocalSparqlStore:
+                    SparqlQuery<T> tmp3 = (SparqlQuery<T>)qf.CreateQuery<T>();
+                    tmp3.TripleStore = Store;
+                    tmp3.QueryFactory = qf;
+                    return tmp3;
+                default:
+                    throw new ApplicationException("unrecognised query type requested");
+            }
         }
     }
 }

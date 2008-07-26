@@ -152,5 +152,12 @@ namespace LinqToRdf
                     where o.Name == Name 
                     select o).First().Prefix;
         }
+
+        public static string PredicateUriForProperty(this Object o, MethodBase propAccessor)
+        {
+            string propertyName = propAccessor.Name.StartsWith("get_") ? propAccessor.Name.Substring(4) : null;
+            PropertyInfo propInfo = o.GetType().GetProperty(propertyName);
+            return propInfo.GetOwlResourceUri();
+        }
     }
 }

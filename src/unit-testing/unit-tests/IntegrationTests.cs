@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LinqToRdf;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RdfMusic;
 
 namespace UnitTests
@@ -23,7 +23,7 @@ namespace UnitTests
     /// <summary>
     /// Summary description for IntegrationTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class IntegrationTests : HighLevelTests
     {
         //
@@ -34,21 +34,21 @@ namespace UnitTests
         // public static void MyClassInitialize(TestContext testContext) { }
         //
         // Use ClassCleanup to run code after all tests in ontology class have run
-        // [TestCleanup]
+        // [TearDown]
         // public static void MyClassCleanup() { }
         //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize]
-        // public void MyTestInitialize() { }
+        // Use SetUp to run code before running each test 
+        // [SetUp]
+        // public void MySetUp() { }
         //
-        // Use TestCleanup to run code after each test has run
+        // Use TearDown to run code after each test has run
 
-        [TestCleanup]
-        public void MyTestCleanup()
+        [TearDown]
+        public void MyTearDown()
         {
         }
 
-        [TestMethod]
+        [Test]
         public void Query1()
         {
             var ts = new TripleStore(CreateMemoryStore());
@@ -60,7 +60,7 @@ namespace UnitTests
             resultList.AddRange(q);
         }
 
-        [TestMethod]
+        [Test]
         public void Query3()
         {
             TripleStore ts = CreateOnlineTripleStore();
@@ -73,7 +73,7 @@ namespace UnitTests
             Assert.IsTrue(q.Length > 0);
         }
 
-        [TestMethod]
+        [Test]
         public void Query5()
         {
             TripleStore ts = CreateOnlineTripleStore();
@@ -89,7 +89,7 @@ namespace UnitTests
             ctx.SubmitChanges();
         }
 
-        [TestMethod]
+        [Test]
         public void QueryWithProjection()
         {
             var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
@@ -100,7 +100,7 @@ namespace UnitTests
             Assert.IsTrue(q.ToList().Count() == 2);
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQuery()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -115,7 +115,7 @@ namespace UnitTests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryAll()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -129,7 +129,7 @@ namespace UnitTests
             Assert.IsTrue(lt.Count > 1);
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryOrdered()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -145,7 +145,7 @@ namespace UnitTests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryUsingCachedResults()
         {
             TripleStore ts = CreateSparqlTripleStore();
@@ -165,7 +165,7 @@ namespace UnitTests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryUsingHttp()
         {
             TripleStore ts = CreateOnlineTripleStore();
@@ -180,7 +180,7 @@ namespace UnitTests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void SparqlQueryWithTheLot()
         {
             TripleStore ts = CreateSparqlTripleStore();

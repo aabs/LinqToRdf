@@ -486,33 +486,46 @@ namespace LinqToRdf.Sparql
             }
             switch (mce.Method.Name)
             {
-                case "HavingSubjectUri":
+                case "OccursAsStmtObjectWithUri":
                     // well we caught it. Now What?
-                    // 1 get the parameter name of the child instance
+                    // 1) get the parameter name of the instance forming the subject of the triple
                     MemberExpression me = (MemberExpression)mce.Arguments[0];
                     ParameterExpression pe = (ParameterExpression)me.Expression;
                     string name = pe.Name;
-                    // 2 get the URI of the relationship
+                    // 2) get the URI of the predicate/relationship
                     string relnUri = me.Member.GetOwlResourceUri();
-                    // 3 get the URI of the parent instance
+                    // 3) get the URI of the instance forming the object of the triple
                     string instanceUri = ((ConstantExpression)mce.Arguments[1]).Value.ToString();
-
                     QueryAppend("${0} <{1}> <{2}>.", name, relnUri, instanceUri);
-
                     break;
                 case "HasInstanceUri":
                     // well we caught it. Now What?
-                    // 1 get the parameter name of the child instance
+                    // 1 get the parameter name of the instance
                     ParameterExpression pe2 = (ParameterExpression)mce.Arguments[0];
                     string name2 = pe2.Name;
-                    // 2 get the URI of the relationship
-                    
-                    string relnUri2 = pe2.Type.GetOwlResourceUri();
-                    // 3 get the URI of the parent instance
+                    // 2 get the URI of the instance
                     string instanceUri2 = ((ConstantExpression)mce.Arguments[1]).Value.ToString();
-
-                    QueryAppend("${0} = <{2}>", name2, relnUri2, instanceUri2);
-
+                    QueryAppend("${0} = \"{1}\"", name2, instanceUri2);
+                    break;
+                case "StmtObjectWithSubjectAndPredicate":
+                    // 1) get the parameter name of the instance forming the object of the triple
+                    ParameterExpression pe3 = (ParameterExpression)mce.Arguments[0];
+                    string name3 = pe3.Name;
+                    // 2) get the triple's subject
+                    string subjectUri3 = ((ConstantExpression)mce.Arguments[1]).Value.ToString();
+                    // 3) get the triple's predicate
+                    string predicateUri3 = ((ConstantExpression)mce.Arguments[2]).Value.ToString();
+                    QueryAppend("<{0}> <{1}> ${2} .", subjectUri3, predicateUri3, name3);
+                    break;
+                case "StmtSubjectWithObjectAndPredicate":
+                    // 1) get the parameter name of the instance forming the subject of the triple
+                    ParameterExpression pe4 = (ParameterExpression)mce.Arguments[0];
+                    string name4 = pe4.Name;
+                    // 2) get the triple's object
+                    string objectUri4 = ((ConstantExpression)mce.Arguments[1]).Value.ToString();
+                    // 3) get the triple's predicate
+                    string predicateUri4 = ((ConstantExpression)mce.Arguments[2]).Value.ToString();
+                    QueryAppend("${0} <{1}> <{2}> .", name4, predicateUri4, objectUri4);
                     break;
                 case "ToInt16":
                 case "ToInt32":

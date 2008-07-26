@@ -3,7 +3,7 @@
 using System;
 using LinqToRdf;
 using LinqToRdf.Sparql;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RdfMusic;
 using SemWeb;
 using UnitTests.Properties;
@@ -16,7 +16,7 @@ namespace UnitTests
 	///This is ontology test class for LinqToRdf.QueryFactory&lt;T&gt; and is intended
 	///to contain all LinqToRdf.QueryFactory&lt;T&gt; Unit Tests
 	///</summary>
-	[TestClass]
+	[TestFixture]
 	public class QueryFactoryTest
 	{
 		#region helpers
@@ -56,7 +56,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateConnectionTest_InMemorySparqlTripleStore()
 		{
 			TestConnectionCreationForTripleStore(CreateInMemorySparqlTripleStore());
@@ -65,7 +65,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateConnectionTest_OnlineSparqlTripleStore()
 		{
 			TestConnectionCreationForTripleStore(CreateOnlineSparqlTripleStore());
@@ -74,7 +74,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[TestMethod]
+		[Test]
 		[ExpectedException(typeof(ApplicationException))]
 		public void CreateConnectionTest_InMemoryTripleStore()
 		{
@@ -84,7 +84,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateConnection (IRdfQuery&lt;T&gt;)
 		///</summary>
-		[TestMethod]
+		[Test]
 		[ExpectedException(typeof(ApplicationException))]
 		public void CreateConnectionTest_PersistentTripleStore()
 		{
@@ -107,7 +107,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateExpressionTranslator ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateExpressionTranslatorTest()
 		{
 			TripleStore ts = CreateOnlineSparqlTripleStore();
@@ -122,7 +122,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateExpressionTranslator ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateExpressionTranslatorTest2()
 		{
 			TripleStore ts = CreateInMemoryTripleStore();
@@ -141,7 +141,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateQueryTest_OnlineSparqlTripleStore()
 		{
 			TripleStore ts = CreateOnlineSparqlTripleStore();
@@ -156,7 +156,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateQueryTest_InMemorySparqlTripleStore()
 		{
 			TripleStore ts = CreateInMemorySparqlTripleStore();
@@ -171,7 +171,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateQueryTest_InMemoryTripleStore()
 		{
 			TripleStore ts = CreateInMemoryTripleStore();
@@ -186,7 +186,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for CreateQuery&lt;&gt; ()
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void CreateQueryTest_PersistentTripleStore()
 		{
 			TripleStore ts = CreatePersistentTripleStore();
@@ -203,7 +203,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for QueryFactory (QueryType, IRdfContext)
 		///</summary>
-		[TestMethod]
+		[Test]
 		public void ConstructorTest()
 		{
 			mocks = new MockRepository();
@@ -216,7 +216,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for QueryType
 		///</summary>
-        [TestMethod]
+        [Test]
 		public void QueryTypeTest()
 		{
 			mocks = new MockRepository();

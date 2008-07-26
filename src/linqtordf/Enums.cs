@@ -14,7 +14,7 @@
 namespace LinqToRdf
 {
 	/// <summary>
-	/// indictates what types of store can be used, and how they can be interacted with.
+	/// Indictates what types of triple store can be used, and how they can be interacted with.
 	/// </summary>
 	public enum QueryType : int
 	{

@@ -40,6 +40,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="semweb.merged, Version=1.0.5.0, Culture=neutral, PublicKeyToken=b4817ea031ba32f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\semweb.merged.dll</HintPath>
@@ -65,6 +69,7 @@
     <Compile Include="LinqToN3ExpTranslator.cs" />
     <Compile Include="IRdfContext.cs" />
     <Compile Include="IRdfQuery.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="MemoryStoreExtensions.cs" />
     <Compile Include="NamespaceManager.cs" />
     <Compile Include="ObjectDeserialiser.cs" />

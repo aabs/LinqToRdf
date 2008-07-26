@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using LinqToRdf;
 
 namespace UnitTests
@@ -10,7 +10,7 @@ namespace UnitTests
     /// <summary>
     /// Summary description for NamspaceManagetTests
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class NamspaceManagerTests
     {
         public NamspaceManagerTests()
@@ -20,13 +20,13 @@ namespace UnitTests
             //
         }
         public NamespaceManager nsm = null;
-        [TestInitialize]
-        public void MyTestInitialize()
+        [SetUp]
+        public void MySetUp()
         {
             nsm = new NamespaceManager();
         }
-       [TestCleanup]
-        public void MyTestCleanup()
+       [TearDown]
+        public void MyTearDown()
         {
             nsm = null;
         }
@@ -77,14 +77,14 @@ namespace UnitTests
             return dict;
         }
 
-        [TestMethod]
+        [Test]
         public void TestCreateWithNoParameters()
         {
             Assert.IsNotNull(nsm);
             Assert.IsTrue(nsm.Count == 0);
             Assert.IsTrue(nsm.Default == null);
         }
-        [TestMethod]
+        [Test]
         public void TestCreateWithDictionary()
         {
             OntologyAttribute expectedOntology = new OntologyAttribute();
@@ -98,7 +98,7 @@ namespace UnitTests
             Assert.IsTrue(nsm["ontology"] == expectedOntology);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCreateWithEnumerable()
         {
             Dictionary<string, OntologyAttribute> dict = CreateNamespaceDictionary();
@@ -106,7 +106,7 @@ namespace UnitTests
             Assert.IsTrue(nsm.Count == 4);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCreateWithAnotherNamespaceManager()
         {
             Dictionary<string, OntologyAttribute> dict = CreateNamespaceDictionary();
@@ -115,7 +115,7 @@ namespace UnitTests
             Assert.IsTrue(nsm2.Count == 4);
         }
 
-        [TestMethod]
+        [Test]
         public void TestEnumerateNamespaces()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -129,7 +129,7 @@ namespace UnitTests
             Assert.IsTrue(counter == 4);
         }
 
-        [TestMethod]
+        [Test]
         public void TestEnumerateOntologies()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -147,14 +147,14 @@ namespace UnitTests
             }
             Assert.IsTrue(counter == 4);
         }
-        [TestMethod]
+        [Test]
         public void TestSelectOntologyByName()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
             nsm = new NamespaceManager(dict);
             Assert.IsNotNull(nsm["Name3"]);
         }
-        [TestMethod]
+        [Test]
         public void TestAddDefaultOntology()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -170,7 +170,7 @@ namespace UnitTests
             Assert.IsNotNull(nsm[""]);
             Assert.IsTrue(nsm[""] == nsm.Default);
         }
-        [TestMethod]
+        [Test]
         public void TestAddDefaultOntologyViaDefaultProperty()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -186,7 +186,7 @@ namespace UnitTests
             Assert.IsNotNull(nsm[""]);
             Assert.IsTrue(nsm[""] == nsm.Default);
         }
-        [TestMethod]
+        [Test]
         public void TestRemoveOntology()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -196,7 +196,7 @@ namespace UnitTests
             Assert.IsTrue(nsm.Count == 3);
             Assert.IsNull(nsm["Name3"]);
         }
-        [TestMethod]
+        [Test]
         public void TestAddNonClashingOntology()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -212,7 +212,7 @@ namespace UnitTests
             Assert.IsNotNull(nsm["mytest"]);
             Assert.IsTrue(nsm.Count == 5);
         }
-        [TestMethod]
+        [Test]
         public void TestAddClashingOntology()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -235,7 +235,7 @@ namespace UnitTests
             Assert.IsNotNull(nsm["Name1"]);
             Assert.IsTrue(nsm.Count == 4);
         }
-        [TestMethod]
+        [Test]
         public void TestRenamePrefix()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -248,21 +248,21 @@ namespace UnitTests
             Assert.IsNotNull(nsm["Name5"]);
             Assert.IsTrue(nsm.Count == 4);
         }
-        [TestMethod]
+        [Test]
         public void TestQueryOntologyPrefix()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
             nsm = new NamespaceManager(dict);
             Assert.IsTrue(nsm["Name1"].Prefix == "Prefix1");
         }
-        [TestMethod]
+        [Test]
         public void TestQueryOntologyUri()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
             nsm = new NamespaceManager(dict);
             Assert.IsTrue(nsm["Name1"].BaseUri == "BaseUri1");
         }
-        [TestMethod]
+        [Test]
         public void TestDefaultNamespaceExists()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -278,7 +278,7 @@ namespace UnitTests
             };
             Assert.IsTrue(nsm.HasDefault == true);
         }
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentException))]
         public void TestAddASecondDefaultNamespace()
         {
@@ -302,7 +302,7 @@ namespace UnitTests
                 UrlOfOntology = "UrlOfOntology6"
             };
         }
-        [TestMethod]
+        [Test]
         public void TestRenameADefaultNamespace()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -320,7 +320,7 @@ namespace UnitTests
             nsm.Rename("", "Name5");
             Assert.IsTrue(nsm.HasDefault == false);
         }
-        [TestMethod]
+        [Test]
         public void TestDeclareADefaultNamespace()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();
@@ -330,7 +330,7 @@ namespace UnitTests
             Assert.IsTrue(nsm.HasDefault == true);
             Assert.IsTrue(nsm.Default.BaseUri == "BaseUri1");
         }
-        [TestMethod]
+        [Test]
         public void TestDeclareADefaultNamespaceWithAnotherAlreadyExistsOverridingException()
         {
             Dictionary<string, OntologyAttribute> dict = CreateRealisticNamespaceDictionary();

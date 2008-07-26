@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using SemWeb;
 using UnitTests.Properties;
 using System.IO;
@@ -70,7 +70,7 @@ namespace UnitTests
             public string Email { get; set; }
         }
     }
-    [TestClass]
+    [TestFixture]
     public class ProjectsAndTasksTests1
     {
         #region housekeeping
@@ -92,16 +92,16 @@ namespace UnitTests
         //
         // Use ClassCleanup to run code after all tests in a class have run
         //
-        // Use TestInitialize to run code before running each test 
-        [TestInitialize]
-        public void MyTestInitialize() 
+        // Use SetUp to run code before running each test 
+        [SetUp]
+        public void MySetUp() 
         {
             CreateSparqlTripleStore();
         }
         //
-        // Use TestCleanup to run code after each test has run
-       [TestCleanup]
-        public void MyTestCleanup() { }
+        // Use TearDown to run code after each test has run
+       [TearDown]
+        public void MyTearDown() { }
         //
 
         internal TripleStore CreateSparqlTripleStore()
@@ -116,14 +116,13 @@ namespace UnitTests
         }
         #endregion
 
-        [TestMethod]
+        [Test]
         public void TestGetAllTasks()
         {
             RdfDataContext ctx = new RdfDataContext(CreateSparqlTripleStore());
             var q = (from t in ctx.ForType<Task>()
-                    select t).Distinct();
-            List<Task> l = q.ToList();
-            Assert.IsTrue(l.Count == 12);
+                    select t).ToArray().Distinct();
+            Assert.IsTrue(q.Count() == 12);
         }
     }
 }

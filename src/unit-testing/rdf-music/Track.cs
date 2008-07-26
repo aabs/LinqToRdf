@@ -15,6 +15,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using ID3Lib;
 using LinqToRdf;
 using System.Data.Linq;
@@ -87,9 +88,6 @@ namespace RdfMusic
 			Comment = th.Comment;
 		}
 
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
-        public string AlbumUri { get; set; }
-
         private EntityRef<Album> _Album { get; set; }
         [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
         public Album Album
@@ -98,12 +96,18 @@ namespace RdfMusic
             {
                 if (_Album.HasLoadedOrAssignedValue)
                     return _Album.Entity;
-                if (DataContext != null)
-                {
-                    var ctx = (MusicDataContext)DataContext;
-                    _Album = new EntityRef<Album>(from a in ctx.Albums where a.HasInstanceUri(AlbumUri) select a);
-                    return _Album.Entity;
-                }
+				if (DataContext != null)
+				{
+					var ctx = (MusicDataContext)DataContext;
+					string trackUri = this.InstanceUri;
+					string trackPredicateUri = this.PredicateUriForProperty(MethodBase.GetCurrentMethod());
+					_Album = new EntityRef<Album>(
+						from r in ((MusicDataContext)DataContext).Albums
+						where r.StmtObjectWithSubjectAndPredicate(trackUri, trackPredicateUri)
+						select r);
+
+					return _Album.Entity;
+				}
                 return null;
             }
         }
@@ -123,20 +127,26 @@ namespace RdfMusic
 		[OwlResource(OntologyName = "Music", RelativeUriReference="name")]
         public string Name { get; set; }
 
-private EntitySet<Track> _Tracks = new EntitySet<Track>();
-[OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
-public EntitySet<Track> Tracks
-{
-    get
-    {
-        if (_Tracks.HasLoadedOrAssignedValues)
-            return _Tracks;
-        if (DataContext != null)
-        {
-            _Tracks.SetSource(from t in ((MusicDataContext)DataContext).Tracks where t.AlbumName == Name select t);
-        }
-        return _Tracks;
-    }
-}
+		private EntitySet<Track> _Tracks = new EntitySet<Track>();
+		[OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+		public EntitySet<Track> Tracks
+		{
+			get
+			{
+				if (_Tracks.HasLoadedOrAssignedValues)
+					return _Tracks;
+				if (DataContext != null)
+				{
+
+					string recordUri = this.InstanceUri;
+					string trackPredicateUri = this.PredicateUriForProperty(MethodBase.GetCurrentMethod());
+					_Tracks.SetSource(
+						from t in ((MusicDataContext)DataContext).Tracks
+						where t.StmtSubjectWithObjectAndPredicate(recordUri, trackPredicateUri)
+						select t);
+				}
+				return _Tracks;
+			}
+		}
 	}
 }

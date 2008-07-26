@@ -35,8 +35,15 @@ namespace LinqToRdf
         }
         public static IEnumerable<MemberInfo> GetAllPersistentProperties(Type t)
         {
-            foreach (MemberInfo propertyInfo in t.GetProperties())
+            foreach (PropertyInfo propertyInfo in t.GetProperties())
+            //foreach (MemberInfo propertyInfo in t.GetProperties())
             {
+                // CMSB:
+                // Skip EntitySet / EntityRef type properties.
+                if (propertyInfo.PropertyType.IsGenericType &&
+                    propertyInfo.PropertyType.GetGenericTypeDefinition().Name.StartsWith("Entity"))
+                    continue;
+
                 if (propertyInfo.IsOntologyResource())
                 {
                     yield return propertyInfo;

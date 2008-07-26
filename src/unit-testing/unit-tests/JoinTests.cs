@@ -3,7 +3,7 @@ using System.Collections;
 using System.Text;
 using System.Collections.Generic;
 using LinqToRdf;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RdfMusic;
 using System.Linq;
 
@@ -12,7 +12,7 @@ namespace UnitTests
 	/// <summary>
 	/// Summary description for JoinTests
 	/// </summary>
-	[TestClass]
+	[TestFixture]
 	public class JoinTests : HighLevelTests
 	{
 		public JoinTests()
@@ -22,8 +22,8 @@ namespace UnitTests
 			//
 		}
 
-		[TestMethod]
-		public void TestMethod1()
+		[Test]
+		public void Test1()
 		{
 			TripleStore ts = CreateSparqlTripleStore();
 			IRdfQuery<Track> qry = new RdfDataContext(ts).ForType<Track>(); 

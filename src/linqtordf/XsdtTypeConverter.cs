@@ -293,13 +293,13 @@ namespace LinqToRdf
 			return result + xsdTypeSuffix;
 		}
 
-		private string GetXsdtDateRepresentationFor(DateTime d, XsdtPrimitiveDataType dt, XsdtAttribute attr)
+	    public string GetXsdtDateRepresentationFor(DateTime d, XsdtPrimitiveDataType dt, XsdtAttribute attr)
 		{
 			// TODO: the time zone offset needs to be returned from somewhere...
 			return d.ToString("yyyy-MM-ddTHH:mm:sszzz");
 		}
 
-		private string GetStringRepresentationFor<T>(T obj, XsdtPrimitiveDataType dt, XsdtAttribute attr)
+        public string GetStringRepresentationFor<T>(T obj, XsdtPrimitiveDataType dt, XsdtAttribute attr)
 		{
 			return obj.ToString();
 		}

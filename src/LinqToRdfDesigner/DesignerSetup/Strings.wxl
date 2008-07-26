@@ -2,8 +2,8 @@
 <WixLocalization xmlns="http://schemas.microsoft.com/wix/2003/11/localization">
 	<!-- Following strings will commonly need to be edited in this file. -->
 	<String Id="Manufacturer">Andrew Matthews</String>
-	<String Id="ProductName">LinqToRdfDesigner</String>
-	<String Id="FileDescription">LinqToRdf Designer File</String>
+	<String Id="ProductName">LinqToRdf</String>
+	<String Id="FileDescription">LinqToRdf File</String>
 	
 	<!-- Following strings can generally be left as-is. -->
 	<String Id="ElevatedProcessRequired">This setup must be launched from an elevated command prompt.</String>

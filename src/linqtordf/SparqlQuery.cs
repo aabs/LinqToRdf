@@ -98,7 +98,6 @@ namespace LinqToRdf.Sparql
                 {
                     case "Skip":
                         return (S) e.Skip<T>(1);
-                        break;
                     case "Count":
                         x = e.Count();
                         break;
@@ -230,10 +229,9 @@ namespace LinqToRdf.Sparql
                 // we need to add the original type to the prolog to allow elements of the where clause to be optimised
             }
             CreateProlog(sb);
-            CreateDataSetClause(sb);
             CreateProjection(sb);
+            CreateDataSetClause(sb); 
             CreateWhereClause(sb);
-
             CreateSolutionModifier(sb);
         }
 
@@ -245,7 +243,9 @@ namespace LinqToRdf.Sparql
                 if (le.Body is MethodCallExpression)
                 {
                     MethodCallExpression mce = (MethodCallExpression) le.Body;
-                    if (mce.Method.Name == "HavingSubjectUri")
+                    if (mce.Method.Name == "OccursAsStmtObjectWithUri" ||
+                        mce.Method.Name == "StmtObjectWithSubjectAndPredicate" ||
+                        mce.Method.Name == "StmtSubjectWithObjectAndPredicate")
                     {
                         return true;
                     }
@@ -278,6 +278,7 @@ namespace LinqToRdf.Sparql
 
         private void CreateDataSetClause(StringBuilder sb)
         {
+#if false   // As was
             // related Issue: #12 http://code.google.com/p/linqtordf/issues/detail?id=12
             string graph = OriginalType.GetOntology().GraphName;
             if (!graph.Empty())
@@ -285,6 +286,14 @@ namespace LinqToRdf.Sparql
                 sb.AppendFormat("FROM NAMED <{0}>\n", graph);
             }
             return; // no named graphs just yet ()
+#else
+            string defaultGraph = DataContext.DefaultGraph;
+            if (!defaultGraph.Empty())
+            {
+                sb.AppendFormat("FROM <{0}>\n", defaultGraph);
+            }
+            return;
+#endif
         }
 
         private void CreateProjection(StringBuilder sb)
@@ -378,10 +387,13 @@ namespace LinqToRdf.Sparql
 
             foreach (MemberInfo arg in args)
             {
+                // The ontology and prefix assigned to a class property need not match those assigned to the class itself.
+                // e.g. The class could have a property which maps to foaf:name, or dc:title.
+                OwlResourceAttribute ora = arg.GetOwlResource();
                 sb.AppendFormat(tripleFormat,
                                 varName,
-                                originalType.GetOntology().Prefix,
-                                arg.GetOwlResource().RelativeUriReference,
+                                AttributeExtensions.GetOntologyPrefix(ora.OntologyName), //WAS: originalType.GetOntology().Prefix,
+                                ora.RelativeUriReference,
                                 arg.Name);
             }
 

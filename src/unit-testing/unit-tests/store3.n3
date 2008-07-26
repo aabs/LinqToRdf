@@ -52,11 +52,13 @@
 :name a owl:DatatypeProperty;
 	rdfs:domain	:NamedThing;
 	rdfs:range	xsdt:string.
+:track  a owl:ObjectProperty;
+	owl:inverseOf  :isTrackOn.
 	
 
-_:Album_1
+ns1:Album_1 a ns1:Album ;
 	ns1:name "Rory Blyth - podcasts" .
-_:Album_2
+ns1:Album_2 a ns1:Album ;
 	ns1:name "Thomas Laqueur - History Lectures" .
 	
 _:Track_861912094 a ns1:Track;
@@ -67,7 +69,7 @@ _:Track_861912094 a ns1:Track;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\hist5_20060829.mp3";
-	ns1:isTrackOn _:Album_2 ;
+	ns1:isTrackOn :Album_2 ;
 	ns1:rating 2.
 _:Track_1378138934 a ns1:Track;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
@@ -77,7 +79,7 @@ _:Track_1378138934 a ns1:Track;
 	ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\hist5_20060831.mp3";
-	ns1:isTrackOn _:Album_2  .
+	ns1:isTrackOn :Album_2  .
 _:Track_1565191876 a ns1:Track;
 	ns1:title "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:artistName "Lars Brownworth" ;
@@ -126,7 +128,7 @@ _:Track_583675819 a ns1:Track;
 	ns1:genreName "Rory Blyth: The Smartest Man in the World" ;
 	ns1:comment "Einstein couldn't do it again if he lived today. He'd be too distracted by the allure of technology, and by all those buttheads at Mensa trying to prove how smart they are." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\A Few Thoughts on the Subject of Gen.mp3";
-	ns1:isTrackOn _:Album_1  .
+	ns1:isTrackOn :Album_1  .
 _:Track_967002632 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
@@ -135,7 +137,7 @@ _:Track_967002632 a ns1:Track;
 	ns1:genreName "Rory Blyth: The Smartest Man in the World" ;
 	ns1:comment "Some of you might know that my work involves a lot of travel... and it looks like I'm going to be making a trip to Alaska." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\Canada Needs to Move the Hell Over.mp3";
-	ns1:isTrackOn _:Album_1   .
+	ns1:isTrackOn :Album_1   .
 _:Track_538269606 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
@@ -144,7 +146,7 @@ _:Track_538269606 a ns1:Track;
 	ns1:genreName "Rory Blyth: The Smartest Man in the World" ;
 	ns1:comment "During dinner recently, Aidika and I talked, and as usual we talked about everything. And obviously, since everything includes the subject of animal dissection..." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\Keeping the Eyeballs.mp3" ;
-	ns1:isTrackOn _:Album_1  .
+	ns1:isTrackOn :Album_1  .
 _:Track_600475779 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
@@ -153,7 +155,7 @@ _:Track_600475779 a ns1:Track;
 	ns1:genreName "Rory Blyth: The Smartest Man in the World" ;
 	ns1:comment "I have a receipt for the tires, I said.  The cop just stared at me.  He was probably thinking about how when someone decides to embark upon a life of crime, he should be at least the slightest bit prepared." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\My Father, My Transvestite Hero.mp3" ;
-	ns1:isTrackOn _:Album_1  .
+	ns1:isTrackOn :Album_1  .
 _:Track_1355442850 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
