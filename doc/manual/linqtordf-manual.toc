@@ -7,6 +7,6 @@
 \contentsline {subsection}{\numberline {2.4}Creating an ontology}{4}
 \contentsline {subsection}{\numberline {2.5}Hosting your ontology}{6}
 \contentsline {subsection}{\numberline {2.6}Linking to the ontology from .NET}{7}
-\contentsline {subsection}{\numberline {2.7}Querying the ontology using SPARQL}{11}
+\contentsline {subsection}{\numberline {2.7}Querying the ontology using SPARQL{}}{11}
 \contentsline {subsection}{\numberline {2.8}Using the graphical designer to design an ontology}{12}
 \contentsline {section}{\numberline {3}Navigating relationships in LinqToRdf}{21}

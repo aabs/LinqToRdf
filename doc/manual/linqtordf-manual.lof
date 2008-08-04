@@ -1,16 +1,16 @@
 \contentsline {figure}{\numberline {1}{\ignorespaces Major technologies employed with LinqToRdf.}}{2}
-\contentsline {figure}{\numberline {2}{\ignorespaces the hierarchy of technologies used in the semantic web.}}{3}
-\contentsline {figure}{\numberline {3}{\ignorespaces The New Items button.}}{13}
+\contentsline {figure}{\numberline {2}{\ignorespaces The hierarchy of technologies used in the semantic web.}}{3}
+\contentsline {figure}{\numberline {3}{\ignorespaces The New Items button.}}{12}
 \contentsline {figure}{\numberline {4}{\ignorespaces The file templates selection dialog showing the LinqToRdf designer template.}}{13}
 \contentsline {figure}{\numberline {5}{\ignorespaces The resulting files using the name that you provide.}}{13}
-\contentsline {figure}{\numberline {6}{\ignorespaces the toolbox when you're editing a LinqToRdf design.}}{14}
-\contentsline {figure}{\numberline {7}{\ignorespaces the default appearance of a class when first dragged onto a design surface.}}{14}
-\contentsline {figure}{\numberline {8}{\ignorespaces Editing the properties of a class on the design surface.}}{15}
+\contentsline {figure}{\numberline {6}{\ignorespaces The toolbox when you're editing a LinqToRdf design.}}{15}
+\contentsline {figure}{\numberline {7}{\ignorespaces The default appearance of a class when first dragged onto a design surface.}}{15}
+\contentsline {figure}{\numberline {8}{\ignorespaces Editing the properties of a class on the design surface.}}{16}
 \contentsline {figure}{\numberline {9}{\ignorespaces Adding a new model attribute.}}{16}
-\contentsline {figure}{\numberline {10}{\ignorespaces The default properties of a class property.}}{16}
+\contentsline {figure}{\numberline {10}{\ignorespaces The default properties of a class property.}}{17}
 \contentsline {figure}{\numberline {11}{\ignorespaces A properly specified attribute has a reference to the property URI that matches the object or data property in the ontology.}}{17}
-\contentsline {figure}{\numberline {12}{\ignorespaces The class with all of the properties defined.}}{17}
-\contentsline {figure}{\numberline {13}{\ignorespaces two classes related by an inheritance relationship.}}{18}
-\contentsline {figure}{\numberline {14}{\ignorespaces Invoking the code generator, using the 'transform all templates' button.}}{19}
-\contentsline {figure}{\numberline {15}{\ignorespaces the output from running the code generator.}}{19}
+\contentsline {figure}{\numberline {12}{\ignorespaces The class with all of the properties defined.}}{18}
+\contentsline {figure}{\numberline {13}{\ignorespaces Two classes related by an inheritance relationship.}}{19}
+\contentsline {figure}{\numberline {14}{\ignorespaces Invoking the code generator, using the 'transform all templates' button.}}{20}
+\contentsline {figure}{\numberline {15}{\ignorespaces The output from running the code generator.}}{20}
 \contentsline {figure}{\numberline {16}{\ignorespaces Necessary assembly references for working with LinqToRdf.}}{21}

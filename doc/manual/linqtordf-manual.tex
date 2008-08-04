@@ -21,13 +21,13 @@ LinqToRdf should work on any .NET language that supports LINQ.
 
 \section{Introduction}
 \subsection{What are the components of a Semantic Web Application?}
-Within the context of this document, Semantic Web Application means
-''application that uses RDF and related technologies''. That is -- an
+Within the context of this document, `Semantic Web Application' means
+``application that uses RDF and related technologies''. That is -- an
 application that represents information as a graph structure using RDF. It’s
 beyond the scope of this document to explain the whole pyramid of standards and
 technologies needed to support the semantic web. Instead I’ll give context
 enough for you to know what steps are required to get your Semantic Web
-Application working.
+Application off the ground.
 
 % unprocessed
 
@@ -36,42 +36,38 @@ Application working.
 \includegraphics[width=0.5\textwidth]{images/img1}
 \caption{Major technologies employed with LinqToRdf.}
 \end{figure}
-
 LinqToRdf uses the SemWeb.NET framework by Joshua Tauberer, which provides a
 platform for working with OWL and \spq{}. It also uses the .NET 3.5 namespace
-System.Linq which will be released as part of Visual Studio .NET 2008. The
-current version at time of writing is targeted at Visual Studio .NET 2008 beta
-2.
+\texttt{System.Linq} which will be released as part of Visual Studio .NET 2008.
  
 \begin{figure}
 \centering
 \includegraphics{images/img2}
-\caption{the hierarchy of technologies used in the semantic web.}
+\caption{The hierarchy of technologies used in the semantic web.}
 \end{figure}
 \section{Programming with LinqToRdf}
+
 \subsection{What do you need to do semantic web programming with LinqToRdf?}
-LinqToRdf requires an IDE that supports the latest version of LINQ, which at
-the time of writing is Visual Studio .NET 2008 Beta 2. The 3.5 version of the
-.NET framework that comes with beta 2 has a go-live license, so it should not
-change substantially prior to release.  Get the latest release, if you haven’t
-already, and install it.
+LinqToRdf requires a runtime that supports the latest version of LINQ, which at
+the time of writing is .NET 3.5 or Mono 1.9. LinqToRdf has not been tested with
+Mono yet, but since Mono 1.9 now supports \cs{} it should be able to run.
 
 \subsection{Where to get LinqToRdf}
 You can download the latest release from Google code (latest version at time of
-writing is LinqToRdf-0.4.msi) . If you want to use the visual designer in
-VS.NET 2008 beta 2, you will also need to download and install
-LinqToRdfDesigner-0.4.msi, also available for download from the Google Code
-website. Check the linqtordf-discuss discussion forum for announcements of
-newer releases.  
+writing is LinqToRdf-0.8.msi) . That installer also contains an installer for te
+LinqToRdf designer - an extension to visual studio 2008 that will provide a
+simple UML design surface for producing ontologies and domain models. Check the
+linqtordf-discuss discussion forum for announcements of newer releases.  
 
 \subsection{Installation procedure}
 Installation is a simple matter of double clicking the MSI file, and deciding
 where to install the assemblies for LinqToRdf. The default location will be in
-a LinqTordf-0.x directory under ''c:\\Program Files''. It is recommended that you
-stay with that location. Once LinqToRdf is installed, you should then install
-LinqToRdfDesigner, which will register the DSL (Domain Specific Language)
-add-in to Visual Studio. Note that LinqToRdf and LinqToRdfDesigner will only
-work with Visual Studio 2008 and above.  
+a \texttt{LinqToRdf-0.x} directory under ``
+  \verb|c:\Program Files\Andrew Matthews|''.
+Once LinqToRdf is installed, you should then install LinqToRdfDesigner, which
+will register the DSL (Domain Specific Language) add-in to Visual Studio. Note
+that LinqToRdf and LinqToRdfDesigner will only work with Visual Studio 2008 and
+above.  
 
 \subsection{Creating an ontology}
 The details of the OWL standard are beyond the scope of this document. The
@@ -151,6 +147,7 @@ ns1:Track_-861912094 <http://www.w3.org/1999/02/22-rdf-syntax-ns\#type> ns1:Trac
     ns1:year "2006" ;
     ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
     ns1:comment " (C) Copyright 2006, UC Regents" ;
+    ns1:isTrackOn ns1:Album_2 ;
     ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\hist5_20060829.mp3" .
 ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns\#type> ns1:Track ;
     ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
@@ -159,6 +156,7 @@ ns1:Track_-1378138934 <http://www.w3.org/1999/02/22-rdf-syntax-ns\#type> ns1:Tra
     ns1:year "2006" ;
     ns1:genreName "History 5 | Fall 2006 | UC Berkeley" ;
     ns1:comment " (C) Copyright 2006, UC Regents" ;
+    ns1:isTrackOn ns1:Album_2 ;
     ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\hist5_20060831.mp3" .
 ns1:Track_583675819 <http://www.w3.org/1999/02/22-rdf-syntax-ns\#type> ns1:Track ;
     ns1:title "Rory Blyth: The Smartest Man in the World\u0000" ;
@@ -169,6 +167,7 @@ ns1:Track_583675819 <http://www.w3.org/1999/02/22-rdf-syntax-ns\#type> ns1:Track
     ns1:comment "Einstein couldn't do it again if he lived today. He'd be
       too distracted by the allure of technology, and by all those buttheads
       at Mensa trying to prove how smart they are." ;
+    ns1:isTrackOn ns1:Album_2 ;
     ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes
       Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\A Few
       Thoughts on the Subject of Gen.mp3" .
@@ -177,15 +176,15 @@ ns1:Track_583675819 <http://www.w3.org/1999/02/22-rdf-syntax-ns\#type> ns1:Track
 
 These entries were taken randomly from a list of podcasts that I subscribe to.
 In addition, I wrote a program to create them, but you could do it by hand if
-you want to. ? I’ll show you in a little while how I created the entries in the
-mp3s.n3 file. In mp3s.n3 I defined a namespace called ns1. It refers to what
+you want to. I’ll show you in a little while how I created the entries in the
+\texttt{mp3s.n3} file. In mp3s.n3 I defined a namespace called ns1. It refers to what
 was the default namespace in music.n3.  That means that references to entities
 from the ontology like ‘Track’ will be called ‘ns1:Track’ rather than ‘:Track’
-as they were called in music.n3.  It doesn’t matter what you call the prefix
+as they were called in \texttt{music.n3}.  It doesn’t matter what you call the prefix
 for the namespace, just so long as the URI that it maps to is the same as was
-used in the ontology definition file. I called it ns1, because that’s what my
-import program wanted to do. The point is that the type ns1:Track in this file
-refers to the :Track class defined in music.n3. The triple store that we’ll get
+used in the ontology definition file. I called it \texttt{ns1}, because that’s what my
+import program wanted to do. The point is that the type \texttt{ns1:Track} in this file
+refers to the \texttt{:Track} class defined in \texttt{music.n3}. The triple store that we’ll get
 to shortly will be able to make sense of that in order to know that a ns1:Track
 has a title, artist etc. It is also able to work out the types of the
 properties (which just happens to be ‘string’ for the moment).
@@ -196,13 +195,15 @@ ObjectProperties, but for now you have an ontology and some data that uses it.
 
 \subsection{Hosting your ontology}
 Since the uptake of semantic web technologies has been pretty patchy in the
-.NET domain your best bet for industrial strength RDF triple stores will (for
-now) lie in the Java domain, and there are various triple store solutions that
+.NET domain so far, your best bet for industrial strength RDF triple stores will (for
+now) be either Jena (\texttt{jena.sf.net}) or OpenLink
+(\texttt{openlinksw.com}), though there are various triple store solutions that
 can be used. For this guide I shall stick to .NET by using Joshua Tauberer’s
 \spq{} enabled HttpHandler for ASP.NET, which is sufficient to demonstrate how
 LinqToRdf can connect to a \spq{} compatible triple store. LinqToRdf has been
-tested with the Joseki \spq{} interface to Jena, which runs on Java. LinqToRdf
-is  platform independent.
+tested with the Joseki \spq{} interface to Jena, and the OpenLink Virtuoso
+platform. LinqToRdf is platform independent in the sense that it will happily
+work on any standards compliant \spq{} server.
 
 To use the HttpHandler as a triple store for music.n3, create an ASP.NET
 application in visual studio. Place the following into configuration section of
@@ -320,102 +321,97 @@ the hard way.
 using LinqToRdf;
 namespace RdfMusic
 {
-[OwlResource(OntologyName="Music", 
-    RelativeUriReference="Track")]
+[OwlResource(OntologyName="Music", RelativeUriReference="Track")]
 public class Track : OwlInstanceSupertype
 {
+
     [OwlResource(OntologyName = "Music", 
-        RelativeUriReference="title")]
-    public string Title
-    {
-        get { return title; }
-        set { title = value; }
-    }
+    	RelativeUriReference = "title")]
+    public string Title { get; set; }
+
     [OwlResource(OntologyName = "Music", 
-        RelativeUriReference="artistName")]
-    public string ArtistName
-    {
-        get { return artistName; }
-        set { artistName = value; }
-    }
+    	RelativeUriReference="artistName")]
+    public string ArtistName { get; set; }
+
     [OwlResource(OntologyName = "Music", 
-        RelativeUriReference="albumName")]
-    public string AlbumName
-    {
-        get { return albumName; }
-        set { albumName = value; }
-    }
+    	RelativeUriReference="albumName")]
+    public string AlbumName { get; set; }
+
     [OwlResource(OntologyName = "Music", 
-        RelativeUriReference="year")]
-    public string Year
-    {
-       	get { return year; }
-        set { year = value; }
-    }
+    	RelativeUriReference="year")]
+    public string Year { get; set; }
+
     [OwlResource(OntologyName = "Music", 
-        RelativeUriReference="genreName")]
-    public string GenreName
-    {
-        get { return genreName; }
-        set { genreName = value; }
-    }
+    	RelativeUriReference="genreName")]
+    public string GenreName { get; set; }
+
     [OwlResource(OntologyName = "Music", 
-        RelativeUriReference="comment")]
-    public string Comment
-    {
-        get { return comment; }
-        set { comment = value; }
-    }
+    	RelativeUriReference="comment")]
+    public string Comment { get; set; }
+
     [OwlResource(OntologyName = "Music", 
-        RelativeUriReference="fileLocation")]
-    public string FileLocation
-    {
-        get { return fileLocation; }
-        set { fileLocation = value; }
-    }
+    	RelativeUriReference="fileLocation")]
+    public string FileLocation { get; set; }
+
     [OwlResource(OntologyName = "Music", 
-        RelativeUriReference="rating")]
-    public int Rating
-    {
-        get { return rating; }
-        set { rating = value; }
-    }
-    private string title;
-    private string artistName;
-    private string albumName;
-    private string year;
-    private string genreName;
-    private string comment;
-    private string fileLocation;
-    private int rating;
-    
+    	RelativeUriReference="rating")]
+    public int Rating { get; set; }
+
     public Track(TagHandler th, string fileLocation)
     {
-        this.fileLocation = fileLocation;
-        title = th.Track;
-        artistName = th.Artist;
-        albumName = th.Album;
-        year = th.Year;
-        genreName = th.Genere;
-        comment = th.Comment;
+        FileLocation = fileLocation;
+        Title = th.Track;
+        ArtistName = th.Artist;
+        AlbumName = th.Album;
+        Year = th.Year;
+        GenreName = th.Genere;
+        Comment = th.Comment;
+    }
+
+    private EntityRef<Album> _Album { get; set; }
+    [OwlResource(OntologyName = "Music", 
+    	RelativeUriReference = "isTrackOn")]
+    public Album Album
+    {
+        get
+        {
+            if (_Album.HasLoadedOrAssignedValue)
+                return _Album.Entity;
+            if (DataContext != null)
+            {
+                var ctx = (MusicDataContext)DataContext;
+                string trackUri = this.InstanceUri;
+                string trackPredicateUri = 
+			this.PredicateUriForProperty(MethodBase.GetCurrentMethod());
+                _Album = new EntityRef<Album>(
+                    from r in ((MusicDataContext)DataContext).Albums
+                    where r.StmtObjectWithSubjectAndPredicate(trackUri, 
+		    	trackPredicateUri)
+                    select r);
+
+                return _Album.Entity;
+            }
+            return null;
+        }
     }
     public Track()
     {
+
     }
 }
-
 \end{verbatim}
 
 The class is just the same as any other entity class except that the class and
 its properties have been annotated with OwlResource attributes . The critical
-bit to get right is to use the same URI in OntologyAttribute as we used in
-music.n3 and mp3s.n3 for the namespace definitions. Using OntologyAttribute
-plus OntologyName allows you to define all attributes as relative URIs which
-makes for a much more readable source file. The OwlResourceAttribute defines
-our .NET class ‘RdfMusic.Track’ to correspond with the OWL class
-http://aabs.purl.org/ontologies/2007/04/music\#Track. Likewise the
-‘FileLocation’ property defined on it corresponds to the RDF datatype property
-http://aabs.purl.org/ontologies/2007/04/music\#fileLocation. The Boolean true on
+bit to get right is to use the same URI in \texttt{OntologyAttribute} as we used in
+\texttt{music.n3} and \texttt{mp3s.n3} for the namespace definitions. Using
+\texttt{OntologyAttribute}
+plus \texttt{OntologyName} allows you to define all attributes as relative URIs which
+makes for a much more readable source file. The \texttt{OwlResourceAttribute} defines
+our .NET class ‘\texttt{RdfMusic.Track}’ to correspond with the OWL class
+\texttt{http://aabs.purl.org/ontologies/2007/04/music\#Track}. Likewise the
+‘\texttt{FileLocation}’ property defined on it corresponds to the RDF datatype property
+\texttt{http://aabs.purl.org/ontologies/2007/04/music\#fileLocation}. The Boolean true on
 these attributes simply tells LinqToRdf that the URIs are relative. It then
 knows enough to be able to work out how to query for the details needed to fill
 each of the properties on the class Track.
@@ -428,14 +424,15 @@ table and column names.
 
 
 That’s all you need to be able to model your ontology classes in .NET. Now we
-will move on to the techniques needed to query your RDF triple store.
+can move on to the techniques needed to query your RDF triple store.
 
 \subsection{Querying the ontology using \spq{}}
 
 The steps to start making queries are also pretty simple. First just create a
-simple LINQ enabled console application called MyRdfTest. Open up Program.cs up
-for editing, and add namespace import statements for System.Linq, LinqToRdf and
-SemWeb:
+simple LINQ enabled console application called \texttt{MyRdfTest}. Open up
+\texttt{Program.cs} up
+for editing, and add namespace import statements for \texttt{System.Linq},
+\texttt{LinqToRdf} and \texttt{SemWeb}:
 
 \begin{verbatim}
 using System;
@@ -444,7 +441,7 @@ using System.Linq;
 
 \end{verbatim}
 
-In Main, create a TripleStore object with the location of the \spq{} server:
+In \texttt{Main}, create a \texttt{TripleStore} object with the location of the \spq{} server:
 
 \begin{verbatim}
 private static void Main(string[] args)
@@ -455,17 +452,18 @@ private static void Main(string[] args)
 
 \end{verbatim}
 
-TripleStore is used to carry any information needed about the triple store for
+\texttt{TripleStore} is used to carry any information needed about the triple store for
 later use by the query. In this case I set up an IIS virtual directory on my
-local machine called linqtordf, and followed the steps outlined early. The
-QueryType just indicates to the query context that we will be using \spq{} over
+local machine called \texttt{linqtordf}, and followed the steps outlined early. The
+\texttt{QueryType} just indicates to the query context that we will be using \spq{} over
 HTTP. That tells it what types of connections, commands, XML data types and the
 query language to use.
 
 Now we’re ready to perform the LINQ query. We’ll get all of the tracks from
-2007 that have a genre name of “Rory Blyth: The Smartest Man in the World”.
+2007 that have a genre name of ``\textsf{Rory Blyth: The Smartest Man in the
+World}''.
 We’ll create a new anonymous type to store the results in, and we’re only
-interested in  the Title and the FileLocation.
+interested in  the \texttt{Title} and the \texttt{FileLocation}.
 
 \begin{verbatim}
 var q = from t in new RDF(ts).ForType<MyTrack>()
@@ -487,21 +485,22 @@ Console.ReadKey();
 
 That’s all there is to it. Of course there’s a lot more going on behind the
 scenes, but the beauty of LINQ is that you don’t need to see all of that while
-you’re only interested in getting some Tracks back! In the references section
+you’re only interested in getting some \texttt{Track}s back! In the references section
 I’ll give some links that you can go to if you want to know what’s going on
 under the hood.
 
 \subsection{Using the graphical designer to design an ontology}
-The process described in previous sections can be done quite easily using the
-LinqToRdfDesigner. This section describes the tasks required to set up a very
-simple ontology of two classes called Artifact and Assembly. The program
+The process described in previous sections can be done easily using the
+\texttt{LinqToRdfDesigner}. This section describes the tasks required to set up a very
+simple ontology of two classes called \texttt{Artifact} and \texttt{Assembly}. The program
 associated with it is available from the google code site via subversion. It’s
 purpose is to gather various bits of information about the running system and
 store them as objects in an N3 file for later use. We won’t explore too much of
 the application except where it depends on LinqToRdf or LinqToRdfDesigner.
 
 The first task is to create a design surface to draw the domain model on. The
-file extension for LinqToRdfDesigner files is ‘rdfx’. Click on the ‘New Item’
+file extension for LinqToRdfDesigner files is ‘\texttt{rdfx}’. Click on the
+‘\textsf{New Item}’
 button on the standard toolbar.
 
 \begin{figure}
@@ -510,8 +509,8 @@ button on the standard toolbar.
 \caption{The New Items button.}
 \end{figure}
 
-The item templates selection dialog will them appear. You will locate the
-LinqToRdf item template at the bottom, under My Templates. If it is not there,
+The item templates selection dialog will then appear. You will locate the
+LinqToRdf item template at the bottom, under \textsf{My Templates}. If it is not there,
 then check that the LinqToRdfDesigner has been installed on your machine.
 
 \begin{figure}
@@ -520,7 +519,7 @@ then check that the LinqToRdfDesigner has been installed on your machine.
 \caption{The file templates selection dialog showing the LinqToRdf designer template.}
 \end{figure}
  
-Change the name of the file to SystemScannerModel.rdfx. This will create
+Change the name of the file to \texttt{SystemScannerModel.rdfx}. This will create
 several files in your project.
 
 \begin{figure}
@@ -529,10 +528,10 @@ several files in your project.
 \caption{The resulting files using the name that you provide.}
 \end{figure}
  
-SystemScannerModel.rdfx is the design surface file.
-SystemScannerModel.rdfx.entities.tt is a text template file that is used to
-generate the C\# file containing the base definitions of you .NET entity model.
-SystemScannerModel.rdfx.n3.tt is the text template that is used to generate the
+\texttt{SystemScannerModel.rdfx} is the design surface file.
+\texttt{SystemScannerModel.rdfx.entities.tt} is a text template file that is used to
+generate the \cs{} file containing the base definitions of your .NET entity model.
+\texttt{SystemScannerModel.rdfx.n3.tt} is the text template that is used to generate the
 N3 format ontology definition that will be used by LinqToRdf and its
 components.
 
@@ -542,7 +541,7 @@ that the toolbox contains elements for modeling your classes.
 \begin{figure}
 \centering
 \includegraphics{images/img6}
-\caption{the toolbox when you're editing a LinqToRdf design.}
+\caption{The toolbox when you're editing a LinqToRdf design.}
 \end{figure}
  
 Drag a class from the toolbox onto the design surface.
@@ -550,14 +549,15 @@ Drag a class from the toolbox onto the design surface.
 \begin{figure}
 \centering
 \includegraphics{images/img7}
-\caption{the default appearance of a class when first dragged onto a design surface.}
+\caption{The default appearance of a class when first dragged onto a design surface.}
 \end{figure}
 
-By default, it will be called something ModelClass1. Rename it to ‘Artifact’.
+By default, it will be called something like \texttt{ModelClass1}. Rename it to
+‘\texttt{Artifact}’.
 This class also needs a name within the ontology. In semantic web applications,
 classes are named using URIs. You will need to choose a URI for the class.
 We’ll get onto that in a moment. For now, press the F4 button an enter
-‘Artifact’ in the ‘Owl Class Uri’ property in the property window.
+‘\texttt{Artifact}’ in the ‘\textsf{Owl Class Uri}’ property in the property window.
 
 Your properties window should now look like this.
 
@@ -567,8 +567,9 @@ Your properties window should now look like this.
 \caption{Editing the properties of a class on the design surface.}
 \end{figure}
 
-Right click on the class shape in the designer and click on the ‘Add New Model
-Attribute’ menu option.
+Right click on the class shape in the designer and click on the
+‘\textsf{Add New Model
+Attribute}’ menu option.
 
 \begin{figure}
 \centering
@@ -577,7 +578,7 @@ Attribute’ menu option.
 \end{figure}
  
 Add an attribute (a field in .NET parlance) to the class and call it
-‘ArtifactExists’. Again, use the properties window to set up some properties
+‘\texttt{ArtifactExists}’. Again, use the properties window to set up some properties
 for the attribute. Initially it will look like this.
 
 \begin{figure}
@@ -595,12 +596,12 @@ Change the properties to be like this.
 that matches the object or data property in the ontology.}
 \end{figure}
 
-What we’re saying here is that the .NET property ‘ArtifactExists’ of .NET type
-bool corresponds to the OWL URI ‘artifactExists’ which LinqToRdf will convert
-into the XML Schema Datatype ‘xsdt:boolean’. You can ignore the description
+What we’re saying here is that the .NET property ‘\texttt{ArtifactExists}’ of .NET type
+\texttt{bool} corresponds to the OWL URI ‘\texttt{artifactExists}’ which LinqToRdf will convert
+into the XML Schema Datatype ‘\texttt{xsdt:boolean}’. You can ignore the description
 property, for the moment, since it’s not currently used in the designer text
 templates. Later on we will see how these extra properties can be used within
-the text templates to generate documentation for both C\# and N3.
+the text templates to generate documentation for both \cs{} and N3.
 
 The rest of the attributes attached to the artifact class are shown below.
  
@@ -614,20 +615,20 @@ Their types should be easy enough to guess, and the OWL URIs are just the same,
 except using camel rather than Pascal case, since that is the norm in N3.
 
 Next drag another class from the toolbox onto the design surface and call it
-Assembly.
+`\texttt{Assembly}'.
 
 \begin{figure}
 \centering
 \includegraphics{images/img13}
-\caption{two classes related by an inheritance relationship.}
+\caption{Two classes related by an inheritance relationship.}
 \end{figure}
  
-Use the ‘inheritance’ tool from the toolbox to connect from it to the class
-‘Artifact’. This will connect the classes using direct inheritance in C\# and
-owl:subclass in N3. Your domain model is now taking shape. 
+Use the ‘\textsf{inheritance}’ tool from the toolbox to connect from it to the class
+‘Artifact’. This will connect the classes using direct inheritance in \cs{} and
+\texttt{owl:subclass} in N3. Your domain model is now taking shape. 
 
 You’re now at a stage where you have something worth converting into code!
-Click on the ‘transform all templates’ button on the Solution Explorer toolbar.
+Click on the ‘\textsf{transform all templates}’ button on the Solution Explorer toolbar.
 
 \begin{figure}
 \centering
@@ -642,7 +643,7 @@ should look like this.
 \begin{figure}
 \centering
 \includegraphics{images/img16}
-\caption{the output from running the code generator.}
+\caption{The output from running the code generator.}
 \end{figure}
  
 If you look inside the code generated for the entities, it should look like this.
@@ -691,8 +692,7 @@ namespace SystemScannerModel
 \end{verbatim}
 
 Here is an example of a unit test that grabs the data from the assembly.
-ArtifactStore is a wrapper around a SemWeb MemoryStthe hierarchy of technologies that are involved in the
-semantic webore.
+\texttt{ArtifactStore} is a wrapper around a SemWeb \texttt{MemoryStore}.
 
 \begin{verbatim}
 string loc = @"C:\\etc\\dev\\prototypes\\linqtordf\\"
@@ -723,13 +723,6 @@ the system it should build OK. You are now able to perform LinqToRdf queries
 against the ontology using the techniques described previously.
 
 
-REFERENCE MATERIAL
-
-
-
-
-
-
 \section{Navigating relationships in LinqToRdf}
 The representation and querying of relationships in RDF is very different from
 the model employed in relational databases. At first glance, looking at LINQ to
@@ -737,9 +730,10 @@ SQL, you might think that that LINQ itself was tied to the relational model,
 but that is not the case. LINQ is a fully extensible platform allowing us to represent
 other kinds of relationship through the use of query operators.
 
-In LinqToRdf you can use the \verb|HavingSubjectUri| and \verb|HasInstanceUri| to
+In LinqToRdf you can use the \texttt{StmtObjectWithSubjectAndPredicate} and
+\texttt{StmtSubjectWithObjectAndPredicate} to
 instruct it to navigate the relationships using \spq{} syntax. here is an
-example of \verb|HavingSubjectUri| in action:
+example of \texttt{StmtObjectWithSubjectAndPredicate} in action:
 
 \begin{verbatim}
 var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
@@ -747,14 +741,16 @@ var album = (from a in ctx.Albums
               where a.Name.StartsWith("Thomas")
               select a).First();
 
-var tracks = from t in ctx.Tracks
-             where t.Album.HavingSubjectUri(album.InstanceUri)
-             select t;
+string recordUri = album.InstanceUri;
+string trackPredicateUri = album.PredicateUriForProperty(MethodBase.GetCurrentMethod());
+var tracks = from t in ((MusicDataContext)DataContext).Tracks
+		where t.StmtSubjectWithObjectAndPredicate(recordUri, trackPredicateUri)
+		select t;
 \end{verbatim}
 
-Given an object called \verb|album| whose instance URI we already know, we can
+Given an object called \texttt{album} whose instance URI we already know, we can
 select through properties that we know reference that URI. The definition of
-property \verb|Album| in class \verb|Track| looks like this:
+property \texttt{Album} in class \texttt{Track} looks like this:
 
 \begin{verbatim}
 [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
@@ -766,17 +762,17 @@ public Album Album
 	
 \end{verbatim}
 
-The combination of \verb|t|, \verb|Album| and \verb|HavingSubjectUri| is enough
+The combination of \texttt{t}, \texttt{Album} and \texttt{StmtSubjectWithObjectAndPredicate} is enough
 for LinqToRdf to be able to generate \spq{} with a triple like this:
 
 \begin{verbatim}
 $t ns1:isTrackOn ns1:Album_2 .
 \end{verbatim}
 
-Which will filter all tracks except those that are tracks on \verb|ns1:Album_2|.
+Which will filter all tracks except those that are tracks on \texttt{ns1:Album\_2}.
 To support this, LinqToRdf automatically retrieves and stores the instance URIs
 for all ontology classes. If you use projections, then you don't get the
-\verb|InstanceUri| property, so you will have to construct your collections
+\texttt{InstanceUri} property, so you will have to construct your collections
 manually.
 
 LinqToRdf also stores a reference to the DataContext from an instance was
@@ -785,8 +781,8 @@ child collections like this:
 
 \begin{verbatim}
 private EntitySet<Track> _Tracks = new EntitySet<Track>();
-
-[OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
+[OwlResource(OntologyName = "Music", 
+  RelativeUriReference = "isTrackOn")]
 public EntitySet<Track> Tracks
 {
     get
@@ -795,124 +791,182 @@ public EntitySet<Track> Tracks
             return _Tracks;
         if (DataContext != null)
         {
-	    var ctx = (MusicDataContext)DataContext;
-            _Tracks.SetSource(from t in ctx.Tracks 
-	    	where t.HavingSubjectUri(this.InstanceUri) 
-		select t);
+
+            string recordUri = this.InstanceUri;
+            string trackPredicateUri = 
+	      this.PredicateUriForProperty(MethodBase.GetCurrentMethod());
+            _Tracks.SetSource(
+                from t in ((MusicDataContext)DataContext).Tracks
+                where t.StmtSubjectWithObjectAndPredicate(recordUri, 
+		 trackPredicateUri)
+                select t);
         }
         return _Tracks;
     }
 }
-
 \end{verbatim}
 
 This uses the EntitySet container that can be primed with a query based on the
-\verb|DataContext| and \verb|InstanceUri| of \verb|this|. It will store the
+\texttt{DataContext} and \texttt{InstanceUri} of \texttt{this}. It will store the
 query and only invoke it on first demand. You need to beware that the
-\verb|DataContext| has not gone out of scope before the query gets invoked. That
+\texttt{DataContext} has not gone out of scope before the query gets invoked. That
 constraint is in common with LINQ to SQL.
-
 
 \begin{verbatim}
 using System.Data.Linq;
 using System.Linq;
+using System.Reflection;
+using ID3Lib;
 using LinqToRdf;
 
-[assembly : Ontology(
-    BaseUri = "http://aabs.purl.org/ontologies/2007/04/music#",
-    Name = "Music",
-    Prefix = "Music",
-    UrlOfOntology = "http://aabs.purl.org/ontologies/2007/04/music#")]
-
-namespace Music
+namespace RdfMusic
 {
-    public partial class MusicDataContext : RdfDataContext
+  public class MusicDataContext : RdfDataContext
+  {
+    public MusicDataContext(TripleStore store) : 
+      base(store){}
+
+    public MusicDataContext(string store) : 
+      base(new TripleStore(store)) { }
+
+    public IQueryable<Album> Albums
     {
-        public MusicDataContext(string store) : base(new TripleStore(store))
-        {
-        }
-
-        public IQueryable<Album> Albums
-        {
-            get { return ForType<Album>(); }
-        }
-
-        public IQueryable<Track> Tracks
-        {
-            get { return ForType<Track>(); }
-        }
+      get { return ForType<Album>(); }
     }
 
-
-    [OwlResource(OntologyName = "Music", RelativeUriReference = "album")]
-    public partial class Album : OwlInstanceSupertype
+    public IQueryable<Track> Tracks
     {
-        private readonly EntitySet<Track> _Tracks = new EntitySet<Track>();
+      get { return ForType<Track>(); }
+    }
+  }
 
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "name")]
-        public string Name { get; set; }
-
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
-        public EntitySet<Track> Tracks
-        {
-            get
-            {
-                if (_Tracks.HasLoadedOrAssignedValues)
-                    return _Tracks;
-                if (DataContext != null)
-                {
-                    var ctx = (MusicDataContext) DataContext;
-                    _Tracks.SetSource(from t in ctx.Tracks
-                                      where t.Album.HavingSubjectUri(InstanceUri)
-                                      select t);
-                }
-                return _Tracks;
-            }
-        }
+  [OwlResource(OntologyName = "Music", 
+    RelativeUriReference = "Track")]
+  public class Track : OwlInstanceSupertype
+  {
+    public Track(TagHandler th, string fileLocation)
+    {
+      FileLocation = fileLocation;
+      Title = th.Track;
+      ArtistName = th.Artist;
+      AlbumName = th.Album;
+      Year = th.Year;
+      GenreName = th.Genere;
+      Comment = th.Comment;
     }
 
-    [OwlResource(OntologyName = "Music", RelativeUriReference = "track")]
-    public partial class Track : OwlInstanceSupertype
+    public Track()
     {
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "title")]
-        public string Title { get; set; }
-
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "fileLocation")]
-        public string FileLocation { get; set; }
-
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
-        public string AlbumUri { get; set; }
-
-        private EntityRef<Album> _Album { get; set; }
-
-        [OwlResource(OntologyName = "Music", RelativeUriReference = "isTrackOn")]
-        public Album Album
-        {
-            get
-            {
-                if (_Album.HasLoadedOrAssignedValue)
-                    return _Album.Entity;
-                if (DataContext != null)
-                {
-                    var ctx = (MusicDataContext) DataContext;
-                    _Album = new EntityRef<Album>(from x in ctx.Albums where x.HasInstanceUri(AlbumUri) select x);
-                    return _Album.Entity;
-                }
-                return null;
-            }
-        }
     }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "title")]
+    public string Title { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "artistName")]
+    public string ArtistName { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "albumName")]
+    public string AlbumName { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "year")]
+    public string Year { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "genreName")]
+    public string GenreName { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "comment")]
+    public string Comment { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "fileLocation")]
+    public string FileLocation { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "rating")]
+    public int Rating { get; set; }
+
+    private EntityRef<Album> _Album { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "isTrackOn")]
+    public Album Album
+    {
+      get
+      {
+        if (_Album.HasLoadedOrAssignedValue)
+          return _Album.Entity;
+        if (DataContext != null)
+        {
+          var ctx = (MusicDataContext) DataContext;
+          string trackUri = InstanceUri;
+          string trackPredicateUri = 
+	    this.PredicateUriForProperty(MethodBase.GetCurrentMethod());
+          _Album = new EntityRef<Album>(
+            from r in ((MusicDataContext) DataContext).Albums
+            where r.StmtObjectWithSubjectAndPredicate(trackUri, 
+	      trackPredicateUri)
+            select r);
+
+          return _Album.Entity;
+        }
+        return null;
+      }
+    }
+  }
+
+  [OwlResource(OntologyName = "Music", 
+    RelativeUriReference = "Album")]
+  public class Album : OwlInstanceSupertype
+  {
+    private readonly EntitySet<Track> _Tracks = 
+      new EntitySet<Track>();
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "name")]
+    public string Name { get; set; }
+
+    [OwlResource(OntologyName = "Music", 
+      RelativeUriReference = "isTrackOn")]
+    public EntitySet<Track> Tracks
+    {
+      get
+      {
+        if (_Tracks.HasLoadedOrAssignedValues)
+          return _Tracks;
+        if (DataContext != null)
+        {
+          string recordUri = InstanceUri;
+          string trackPredicateUri = 
+	    this.PredicateUriForProperty(MethodBase.GetCurrentMethod());
+          _Tracks.SetSource(
+            from t in ((MusicDataContext) DataContext).Tracks
+            where t.StmtSubjectWithObjectAndPredicate(recordUri, 
+	      trackPredicateUri)
+            select t);
+        }
+        return _Tracks;
+      }
+    }
+  }
 }
-
 \end{verbatim}
 
 \begin{verbatim}
 public static void Main()
 {
-    var ctx = new MusicDataContext(@"http://localhost/linqtordf/SparqlQuery.aspx");
+    var ctx = new MusicDataContext(
+      @"http://localhost/linqtordf/SparqlQuery.aspx");
     var track = (from t in ctx.Tracks
-            where t.HasInstanceUri("http://aabs.purl.org/ontologies/2007/04/music#Track_-861912094")
-            select t).First();
+                 where t.StmtObjectWithSubjectAndPredicate(
+		   "http://aabs.purl.org/ontologies/2007/04/music#Track_-861912094",
+	           "http://aabs.purl.org/ontologies/2007/04/music#isTrackOn")
+                 select t).First();
 
     Debug.WriteLine("Track was " + track.Title);
     Debug.WriteLine("Album was " + track.Album.Name);
@@ -922,6 +976,6 @@ public static void Main()
         Debug.WriteLine("Album Track was " + track.Title);
     }
 }
-\end{verbatim}<++>
+\end{verbatim}
 
 \end{document}
