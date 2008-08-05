@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_01C8061E3AC04A439E19E46662D57896"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0EE599E9C62D2FCE68F9C24751C761EC"
         "OwnerKey" = "8:_63EBA8D0A9404C01A3BA31AC6EEDB576"
         "MsmSig" = "8:_UNDEFINED"
@@ -82,6 +88,12 @@
         "Entry"
         {
         "MsmKey" = "8:_68D404AA64C54EB88149C698D979ACD7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6A6E88D4D30D4D5F97CD8F5C1E82C747"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -286,6 +298,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_01C8061E3AC04A439E19E46662D57896"
+            {
+            "SourcePath" = "8:C:\\dev\\linqtordf\\trunk\\src\\designer\\DesignerSetup\\bin\\Debug\\Readme.htm"
+            "TargetName" = "8:Readme.htm"
+            "Tag" = "8:"
+            "Folder" = "8:_808B380EC0A54AECB4ADF87B4CEAE635"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0EE599E9C62D2FCE68F9C24751C761EC"
             {
             "AssemblyRegister" = "3:1"
@@ -501,6 +533,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6A6E88D4D30D4D5F97CD8F5C1E82C747"
+            {
+            "SourcePath" = "8:C:\\dev\\linqtordf\\trunk\\src\\designer\\DesignerSetup\\bin\\Debug\\LinqToRdf.msi"
+            "TargetName" = "8:LinqToRdfDesigner.msi"
+            "Tag" = "8:"
+            "Folder" = "8:_808B380EC0A54AECB4ADF87B4CEAE635"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7530C235115F4478A421D7EFE8A821A0"
             {
             "SourcePath" = "8:..\\RdfMetal\\template\\classes.st"
@@ -713,7 +765,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_808B380EC0A54AECB4ADF87B4CEAE635"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -751,7 +803,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:LinqToRdf"
         "ProductCode" = "8:{8BEDF05D-649A-4E54-BA1D-11D40A5DDF41}"
-        "PackageCode" = "8:{E723DB9E-3A9E-42B8-834F-6D5B863B6282}"
+        "PackageCode" = "8:{A639CF5B-A020-4842-9442-E09A61B8C4A5}"
         "UpgradeCode" = "8:{B3FA2CAE-0CD3-4D87-A976-08843A5CE16F}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -1299,7 +1351,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_63EBA8D0A9404C01A3BA31AC6EEDB576"
             {
-            "SourcePath" = "8:..\\linqtordf\\obj\\Debug\\linqtordf.dll"
+            "SourcePath" = "8:..\\linqtordf\\obj\\Release\\linqtordf.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_808B380EC0A54AECB4ADF87B4CEAE635"
@@ -1327,7 +1379,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_68D404AA64C54EB88149C698D979ACD7"
             {
-            "SourcePath" = "8:..\\RdfMetal\\obj\\Debug\\RdfMetal.exe"
+            "SourcePath" = "8:..\\RdfMetal\\obj\\Release\\RdfMetal.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_808B380EC0A54AECB4ADF87B4CEAE635"

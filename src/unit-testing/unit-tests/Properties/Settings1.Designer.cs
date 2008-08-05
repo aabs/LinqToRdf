@@ -43,7 +43,7 @@ namespace UnitTests.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\store3.n3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("store3.n3")]
         public string testStoreLocation {
             get {
                 return ((string)(this["testStoreLocation"]));
@@ -52,7 +52,7 @@ namespace UnitTests.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\standard-test-data")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".")]
         public string taskStorePath {
             get {
                 return ((string)(this["taskStorePath"]));

@@ -1,6 +1,3 @@
-[OwlResource(OntologyName = "$handle$", RelativeUriReference = "$it.Name$")]
-public string $it.Name$Uri { get; set; }
-
 private EntityRef<$it.Range$> _$it.Name$ { get; set; }
 
 [OwlResource(OntologyName = "$handle$", RelativeUriReference = "$it.Name$")]
@@ -13,7 +10,14 @@ public $it.Range$ $it.Name$
         if (DataContext != null)
         {
             var ctx = ($handle$DataContext)DataContext;
-            _$it.Name$ = new EntityRef<$it.Range$>(from x in ctx.$it.Range$s where x.HasInstanceUri($it.Name$Uri) select x);
+            string childUri = InstanceUri;
+            string childPredicateUri = this.PredicateUriForProperty(MethodBase.GetCurrentMethod());
+
+            _$it.Name$ = new EntityRef<$it.Range$>(
+                from r in ctx.Albums
+                where r.StmtObjectWithSubjectAndPredicate(trackUri, trackPredicateUri)
+                select r);
+
             return _$it.Name$.Entity;
         }
         return null;

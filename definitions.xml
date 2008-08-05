@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<project name="definitions" xmlns="http://nant.sf.net/schemas/nant.xsd">
+	<echo>LinqToRdf (c) Andrew Matthews 2008</echo>
+	<echo>framework: ${framework::get-target-framework() }</echo>
+	<property name="name.base" value="LinqToRdf" />
+    <property name="version" value="0.8.1"/>
+    <property name="name.manufacturer" value="Andrew Matthews"/>
+	<!-- project directory structure -->
+	<property name="dir.base" value="${project::get-base-directory()}" />
+	<property name="dir.output" value="${dir.base}/build" />
+	<property name="dir.library" value="${dir.base}/lib" />
+	<property name="dir.source" value="${dir.base}/src" />
+	<property name="dir.releasedir" value="${dir.base}/release" />
+	<property name="dir.docs" value="${dir.base}/doc" />
+    <property name="dir.test.base" value="${dir.source}/unit-testing" />
+    <property name="dir.designer.base" value="${dir.source}/designer" />
+
+	<!-- individual project directories -->
+	<property name="dir.core" value="${dir.source}/linqtordf" />
+	<property name="dir.linqtordf" value="${dir.core}" />
+	<property name="dir.rdfmetal" value="${dir.source}/RdfMetal" />
+	<property name="dir.website" value="${dir.source}/website" />
+	<property name="dir.installer" value="${dir.source}/LinqToRdfInstaller" />
+    <property name="dir.designer.dsl" value="${dir.designer.base}/Dsl" />
+    <property name="dir.designer.dslpackage" value="${dir.designer.base}/DslPackage" />
+    <property name="dir.designer.setup" value="${dir.designer.base}/DesignerSetup" />
+    <property name="dir.designer.test-proj" value="${dir.designer.base}/Debugging" />
+    <property name="dir.test.unitTests" value="${dir.test.base}/unit-tests" />
+    <property name="dir.test.rdfmusic" value="${dir.test.base}/rdf-music" />
+    <property name="dir.test.testdata" value="${dir.test.base}/standard-test-data" />
+    <property name="dir.test.rdfmetal.testharness" value="${dir.test.base}/RdfMetalTestHarness" />
+
+	<!-- individual project directories -->
+    <property name="name.project.prefix" value="${name.base}" />
+    <property name="name.core" value="${name.project.prefix}.Core" />
+    <property name="name.rdfmetal" value="${name.project.prefix}.RdfMetal" />
+    <property name="name.website" value="${name.project.prefix}.website" />
+    <property name="name.installer" value="${name.project.prefix}.Installer" />
+    <property name="name.designer.dsl" value="${name.project.prefix}.Dsl" />
+    <property name="name.designer.dslpackage" value="${name.project.prefix}.DslPackage" />
+    <property name="name.designer.setup" value="${name.project.prefix}.DesignerSetup" />
+    <property name="name.designer.test-proj" value="${name.project.prefix}.Debugging" />
+    <property name="name.test.unitTests" value="${name.project.prefix}.UnitTests" />
+    <property name="name.test.rdfmusic" value="${name.project.prefix}.RdfMusic" />
+    <property name="name.test.testdata" value="${name.project.prefix}.StandardTestData" />
+    <property name="name.test.rdfmetal.testharness" value="${name.project.prefix}.RdfMetal.TestHarness" />
+    <property name="name.setup" value="${name.base}-${version}.msi" />
+
+	<!-- build settings -->
+	<property name="IsDebugBuild" value="true" />
+	<property name="SNKeyFile" value="${dir.linqtordf}/Key.snk" />
+	<property name="uri.svn.trunk" value="https://linqtordf.googlecode.com/svn/trunk" />
+    <property name="solution.file" value="${name.base}" />
+    <property name="solution.output" value="${dir.output}\${name.core}.dll"/>
+    <property name="solution.comments" value="C:\shared.datastore\repository\personal\dev\projects\semantic-web\linqtordf\trunk\${name.base}.xml"/>
+    <!--property name="" value="" /-->
+	<!--property name="" value="" /-->
+	
+    <!-- Sandcastle Related Stuff /-->
+    <!-- Directories  -->
+    <property name="hhc.exe" overwrite="false"
+              value="C:\Program Files\HTML Help Workshop\hhc.exe" />
+    <property name="sandcastle.dir"
+              value="C:\Program Files\Sandcastle" />
+
+    <!-- Executables -->
+    <property name="sandcastle.mrefbuilder.exe"
+       value="${sandcastle.dir}\productiontools\mrefbuilder.exe" />
+    <property name="sandcastle.buildassembler.exe"
+       value="${sandcastle.dir}\productiontools\buildassembler.exe" />
+    <property name="sandcastle.xsltransform.exe"
+       value="${sandcastle.dir}\productiontools\xsltransform.exe" />
+    <property name="sandcastle.chmbuilder.exe"
+       value="${sandcastle.dir}\productiontools\chmbuilder.exe" />
+
+    <!-- Directories -->
+    <property name="sandcastle.workingdir" value="C:\shared.datastore\repository\personal\dev\projects\semantic-web\linqtordf\trunk\build\Sandcastle" />
+    <property name="sandcastle.html.dir"   value="${sandcastle.workingdir}\Html" />
+    <property name="sandcastle.chm.dir"    value="${sandcastle.workingdir}\Chm" />
+    <property name="sandcastle.chm.file"   value="${solution.file}"/>
+
+    <!-- Transformations -->
+    <property name="sandcastle.addoverloads.xsl"
+       value="${sandcastle.dir}\ProductionTransforms\ApplyVsDocModel.xsl" />
+    <property name="sandcastle.addfriendlyfilenames.xsl"
+       value="${sandcastle.dir}\ProductionTransforms\AddFriendlyFilenames.xsl" />
+    <property name="sandcastle.reflectiontomanifest.xsl"
+       value="${sandcastle.dir}\ProductionTransforms\ReflectionToManifest.xsl" />
+    <property name="sandcastle.createvstoc.xsl"
+       value="${sandcastle.dir}\ProductionTransforms\createvstoc.xsl"/>
+
+</project>

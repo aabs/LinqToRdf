@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dsl", "Dsl\Dsl.csproj", "{AAF7EDFC-B650-4B38-8C84-0C200235D3B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DslPackage", "DslPackage\DslPackage.csproj", "{A1F4DFA2-97B0-49D2-A76E-525B3783FD03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignerSetup", "DesignerSetup\DesignerSetup.csproj", "{72008BD7-8DB7-439A-A177-A3B15B0FD1BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAF7EDFC-B650-4B38-8C84-0C200235D3B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAF7EDFC-B650-4B38-8C84-0C200235D3B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAF7EDFC-B650-4B38-8C84-0C200235D3B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAF7EDFC-B650-4B38-8C84-0C200235D3B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1F4DFA2-97B0-49D2-A76E-525B3783FD03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1F4DFA2-97B0-49D2-A76E-525B3783FD03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1F4DFA2-97B0-49D2-A76E-525B3783FD03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1F4DFA2-97B0-49D2-A76E-525B3783FD03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72008BD7-8DB7-439A-A177-A3B15B0FD1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72008BD7-8DB7-439A-A177-A3B15B0FD1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72008BD7-8DB7-439A-A177-A3B15B0FD1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,356 @@
+<?xml version="1.0" ?>
+<project name="nant" default="test" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir=".">
+    <include failonerror="true" buildfile="${path::combine(project::get-base-directory(),'definitions.xml')}"/>
+    <target name="clean" depends="" description="Delete Automated Build artifacts">
+        <delete dir="${dir.output}" />
+        <delete dir="${dir.output}/Sandcastle" />
+    </target>
+    <target name="prepare" depends="">
+        <mkdir dir="${dir.output}" />
+        <mkdir dir="${dir.output}/Sandcastle" />
+    </target>
+    <target name="compile" depends="prepare, compile.core, compile.rdfmetal, compile.tests">
+    </target>
+    <target name="complete" depends="clean, compile, test, docs, setup">
+    </target>
+    <target name="compile.core" depends="prepare" description="Compiles using the AutomatedDebug Configuration">
+        <csc target="library" output="${dir.output}/${name.core}.dll" debug="${IsDebugBuild}"
+			warninglevel="0" doc="${dir.output}/${name.core}.xml" >
+            <nowarn>
+                <warning number="162"/>
+            </nowarn>
+            <sources>
+                <include name="${dir.core}/**/*.cs" />
+            </sources>
+            <references>
+                <include name="System.dll" />
+                <include name="System.Xml.dll" />
+                <include name="System.Core.dll" />
+                <include name="System.Data.dll" />
+                <include name="System.Data.Linq.dll" />
+                <include name="${dir.library}/log4net.dll" />
+                <include name="${dir.library}/semweb.merged.dll" />
+            </references>
+            <arg value="/nowarn:114,162,108,168,169,219" />
+        </csc>
+    </target>
+    <target name="compile.rdfmetal" depends="compile.core" description="Compiles using the AutomatedDebug Configuration">
+        <csc target="exe" output="${dir.output}/${name.rdfmetal}.exe" debug="${IsDebugBuild}"
+			warninglevel="0" doc="${dir.output}/${name.rdfmetal}.xml" >
+            <nowarn>
+                <warning number="162"/>
+            </nowarn>
+            <sources>
+                <include name="${dir.rdfmetal}/**/*.cs" />
+                <exclude name="${dir.rdfmetal}/out.cs"/>
+            </sources>
+            <references>
+                <include name="System.dll" />
+                <include name="System.Core.dll" />
+                <include name="System.Xml.Linq.dll" />
+                <include name="${dir.library}/antlr.runtime.dll" />
+                <include name="${dir.library}/StringTemplate.dll" />
+                <include name="${dir.library}/Mono.GetOptions.dll" />
+                <include name="${dir.library}/semweb.merged.dll" />
+                <include name="${dir.output}/${name.core}.dll" />
+            </references>
+            <arg value="/nowarn:114,162,108,168,169,219" />
+        </csc>
+    </target>
+    <target name="compile.test.rdfmusic" depends="compile.core" description="Compiles using the AutomatedDebug Configuration">
+        <csc target="library" output="${dir.output}/${name.test.rdfmusic}.dll" debug="${IsDebugBuild}"
+			warninglevel="0" >
+            <nowarn>
+                <warning number="162"/>
+            </nowarn>
+            <sources>
+                <include name="${dir.test.rdfmusic}/**/*.cs" />
+            </sources>
+            <references>
+                <include name="System.dll" />
+                <include name="System.Xml.dll" />
+                <include name="System.Core.dll" />
+                <include name="System.Data.dll" />
+                <include name="System.Data.Linq.dll" />
+                <include name="${dir.output}/${name.core}.dll" />
+                <include name="${dir.library}/id3lib.dll" />
+                <include name="${dir.library}/semweb.merged.dll" />
+            </references>
+            <arg value="/nowarn:114,162,108,168,169,219" />
+        </csc>
+    </target>
+    <target name="compile.tests" depends="compile.core, compile.test.rdfmusic" description="Compiles using the AutomatedDebug Configuration">
+        <csc target="library" output="${dir.output}/${name.test.unitTests}.dll" debug="${IsDebugBuild}"
+			warninglevel="0" >
+            <nowarn>
+                <warning number="162"/>
+            </nowarn>
+            <sources>
+                <include name="${dir.test.unitTests}/**/*.cs" />
+            </sources>
+            <references>
+                <include name="System.dll" />
+                <include name="System.Xml.dll" />
+                <include name="System.Core.dll" />
+                <include name="System.Data.dll" />
+                <include name="System.Data.Linq.dll" />
+                <include name="${dir.output}/${name.core}.dll" />
+                <include name="${dir.output}/${name.test.rdfmusic}.dll" />
+                <include name="${dir.library}/log4net.dll" />
+                <include name="${dir.library}/Rhino.Mocks.dll" />
+                <include name="${dir.library}/semweb.merged.dll" />
+                <include name="${dir.library}/nunit.framework.dll" />
+            </references>
+            <arg value="/nowarn:114,162,108,168,169,219" />
+        </csc>
+    </target>
+    <target name="test" depends="test-deploy">
+        <nunit2>
+            <formatter type="Plain" />
+            <test assemblyname="${dir.output}/${name.test.unitTests}.dll" appconfig="${dir.test.unitTests}/App.config" />
+        </nunit2>
+    </target>
+    <target name="docs">
+
+        <!-- Check environment -->
+        <fail if="${not file::exists(hhc.exe)}"
+         message ="HTML Help Workshop not found at ${hhc.exe}"/>
+        <fail if="${not file::exists(sandcastle.mrefbuilder.exe)}"
+         message ="MRef Builder not found at ${sandcastle.mrefbuilder.exe}"/>
+        <fail if="${not file::exists(sandcastle.buildassembler.exe)}"
+         message ="Build Assembler not found at ${sandcastle.buildassembler.exe}"/>
+        <fail if="${not file::exists(sandcastle.xsltransform.exe)}"
+         message ="XSL Transform not found at ${sandcastle.xsltransform.exe}"/>
+        <fail if="${not file::exists(sandcastle.chmbuilder.exe)}"
+         message ="CHM Builder not found at ${sandcastle.chmbuilder.exe}"/>
+
+        <!-- Specifies the DLL file that we want to document -->
+        <property name="sandcastle.input.files"       value="${solution.output}"/>
+
+        <!-- Delete working directory -->
+        <delete dir="${sandcastle.workingdir}"/>
+
+        <!-- Copy configuration file, and hard code references -->
+        <copy file="${sandcastle.dir}/Presentation/vs2005/Configuration/Sandcastle.config"
+              tofile="${sandcastle.workingdir}/Sandcastle.config">
+            <filterchain>
+                <replacestring from="%DXROOT%" to="${sandcastle.dir}\" />
+                <replacestring from=".\comments.xml" to="${solution.comments}" />
+                <replacestring from=".\Output\html" to="${dir.output}\Sandcastle\Html"/>
+            </filterchain>
+        </copy>
+
+        <!-- Create HTML Output Environment -->
+        <mkdir dir="${sandcastle.html.dir}" />
+
+        <!-- Create CHM Output Environment -->
+        <mkdir dir="${sandcastle.chm.dir}" />
+        <copy todir="${sandcastle.chm.dir}">
+            <fileset basedir="${sandcastle.dir}/Presentation/vs2005">
+                <include name="Scripts\*.*"/>
+                <include name="Icons\*.*"/>
+                <include name="Styles\*.*"/>
+            </fileset>
+        </copy>
+
+        <!-- Run MRefBuilder (introspection on assemblies) to create basic Reflection XML -->
+        <exec program="${sandcastle.mrefbuilder.exe}" workingdir="${sandcastle.workingdir}">
+            <arg value="${sandcastle.input.files}" />
+
+            <arg value="/dep:&quot;${dir.library}\semweb.merged.dll&quot;"/>
+            <arg value="/dep:&quot;${dir.library}\log4net.dll&quot;"/>
+            <!-- If you have dependencies 
+      <arg value="/dep:&quot;C:\Program Files\Microsoft CE\v3.1\System.Data.SqlServerCe.dll&quot;"/>
+      -->
+
+            <arg value="/out:reflection.org1.xml" />
+        </exec>
+
+        <!-- Create final Reflection XML -->
+        <!-- Regroup overloads -->
+        <exec program="${sandcastle.xsltransform.exe}" workingdir="${sandcastle.workingdir}">
+            <arg value="reflection.org1.xml" />
+            <arg value="/xsl:&quot;${sandcastle.addoverloads.xsl}&quot;" />
+            <arg value="/out:reflection.org2.xml" />
+        </exec>
+
+        <!-- Create filenames for html documents -->
+        <exec program="${sandcastle.xsltransform.exe}" workingdir="${sandcastle.workingdir}">
+            <arg value="reflection.org2.xml" />
+            <arg value="/xsl:&quot;${sandcastle.addfriendlyfilenames.xsl}&quot;" />
+            <arg value="/out:reflection.xml" />
+        </exec>
+
+        <!-- Create Manifest (list of Topics) -->
+        <exec program="${sandcastle.xsltransform.exe}" workingdir="${sandcastle.workingdir}">
+            <arg value="/xsl:&quot;${sandcastle.reflectiontomanifest.xsl}&quot;" />
+            <arg value="reflection.xml" />
+            <arg value="/out:manifest.xml" />
+        </exec>
+
+        <!-- Run BuildAssembler (create html topic files) -->
+        <exec program="${sandcastle.buildassembler.exe}" workingdir="${sandcastle.workingdir}" >
+            <arg value="manifest.xml" />
+            <arg value="/config:Sandcastle.config" />
+        </exec>
+
+        <!-- Generate an intermediate Toc file that simulates the Whidbey TOC format. -->
+        <exec program="${sandcastle.xsltransform.exe}" workingdir="${sandcastle.workingdir}">
+            <arg value="/xsl:&quot;${sandcastle.createvstoc.xsl}&quot;" />
+            <arg value="reflection.xml" />
+            <arg value="/out:toc.xml" />
+        </exec>
+
+        <!-- Generate HHP File -->
+        <exec program="${sandcastle.chmbuilder.exe}" workingdir="${sandcastle.workingdir}">
+            <arg value="/project:${sandcastle.chm.file}" />
+            <arg value="/html:Html" />
+            <arg value="/lcid:1033" />
+            <arg value="/toc:toc.xml" />
+            <arg value="/out:Chm" />
+        </exec>
+
+        <!-- Generate CHM file -->
+        <exec program="${hhc.exe}"
+              commandline="${sandcastle.chm.file}.hhp"
+              workingdir="${sandcastle.chm.dir}"
+              failonerror="false"/>
+    </target>
+
+    <target name="test-deploy" depends="compile">
+        <copy todir="${dir.output}">
+            <fileset basedir="${dir.library}">
+                <include name="log4net.dll" />
+                <include name="semweb.merged.dll" />
+                <include name="Rhino.Mocks.dll" />
+            </fileset>
+        </copy>
+        <copy todir="${dir.output}">
+            <fileset basedir="${dir.website}">
+                <include name="store3.n3" />
+            </fileset>
+        </copy>
+        <copy todir="${dir.output}">
+            <fileset basedir="${dir.test.testdata}">
+                <include name="*.n3" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="setup" depends="compile, docs">
+        <msi sourcedir="${dir.output}" output="${dir.output}\${name.setup}" 
+             verbose="true" debug="${IsDebugBuild}" failonerror="false"
+             license="${dir.docs}\license.rtf">
+            <properties>
+                <property name="ProductName" value="${name.base}" />
+                <property name="ProductVersion" value="${version}" />
+                <property name="Manufacturer" value="${name.manufacturer}" />
+                <property name="ProductCode" value="{2615DD3F-CEF0-41d8-BA54-EB34ED28F74C}" />
+                <property name="UpgradeCode" value="{A0138323-11DD-4163-B097-97E4D05E48F5}" />
+            </properties>
+
+            <directories>
+                <directory name="D__Product" foldername="${name.base}" root="ProgramFilesFolder">
+                    <directory name="D__ProductVersion" foldername="${name.base}-${version}">
+                        <directory name="D__Templates" foldername="template"/>
+                    </directory>
+                </directory>
+            </directories>
+            <components>
+                <!-- TODO: Create components for all files to be included in Product release -->
+                <component name="C__Core" directory="D__ProductVersion" feature="F__Product" 
+                           id="{D51E0D8A-9005-4fd5-A0DA-41FDF5549C10}" attr="2" >
+                    <key file="${name.core}.dll" />
+                    <fileset basedir="${dir.output}">
+                        <include name="${name.core}.dll" />
+                    </fileset>
+                </component>
+
+                <component name="C__SemWeb" directory="D__ProductVersion" feature="F__Product" 
+                           id="{F1276BDC-663E-409c-86A8-2FE301A4952C}" attr="2" >
+                    <key file="semweb.merged.dll" />
+                    <fileset basedir="${dir.library}">
+                        <include name="semweb.merged.dll" />
+                    </fileset>
+                </component>
+                <component name="C__Options" directory="D__ProductVersion" feature="F__Product" 
+                           id="{12FB7970-8055-4226-AE21-78ACDD2837F1}" attr="2" >
+                    <key file="${name.core}.dll" />
+                    <fileset basedir="${dir.library}">
+                        <include name="Mono.GetOptions.dll" />
+                    </fileset>
+                </component>
+
+                <component name="C__RdfMetal" directory="D__ProductVersion" feature="F__Product" 
+                           id="{A4AE6452-1B50-4650-BCEB-BEE97DD60C96}" attr="2">
+                    <key file="${name.rdfmetal}.exe"/>
+                    <fileset basedir="${dir.output}">
+                        <include name="${name.rdfmetal}.exe"/>
+                    </fileset>
+                </component>
+                <component name="C__RdfMetal_Templates" directory="D__Templates" feature="F__Product" 
+                           id="{6B6F93DA-110E-4fd4-81F5-F6660B75E4CF}" attr="2">
+                    <key file="class.st"/>
+                    <fileset basedir="${dir.rdfmetal}\template">
+                        <include name="*.st"/>
+                    </fileset>
+                </component>
+                <component name="C__CoreManual" directory="D__ProductVersion" feature="F__Documentation" 
+                           id="{82BA2276-2638-44dc-B883-624B5B984610}" attr="2">
+                    <key file="${name.base}-manual.pdf"/>
+                    <fileset basedir="${dir.docs}\manual">
+                        <include name="${name.base}-manual.pdf"/>
+                    </fileset>
+                </component>
+                <component name="C__RdfMetalManual" directory="D__ProductVersion" feature="F__Documentation" 
+                           id="{D24FAC7E-2460-40f1-9359-AAB73317098F}" attr="2">
+                    <key file="rdfmetal-manual.pdf"/>
+                    <fileset basedir="${dir.docs}\manual">
+                        <include name="rdfmetal-manual.pdf"/>
+                    </fileset>
+                </component>
+                <component name="C__ApiChm" directory="D__ProductVersion" feature="F__Documentation" 
+                           id="{9A13A6B3-2CE5-4076-A0B9-16847713C7D8}" attr="2">
+                    <key file="${name.base}.chm"/>
+                    <fileset basedir="${dir.output}\Sandcastle\Chm">
+                        <include name="${name.base}.chm"/>
+                    </fileset>
+                </component>
+            </components>
+            <icons>
+                <icon name="icon1" value="${dir.docs}\sw-cube.ico"/>
+            </icons>
+            <shortcuts>
+                <!--Desktop shortcuts-->
+                <shortcut name="SC__DT_LinqToRdfManual" directory="DesktopFolder" filename="${name.base}-manual.pdf" 
+                          component="C__CoreManual" target="[D__ProductVersion]\${name.base}-manual.pdf" icon="icon1" 
+                          iconindex="0" showcmd="3" >
+                    <description>LinqToRdf manual</description>
+                </shortcut>
+                <!--Program Menu shortcuts-->
+                <shortcut name="SC__PM_LinqToRdfManual" directory="ProgramMenuFolder" filename="${name.base}-manual.pdf" 
+                          component="C__CoreManual" target="[D__ProductVersion]\${name.base}-manual.pdf" icon="icon1" 
+                          iconindex="0" showcmd="3">
+                    <description>LinqToRdf manual</description>
+                </shortcut>
+                <shortcut name="SC__PM_RdfMetalManual" directory="ProgramMenuFolder" filename="rdfmetal-manual.pdf" 
+                          component="C__RdfMetalManual" target="[D__ProductVersion]\rdfmetal-manual.pdf" icon="icon1" 
+                          iconindex="0" showcmd="3">
+                    <description>Guide to RdfMetal</description>
+                </shortcut>
+                <shortcut name="SC__PM_Chm" directory="ProgramMenuFolder" filename="${name.base}.chm" 
+                          component="C__ApiChm" target="[D__ProductVersion]\${name.base}.chm" icon="icon1" 
+                          iconindex="0" showcmd="3">
+                    <description>API documentation for LinqToRdf</description>
+                </shortcut>
+            </shortcuts>
+            <features>
+                <feature name="F__Product" title="LinqToRdf" display="1" typical="true" directory="D__ProductVersion">
+                    <description>Programs, utilities and other installers</description>
+                </feature>
+                <feature name="F__Documentation" title="Documentation" display="2" typical="true" directory="D__ProductVersion">
+                    <description>Manuals and API documentation</description>
+                </feature>
+            </features>
+        </msi>
+    </target>
+</project>
