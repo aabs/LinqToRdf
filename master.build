@@ -1,19 +1,13 @@
 <?xml version="1.0" ?>
 <project name="nant" default="test" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir=".">
     <include failonerror="true" buildfile="${path::combine(project::get-base-directory(),'definitions.xml')}"/>
-    <target name="clean" depends="" description="Delete Automated Build artifacts">
+    <!--[clean]--><target name="clean" depends="" description="Delete Automated Build artifacts">
         <delete dir="${dir.output}" />
         <delete dir="${dir.output}/Sandcastle" />
     </target>
-    <target name="prepare" depends="">
-        <mkdir dir="${dir.output}" />
-        <mkdir dir="${dir.output}/Sandcastle" />
+    <!--[compile]--><target name="compile" depends="prepare, compile.core, compile.rdfmetal, compile.tests">
     </target>
-    <target name="compile" depends="prepare, compile.core, compile.rdfmetal, compile.tests">
-    </target>
-    <target name="complete" depends="clean, compile, test, docs, setup">
-    </target>
-    <target name="compile.core" depends="prepare" description="Compiles using the AutomatedDebug Configuration">
+    <!--[compile.core]--><target name="compile.core" depends="prepare" description="Compiles using the AutomatedDebug Configuration">
         <csc target="library" output="${dir.output}/${name.core}.dll" debug="${IsDebugBuild}"
 			warninglevel="0" doc="${dir.output}/${name.core}.xml" >
             <nowarn>
@@ -34,7 +28,7 @@
             <arg value="/nowarn:114,162,108,168,169,219" />
         </csc>
     </target>
-    <target name="compile.rdfmetal" depends="compile.core" description="Compiles using the AutomatedDebug Configuration">
+    <!--[compile.rdfmetal]--><target name="compile.rdfmetal" depends="compile.core" description="Compiles using the AutomatedDebug Configuration">
         <csc target="exe" output="${dir.output}/${name.rdfmetal}.exe" debug="${IsDebugBuild}"
 			warninglevel="0" doc="${dir.output}/${name.rdfmetal}.xml" >
             <nowarn>
@@ -57,7 +51,7 @@
             <arg value="/nowarn:114,162,108,168,169,219" />
         </csc>
     </target>
-    <target name="compile.test.rdfmusic" depends="compile.core" description="Compiles using the AutomatedDebug Configuration">
+    <!--[compile.test.rdfmusic]--><target name="compile.test.rdfmusic" depends="compile.core" description="Compiles using the AutomatedDebug Configuration">
         <csc target="library" output="${dir.output}/${name.test.rdfmusic}.dll" debug="${IsDebugBuild}"
 			warninglevel="0" >
             <nowarn>
@@ -79,7 +73,7 @@
             <arg value="/nowarn:114,162,108,168,169,219" />
         </csc>
     </target>
-    <target name="compile.tests" depends="compile.core, compile.test.rdfmusic" description="Compiles using the AutomatedDebug Configuration">
+    <!--[compile.tests]--><target name="compile.tests" depends="compile.core, compile.test.rdfmusic" description="Compiles using the AutomatedDebug Configuration">
         <csc target="library" output="${dir.output}/${name.test.unitTests}.dll" debug="${IsDebugBuild}"
 			warninglevel="0" >
             <nowarn>
@@ -104,13 +98,9 @@
             <arg value="/nowarn:114,162,108,168,169,219" />
         </csc>
     </target>
-    <target name="test" depends="test-deploy">
-        <nunit2>
-            <formatter type="Plain" />
-            <test assemblyname="${dir.output}/${name.test.unitTests}.dll" appconfig="${dir.test.unitTests}/App.config" />
-        </nunit2>
+    <!--[full]--><target name="complete" depends="clean, compile, test">
     </target>
-    <target name="docs">
+    <!--[docs]--><target name="docs">
 
         <!-- Check environment -->
         <fail if="${not file::exists(hhc.exe)}"
@@ -216,27 +206,11 @@
               workingdir="${sandcastle.chm.dir}"
               failonerror="false"/>
     </target>
-
-    <target name="test-deploy" depends="compile">
-        <copy todir="${dir.output}">
-            <fileset basedir="${dir.library}">
-                <include name="log4net.dll" />
-                <include name="semweb.merged.dll" />
-                <include name="Rhino.Mocks.dll" />
-            </fileset>
-        </copy>
-        <copy todir="${dir.output}">
-            <fileset basedir="${dir.website}">
-                <include name="store3.n3" />
-            </fileset>
-        </copy>
-        <copy todir="${dir.output}">
-            <fileset basedir="${dir.test.testdata}">
-                <include name="*.n3" />
-            </fileset>
-        </copy>
+    <!--[prepare]--><target name="prepare" depends="">
+        <mkdir dir="${dir.output}" />
+        <mkdir dir="${dir.output}/Sandcastle" />
     </target>
-    <target name="setup" depends="compile, docs">
+    <!--[setup]--><target name="setup" depends="compile">
         <msi sourcedir="${dir.output}" output="${dir.output}\${name.setup}" 
              verbose="true" debug="${IsDebugBuild}" failonerror="false"
              license="${dir.docs}\license.rtf">
@@ -252,6 +226,9 @@
                 <directory name="D__Product" foldername="${name.base}" root="ProgramFilesFolder">
                     <directory name="D__ProductVersion" foldername="${name.base}-${version}">
                         <directory name="D__Templates" foldername="template"/>
+                        <directory name="D__Website" foldername="website">
+                            <directory name="D__WebsiteBin" foldername="bin"/>
+                        </directory>
                     </directory>
                 </directory>
             </directories>
@@ -315,6 +292,20 @@
                         <include name="${name.base}.chm"/>
                     </fileset>
                 </component>
+                <component name="C__SparqlEndpoint" directory="D__Website" feature="F__Website" 
+                           id="{c30b23cf-5da6-4e79-96e0-804345cb76e5}" attr="2">
+                    <key file="Default.aspx"/>
+                    <fileset basedir="${dir.website}">
+                        <include name="*.*"/>
+                    </fileset>
+                </component>
+                <component name="C__SparqlEndpointBin" directory="D__WebsiteBin" feature="F__Website" 
+                           id="{bd543a88-7522-4e29-a703-469952c5dfcf}" attr="2">
+                    <key file="website.dll"/>
+                    <fileset basedir="${dir.website}\bin">
+                        <include name="*.*"/>
+                    </fileset>
+                </component>
             </components>
             <icons>
                 <icon name="icon1" value="${dir.docs}\sw-cube.ico"/>
@@ -347,10 +338,38 @@
                 <feature name="F__Product" title="LinqToRdf" display="1" typical="true" directory="D__ProductVersion">
                     <description>Programs, utilities and other installers</description>
                 </feature>
-                <feature name="F__Documentation" title="Documentation" display="2" typical="true" directory="D__ProductVersion">
+                <feature name="F__Documentation" title="Documentation" display="3" typical="true" directory="D__ProductVersion">
                     <description>Manuals and API documentation</description>
+                </feature>
+                <feature name="F__Website" title="Website" display="2" typical="true" directory="D__Website">
+                    <description>A simple SPARQL-enabled website to host your ontology</description>
                 </feature>
             </features>
         </msi>
+    </target>
+    <!--[test]--><target name="test" depends="test-deploy">
+        <nunit2>
+            <formatter type="Plain" />
+            <test assemblyname="${dir.output}/${name.test.unitTests}.dll" appconfig="${dir.test.unitTests}/App.config" />
+        </nunit2>
+    </target>
+    <!--[test-deploy]--><target name="test-deploy" depends="compile">
+        <copy todir="${dir.output}">
+            <fileset basedir="${dir.library}">
+                <include name="log4net.dll" />
+                <include name="semweb.merged.dll" />
+                <include name="Rhino.Mocks.dll" />
+            </fileset>
+        </copy>
+        <copy todir="${dir.output}">
+            <fileset basedir="${dir.website}">
+                <include name="store3.n3" />
+            </fileset>
+        </copy>
+        <copy todir="${dir.output}">
+            <fileset basedir="${dir.test.testdata}">
+                <include name="*.n3" />
+            </fileset>
+        </copy>
     </target>
 </project>
