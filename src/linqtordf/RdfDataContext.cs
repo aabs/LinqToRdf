@@ -117,7 +117,7 @@ namespace LinqToRdf
         public void Add<T>(T entity) where T : OwlInstanceSupertype
         {
             if (entity == null)
-                throw new ArgumentNullException("entity cannot be null");
+                throw new ArgumentNullException("entity");
 
             pendingQueue.Enqueue(entity);
         }

@@ -12,15 +12,38 @@
  *
  */
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
-using SemWeb;
+using System.ComponentModel;
 
 namespace LinqToRdf
 {
     public class OwlInstanceSupertype : OwlClassSupertype
     {
         public string InstanceUri { get; set; }
+
+        #region Standard Stuff Taken from LINQ to SQL
+
+        private static readonly PropertyChangingEventArgs emptyChangingEventArgs =
+            new PropertyChangingEventArgs(String.Empty);
+
+        public event PropertyChangingEventHandler PropertyChanging;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void SendPropertyChanging()
+        {
+            if ((PropertyChanging != null))
+            {
+                PropertyChanging(this, emptyChangingEventArgs);
+            }
+        }
+
+        protected virtual void SendPropertyChanged(String propertyName)
+        {
+            if ((PropertyChanged != null))
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
     }
 }

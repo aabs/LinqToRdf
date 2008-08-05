@@ -18,94 +18,146 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using SemWeb;
 using SemWeb.Query;
 
 namespace LinqToRdf
 {
     public class ObjectDeserialiserQuerySink : QueryResultSink
     {
-		protected Logger Logger  = new Logger(typeof(ObjectDeserialiserQuerySink));
-        private readonly IList deserialisedObjects = new ArrayList();
-        private readonly bool elideDuplicates;
+        /// <summary>
+        /// the type of the object that must be returned (maybe the original type or a projection)
+        /// </summary>
         private readonly Type instanceType;
+        /// <summary>
+        /// A logger based on log4net
+        /// </summary>
+        private Logger Logger = new Logger(typeof(ObjectDeserialiserQuerySink));
+        /// <summary>
+        /// the original type that the query was made against (i.e. the type that the datacontext defined for its standard queries)
+        /// </summary>
         private Type originalType;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectDeserialiserQuerySink"/> class.
+        /// </summary>
+        /// <param name="originalType">the original type that the query was made against.</param>
+        /// <param name="instanceType">the type of the object that must be returned.</param>
+        /// <param name="instanceName">Name of the instance (i.e the alias used in both the LINQ and SPARQL queries).</param>
+        /// <param name="distinct">if set to <c>true</c> discard duplicate answers.</param>
+        /// <param name="selectExpression">The select expression (derived from the the LINQ query). Used to help in deserialisation.</param>
+        /// <param name="context">The data context that will monitor the objects created (not yet used).</param>
         public ObjectDeserialiserQuerySink(
             Type originalType,
             Type instanceType,
             string instanceName,
-            bool elideDuplicates,
+            bool distinct,
             MethodCallExpression selectExpression,
             RdfDataContext context)
         {
-			#region Tracing
+            #region Tracing
+
 #line hidden
-			if (Logger.IsDebugEnabled)
-			{
-				Logger.Debug("Deserialising {0}.", instanceType.Name);
-			}
+            if (Logger.IsDebugEnabled)
+            {
+                Logger.Debug("Deserialising {0}.", instanceType.Name);
+            }
 #line default
-			#endregion
+
+            #endregion
+
             SelectExpression = selectExpression;
             this.originalType = originalType;
             this.instanceType = instanceType;
             InstanceName = instanceName;
-            this.elideDuplicates = elideDuplicates;
+            Distinct = distinct;
             DataContext = context;
+            IncomingResults = new ArrayList();
         }
 
-        public IList DeserialisedObjects
-        {
-            get { return deserialisedObjects; }
-        }
+        /// <summary>
+        /// Stores the results as they get deserialised.
+        /// </summary>
+        public IList IncomingResults { get; private set; }
 
+        /// <summary>
+        /// if set to <c>true</c> discard duplicate answers, otherwise keep everything that comes in.
+        /// </summary>
+        public bool Distinct { get; private set; }
+
+        /// <summary>
+        /// The select expression (derived from the the LINQ query). Used to help in deserialisation.
+        /// </summary>
         private MethodCallExpression SelectExpression { get; set; }
 
+        /// <summary>
+        /// the original type that the query was made against.
+        /// </summary>
         public Type OriginalType
         {
             get { return originalType; }
             set { originalType = value; }
         }
 
+        /// <summary>
+        /// Name of the instance (i.e the alias used in both the LINQ and SPARQL queries).
+        /// </summary>
         private string InstanceName { get; set; }
 
+        /// <summary>
+        /// The data context that will monitor the objects created (not yet used).
+        /// </summary>
         private RdfDataContext DataContext { get; set; }
 
+        /// <summary>
+        /// A callback interface that gets called by SemWeb when results are sent 
+        /// back from a remote SPAZRQL source. This gets each unique set of bindings 
+        /// in turn. It can either store the results or deserialise them on the spot.
+        /// </summary>
+        /// <returns>true if the deserialiser was able to use the result or false otherwise</returns>
         public override bool Add(VariableBindings result)
         {
-			#region Tracing
+            #region Tracing
+
 #line hidden
-			if (Logger.IsDebugEnabled)
-			{
-				Logger.Debug("Got Result {0}.", result.ToString());
-			}
+            if (Logger.IsDebugEnabled)
+            {
+                Logger.Debug("Got Result {0}.", result.ToString());
+            }
 #line default
-			#endregion
+
+            #endregion
+
             if (IsSelectMember(SelectExpression))
             {
-                deserialisedObjects.Add(ExtractMemberAccess(result));
+                IncomingResults.Add(ExtractMemberAccess(result));
                 return true;
             }
 
             if (originalType == null) throw new ApplicationException("need ontology type to create");
             object t;
 
-            IEnumerable<MemberInfo> props;
-            if (originalType == instanceType)
-                //  i.e. identity projection, meaning we can use GetAllPersistentProperties safely
-            {
-                props = OwlClassSupertype.GetAllPersistentProperties(OriginalType);
-            }
-            else
-            {
-                props = instanceType.GetProperties();
-            }
+            IEnumerable<MemberInfo> props = GetPropertiesToPopulate(originalType, instanceType);
+
             if (originalType == instanceType)
             {
+                #region not using a projection
+
                 t = Activator.CreateInstance(instanceType);
-                AssignDataContextToOwlInstanceType(t as OwlInstanceSupertype, DataContext);
-                AssignInstanceUriToOwlInstanceType(t as OwlInstanceSupertype, InstanceName, result);
+
+                #region Tracing
+
+#line hidden
+                if (Logger.IsDebugEnabled)
+                {
+                    Logger.Debug("created new instance of {0}.", t.GetType().Name);
+                }
+#line default
+
+                #endregion
+
+                AssignDataContext(t as OwlInstanceSupertype, DataContext);
+                AssignInstanceUri(t as OwlInstanceSupertype, InstanceName, result);
+
                 foreach (PropertyInfo pi in props)
                 {
                     if (pi.PropertyType.IsGenericType &&
@@ -113,51 +165,45 @@ namespace LinqToRdf
                         continue;
                     try
                     {
-                        if (result[pi.Name] != null)
-                        {
-                            string vVal = result[pi.Name].ToString();
-                            var tc = new XsdtTypeConverter();
-                            object x = tc.Parse(vVal);
-//							vVal = RemoveEnclosingQuotesOnString(vVal, pi);
-//							if (IsXsdtEncoded(vVal))
-//								vVal = DecodeXsdtString(vVal);
-                            if (x is IConvertible)
-                                pi.SetValue(t, Convert.ChangeType(x, pi.PropertyType), null);
-                            else 
-                            // if it's not convertible, it could be because the type is an MS XSDT type rather than a .NET primitive 
-                            if (x.GetType().Namespace == "System.Runtime.Remoting.Metadata.W3cXsd2001")
-                            {
-                                switch (x.GetType().Name)
-                                {
-                                    case "SoapDate":
-                                        var d = (SoapDate) x;
-                                        pi.SetValue(t, Convert.ChangeType(d.Value, pi.PropertyType), null);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            else if(pi.PropertyType == typeof(string) )
-                            {
-                                pi.SetValue(t, x.ToString(), null);
-                            }
-                        }
+                        PopulateProperty(result, t, pi);
                     }
                     catch (ArgumentException ae)
                     {
-                        // required variable is NotFiniteNumberException present
-                        // we cannot fill the ValueType we're after.
-                        Console.WriteLine(ae);
+                        #region Tracing
+
+#line hidden
+                        if (Logger.IsErrorEnabled)
+                        {
+                            Logger.ErrorEx("Unable to populate property " + pi.Name, ae);
+                            Logger.Error("continuing");
+                        }
+#line default
+
+                        #endregion
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        #region Tracing
+
+#line hidden
+                        if (Logger.IsErrorEnabled)
+                        {
+                            Logger.ErrorEx("Unable to populate property " + pi.Name, e);
+                        }
+#line default
+
+                        #endregion
+
                         return false;
                     }
                 }
+
+                #endregion
             }
             else
             {
+                #region using a projection
+
                 var args = new List<object>();
                 foreach (PropertyInfo pi in props)
                 {
@@ -179,68 +225,157 @@ namespace LinqToRdf
                     }
                 }
                 t = Activator.CreateInstance(instanceType, args.ToArray());
+
+                #endregion
             }
-// NBB at the moment we have no way to know whether there is a duplicate instance in the results, because there is no return of the instance URI
-// once that has been returned then it can be used to compare instance in the results collection to determine whether to save the current result.
-//            if(elideDuplicates)
-//            {
-//                if(ObjectIsUniqueSoFar(t))
-//			        DeserialisedObjects.Add(t);
-//            }
-//            else
-            DeserialisedObjects.Add(t);
+            if (Distinct)
+            {
+                if (ObjectIsUniqueSoFar(t as OwlInstanceSupertype))
+                    IncomingResults.Add(t);
+            }
+            else
+                IncomingResults.Add(t);
             return true;
         }
 
-        private void AssignInstanceUriToOwlInstanceType(OwlInstanceSupertype inst, string instanceName,
-                                                        VariableBindings bindings)
+        /// <summary>
+        /// stores the result from a SemWeb result into a <see cref="PropertyInfo"/> doing whatever conversions are required.
+        /// </summary>
+        /// <param name="semwebBindings">The incoming result from semweb.</param>
+        /// <param name="obj">The object instance on wqhich the property is to be set</param>
+        /// <param name="propertyInfo">The <see cref="PropertyInfo"/> identifying the property to be populated with the value stored in <see cref="semwebBindings"/>.</param>
+        public static void PopulateProperty(VariableBindings semwebBindings, object obj, PropertyInfo propertyInfo)
         {
-            if (string.IsNullOrEmpty(instanceName))
+            if (semwebBindings[propertyInfo.Name] != null)
+            {
+                string vVal = semwebBindings[propertyInfo.Name].ToString();
+                var tc = new XsdtTypeConverter();
+                object x = tc.Parse(vVal);
+//							vVal = RemoveEnclosingQuotesOnString(vVal, pi);
+//							if (IsXsdtEncoded(vVal))
+//								vVal = DecodeXsdtString(vVal);
+                if (x is IConvertible)
+                    propertyInfo.SetValue(obj, Convert.ChangeType(x, propertyInfo.PropertyType), null);
+                else 
+                    // if it's not convertible, it could be because the type is an MS XSDT type rather than a .NET primitive 
+                    if (x.GetType().Namespace == "System.Runtime.Remoting.Metadata.W3cXsd2001")
+                    {
+                        switch (x.GetType().Name)
+                        {
+                            case "SoapDate":
+                                var d = (SoapDate) x;
+                                propertyInfo.SetValue(obj, Convert.ChangeType(d.Value, propertyInfo.PropertyType), null);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else if (propertyInfo.PropertyType == typeof (string))
+                    {
+                        propertyInfo.SetValue(obj, x.ToString(), null);
+                    }
+            }
+        }
+
+        /// <summary>
+        /// Get those properties that were adorned by the <see cref="OwlResourceAttribute"/>. 
+        /// If there are none, then just get every property (and let later processors take their chances).
+        /// </summary>
+        /// <param name="originalType">the original type that the query was made against.</param>
+        /// <param name="instanceType">the type of the object that must be returned.</param>
+        /// <returns></returns>
+        private IEnumerable<MemberInfo> GetPropertiesToPopulate(Type originalType, Type instanceType)
+        {
+            IEnumerable<MemberInfo> props;
+            if (originalType == instanceType)
+                //  i.e. identity projection, meaning we can use GetAllPersistentProperties safely
+            {
+                props = OwlClassSupertype.GetAllPersistentProperties(OriginalType);
+            }
+            else
+            {
+                props = instanceType.GetProperties();
+            }
+            return props;
+        }
+
+        /// <summary>
+        /// Assigns the instance URI from the SPARQL result bindings.
+        /// </summary>
+        /// <param name="obj">The object to assign the URI to.</param>
+        /// <param name="queryAlias">The query alias that was used in LINQ and SPARQL.</param>
+        /// <param name="semwebResult">The semweb result to take the value from.</param>
+        private void AssignInstanceUri(OwlInstanceSupertype obj, string queryAlias,
+                                                        VariableBindings semwebResult)
+        {
+            // if there is no alias, then there's no way to work out what contains the instance URI
+            if (string.IsNullOrEmpty(queryAlias))
             {
                 return;
             }
-            if (bindings.Variables.Map(v => v.LocalName).Contains(instanceName))
+
+            // if there is a binding with the same name as the alias
+            if (semwebResult.Variables.Map(v => v.LocalName).Contains(queryAlias))
             {
-                string x = bindings[instanceName].ToString();
-                if (x.StartsWith("<") && x.EndsWith(">"))
+                // get string representation of the instance URI
+                string uri = semwebResult[queryAlias].ToString();
+
+                // is it enclosed in angle brackets? then strip them.
+                if (uri.StartsWith("<") && uri.EndsWith(">"))
                 {
-                    x = x.Substring(1, x.Length - 2);
+                    uri = uri.Substring(1, uri.Length - 2);
                 }
-                if (Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute))
+
+                // can this be parsed as a URI? if so then assign to instance URI property of obj
+                if (Uri.IsWellFormedUriString(uri, UriKind.RelativeOrAbsolute))
                 {
-                    inst.InstanceUri = x;
+                    obj.InstanceUri = uri;
                 }
             }
         }
 
         /// <summary>
-        /// Assigns the data context to the instance in case it needs it to lazily load references later on.
+        /// Assigns the <see cref="RdfDataContext"/> to the instance.
         /// </summary>
-        /// <param name="inst">the object that has just been deserialised.</param>
-        /// <param name="context">The context through which the query was run that led to the instance being deserialised.</param>
-        private void AssignDataContextToOwlInstanceType(OwlInstanceSupertype inst, RdfDataContext context)
+        /// <remarks>
+        /// this is used in case it needs it to lazily load references later on.
+        /// </remarks>
+        /// <param name="obj">the object that has just been deserialised.</param>
+        /// <param name="dataContext">The <see cref="RdfDataContext"/> through which the query was run that led to the instance being deserialised.</param>
+        private void AssignDataContext(OwlInstanceSupertype obj, RdfDataContext dataContext)
         {
-            if (inst != null)
+            if (obj != null)
             {
-                inst.DataContext = DataContext;
+                obj.DataContext = DataContext;
             }
+            // TODO: assign event handlers for NotifyPropertyChanged
         }
 
-        private bool ObjectIsUniqueSoFar(object t)
+        /// <summary>
+        /// Returns true if the result is unique among the results so far received.
+        /// </summary>
+        /// <param name="obj">The object that is potentially to be added to the results collection.</param>
+        /// <returns>true if there is no object among the <see cref="IncomingResults"/> with the same <see cref="OwlInstanceSupertype.InstanceUri"/>.</returns>
+        private bool ObjectIsUniqueSoFar(OwlInstanceSupertype obj)
         {
-            // 1. get the instance URI for t
-            var oo = t as OwlInstanceSupertype;
-            string instanceUri = oo.InstanceUri;
-
-            // 2. check other instance in DeserializedObjects for duplicate instance URIs
-            foreach (OwlInstanceSupertype o in deserialisedObjects)
+            if (obj == null)
             {
-                if (o.InstanceUri == oo.InstanceUri)
-                    return false;
+                return true;
             }
-            return true; // default placeholder impl
+            return IncomingResults
+                       .Cast<OwlInstanceSupertype>()
+                       .Where(o => o.InstanceUri == obj.InstanceUri)
+                       .Count() == 0;
         }
 
+        /// <summary>
+        /// A simple mechanism to extract the value from a string formatted using XML Schema Datatype definitions (in Turtle format?).
+        /// </summary>
+        /// <param name="val">The value to be decoded.</param>
+        /// <returns>a string representation of the value that was encoded</returns>
+        /// <remarks>This is a completely half-arsed solution.
+        /// TODO: devise a solution using the std .NET decoding system (or the <see cref="XsdtTypeConverter"/>)
+        /// </remarks>
         private string DecodeXsdtString(string val)
         {
             var delims = new[] {"^^"};
@@ -252,11 +387,27 @@ namespace LinqToRdf
             return sValue;
         }
 
+        /// <summary>
+        /// Determines whether the specified val is XSDT encoded.
+        /// </summary>
+        /// <param name="val">The value to be decoded.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified val is XSDT encoded; otherwise, <c>false</c>.
+        /// </returns>
+        /// <remarks>This is a completely half-arsed solution.
+        /// TODO: devise a solution using the std .NET decoding system (or the <see cref="XsdtTypeConverter"/>)
+        /// </remarks>
         private bool IsXsdtEncoded(string val)
         {
             return val.Contains("^^");
         }
 
+        /// <summary>
+        /// Strip quotes from the value if it is a string or a timespan.
+        /// </summary>
+        /// <param name="val">The value to be decoded.</param>
+        /// <param name="pi">The <see cref="PropertyInfo"/> of the property that will get the value.</param>
+        /// <returns></returns>
         private string RemoveEnclosingQuotesOnString(string val, PropertyInfo pi)
         {
             if (pi.PropertyType == typeof (string) || pi.PropertyType == typeof (TimeSpan))
@@ -269,6 +420,20 @@ namespace LinqToRdf
             return val;
         }
 
+        /// <summary>
+        /// Determines whether <see cref="e"/> is a member that has been selected.
+        /// </summary>
+        /// <param name="e">The expression for the <c>select</c> statement.</param>
+        /// <returns>
+        /// 	<c>true</c> if e contains a <see cref="MemberExpression"/>; otherwise, <c>false</c>.
+        /// </returns>
+        /// <example>
+        /// i.e. a select member will come through for queries like this:
+        /// <code>
+        /// var q = from a in ctx.Albums select a.Name;
+        /// </code>
+        /// i.e. a property of the <see cref="OriginalType"/> was chosen for the results.
+        /// </example>
         private bool IsSelectMember(MethodCallExpression e)
         {
             if (e == null)
@@ -284,53 +449,44 @@ namespace LinqToRdf
         {
             // create function to create the storage object
             var ue = (SelectExpression).Arguments[1] as UnaryExpression;
-            var le = (LambdaExpression) ue.Operand;
+            if (ue == null)
+                throw new ArgumentException("incompatible expression type");
+    
+            var le = ue.Operand as LambdaExpression;
             if (le == null)
                 throw new ApplicationException("Incompatible expression type found when building ontology projection");
+
             if (le.Body is MemberExpression)
             {
                 #region member expression
+                var memberExpression = (MemberExpression) le.Body;
+                MemberInfo memberInfo = memberExpression.Member;
+/*
+ * this seems to be pointless. Not sure why it was ever there.
+                Type memberType = null;
 
-                var memex = (MemberExpression) le.Body;
-                MemberInfo mi = memex.Member;
-                Type memType = null;
-                switch (mi.MemberType)
+                switch (memberInfo.MemberType)
                 {
                     case MemberTypes.Field:
-                        var fi = mi as FieldInfo;
-                        memType = fi.FieldType;
+                        var fi = memberInfo as FieldInfo;
+                        memberType = fi.FieldType;
                         break;
                     case MemberTypes.Property:
-                        var pi = mi as PropertyInfo;
-                        memType = pi.PropertyType;
+                        var pi = memberInfo as PropertyInfo;
+                        memberType = pi.PropertyType;
                         break;
                     default:
                         break;
                 }
+ */
 
-                string vVal = vb[mi.Name].ToString();
+                string vVal = vb[memberInfo.Name].ToString();
                 var tc = new XsdtTypeConverter();
                 return tc.Parse(vVal);
 
                 #endregion
             }
             return null;
-        }
-    }
-
-    public class PrintQuerySink : QueryResultSink
-    {
-        public override bool Add(VariableBindings result)
-        {
-            foreach (Variable variable in result.Variables)
-            {
-                if (variable.LocalName != null && result[variable] != null)
-                {
-                    Console.WriteLine(variable.LocalName + " ==> " + result[variable]);
-                }
-                Console.WriteLine("\n");
-            }
-            return true;
         }
     }
 }

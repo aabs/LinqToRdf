@@ -197,7 +197,7 @@ namespace UnitTests
 		///A test for TypeAs (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void AsTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -242,7 +242,7 @@ namespace UnitTests
 		///A test for Coalesce (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void CoalesceTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -258,7 +258,7 @@ namespace UnitTests
 		///A test for Conditional (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void ConditionalTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -276,7 +276,7 @@ namespace UnitTests
 		///A test for Convert (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void ConvertTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -291,7 +291,7 @@ namespace UnitTests
 		///A test for ConvertChecked (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void ConvertCheckedTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -341,7 +341,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for Funclet (Expression)
 		///</summary>
-		[Test, Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Test, Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void FuncletTest()
 		{
 			// SparqlExpressionTranslator<T> target = new SparqlExpressionTranslator<T>();
@@ -409,7 +409,7 @@ namespace UnitTests
 		///A test for Invoke (Expression)
 		///</summary>
 		[Test]
-		[Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void InvokeTest()
 		{
 			// not sure how to construct ontology lambda expression
@@ -419,7 +419,7 @@ namespace UnitTests
 		///A test for TypeIs (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void IsTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -437,7 +437,7 @@ namespace UnitTests
 		///A test for Lambda (Expression)
 		///</summary>
 		[Test]
-		[Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void LambdaTest()
 		{
 			// not sure how to construct ontology lambda expression
@@ -464,7 +464,7 @@ namespace UnitTests
 		///A test for ArrayLength (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void LenTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -482,7 +482,7 @@ namespace UnitTests
 		///A test for ListInit (Expression)
 		///</summary>
 		[Test]
-		[Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void ListInitTest()
 		{
 			// not sure how to build this
@@ -492,7 +492,7 @@ namespace UnitTests
 		///A test for LShift (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof(NotImplementedException))]
+        [ExpectedException(typeof(NotSupportedException))]
 		public void LShiftTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -544,7 +544,7 @@ namespace UnitTests
 		///A test for MemberInit (Expression)
 		///</summary>
 		[Test]
-		[Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void MemberInitTest()
 		{
 			// not sure how to test this
@@ -572,7 +572,7 @@ namespace UnitTests
 		///A test for Modulo (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void ModuloTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -641,7 +641,7 @@ namespace UnitTests
 		///A test for Negate (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void NegateTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -659,7 +659,7 @@ namespace UnitTests
 		///A test for New (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void NewTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -677,7 +677,7 @@ namespace UnitTests
 		///A test for NewArrayBounds (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void NewArrayBoundsTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -695,7 +695,7 @@ namespace UnitTests
 		///A test for NewArrayInit (Expression)
 		///</summary>
 		[Test]
-		[Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void NewArrayInitTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -802,7 +802,7 @@ namespace UnitTests
 		///A test for RShift (Expression)
 		///</summary>
 		[Test]
-		[ExpectedException(typeof (NotImplementedException))]
+		[ExpectedException(typeof (NotSupportedException))]
 		public void RShiftTest()
 		{
 			LinqToSparqlExpTranslator<Track> target = new LinqToSparqlExpTranslator<Track>();
@@ -819,7 +819,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for Sanitise (string)
 		///</summary>
-		[Test, Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Test, Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void SanitiseTest()
 		{
 			// Unit Test Generation Error: A private accessor could not be created for RdfSerialisation.SparqlExpressionTranslator<T>.Sanitise: Private accessors cannot be created for generic types
@@ -831,7 +831,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for SparqlExpressionTranslator ()
 		///</summary>
-		[Test, Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Test, Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void ConstructorTest()
 		{
 			// SparqlExpressionTranslator<T> target = new SparqlExpressionTranslator<T>();
@@ -844,7 +844,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for SparqlExpressionTranslator (StringBuilder)
 		///</summary>
-		[Test, Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Test, Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void ConstructorTest1()
 		{
 			// StringBuilder stringBuilder = null; // TODO: Initialize to an appropriate value
@@ -859,7 +859,7 @@ namespace UnitTests
 		/// <summary>
 		///A test for StringBuilder
 		///</summary>
-		[Test, Ignore, ExpectedException(typeof (NotImplementedException))]
+		[Test, Ignore, ExpectedException(typeof (NotSupportedException))]
 		public void StringBuilderTest()
 		{
 			// SparqlExpressionTranslator<T> target = new SparqlExpressionTranslator<T>();

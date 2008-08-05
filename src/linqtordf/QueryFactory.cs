@@ -17,75 +17,102 @@ using LinqToRdf.Sparql;
 
 namespace LinqToRdf
 {
-	public class QueryFactory<T>
-	{
-		public QueryFactory(QueryType queryType, IRdfContext context)
-		{
-			this.queryType = queryType;
-			this.context = context;
-		}
+    /// <summary>
+    /// A class factory that create queries of type <see cref="IRdfQuery{T}"/>
+    /// </summary>
+    /// <typeparam name="T">The type of object being queried for</typeparam>
+    public class QueryFactory<T>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryFactory{T}"/> class.
+        /// </summary>
+        /// <param name="queryType">the <see cref="LinqToRdf.QueryType"/> of the query.</param>
+        /// <param name="context">The <see cref="IRdfContext"/> data context that will track results, connections and instances.</param>
+        public QueryFactory(QueryType queryType, IRdfContext context)
+        {
+            QueryType = queryType;
+            DataContext = context;
+            TypeTranslator = new XsdtTypeConverter();
+        }
 
-		private readonly QueryType queryType;
-		private readonly IRdfContext context;
-		private ITypeTranslator typeConverter;
+        /// <summary>
+        /// The <see cref="IRdfContext"/> data context that will track results, connections and instances.
+        /// </summary>
+        private IRdfContext DataContext { get; set; }
 
-		public IQueryFormatTranslator CreateExpressionTranslator()
-		{
-			switch (queryType)
-			{
-				case QueryType.RemoteSparqlStore:
-				case QueryType.LocalSparqlStore:
-					LinqToSparqlExpTranslator<T> translator = new LinqToSparqlExpTranslator<T>(new StringBuilder());
-					translator.TypeTranslator = TypeTranslator;
-					return translator;
-				default:
-					LinqToN3ExpTranslator<T> n3translator = new LinqToN3ExpTranslator<T>(new StringBuilder());
-					n3translator.TypeTranslator = TypeTranslator;
-					return n3translator;
-			}
-		}
+        /// <summary>
+        /// indicates what type of query this is for.
+        /// </summary>
+        /// <value>The type of the query.</value>
+        public QueryType QueryType { get; set; }
 
-		public IRdfQuery<S> CreateQuery<S>()
-		{
-			switch (queryType)
-			{
-				case QueryType.RemoteSparqlStore:
-					return new SparqlQuery<S>(context);
-				case QueryType.LocalSparqlStore:
-					return new SparqlQuery<S>(context);
-				default:
-					return new RdfN3Query<S>(context);
-			}
-		}
+        /// <summary>
+        /// the <see cref="ITypeTranslator"/> that will be used to convert results prior to insertion into result objects.
+        /// </summary>
+        /// <value>The type translator.</value>
+        public ITypeTranslator TypeTranslator { get; private set; }
 
-		public QueryType QueryType
-		{
-			get { return queryType; }
-		}
+        /// <summary>
+        /// Creates an expression translator that will be able to decode the results 
+        /// returned from the triple store selected for the query.
+        /// </summary>
+        /// <returns>An <see cref="IQueryFormatTranslator"/> that will be able to decode 
+        /// the results from the chosen triple store</returns>
+        public IQueryFormatTranslator CreateExpressionTranslator()
+        {
+            switch (QueryType)
+            {
+                case QueryType.RemoteSparqlStore:
+                case QueryType.LocalSparqlStore:
+                    var translator = new LinqToSparqlExpTranslator<T>(new StringBuilder());
+                    translator.TypeTranslator = TypeTranslator;
+                    return translator;
+                default:
+                    var n3translator = new LinqToN3ExpTranslator<T>(new StringBuilder());
+                    n3translator.TypeTranslator = TypeTranslator;
+                    return n3translator;
+            }
+        }
 
-		public ITypeTranslator TypeTranslator
-		{
-			get
-			{
-				if (typeConverter == null)
-					typeConverter = new XsdtTypeConverter();
-				return typeConverter;
-			}
-		}
+        /// <summary>
+        /// Creates the query using <see cref="S"/> as the base type of the query.
+        /// </summary>
+        /// <typeparam name="S">the base type with the metadata needed to make the query</typeparam>
+        /// <returns>an <see cref="IRdfQuery{T}"/> to help generate the query</returns>
+        public IRdfQuery<S> CreateQuery<S>()
+        {
+            switch (QueryType)
+            {
+                case QueryType.RemoteSparqlStore:
+                    return new SparqlQuery<S>(DataContext);
+                case QueryType.LocalSparqlStore:
+                    return new SparqlQuery<S>(DataContext);
+                default:
+                    return new RdfN3Query<S>(DataContext);
+            }
+        }
 
-		public IRdfConnection<T> CreateConnection(IRdfQuery<T> qry)
-		{
-			switch(queryType)
-			{
-				case QueryType.LocalSparqlStore:
-					SparqlLocalConnection<T> sparqlLocalConnection = new SparqlLocalConnection<T>((SparqlQuery<T>)qry);
-					return sparqlLocalConnection;
-				case QueryType.RemoteSparqlStore:
-					SparqlConnection<T> sparqlConnection = new SparqlConnection<T>((SparqlQuery<T>)qry);
-					return sparqlConnection;
-				default:
-					throw new ApplicationException("Only sparql queries currently support the ADO.NET style APIs");
-			}
-		}
-	}
+        /// <summary>
+        /// Creates the <see cref="IRdfConnection{T}"/> through which the communication with the triple store is performed.
+        /// </summary>
+        /// <param name="qry">The <see cref="IRdfQuery{T}"/> that contains details of the type of triple store to target.</param>
+        /// <returns>An <see cref="IRdfConnection{T}"/> that can communicate with the triple store identified in the query</returns>
+        /// <remarks>
+        /// At present this is confined to Local and remote SPARQL stores. Local in-memory stores created by SemWeb do not get a connection (IIRC).
+        /// </remarks>
+        public IRdfConnection<T> CreateConnection(IRdfQuery<T> qry)
+        {
+            switch (QueryType)
+            {
+                case QueryType.LocalSparqlStore:
+                    var sparqlLocalConnection = new SparqlLocalConnection<T>((SparqlQuery<T>) qry);
+                    return sparqlLocalConnection;
+                case QueryType.RemoteSparqlStore:
+                    var sparqlConnection = new SparqlConnection<T>((SparqlQuery<T>) qry);
+                    return sparqlConnection;
+                default:
+                    throw new ApplicationException("Only sparql queries currently support the ADO.NET style APIs");
+            }
+        }
+    }
 }

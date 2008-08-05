@@ -288,7 +288,7 @@ namespace LinqToRdf.Sparql
             return; // no named graphs just yet ()
 #else
             string defaultGraph = DataContext.DefaultGraph;
-            if (!defaultGraph.Empty())
+            if (!string.IsNullOrEmpty(defaultGraph))
             {
                 sb.AppendFormat("FROM <{0}>\n", defaultGraph);
             }

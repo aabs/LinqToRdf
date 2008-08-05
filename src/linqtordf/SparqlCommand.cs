@@ -123,9 +123,9 @@ namespace LinqToRdf.Sparql
 
 		private void ExtractResultsIntoList(IList<T> list, ObjectDeserialiserQuerySink querySink)
 		{
-			if (querySink.DeserialisedObjects != null)
+			if (querySink.IncomingResults != null)
 			{
-				foreach (T t in querySink.DeserialisedObjects)
+				foreach (T t in querySink.IncomingResults)
 				{
 					list.Add(t);
 				}

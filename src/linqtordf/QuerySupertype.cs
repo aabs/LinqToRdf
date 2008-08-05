@@ -19,6 +19,10 @@ using System.Reflection;
 
 namespace LinqToRdf
 {
+    /// <summary>
+    /// Supertype for all query types
+    /// </summary>
+    /// <typeparam name="T">the type of object being queried for</typeparam>
     public class QuerySupertype<T>
     {
         protected Dictionary<string, MethodCallExpression> expressions;

@@ -1,4 +1,17 @@
-﻿using System;
+﻿/* 
+ * Copyright (C) 2007, Andrew Matthews http://aabs.wordpress.com/
+ *
+ * This file is Free Software and part of LinqToRdf http://code.google.com/fromName/linqtordf/
+ *
+ * It is licensed under the following license:
+ *   - Berkeley License, V2.0 or any newer version
+ *
+ * You may not use this file except in compliance with the above license.
+ *
+ * See http://code.google.com/fromName/linqtordf/ for the complete text of the license agreement.
+ *
+ */
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
@@ -11,6 +24,7 @@ namespace LinqToRdf
 {
     public static class Evaluator
     {
+        static Logger Logger  = new Logger(typeof(Evaluator));
         /// <summary>
         /// Performs evaluation & replacement of independent sub-trees
         /// </summary>
@@ -19,7 +33,10 @@ namespace LinqToRdf
         /// <returns>A new tree with sub-trees evaluated and replaced.</returns>
         public static Expression PartialEval(Expression expression, Func<Expression, bool> fnCanBeEvaluated)
         {
-            return new SubtreeEvaluator(new Nominator(fnCanBeEvaluated).Nominate(expression)).Eval(expression);
+            using (var ls = new LoggingScope("Evaluator.PartialEval3"))
+            {
+                return new SubtreeEvaluator(new Nominator(fnCanBeEvaluated).Nominate(expression)).Eval(expression);
+            }
         }
 
 
@@ -30,7 +47,10 @@ namespace LinqToRdf
         /// <returns>A new tree with sub-trees evaluated and replaced.</returns>
         public static Expression PartialEval(Expression expression)
         {
+            using (var ls = new LoggingScope("Evaluator.PartialEval1"))
+            {
             return PartialEval(expression, CanBeEvaluatedLocally);
+            }
         }
 
 

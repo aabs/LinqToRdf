@@ -70,6 +70,7 @@
     <Compile Include="IRdfContext.cs" />
     <Compile Include="IRdfQuery.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="LogSink.cs" />
     <Compile Include="MemoryStoreExtensions.cs" />
     <Compile Include="NamespaceManager.cs" />
     <Compile Include="ObjectDeserialiser.cs" />

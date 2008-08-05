@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<project name="nant" default="test" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir=".">
+<project name="nant" default="compile" xmlns="http://nant.sf.net/schemas/nant.xsd" basedir=".">
     <include failonerror="true" buildfile="${path::combine(project::get-base-directory(),'definitions.xml')}"/>
     <!--[clean]--><target name="clean" depends="" description="Delete Automated Build artifacts">
         <delete dir="${dir.output}" />

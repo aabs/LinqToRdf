@@ -26,17 +26,21 @@ namespace LinqToRdf
 
     public static class MemoryStoreExtensions
     {
+        static Logger Logger  = new Logger(typeof(MemoryStoreExtensions));
         public static void Add(this MemoryStore ms, OwlInstanceSupertype oc)
         {
-            Type t = oc.GetType();
-            Console.WriteLine(oc.InstanceUri);
-            PropertyInfo[] pia = t.GetProperties();
-            ms.Add(new Statement((Entity)oc.InstanceUri, OntologyHelper.rdfType, (Entity)OwlClassSupertype.GetOwlClassUri(t)));
-            foreach (PropertyInfo pi in pia)
+            using (var ls = new LoggingScope("MemoryStoreExtensions.Add"))
             {
-                if(pi.IsOntologyResource())
+                Type t = oc.GetType();
+                Console.WriteLine(oc.InstanceUri);
+                PropertyInfo[] pia = t.GetProperties();
+                ms.Add(new Statement((Entity)oc.InstanceUri, OntologyHelper.rdfType, (Entity)OwlClassSupertype.GetOwlClassUri(t)));
+                foreach (PropertyInfo pi in pia)
                 {
-                    AddPropertyToStore(oc, pi, ms);
+                    if (pi.IsOntologyResource())
+                    {
+                        AddPropertyToStore(oc, pi, ms);
+                    }
                 }
             }
         }
@@ -44,23 +48,39 @@ namespace LinqToRdf
         private static void AddPropertyToStore(OwlInstanceSupertype track, PropertyInfo pi, MemoryStore ms)
         {
             if (track == null)
-                throw new ArgumentNullException("track cannot be null");
+                throw new ArgumentNullException("track");
             if (pi == null)
-                throw new ArgumentNullException("pi cannot be null");
+                throw new ArgumentNullException("pi");
             if (ms == null)
-                throw new ArgumentNullException("ms cannot be null");
+                throw new ArgumentNullException("ms");
 
             if (pi.GetValue(track, null) != null)
+            {
                 Add(track.InstanceUri, pi.GetOwlResourceUri(), pi.GetValue(track, null).ToString(), ms);
+                #region Tracing
+#line hidden
+                if (Logger.IsDebugEnabled)
+                {
+                    Logger.Debug("Added property {0} to store.", pi.Name);
+                }
+#line default
+                #endregion
+            }
         }
         public static void Add(string s, string p, string o, MemoryStore ms)
         {
-            if(!Empty(s) && !Empty(p) && !Empty(o))
+            if (!string.IsNullOrEmpty(s) && !string.IsNullOrEmpty(p) && !string.IsNullOrEmpty(o))
+            {
                 ms.Add(new Statement(new Entity(s), new Entity(p), new Literal(o), Statement.DefaultMeta));
-        }
-        public static bool Empty(this string s)
-        {
-            return (s == null || s.Length == 0);
+                #region Tracing
+#line hidden
+                if (Logger.IsDebugEnabled)
+                {
+                    Logger.Debug("Added <{0}> <{1}> <{2}>.", s,p,o);
+                }
+#line default
+                #endregion
+            }
         }
     }
 

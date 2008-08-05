@@ -19,6 +19,7 @@ namespace LinqToRdf
     using Mapping = Dictionary<string, OntologyAttribute>;
     public class NamespaceManager
     {
+        protected Logger Logger  = new Logger(typeof(NamespaceManager));
         private char generatedNamespaceChar = 'a';
 
         Mapping store = new Mapping();
@@ -28,6 +29,15 @@ namespace LinqToRdf
         public NamespaceManager(Mapping store)
         {
             this.store = new Mapping(store);
+            #region Tracing
+#line hidden
+            if (Logger.IsDebugEnabled)
+            {
+                Logger.Debug("created namespace manager:");
+                store.Keys.ForEach(k=> Logger.Debug("\t {0}:\t{1}", store[k].Prefix, store[k].BaseUri));
+            }
+#line default
+            #endregion
         }
         public NamespaceManager(IEnumerable<OntologyAttribute> input)
         {
@@ -73,15 +83,23 @@ namespace LinqToRdf
             get
             {
                 if (name == null)
-                    throw new ArgumentNullException("name cannot be null");
+                    throw new ArgumentNullException("name");
                 return store.ContainsKey(name) ? store[name]:null;
             }
             set
             {
+                #region Tracing
+#line hidden
+                if (Logger.IsDebugEnabled)
+                {
+                    Logger.Debug("adding namespace\n\t{0}:\t{1}.", name, value);
+                }
+#line default
+                #endregion
                 if (value == null)
-                    throw new ArgumentNullException("value cannot be null");
+                    throw new ArgumentNullException("value");
                 if (name == null)
-                    throw new ArgumentNullException("name cannot be null");
+                    throw new ArgumentNullException("name");
                 if (store.ContainsKey(name))
                     throw new ArgumentException("an ontology already exists by that name");
                 store[name] = value;

@@ -23,18 +23,43 @@ namespace LinqToRdf.Sparql
 {
     public class LinqToSparqlExpTranslator<T> : RdfExpressionTranslator<T>, IQueryFormatTranslator
     {
+        protected Logger Logger  = new Logger(typeof(LinqToSparqlExpTranslator<T>));
         public LinqToSparqlExpTranslator()
         {
+            #region Tracing
+#line hidden
+            if (Logger.IsDebugEnabled)
+            {
+                Logger.Debug("creating LinqToSparqlExpTranslator.");
+            }
+#line default
+            #endregion
             stringBuilder = new StringBuilder();
         }
 
         public LinqToSparqlExpTranslator(StringBuilder stringBuilder)
         {
+            #region Tracing
+#line hidden
+            if (Logger.IsDebugEnabled)
+            {
+                Logger.Debug("creating LinqToSparqlExpTranslator [2].");
+            }
+#line default
+            #endregion
             this.stringBuilder = stringBuilder;
         }
 
         public void Dispatch(Expression expression)
         {
+            #region Tracing
+#line hidden
+            if (Logger.IsDebugEnabled)
+            {
+                Logger.Debug("Dispatching {0} Expression.", Enum.GetName(typeof(ExpressionType), expression.NodeType));
+            }
+#line default
+            #endregion
             switch (expression.NodeType)
             {
                 case ExpressionType.Add:
@@ -181,21 +206,53 @@ namespace LinqToRdf.Sparql
 
         public void ExclusiveOr(Expression expression)
         {
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
             throw new NotImplementedException();
         }
 
         public void NegateChecked(Expression expression)
         {
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
             throw new NotImplementedException();
         }
 
         public void Power(Expression expression)
         {
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
             throw new NotImplementedException();
         }
 
         public void UnaryPlus(Expression expression)
         {
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
             throw new NotImplementedException();
         }
 
@@ -263,12 +320,28 @@ namespace LinqToRdf.Sparql
 
         public void TypeAs(Expression e)
         {
-            throw new NotImplementedException("operation TypeAs not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation TypeAs not supported");
         }
 
         public void BitwiseAnd(Expression e)
         {
-            throw new NotImplementedException("operation Bitwise And not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Bitwise And not supported");
             /*
                         BinaryExpression be = e as BinaryExpression;
                         if (be != null)
@@ -285,32 +358,80 @@ namespace LinqToRdf.Sparql
 
         public void BitwiseNot(Expression e)
         {
-            throw new NotImplementedException("operation BitwiseNot not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation BitwiseNot not supported");
         }
 
         public void BitwiseOr(Expression e)
         {
-            throw new NotImplementedException("operation BitwiseOr not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation BitwiseOr not supported");
         }
 
         public void BitwiseXor(Expression e)
         {
-            throw new NotImplementedException("operation BitwiseXor not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation BitwiseXor not supported");
         }
 
         public void Cast(Expression e)
         {
-            throw new NotImplementedException("operation Cast not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Cast not supported");
         }
 
         public void Coalesce(Expression e)
         {
-            throw new NotImplementedException("operation Coalesce not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Coalesce not supported");
         }
 
         public void Conditional(Expression e)
         {
-            throw new NotImplementedException("operation Conditional not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Conditional not supported");
         }
 
         public void Constant(Expression e)
@@ -321,12 +442,28 @@ namespace LinqToRdf.Sparql
 
         public void Convert(Expression e)
         {
-            throw new NotImplementedException("operation Convert not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Convert not supported");
         }
 
         public void ConvertChecked(Expression e)
         {
-            throw new NotImplementedException("operation ConvertChecked not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation ConvertChecked not supported");
         }
 
         public void Divide(Expression e)
@@ -394,7 +531,15 @@ namespace LinqToRdf.Sparql
 
         public void Funclet(Expression e)
         {
-            throw new NotImplementedException("operation Funclet not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Funclet not supported");
         }
 
         public void GreaterThan(Expression e)
@@ -420,12 +565,28 @@ namespace LinqToRdf.Sparql
 
         public void Invoke(Expression e)
         {
-            throw new NotImplementedException("operation Invoke not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Invoke not supported");
         }
 
         public void TypeIs(Expression e)
         {
-            throw new NotImplementedException("operation TypeIs not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation TypeIs not supported");
         }
 
         public void Lambda(Expression e)
@@ -441,17 +602,41 @@ namespace LinqToRdf.Sparql
 
         public void ArrayLength(Expression e)
         {
-            throw new NotImplementedException("operation ArrayLength not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation ArrayLength not supported");
         }
 
         public void ListInit(Expression e)
         {
-            throw new NotImplementedException("operation ListInit not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation ListInit not supported");
         }
 
         public void LeftShift(Expression e)
         {
-            throw new NotImplementedException("operation LShift not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation LShift not supported");
         }
 
         public void LessThan(Expression e)
@@ -473,7 +658,15 @@ namespace LinqToRdf.Sparql
 
         public void MemberInit(Expression e)
         {
-            throw new NotImplementedException("operation MemberInit not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation MemberInit not supported");
         }
 
         public void Call(Expression e)
@@ -589,7 +782,15 @@ namespace LinqToRdf.Sparql
                 ProcessStringOperations(mce);
                 return;
             }
-            throw new NotImplementedException("operation MethodCallVirtual not supported for Method '" + mi.Name + "'");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation MethodCallVirtual not supported for Method '" + mi.Name + "'");
         }
 
         private void ProcessStringOperations(MethodCallExpression mce)
@@ -647,7 +848,15 @@ namespace LinqToRdf.Sparql
 
         public void Modulo(Expression e)
         {
-            throw new NotImplementedException("operation Modulo not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Modulo not supported");
         }
 
         public void Multiply(Expression e)
@@ -664,7 +873,15 @@ namespace LinqToRdf.Sparql
 
         public void Negate(Expression e)
         {
-            throw new NotImplementedException("operation Negate not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation Negate not supported");
         }
 
         public void NotEqual(Expression e)
@@ -675,17 +892,41 @@ namespace LinqToRdf.Sparql
 
         public void New(Expression e)
         {
-            throw new NotImplementedException("operation New not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation New not supported");
         }
 
         public void NewArrayInit(Expression e)
         {
-            throw new NotImplementedException("operation NewArrayInit not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation NewArrayInit not supported");
         }
 
         public void NewArrayBounds(Expression e)
         {
-            throw new NotImplementedException("operation NewArrayBounds not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation NewArrayBounds not supported");
         }
 
         public void Not(Expression e)
@@ -725,7 +966,15 @@ namespace LinqToRdf.Sparql
 
         public void RightShift(Expression e)
         {
-            throw new NotImplementedException("operation RShift not supported");
+            #region Tracing
+#line hidden
+            if (Logger.IsWarnEnabled)
+            {
+                Logger.Warn("unsupported feature requested.");
+            }
+#line default
+            #endregion
+            throw new NotSupportedException("operation RShift not supported");
         }
 
         public void Subtract(Expression e)

@@ -70,7 +70,7 @@ FILTER((regex(?Year, ""2007""))&&(regex(?GenreName, ""Rory Blyth: The Smartest M
 //			Query query = new GraphMatch(new N3Reader(new StringReader(qry)));
 			query.Run(store, sink);
 
-			foreach (object track in sink.DeserialisedObjects)
+			foreach (object track in sink.IncomingResults)
 			{
 				Console.WriteLine(track.ToString());
 			}

@@ -165,7 +165,7 @@ namespace LinqToRdf
             Query graphMatchQuery = new GraphMatch(new N3Reader(new StringReader(qry)));
             graphMatchQuery.Run(ms, sink);
             var list = new List<T>();
-            foreach (T t in sink.DeserialisedObjects)
+            foreach (T t in sink.IncomingResults)
             {
                 list.Add(t);
             }
