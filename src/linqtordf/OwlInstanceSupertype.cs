@@ -18,9 +18,13 @@ namespace LinqToRdf
 {
     public class OwlInstanceSupertype : OwlClassSupertype
     {
+        /// <summary>
+        /// Gets or sets the instance URI that identifies this particular instance within the Triple Store.
+        /// </summary>
+        /// <value>The instance URI of <c>this</c>.</value>
         public string InstanceUri { get; set; }
 
-        #region Standard Stuff Taken from LINQ to SQL
+        #region Standard event tracking stuff taken direct from LINQ to SQL
 
         private static readonly PropertyChangingEventArgs emptyChangingEventArgs =
             new PropertyChangingEventArgs(String.Empty);

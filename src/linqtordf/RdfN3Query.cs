@@ -33,7 +33,7 @@ namespace LinqToRdf
         public RdfN3Query(IRdfContext context)
         {
             DataContext = context;
-            originalType = typeof (T);
+            OriginalType = typeof (T);
             parser = new LinqToN3ExpTranslator<T>();
         }
 
@@ -71,11 +71,11 @@ namespace LinqToRdf
                 switch (call.Method.Name)
                 {
                     case "Where":
-                        Log("Processing the where expression");
+                        Logger.Debug("Processing the where expression");
                         newQuery.BuildQuery(call.Arguments[1]);
                         break;
                     case "Select":
-                        Log("Processing the select expression");
+                        Logger.Debug("Processing the select expression");
                         newQuery.BuildProjection(call);
                         break;
                 }
@@ -134,11 +134,10 @@ namespace LinqToRdf
         {
             var newQuery = new RdfN3Query<TElement>(DataContext);
             newQuery.Store = store;
-            newQuery.OriginalType = originalType;
-            newQuery.Projection = projection;
-            newQuery.QueryGraphParameters = queryGraphParameters;
+            newQuery.OriginalType = OriginalType;
+            newQuery.ProjectionFunction = ProjectionFunction;
+            newQuery.QueryGraphParameters = QueryGraphParameters;
             newQuery.FilterClause = FilterClause;
-            newQuery.Logger = logger;
             newQuery.QueryFactory = new QueryFactory<TElement>(QueryFactory.QueryType, DataContext);
             newQuery.Parser = QueryFactory.CreateExpressionTranslator();
             newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
@@ -151,16 +150,16 @@ namespace LinqToRdf
             {
                 return CachedResults.GetEnumerator();
             }
-            filterClause = ConstructQuery();
+            FilterClause = ConstructQuery();
             PrepareQueryAndConnection();
-            PresentQuery(filterClause);
+            PresentQuery(FilterClause);
             return CachedResults.GetEnumerator();
         }
 
         private void PresentQuery(string qry)
         {
             Store ms = store;
-            var sink = new ObjectDeserialiserQuerySink(originalType, typeof (T), "", Expressions.ContainsKey("Distinct"),
+            var sink = new ObjectDeserialiserQuerySink(OriginalType, typeof (T), "", Expressions.ContainsKey("Distinct"),
                                                        Expressions["Select"], (RdfDataContext) DataContext);
             Query graphMatchQuery = new GraphMatch(new N3Reader(new StringReader(qry)));
             graphMatchQuery.Run(ms, sink);
@@ -175,12 +174,12 @@ namespace LinqToRdf
         private void PrepareQueryAndConnection()
         {
             // create ontology ObjectDeserialiserQuerySink and attach it to the store
-            string q = string.Format("@prefix m: <{0}> .\n", OwlClassSupertype.GetOntologyBaseUri(originalType));
-            filterClause = q + filterClause;
+            string q = string.Format("@prefix m: <{0}> .\n", OwlClassSupertype.GetOntologyBaseUri(OriginalType));
+            FilterClause = q + FilterClause;
             foreach (PropertyInfo pi in OwlClassSupertype.GetAllPersistentProperties(typeof (T)))
             {
-                filterClause +=
-                    string.Format("?{0} <{1}> ?{2} .\n", originalType.Name,
+                FilterClause +=
+                    string.Format("?{0} <{1}> ?{2} .\n", OriginalType.Name,
                                   pi.GetOwlResourceUri(), pi.Name);
             }
         }
@@ -195,12 +194,12 @@ namespace LinqToRdf
             var sb = new StringBuilder();
             ParseQuery(q, sb);
             FilterClause = Parser.StringBuilder.ToString();
-            Log(FilterClause);
+            Logger.Debug(FilterClause);
         }
 
         private void ParseQuery(Expression expression, StringBuilder sb)
         {
-            sb.Append("#Query - " + DateTime.Now.ToLongTimeString());
+            Logger.Debug("#Query - {0}", DateTime.Now.ToLongTimeString());
             Parser.Dispatch(expression);
         }
     }

@@ -31,7 +31,7 @@ namespace LinqToRdf.Sparql
         {
             DataContext = context;
             tripleStore = null;
-            originalType = typeof (T);
+            OriginalType = typeof (T);
             parser = new LinqToSparqlExpTranslator<T>();
         }
 
@@ -51,7 +51,7 @@ namespace LinqToRdf.Sparql
 
         public Type ElementType
         {
-            get { return originalType; }
+            get { return OriginalType; }
         }
 
         public Expression Expression
@@ -161,11 +161,11 @@ namespace LinqToRdf.Sparql
         {
             var newQuery = new SparqlQuery<S>(DataContext);
             newQuery.TripleStore = tripleStore;
-            newQuery.OriginalType = originalType;
-            newQuery.Projection = projection;
-            newQuery.QueryGraphParameters = queryGraphParameters;
+            newQuery.OriginalType = OriginalType;
+            newQuery.ProjectionFunction = ProjectionFunction;
+            newQuery.QueryGraphParameters = QueryGraphParameters;
             newQuery.FilterClause = FilterClause;
-            newQuery.Logger = logger;
+            newQuery.Log = externalLogger;
             newQuery.QueryFactory = new QueryFactory<S>(QueryFactory.QueryType, DataContext);
             newQuery.Parser = QueryFactory.CreateExpressionTranslator();
             newQuery.Parser.StringBuilder = new StringBuilder(parser.StringBuilder.ToString());
@@ -175,7 +175,7 @@ namespace LinqToRdf.Sparql
 
         protected void ParseQuery(Expression expression, StringBuilder sb)
         {
-            Log("#Query {0:d}", DateTime.Now);
+            Logger.Debug("#Query {0:d}", DateTime.Now);
             StringBuilder tmp = Parser.StringBuilder;
             Parser.StringBuilder = sb;
             Parser.Dispatch(expression);
@@ -223,7 +223,7 @@ namespace LinqToRdf.Sparql
                 {
                     foreach (MemberInfo item in Parser.Parameters)
                     {
-                        queryGraphParameters.Add(item);
+                        QueryGraphParameters.Add(item);
                     }
                 }
                 // we need to add the original type to the prolog to allow elements of the where clause to be optimised
@@ -235,6 +235,20 @@ namespace LinqToRdf.Sparql
             CreateSolutionModifier(sb);
         }
 
+        /// <summary>
+        /// Works out whether the expression is refering to to some other class via an OWL ObjectProperty.
+        /// </summary>
+        /// TODO: this documentation needs a clean up
+        /// <param name="e">The <see cref="Expression"/> being tested.</param>
+        /// <returns>True if <see cref="e"/> refers via a <see cref="MethodCallExpression"/> to a property associated with an OWL ObjectProperty</returns>
+        /// <remarks>
+        /// This will return true if the Expression is a <see cref="MethodCallExpression"/> that references one of:
+        /// <list type="">
+        ///   <item>OccursAsStmtObjectWithUri - matches objects with a specific URI</item>
+        ///   <item>StmtObjectWithSubjectAndPredicate - matches statements with given subject and predicate URIs</item>
+        ///   <item>StmtSubjectWithObjectAndPredicate - matches statements with given object and predicate URIs</item>
+        /// </list>
+        /// </remarks>
         private bool ExpressionIsObjectPropertyReference(Expression e)
         {
             if (e is LambdaExpression)
@@ -254,6 +268,11 @@ namespace LinqToRdf.Sparql
             return false;
         }
 
+        /// <summary>
+        /// Creates the prolog section of a SPARQL query. 
+        /// This consists of the prefixes stored in the <see cref="NamespaceManager"/>
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> onto which the prolog should be appended.</param>
         private void CreateProlog(StringBuilder sb)
         {
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
@@ -276,6 +295,11 @@ namespace LinqToRdf.Sparql
             sb.Append("\n");
         }
 
+        /// <summary>
+        /// Creates the data set section of the SPARQL query.
+        /// </summary>
+        /// TODO: Determine whether the changes to the Data Set clause break the case for named graphs.
+        /// <param name="sb">A <see cref="StringBuilder"/> onto which the clause should be appended.</param>
         private void CreateDataSetClause(StringBuilder sb)
         {
 #if false   // As was
@@ -296,6 +320,10 @@ namespace LinqToRdf.Sparql
 #endif
         }
 
+        /// <summary>
+        /// Creates the projection part of the SPARQL query - the part that specifies which data to return back.
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> into which the projection is inserted.</param>
         private void CreateProjection(StringBuilder sb)
         {
             string distinct = Expressions.ContainsKey("Distinct") ? "DISTINCT " : "";
@@ -306,7 +334,9 @@ namespace LinqToRdf.Sparql
             }
 
             sb.Append("SELECT " + distinct);
-            if (projectionParameters.Count == 0)
+
+            // if it is of the form "from a in b select a"
+            if (ProjectionParameters.Count == 0)
             {
                 foreach (MemberInfo mi in OwlClassSupertype.GetAllPersistentProperties(typeof (T)))
                 {
@@ -315,17 +345,23 @@ namespace LinqToRdf.Sparql
                 }
             }
             else
+                // if it is of the form "from a in b select new {a.c, a.d, a.e}" then add c,d,e to the projection
             {
-                foreach (MemberInfo mi in projectionParameters)
+                foreach (MemberInfo mi in ProjectionParameters)
                 {
                     sb.Append(" ?");
                     sb.Append(mi.Name);
                 }
             }
 
+            // add a parameter to get back the instance URI to allow relationship tracking etc
             sb.AppendLine(" $" + GetInstanceName());
         }
 
+        /// <summary>
+        /// Creates the where clause of the SPARQL query - the part that indicates what the properties of selected objects should be.
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> into which the SPARQL should be inserted.</param>
         private void CreateWhereClause(StringBuilder sb)
         {
             // if using an identity projection then every available property of the type must be returned
@@ -346,7 +382,7 @@ namespace LinqToRdf.Sparql
             sb.Append("WHERE {\n");
             // if parameters have been defined somewhere. If using an identity projection then we will not be getting anything from projectionParameters
             // if we have no WHERE expression, then we also won't be getting anything from queryGraphParameters
-            var parameters = new List<MemberInfo>(queryGraphParameters.Union(projectionParameters));
+            var parameters = new List<MemberInfo>(QueryGraphParameters.Union(ProjectionParameters));
 
             if (parameters.Count == 0)
             {
@@ -362,8 +398,8 @@ namespace LinqToRdf.Sparql
 
 //            if (parameters.Count > 0)
 //            {
-                sb.AppendFormat("{0} a {1}:{2}.\n", varName, originalType.GetOntology().Prefix,
-                                originalType.GetOwlResource().RelativeUriReference);
+                sb.AppendFormat("{0} a {1}:{2}.\n", varName, OriginalType.GetOntology().Prefix,
+                                OriginalType.GetOwlResource().RelativeUriReference);
 //            }
 //            else
 //            {
@@ -410,6 +446,11 @@ namespace LinqToRdf.Sparql
             sb.Append("}\n");
         }
 
+        /// <summary>
+        /// Gets the alias used in both the LINQ and the SPARQL query for the class instance that is being sought.
+        /// </summary>
+        /// i.e. if the query was "from a in ctx ..." then the instance name would be "a".
+        /// <returns>A string with the name used in the query.</returns>
         private string GetInstanceName()
         {
             if (Expressions.ContainsKey("Where"))
@@ -426,6 +467,12 @@ namespace LinqToRdf.Sparql
             return "tmpInt";
         }
 
+        /// <summary>
+        /// Used to create a valid identifier in the case where the identifier 
+        /// derived from the LINQ query is either non-existent or invalid.
+        /// </summary>
+        /// <param name="name">The name derived from the LINQ query.</param>
+        /// <returns>the same as <see cref="name"/> but with illegal (punctuation) characters removed</returns>
         private string CreateValidIdentifier(string name)
         {
             return name.Replace("<", "")
@@ -437,11 +484,23 @@ namespace LinqToRdf.Sparql
                        .Replace("}", "");
         }
 
+        /// <summary>
+        /// Determines whether <see cref="name"/> contains illegal characters thaqt would make it an invalid identifier for SPARQL.
+        /// </summary>
+        /// <param name="name">The identifier to be tested.</param>
+        /// <returns>
+        /// 	<c>true</c> if no invalid chars were found in <see cref="name"/>; otherwise, <c>false</c>.
+        /// </returns>
         private bool IsInvalidIdentifier(string name)
         {
             return name.ToCharArray().ContainsAnyOf(new[]{'<','>',':',',','.','{','}'});
         }
 
+        /// <summary>
+        /// appends solution modifiers to the SPARQL query.
+        /// </summary>
+        /// This part handles the generation of 'Order', 'Limit' and 'offset' clauses.
+        /// <param name="sb">A <see cref="StringBuilder"/> into which the SPARQL should be inserted.</param>
         private void CreateSolutionModifier(StringBuilder sb)
         {
             CreateOrderClause(sb);
@@ -449,6 +508,10 @@ namespace LinqToRdf.Sparql
             CreateOffsetClause(sb);
         }
 
+        /// <summary>
+        /// Inserts an order clause into the SPARQL query if present in the LINQ query.
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> into which the SPARQL should be inserted.</param>
         private void CreateOrderClause(StringBuilder sb)
         {
             if (Expressions.ContainsKey("OrderBy"))
@@ -461,6 +524,10 @@ namespace LinqToRdf.Sparql
             }
         }
 
+        /// <summary>
+        /// Inserts a limit clause into the SPARQL query if present in the LINQ query.
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> into which the SPARQL should be inserted.</param>
         private void CreateLimitClause(StringBuilder sb)
         {
             if (Expressions.ContainsKey("Take"))
@@ -474,6 +541,10 @@ namespace LinqToRdf.Sparql
             }
         }
 
+        /// <summary>
+        /// Inserts an offset clause into the SPARQL if present in the LINQ query.
+        /// </summary>
+        /// <param name="sb">A <see cref="StringBuilder"/> into which the SPARQL should be inserted.</param>
         private void CreateOffsetClause(StringBuilder sb)
         {
             if (Expressions.ContainsKey("Skip"))

@@ -20,23 +20,38 @@ using System.Reflection;
 namespace LinqToRdf
 {
     /// <summary>
-    /// Supertype for all query types
+    /// Supertype for all LINQ query types (that are defined by LinqToRdf)
     /// </summary>
     /// <typeparam name="T">the type of object being queried for</typeparam>
     public class QuerySupertype<T>
     {
+        /// <summary>
+        /// A collection of each sub expression that forms the query to be performed
+        /// </summary>
         protected Dictionary<string, MethodCallExpression> expressions;
-        protected string filterClause;
-        protected TextWriter logger;
+
+        /// <summary>
+        /// A logger that external clients can attach to (imitating LINQ to SQL)
+        /// </summary>
+        protected TextWriter externalLogger;
+        /// <summary>
+        /// A <see cref="NamespaceManager"/> that keeps track of the namespaces that need to be added to the query as prefixes.
+        /// </summary>
         protected NamespaceManager namespaceManager = new NamespaceManager();
-        protected Type originalType = typeof (T);
-        protected Delegate projection;
-        protected HashSet<MemberInfo> projectionParameters = new HashSet<MemberInfo>();
-        protected QueryFactory<T> queryFactory;
-        protected HashSet<MemberInfo> queryGraphParameters = new HashSet<MemberInfo>();
+
+        /// <summary>
+        /// indicates whether subsequent enumerations of the results should rerun the query, or just use previous results.
+        /// </summary>
         private bool shouldReuseResultset;
+        /// <summary>
+        /// Gets or sets the <see cref="IRdfContext"/> that this query is running within.
+        /// </summary>
         public IRdfContext DataContext { get; set; }
 
+        /// <summary>
+        /// Gets or sets the <see cref="T"/> results that were retrieved when the query was enumerated. these will be reused if <see cref="ShouldReuseResultset"/> is true.
+        /// </summary>
+        /// <value>a collection of <see cref="T"/>.</value>
         public IEnumerable<T> CachedResults
         {
             get
@@ -55,6 +70,9 @@ namespace LinqToRdf
             }
         }
 
+        /// <summary>
+        /// A collection of each sub expression that forms the query to be performed
+        /// </summary>
         public Dictionary<string, MethodCallExpression> Expressions
         {
             get
@@ -66,52 +84,47 @@ namespace LinqToRdf
             set { expressions = value; }
         }
 
-        public string FilterClause
-        {
-            get { return filterClause; }
-            set { filterClause = value; }
-        }
+        /// <summary>
+        /// A partial expansion of the query into SPARQL. In this case for the FILTER parts of the query.
+        /// </summary>
+        public string FilterClause { get; set; }
 
         public string PropertyReferenceTriple { get; set; }
 
-        public TextWriter Logger
-        {
-            get { return logger; }
-            set { logger = value; }
-        }
+        /// <summary>
+        /// Stores the original type that the query was being made against.
+        /// </summary>
+        public Type OriginalType { get; set; }
 
-        public Type OriginalType
-        {
-            get { return originalType; }
-            set { originalType = value; }
-        }
+        /// <summary>
+        /// stores <see cref="MemberInfo"/> details of each property that is referenced inside the query
+        /// </summary>
+        public HashSet<MemberInfo> QueryGraphParameters { get; set; }
 
-        public HashSet<MemberInfo> QueryGraphParameters
-        {
-            get { return queryGraphParameters; }
-            set { queryGraphParameters = value; }
-        }
+        /// <summary>
+        /// stores parameters that are used inside the projection (if any)
+        /// </summary>
+        public HashSet<MemberInfo> ProjectionParameters { get; set; }
 
-        public HashSet<MemberInfo> ProjectionParameters
-        {
-            get { return projectionParameters; }
-            set { projectionParameters = value; }
-        }
+        /// <summary>
+        /// Stores the lambda of the select part (if it is performing some kind of projection onto an anonymous type)
+        /// </summary>
+        public Delegate ProjectionFunction { get; set; }
 
-        public Delegate Projection
-        {
-            get { return projection; }
-            set { projection = value; }
-        }
-
+        /// <summary>
+        /// Caches the SPARQL query that was generated when this query was first run.
+        /// </summary>
         public string QueryText { get; set; }
 
-        public QueryFactory<T> QueryFactory
-        {
-            get { return queryFactory; }
-            set { queryFactory = value; }
-        }
+        /// <summary>
+        /// an abstract class factory that dispenses types appropriate for this kind of query.
+        /// This will normally depend on the <see cref="QueryType"/> for this query.
+        /// </summary>
+        public QueryFactory<T> QueryFactory { get; set; }
 
+        /// <summary>
+        /// indicates whether subsequent enumerations of the results should rerun the query, or just use previous results.
+        /// </summary>
         public bool ShouldReuseResultset
         {
             get { return shouldReuseResultset; }
@@ -127,54 +140,65 @@ namespace LinqToRdf
             }
         }
 
+        /// <summary>
+        /// Builds the projection function (<see cref="ProjectionFunction"/>) and extracts the arguments to it 
+        /// for use elsewhere.
+        /// </summary>
+        /// <param name="expression">The Select expression.</param>
         protected void BuildProjection(Expression expression)
         {
+            if (expression == null)
+                throw new ArgumentNullException("expression");
+    
             var ue = ((MethodCallExpression) expression).Arguments[1] as UnaryExpression;
-            var le = (LambdaExpression) ue.Operand;
-            if (le == null)
+            if (ue == null)
                 throw new ApplicationException("Incompatible expression type found when building ontology projection");
-            projection = le.Compile();
-            var mie = le.Body as NewExpression;
-            if (le.Body is ParameterExpression) //  ie an identity projection
+    
+            var projectionFunctionExpression = (LambdaExpression) ue.Operand;
+            if (projectionFunctionExpression == null)
+                throw new ApplicationException("Incompatible expression type found when building ontology projection");
+
+            // compile the projection's lambda expression into a function that can be used to instantiate new objects
+            ProjectionFunction = projectionFunctionExpression.Compile();
+
+            // work out what kind of project is being performed (identity, member or anonymous type)
+            // identity projection is from queries like this: "from a in ctx select a"
+            // member projection from ones like this "from a in ctx select a.b"
+            // anonymous type projection from this "from a in ctx select new {a.b, a.b}"
+            if (projectionFunctionExpression.Body is ParameterExpression) //  ie an identity projection
             {
-                foreach (PropertyInfo i in OwlClassSupertype.GetAllPersistentProperties(originalType))
-                    projectionParameters.Add(i);
+                foreach (PropertyInfo i in OwlClassSupertype.GetAllPersistentProperties(OriginalType))
+                    ProjectionParameters.Add(i);
             }
-            else if (le.Body is MemberExpression)
+            else if (projectionFunctionExpression.Body is MemberExpression) // a member projection
             {
-                var memex = le.Body as MemberExpression;
-                projectionParameters.Add(memex.Member);
+                var memex = projectionFunctionExpression.Body as MemberExpression;
+                if (memex == null)
+                    throw new ApplicationException("Expected MemberExpression was null");
+    
+                ProjectionParameters.Add(memex.Member);
             }
-            else
+            else // create an anonymous type
             {
+                var mie = projectionFunctionExpression.Body as NewExpression;
+                if (mie == null)
+                    throw new ApplicationException("Expected NewExpression was not present");
+    
                 foreach (MemberExpression me in mie.Arguments)
                 {
-                    projectionParameters.Add(me.Member);
+                    ProjectionParameters.Add(me.Member);
                 }
             }
         }
 
-        private void FindProperties(MemberBinding e)
+        public QuerySupertype()
         {
-            if (!namespaceManager.HasOntologyFor(OriginalType))
-                namespaceManager.Add(OriginalType);
-            switch (e.BindingType)
-            {
-                case MemberBindingType.Assignment:
-                    projectionParameters.Add(e.Member);
-                    break;
-                case MemberBindingType.ListBinding:
-                    break;
-                case MemberBindingType.MemberBinding:
-                    projectionParameters.Add(e.Member);
-                    break;
-            }
+            ProjectionParameters = new HashSet<MemberInfo>();
+            QueryGraphParameters = new HashSet<MemberInfo>();
+            OriginalType = typeof (T);
         }
 
-        internal void Log(string msg, params object[] args)
-        {
-            if (Logger != null)
-                logger.WriteLine(string.Format("+ :" + msg, args));
-        }
+        protected Logger Logger  = new Logger(typeof(QuerySupertype<T>));
+        public TextWriter Log { get; set; }
     }
 }

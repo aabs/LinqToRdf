@@ -445,9 +445,14 @@ namespace LinqToRdf
             return le.Body is MemberExpression;
         }
 
+        /// <summary>
+        /// Extracts the corresponding value from the SemWeb results for a member access projection.
+        /// </summary>
+        /// <param name="vb">The SemWeb results.</param>
+        /// <returns>the value that was extracted (and converted) from the results.</returns>
         private object ExtractMemberAccess(VariableBindings vb)
         {
-            // create function to create the storage object
+            // work out if the SelectExpression really is a member access
             var ue = (SelectExpression).Arguments[1] as UnaryExpression;
             if (ue == null)
                 throw new ArgumentException("incompatible expression type");
@@ -458,33 +463,14 @@ namespace LinqToRdf
 
             if (le.Body is MemberExpression)
             {
-                #region member expression
+                // work out which member is being queried on
                 var memberExpression = (MemberExpression) le.Body;
                 MemberInfo memberInfo = memberExpression.Member;
-/*
- * this seems to be pointless. Not sure why it was ever there.
-                Type memberType = null;
-
-                switch (memberInfo.MemberType)
-                {
-                    case MemberTypes.Field:
-                        var fi = memberInfo as FieldInfo;
-                        memberType = fi.FieldType;
-                        break;
-                    case MemberTypes.Property:
-                        var pi = memberInfo as PropertyInfo;
-                        memberType = pi.PropertyType;
-                        break;
-                    default:
-                        break;
-                }
- */
-
+                // get its name and use that as a key into the results
                 string vVal = vb[memberInfo.Name].ToString();
+                // convert the result from XSDT format to .NET types
                 var tc = new XsdtTypeConverter();
                 return tc.Parse(vVal);
-
-                #endregion
             }
             return null;
         }
