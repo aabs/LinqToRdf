@@ -61,7 +61,7 @@ ns1:Album_1 a ns1:Album ;
 ns1:Album_2 a ns1:Album ;
 	ns1:name "Thomas Laqueur - History Lectures" .
 	
-_:Track_861912094 a ns1:Track;
+:Track_861912094 a ns1:Track;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
 	ns1:albumName "Thomas Laqueur - History Lectures" ;
@@ -71,7 +71,7 @@ _:Track_861912094 a ns1:Track;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\hist5_20060829.mp3";
 	ns1:isTrackOn :Album_2 ;
 	ns1:rating 2.
-_:Track_1378138934 a ns1:Track;
+:Track_1378138934 a ns1:Track;
 	ns1:title "History 5 | Fall 2006 | UC Berkeley" ;
 	ns1:artistName "Thomas Laqueur" ;
 	ns1:albumName "Thomas Laqueur - History Lectures" ;
@@ -80,7 +80,7 @@ _:Track_1378138934 a ns1:Track;
 	ns1:comment " (C) Copyright 2006, UC Regents" ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\hist5_20060831.mp3";
 	ns1:isTrackOn :Album_2  .
-_:Track_1565191876 a ns1:Track;
+:Track_1565191876 a ns1:Track;
 	ns1:title "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:artistName "Lars Brownworth" ;
 	ns1:albumName "12 Byzantine Rulers: The History of The Byzantine Empire" ;
@@ -88,7 +88,7 @@ _:Track_1565191876 a ns1:Track;
 	ns1:genreName "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:comment "This was about the 15th version that I recorded" ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\12 Byzantine Rulers_ The History of The\\12 Byzantine Rulers_ Part 1 - Introd.mp3" .
-_:Track_1423001546 a ns1:Track;
+:Track_1423001546 a ns1:Track;
 	ns1:title "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:artistName "Lars Brownworth" ;
 	ns1:albumName "12 Byzantine Rulers: The History of The Byzantine Empire" ;
@@ -96,7 +96,7 @@ _:Track_1423001546 a ns1:Track;
 	ns1:genreName "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:comment "0" ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\12 Byzantine Rulers_ The History of The\\12 Byzantine Rulers_ Part 13 - Basil.mp3" .
-_:Track_329535343 a ns1:Track;
+:Track_329535343 a ns1:Track;
 	ns1:title "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:artistName "Lars Brownworth" ;
 	ns1:albumName "12 Byzantine Rulers: The History of The Byzantine Empire" ;
@@ -104,7 +104,7 @@ _:Track_329535343 a ns1:Track;
 	ns1:genreName "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:comment "0" ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\12 Byzantine Rulers_ The History of The\\12 Byzantine Rulers_ Part 14 - Alexi.mp3" .
-_:Track_1897300716 a ns1:Track;
+:Track_1897300716 a ns1:Track;
 	ns1:title "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:artistName "Lars Brownworth" ;
 	ns1:albumName "12 Byzantine Rulers: The History of The Byzantine Empire" ;
@@ -112,7 +112,7 @@ _:Track_1897300716 a ns1:Track;
 	ns1:genreName "12 Byzantine Rulers: The History of The Byzantine Empire" ;
 	ns1:comment "0" ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\12 Byzantine Rulers_ The History of The\\12 Byzantine Rulers_ Part 2 - Diocle.mp3" .
-_:Track_98976600 a ns1:Track;
+:Track_98976600 a ns1:Track;
 	ns1:title "British History 101" ;
 	ns1:artistName "Michael Anthony" ;
 	ns1:albumName "British History 101" ;
@@ -120,7 +120,7 @@ _:Track_98976600 a ns1:Track;
 	ns1:genreName "British History 101" ;
 	ns1:comment "0" ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\British History 101\\British History 101 - Ramblings from.mp3" .
-_:Track_583675819 a ns1:Track;
+:Track_583675819 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
@@ -129,7 +129,7 @@ _:Track_583675819 a ns1:Track;
 	ns1:comment "Einstein couldn't do it again if he lived today. He'd be too distracted by the allure of technology, and by all those buttheads at Mensa trying to prove how smart they are." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\A Few Thoughts on the Subject of Gen.mp3";
 	ns1:isTrackOn :Album_1  .
-_:Track_967002632 a ns1:Track;
+:Track_967002632 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
@@ -138,7 +138,7 @@ _:Track_967002632 a ns1:Track;
 	ns1:comment "Some of you might know that my work involves a lot of travel... and it looks like I'm going to be making a trip to Alaska." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\Canada Needs to Move the Hell Over.mp3";
 	ns1:isTrackOn :Album_1   .
-_:Track_538269606 a ns1:Track;
+:Track_538269606 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
@@ -147,7 +147,7 @@ _:Track_538269606 a ns1:Track;
 	ns1:comment "During dinner recently, Aidika and I talked, and as usual we talked about everything. And obviously, since everything includes the subject of animal dissection..." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\Keeping the Eyeballs.mp3" ;
 	ns1:isTrackOn :Album_1  .
-_:Track_600475779 a ns1:Track;
+:Track_600475779 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
@@ -156,7 +156,7 @@ _:Track_600475779 a ns1:Track;
 	ns1:comment "I have a receipt for the tires, I said.  The cop just stared at me.  He was probably thinking about how when someone decides to embark upon a life of crime, he should be at least the slightest bit prepared." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\My Father, My Transvestite Hero.mp3" ;
 	ns1:isTrackOn :Album_1  .
-_:Track_1355442850 a ns1:Track;
+:Track_1355442850 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
@@ -164,7 +164,7 @@ _:Track_1355442850 a ns1:Track;
 	ns1:genreName "Rory Blyth: The Smartest Man in the World" ;
 	ns1:comment "During a recent dinner with friends, a little comment I made in passing prompted someone to ask me about my dislike for French Canadians." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\No Peace with French Canadia.mp3" .
-_:Track_57222725 a ns1:Track;
+:Track_57222725 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
@@ -172,7 +172,7 @@ _:Track_57222725 a ns1:Track;
 	ns1:genreName "Rory Blyth: The Smartest Man in the World" ;
 	ns1:comment "I went back to London to see if it was the same magical place of my youth- and London has changed." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\Not the London I Remember.mp3" .
-_:Track_1842888026 a ns1:Track;
+:Track_1842888026 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
@@ -180,7 +180,7 @@ _:Track_1842888026 a ns1:Track;
 	ns1:genreName "Rory Blyth: The Smartest Man in the World" ;
 	ns1:comment "My father told me this story. Unbelievable." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\Office Space - A Cautionary Tale.mp3" .
-_:Track_1771362126 a ns1:Track;
+:Track_1771362126 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
@@ -188,7 +188,7 @@ _:Track_1771362126 a ns1:Track;
 	ns1:genreName "Rory Blyth: The Smartest Man in the World" ;
 	ns1:comment "There is another sinister affront to the good Neopoleon County to which I have been made privy in recent and difficult times." ;
 	ns1:fileLocation "C:\\Users\\andrew.matthews\\Music\\iTunes\\iTunes Music\\Podcasts\\Rory Blyth_ The Smartest Man in the Worl\\Proposed Amendment to the Neopoleon.mp3" .
-_:Track_1145269335 a ns1:Track;
+:Track_1145269335 a ns1:Track;
 	ns1:title "Rory Blyth: The Smartest Man in the World" ;
 	ns1:artistName "Rory Blyth" ;
 	ns1:albumName "Rory Blyth: The Smartest Man in the World" ;
