@@ -2,6 +2,9 @@
 <project name="definitions" xmlns="http://nant.sf.net/schemas/nant.xsd">
 	<echo>LinqToRdf (c) Andrew Matthews 2008</echo>
 	<echo>framework: ${framework::get-target-framework() }</echo>
+	<property name="dotnet"
+value="c:/windows/Microsoft.NET/Framework/v2.0.50727" overwrite="false"
+/>
 	<property name="name.base" value="LinqToRdf" />
     <property name="version" value="0.8.1"/>
     <property name="name.manufacturer" value="Andrew Matthews"/>

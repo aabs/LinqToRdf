@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C7765FC0-D249-47F4-9F99-7C7E8ADEA1FC}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -85,13 +85,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="meta.xml" />
-    <None Include="template\childprop.st" />
-    <None Include="template\class.st" />
-    <None Include="template\classes.st" />
-    <None Include="template\namespaceref.st" />
-    <None Include="template\parentprop.st" />
-    <None Include="template\prop.st" />
-    <None Include="template\query.st" />
+    <EmbeddedResource Include="template\childprop.st" />
+    <EmbeddedResource Include="template\class.st" />
+    <EmbeddedResource Include="template\classes.st" />
+    <EmbeddedResource Include="template\namespaceref.st" />
+    <EmbeddedResource Include="template\parentprop.st" />
+    <EmbeddedResource Include="template\prop.st" />
+    <EmbeddedResource Include="template\query.st" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

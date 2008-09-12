@@ -45,12 +45,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2663EA584962406B924AC77C678A3669"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_31C541F65441439991EF6FC1305E6170"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -99,49 +93,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7530C235115F4478A421D7EFE8A821A0"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7D0DDB35D4144BAC81E6BDEC40E8F60E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_85326A6CE78A057A94EF7B4ADB68F825"
         "OwnerKey" = "8:_68D404AA64C54EB88149C698D979ACD7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8A5BC6C71817457494E8A2AD30700100"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9299E29C26154B5E82CF61DD5006AE10"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C6CCF10319744AE3A855201BD63F315C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E1B46BAA3D2440D79B3E8AA2B01718F4"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F4FFAA9A362649D68494CB7D86958F43"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -411,26 +369,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2663EA584962406B924AC77C678A3669"
-            {
-            "SourcePath" = "8:..\\RdfMetal\\template\\childprop.st"
-            "TargetName" = "8:childprop.st"
-            "Tag" = "8:"
-            "Folder" = "8:_9653E90FFA954D5DA200576DD8968C70"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_31C541F65441439991EF6FC1305E6170"
             {
             "SourcePath" = "8:..\\..\\doc\\sw-cube.ico"
@@ -553,46 +491,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7530C235115F4478A421D7EFE8A821A0"
-            {
-            "SourcePath" = "8:..\\RdfMetal\\template\\classes.st"
-            "TargetName" = "8:classes.st"
-            "Tag" = "8:"
-            "Folder" = "8:_9653E90FFA954D5DA200576DD8968C70"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7D0DDB35D4144BAC81E6BDEC40E8F60E"
-            {
-            "SourcePath" = "8:..\\RdfMetal\\template\\class.st"
-            "TargetName" = "8:class.st"
-            "Tag" = "8:"
-            "Folder" = "8:_9653E90FFA954D5DA200576DD8968C70"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_85326A6CE78A057A94EF7B4ADB68F825"
             {
             "AssemblyRegister" = "3:1"
@@ -624,92 +522,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8A5BC6C71817457494E8A2AD30700100"
-            {
-            "SourcePath" = "8:..\\RdfMetal\\template\\namespaceref.st"
-            "TargetName" = "8:namespaceref.st"
-            "Tag" = "8:"
-            "Folder" = "8:_9653E90FFA954D5DA200576DD8968C70"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9299E29C26154B5E82CF61DD5006AE10"
-            {
-            "SourcePath" = "8:..\\RdfMetal\\template\\query.st"
-            "TargetName" = "8:query.st"
-            "Tag" = "8:"
-            "Folder" = "8:_9653E90FFA954D5DA200576DD8968C70"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C6CCF10319744AE3A855201BD63F315C"
             {
             "SourcePath" = "8:..\\..\\doc\\manual\\linqtordf-manual.pdf"
             "TargetName" = "8:linqtordf-manual.pdf"
             "Tag" = "8:"
             "Folder" = "8:_808B380EC0A54AECB4ADF87B4CEAE635"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E1B46BAA3D2440D79B3E8AA2B01718F4"
-            {
-            "SourcePath" = "8:..\\RdfMetal\\template\\prop.st"
-            "TargetName" = "8:prop.st"
-            "Tag" = "8:"
-            "Folder" = "8:_9653E90FFA954D5DA200576DD8968C70"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F4FFAA9A362649D68494CB7D86958F43"
-            {
-            "SourcePath" = "8:..\\RdfMetal\\template\\parentprop.st"
-            "TargetName" = "8:parentprop.st"
-            "Tag" = "8:"
-            "Folder" = "8:_9653E90FFA954D5DA200576DD8968C70"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1351,7 +1169,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_63EBA8D0A9404C01A3BA31AC6EEDB576"
             {
-            "SourcePath" = "8:..\\linqtordf\\obj\\Release\\linqtordf.dll"
+            "SourcePath" = "8:..\\linqtordf\\obj\\Debug\\linqtordf.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_808B380EC0A54AECB4ADF87B4CEAE635"
@@ -1379,7 +1197,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_68D404AA64C54EB88149C698D979ACD7"
             {
-            "SourcePath" = "8:..\\RdfMetal\\obj\\Release\\RdfMetal.exe"
+            "SourcePath" = "8:..\\RdfMetal\\obj\\Debug\\RdfMetal.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_808B380EC0A54AECB4ADF87B4CEAE635"

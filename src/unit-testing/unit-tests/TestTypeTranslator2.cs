@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using NUnit.Framework;
 using LinqToRdf;
 
@@ -20,7 +23,7 @@ namespace UnitTests
             //
         }
 
-		[Test]
+        [Test]
         public void TestFactoryWorks()
         {
             ITypeTranslator2 tt1 = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.DotNet);
@@ -32,7 +35,7 @@ namespace UnitTests
             Assert.AreNotEqual(tt1, tt2);
         }
 
-		[Test]
+        [Test]
         public void TestDotNetTypeTranslator()
         {
             ITypeTranslator2 tt1 = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.DotNet);
@@ -65,7 +68,7 @@ namespace UnitTests
             Assert.AreEqual("string", tt1[PrimitiveDataType.NOTATION]);
         }
 
-		[Test]
+        [Test]
         public void TestXsdtTypeTranslator()
         {
             ITypeTranslator2 tt1 = TypeTranslationProvider.GetTypeTranslator(SupportedTypeDomain.XmlSchemaDatatypes);
@@ -92,30 +95,52 @@ namespace UnitTests
             Assert.AreEqual("QName", tt1[PrimitiveDataType.QNAME]);
             Assert.AreEqual("NOTATION", tt1[PrimitiveDataType.NOTATION]);
             Assert.AreEqual("string", tt1[PrimitiveDataType.UNKNOWN]);
-                                                                 
+
         }
 
 
-		[Test]
-		public void TestXsdtToNet()
-		{
-			XsdtTypeConverter tc = new XsdtTypeConverter();
-		    //Assert.AreSame(dbl, tc.Parse("\"10\"^^xsdt:double"));
-			Assert.AreEqual(tc.Parse("\"10\"^^<http://www.w3.org/2001/XMLSchema#double>"), tc.Parse("\"10\"^^xsdt:double"));
-			var f = tc.Parse("\"10\"^^<http://www.w3.org/2001/XMLSchema#float>");
-			var d = tc.Parse("\"10\"^^xsdt:double");
-			Assert.IsTrue(f is float);
-			Assert.IsTrue(d is double);
-			var s = tc.Parse("\"hello world\""); 
-			Assert.IsTrue(s is string);
-			Assert.AreEqual(tc.Parse("\"P1D\"^^xsdt:duration"), tc.Parse("\"P1D\"^^<http://www.w3.org/2001/XMLSchema#duration>"));
-			var ts = tc.Parse("\"P1Y2M3DT10H30M\"^^xsdt:duration");
-			Assert.IsTrue(ts != null && ts is TimeSpan);
-			var i = tc.Parse("10");
-			Assert.IsTrue(i is int);
-			var i2 = tc.Parse("10^^xsdt:integer");
-			Assert.IsTrue(i2 is int);
-		}
-  
-    }                                                            
-}                                                                
+        [Test]
+        public void TestXsdtToNet()
+        {
+            XsdtTypeConverter tc = new XsdtTypeConverter();
+            //Assert.AreSame(dbl, tc.Parse("\"10\"^^xsdt:double"));
+            Assert.AreEqual(tc.Parse("\"10\"^^<http://www.w3.org/2001/XMLSchema#double>"), tc.Parse("\"10\"^^xsdt:double"));
+            var f = tc.Parse("\"10\"^^<http://www.w3.org/2001/XMLSchema#float>");
+            var d = tc.Parse("\"10\"^^xsdt:double");
+            Assert.IsTrue(f is float);
+            Assert.IsTrue(d is double);
+            var s = tc.Parse("\"hello world\"");
+            Assert.IsTrue(s is string);
+            Assert.AreEqual(tc.Parse("\"P1D\"^^xsdt:duration"), tc.Parse("\"P1D\"^^<http://www.w3.org/2001/XMLSchema#duration>"));
+            var ts = tc.Parse("\"P1Y2M3DT10H30M\"^^xsdt:duration");
+            Assert.IsTrue(ts != null && ts is TimeSpan);
+            var i = tc.Parse("10");
+            Assert.IsTrue(i is int);
+            var i2 = tc.Parse("10^^xsdt:integer");
+            Assert.IsTrue(i2 is int);
+        }
+
+        [Test, Category("experiment")]
+        public void TestRemotingTypeConversions()
+        {
+            XsdDataContractExporter x = new XsdDataContractExporter();
+            XsdDataContractImporter i = new XsdDataContractImporter();
+            Type[] ta = new Type[]
+                            {
+                                typeof(int), typeof(string), 
+                                typeof(DateTime), typeof(float), 
+                                typeof(TimeSpan), typeof(Decimal),
+                                typeof(bool), typeof(char),
+                                typeof(short), typeof(Int16), typeof(long)
+                            };
+            foreach (var t in ta)
+            {
+                Debug.WriteLine(".NET: " + t.Name);
+                var y = x.GetSchemaTypeName(t);
+                Debug.WriteLine(string.Format("XSD: {0} {1}", y.Namespace, y.Name));
+                var cr = i.GetCodeTypeReference(y);
+                Debug.WriteLine(".NET2 :" + cr.BaseType);
+            }
+        }
+    }
+}

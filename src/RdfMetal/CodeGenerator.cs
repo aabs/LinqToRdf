@@ -5,11 +5,21 @@ namespace RdfMetal
 {
     public class CodeGenerator
     {
-        private readonly StringTemplateGroup group = new StringTemplateGroup("myGroup", @"C:\shared.datastore\repository\personal\dev\projects\semantic-web\LinqToRdf.Prototypes\RdfMetal\template");
+		EmbeddedResourceTemplateLoader templateLoader;
+		StringTemplateGroup stringTemplateGroup;
+		private static readonly string TemplateNamespace = "RdfMetal.template";
+		
+//		private readonly StringTemplateGroup group = new StringTemplateGroup("myGroup", @"C:\shared.datastore\repository\personal\dev\projects\semantic-web\LinqToRdf.Prototypes\RdfMetal\template");
+		
+		public CodeGenerator()
+		{
+			templateLoader = new EmbeddedResourceTemplateLoader(GetType().Assembly, TemplateNamespace);
+			stringTemplateGroup = new StringTemplateGroup("RdfMetal", templateLoader);
+		}
 
         public string Generate(IEnumerable<OntologyClass> classes, Options opts)
         {
-            StringTemplate template = group.GetInstanceOf("classes");
+			StringTemplate template = stringTemplateGroup.GetInstanceOf("classes");
             template.SetAttribute("classes", classes);
             template.SetAttribute("handle", opts.ontologyPrefix);
             template.SetAttribute("uri", opts.ontologyNamespace);

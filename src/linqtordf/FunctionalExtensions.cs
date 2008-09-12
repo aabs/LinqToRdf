@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace LinqToRdf
 {
@@ -54,6 +55,11 @@ namespace LinqToRdf
                     task(t);
                 }
             }
+        }
+
+        public static string NodeTypeName(this Expression ex)
+        {
+            return Enum.GetName(ex.NodeType.GetType(), ex.NodeType);
         }
 
         public static bool ContainsAnyOf<T>(this IEnumerable<T> seq, IEnumerable<T> x)

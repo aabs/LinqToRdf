@@ -39,15 +39,10 @@ namespace LinqToRdf.Sparql
 
         public LinqToSparqlExpTranslator(StringBuilder stringBuilder)
         {
-            #region Tracing
-#line hidden
-            if (Logger.IsDebugEnabled)
+            using (var ls = new LoggingScope("LinqToSparqlExpTranslator ctor"))
             {
-                Logger.Debug("creating LinqToSparqlExpTranslator [2].");
-            }
-#line default
-            #endregion
-            this.stringBuilder = stringBuilder;
+                this.stringBuilder = stringBuilder;
+            }    
         }
 
         public void Dispatch(Expression expression)
@@ -56,7 +51,7 @@ namespace LinqToRdf.Sparql
 #line hidden
             if (Logger.IsDebugEnabled)
             {
-                Logger.Debug("Dispatching {0} Expression.", Enum.GetName(typeof(ExpressionType), expression.NodeType));
+                Logger.Debug("Dispatching {0} Expression.", expression.NodeTypeName());
             }
 #line default
             #endregion
@@ -766,7 +761,7 @@ namespace LinqToRdf.Sparql
         {
             MethodCallExpression mce = (MethodCallExpression)e;
             XsdtTypeConverter tc = new XsdtTypeConverter();
-            string typeToCastTo = tc.GetXsdtAttrFor(mce.Type).Name;
+            string typeToCastTo = tc.GetXsdtAttrFor(mce.Type).TypeUri;
             string argName = SafeDispatch(mce.Arguments[0]);
             QueryAppend("xsdt:{1}({0})", argName, typeToCastTo);
         }

@@ -3,9 +3,10 @@
     <include failonerror="true" buildfile="${path::combine(project::get-base-directory(),'definitions.xml')}"/>
     <!--[clean]--><target name="clean" depends="" description="Delete Automated Build artifacts">
         <delete dir="${dir.output}" />
+        <delete dir="${dir.output}/website" />
         <delete dir="${dir.output}/Sandcastle" />
     </target>
-    <!--[compile]--><target name="compile" depends="prepare, compile.core, compile.rdfmetal, compile.tests">
+    <!--[compile]--><target name="compile" depends="prepare, compile.core, compile.rdfmetal, compile.website, compile.tests">
     </target>
     <!--[compile.core]--><target name="compile.core" depends="prepare" description="Compiles using the AutomatedDebug Configuration">
         <csc target="library" output="${dir.output}/${name.core}.dll" debug="${IsDebugBuild}"
@@ -38,6 +39,9 @@
                 <include name="${dir.rdfmetal}/**/*.cs" />
                 <exclude name="${dir.rdfmetal}/out.cs"/>
             </sources>
+			<resources>
+				<include name="{dir.rdfmetal}/template/*.st" />
+			</resources>
             <references>
                 <include name="System.dll" />
                 <include name="System.Core.dll" />
@@ -73,6 +77,13 @@
             <arg value="/nowarn:114,162,108,168,169,219" />
         </csc>
     </target>
+    <!--[compile.website]--><target name="compile.website" depends="" description="Compiles using the AutomatedDebug Configuration">
+		<exec basedir="."
+		   program="${dotnet}/aspnet_compiler.exe"
+		   commandline="-nologo -v linqtordf ${dir.output}/website"
+		   workingdir="${dir.output}/website"
+		   failonerror="true" />
+    </target>
     <!--[compile.tests]--><target name="compile.tests" depends="compile.core, compile.test.rdfmusic" description="Compiles using the AutomatedDebug Configuration">
         <csc target="library" output="${dir.output}/${name.test.unitTests}.dll" debug="${IsDebugBuild}"
 			warninglevel="0" >
@@ -89,7 +100,9 @@
                 <include name="System.Data.dll" />
                 <include name="System.Data.Linq.dll" />
                 <include name="${dir.output}/${name.core}.dll" />
+                <include name="${dir.output}/${name.rdfmetal}.exe" />
                 <include name="${dir.output}/${name.test.rdfmusic}.dll" />
+                <include name="${dir.library}/Mono.GetOptions.dll" />
                 <include name="${dir.library}/log4net.dll" />
                 <include name="${dir.library}/Rhino.Mocks.dll" />
                 <include name="${dir.library}/semweb.merged.dll" />
@@ -144,7 +157,8 @@
         </copy>
 
         <!-- Run MRefBuilder (introspection on assemblies) to create basic Reflection XML -->
-        <exec program="${sandcastle.mrefbuilder.exe}" workingdir="${sandcastle.workingdir}">
+        <exec program="${sandcastle.mrefbuilder.exe}" 
+              workingdir="${sandcastle.workingdir}">
             <arg value="${sandcastle.input.files}" />
 
             <arg value="/dep:&quot;${dir.library}\semweb.merged.dll&quot;"/>
@@ -158,8 +172,10 @@
 
         <!-- Create final Reflection XML -->
         <!-- Regroup overloads -->
-        <exec program="${sandcastle.xsltransform.exe}" workingdir="${sandcastle.workingdir}">
+        <exec program="${sandcastle.xsltransform.exe}" 
+              workingdir="${sandcastle.workingdir}">
             <arg value="reflection.org1.xml" />
+            <!--arg value="${dir.output}\${name.core}.xml" /-->
             <arg value="/xsl:&quot;${sandcastle.addoverloads.xsl}&quot;" />
             <arg value="/out:reflection.org2.xml" />
         </exec>
@@ -208,6 +224,8 @@
     </target>
     <!--[prepare]--><target name="prepare" depends="">
         <mkdir dir="${dir.output}" />
+        <delete dir="${dir.output}/website" />
+        <mkdir dir="${dir.output}/website" />
         <mkdir dir="${dir.output}/Sandcastle" />
     </target>
     <!--[setup]--><target name="setup" depends="compile">
@@ -347,7 +365,7 @@
             </features>
         </msi>
     </target>
-    <!--[test]--><target name="test" depends="test-deploy">
+    <!--[test]--><target name="test" depends="test-deploy, compile.website">
         <nunit2>
             <formatter type="Plain" />
             <test assemblyname="${dir.output}/${name.test.unitTests}.dll" appconfig="${dir.test.unitTests}/App.config" />

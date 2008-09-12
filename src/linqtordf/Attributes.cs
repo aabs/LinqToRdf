@@ -84,6 +84,37 @@ namespace LinqToRdf
         public string RelativeUriReference { get; set; }
     }
 
+    /// <summary>
+    /// Defines metadata for XSDT datatypes in the <see cref="XsdtPrimitiveDataType"/> 
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field)]
+    public class XsdtAttribute : Attribute
+    {
+        /// <summary>
+        /// supply information on whether the enum (to which this attribute is attached) is represented using a quoted string and the 
+        /// URI for the XSDT specification for the datatype.
+        /// </summary>
+        /// <param name="isQuoted">if set to <c>true</c> this type is represented using a quoted string. eg Dates and strings but not ints.</param>
+        /// <param name="uri">The name.</param>
+        public XsdtAttribute(bool isQuoted, string uri)
+        {
+            IsQuoted = isQuoted;
+            TypeUri = uri;
+        }
+
+        /// <summary>
+        /// Gets the unqualified URI of the type as a string.
+        /// </summary>
+        /// <value>The name.</value>
+        public string TypeUri { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is quoted in strings.
+        /// </summary>
+        /// <value><c>true</c> if this instance is quoted; otherwise, <c>false</c>.</value>
+        public bool IsQuoted { get; private set; }
+    }
+
     public static class AttributeExtensions
     {
         public static bool IsOwlClass(this Type t)
