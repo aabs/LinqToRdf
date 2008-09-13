@@ -227,7 +227,15 @@
         <delete dir="${dir.output}/website" />
         <mkdir dir="${dir.output}/website" />
         <mkdir dir="${dir.output}/Sandcastle" />
-    </target>
+		<copy todir="${dir.output}">
+			<fileset basedir="${dir.library}">
+				<include name="Mono.GetOptions.dll"/>
+				<include name="StringTemplate.dll"/>
+				<include name="antlr.runtime.dll"/>
+			</fileset>
+		</copy>
+
+	</target>
     <!--[setup]--><target name="setup" depends="compile">
         <msi sourcedir="${dir.output}" output="${dir.output}\${name.setup}" 
              verbose="true" debug="${IsDebugBuild}" failonerror="false"
